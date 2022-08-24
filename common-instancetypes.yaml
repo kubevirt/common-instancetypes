@@ -190,6 +190,7 @@ spec:
   cpu:
     preferredCPUTopology: preferSockets
   devices:
+    preferredAutoattachInputDevice: true
     preferredDiskBus: sata
     preferredInterfaceModel: e1000e
   features:
@@ -230,6 +231,7 @@ spec:
   cpu:
     preferredCPUTopology: preferSockets
   devices:
+    preferredAutoattachInputDevice: true
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
   features:
@@ -270,6 +272,7 @@ spec:
   cpu:
     preferredCPUTopology: preferSockets
   devices:
+    preferredAutoattachInputDevice: true
     preferredDiskBus: sata
     preferredInterfaceModel: e1000e
     preferredTPM: {}
@@ -315,6 +318,7 @@ spec:
   cpu:
     preferredCPUTopology: preferSockets
   devices:
+    preferredAutoattachInputDevice: true
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
     preferredTPM: {}
@@ -360,6 +364,7 @@ spec:
   cpu:
     preferredCPUTopology: preferSockets
   devices:
+    preferredAutoattachInputDevice: true
     preferredDiskBus: sata
     preferredInterfaceModel: e1000e
   features:
@@ -400,6 +405,7 @@ spec:
   cpu:
     preferredCPUTopology: preferSockets
   devices:
+    preferredAutoattachInputDevice: true
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
   features:
@@ -440,6 +446,7 @@ spec:
   cpu:
     preferredCPUTopology: preferSockets
   devices:
+    preferredAutoattachInputDevice: true
     preferredDiskBus: sata
     preferredInterfaceModel: e1000e
   features:
@@ -480,6 +487,7 @@ spec:
   cpu:
     preferredCPUTopology: preferSockets
   devices:
+    preferredAutoattachInputDevice: true
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
   features:
@@ -520,6 +528,7 @@ spec:
   cpu:
     preferredCPUTopology: preferSockets
   devices:
+    preferredAutoattachInputDevice: true
     preferredDiskBus: sata
     preferredInterfaceModel: e1000e
   features:
@@ -560,6 +569,7 @@ spec:
   cpu:
     preferredCPUTopology: preferSockets
   devices:
+    preferredAutoattachInputDevice: true
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
   features:
