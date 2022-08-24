@@ -1,0 +1,10 @@
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachineInstancetype
+metadata:
+  name: highperformance
+spec:
+  ioThreadsPolicy: shared
+  cpu:
+    isolateEmulatorThread: true
+    dedicatedCPUPlacement: true
