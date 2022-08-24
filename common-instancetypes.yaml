@@ -314,6 +314,15 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha1
 kind: VirtualMachineClusterPreference
 metadata:
+  name: rhel.8
+spec:
+  devices:
+    preferredDiskBus: virtio
+    preferredInterfaceModel: virtio
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachineClusterPreference
+metadata:
   name: rhel.9
 spec:
   devices:
@@ -746,6 +755,15 @@ spec:
       tlbflush: {}
       vapic: {}
       vpindex: {}
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachinePreference
+metadata:
+  name: rhel.8
+spec:
+  devices:
+    preferredDiskBus: virtio
+    preferredInterfaceModel: virtio
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha1
 kind: VirtualMachinePreference
