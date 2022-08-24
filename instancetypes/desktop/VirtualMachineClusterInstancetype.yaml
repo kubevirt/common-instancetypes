@@ -1,0 +1,6 @@
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  name: desktop
+spec:

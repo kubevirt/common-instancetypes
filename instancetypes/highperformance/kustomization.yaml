@@ -1,3 +1,4 @@
 ---
 resources:
   - VirtualMachineInstancetype.yaml
+  - VirtualMachineClusterInstancetype.yaml
