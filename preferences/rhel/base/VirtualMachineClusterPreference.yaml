@@ -1,0 +1,9 @@
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachineClusterPreference
+metadata:
+  name: rhel
+spec:
+  devices:
+    preferredDiskBus: virtio
+    preferredInterfaceModel: virtio

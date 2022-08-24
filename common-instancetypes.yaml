@@ -312,6 +312,442 @@ spec:
     guest: 1.5Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachineClusterPreference
+metadata:
+  name: rhel.9
+spec:
+  devices:
+    preferredDiskBus: virtio
+    preferredDiskDedicatedIoThread: true
+    preferredInterfaceModel: virtio
+    preferredRng: {}
+  features:
+    preferredSmm: {}
+  firmware:
+    preferredUseEfi: true
+    preferredUseSecureBoot: true
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachineClusterPreference
+metadata:
+  name: windows.10
+spec:
+  clock:
+    preferredClockOffset:
+      utc: {}
+    preferredTimer:
+      hpet:
+        present: false
+      hyperv: {}
+      pit:
+        tickPolicy: delay
+      rtc:
+        tickPolicy: catchup
+  cpu:
+    preferredCPUTopology: preferSockets
+  devices:
+    preferredAutoattachInputDevice: true
+    preferredDiskBus: sata
+    preferredInterfaceModel: e1000e
+  features:
+    preferredAcpi: {}
+    preferredApic: {}
+    preferredHyperv:
+      frequencies: {}
+      ipi: {}
+      reenlightenment: {}
+      relaxed: {}
+      reset: {}
+      runtime: {}
+      spinlocks:
+        spinlocks: 8191
+      synic: {}
+      synictimer:
+        direct: {}
+      tlbflush: {}
+      vapic: {}
+      vpindex: {}
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachineClusterPreference
+metadata:
+  name: windows.10.virtio
+spec:
+  clock:
+    preferredClockOffset:
+      utc: {}
+    preferredTimer:
+      hpet:
+        present: false
+      hyperv: {}
+      pit:
+        tickPolicy: delay
+      rtc:
+        tickPolicy: catchup
+  cpu:
+    preferredCPUTopology: preferSockets
+  devices:
+    preferredAutoattachInputDevice: true
+    preferredDiskBus: virtio
+    preferredInterfaceModel: virtio
+  features:
+    preferredAcpi: {}
+    preferredApic: {}
+    preferredHyperv:
+      frequencies: {}
+      ipi: {}
+      reenlightenment: {}
+      relaxed: {}
+      reset: {}
+      runtime: {}
+      spinlocks:
+        spinlocks: 8191
+      synic: {}
+      synictimer:
+        direct: {}
+      tlbflush: {}
+      vapic: {}
+      vpindex: {}
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachineClusterPreference
+metadata:
+  name: windows.11
+spec:
+  clock:
+    preferredClockOffset:
+      utc: {}
+    preferredTimer:
+      hpet:
+        present: false
+      hyperv: {}
+      pit:
+        tickPolicy: delay
+      rtc:
+        tickPolicy: catchup
+  cpu:
+    preferredCPUTopology: preferSockets
+  devices:
+    preferredAutoattachInputDevice: true
+    preferredDiskBus: sata
+    preferredInterfaceModel: e1000e
+    preferredTPM: {}
+  features:
+    preferredAcpi: {}
+    preferredApic: {}
+    preferredHyperv:
+      frequencies: {}
+      ipi: {}
+      reenlightenment: {}
+      relaxed: {}
+      reset: {}
+      runtime: {}
+      spinlocks:
+        spinlocks: 8191
+      synic: {}
+      synictimer:
+        direct: {}
+      tlbflush: {}
+      vapic: {}
+      vpindex: {}
+    preferredSmm: {}
+  firmware:
+    preferredUseEfi: true
+    preferredUseSecureBoot: true
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachineClusterPreference
+metadata:
+  name: windows.11.virtio
+spec:
+  clock:
+    preferredClockOffset:
+      utc: {}
+    preferredTimer:
+      hpet:
+        present: false
+      hyperv: {}
+      pit:
+        tickPolicy: delay
+      rtc:
+        tickPolicy: catchup
+  cpu:
+    preferredCPUTopology: preferSockets
+  devices:
+    preferredAutoattachInputDevice: true
+    preferredDiskBus: virtio
+    preferredInterfaceModel: virtio
+    preferredTPM: {}
+  features:
+    preferredAcpi: {}
+    preferredApic: {}
+    preferredHyperv:
+      frequencies: {}
+      ipi: {}
+      reenlightenment: {}
+      relaxed: {}
+      reset: {}
+      runtime: {}
+      spinlocks:
+        spinlocks: 8191
+      synic: {}
+      synictimer:
+        direct: {}
+      tlbflush: {}
+      vapic: {}
+      vpindex: {}
+    preferredSmm: {}
+  firmware:
+    preferredUseEfi: true
+    preferredUseSecureBoot: true
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachineClusterPreference
+metadata:
+  name: windows.2k12
+spec:
+  clock:
+    preferredClockOffset:
+      utc: {}
+    preferredTimer:
+      hpet:
+        present: false
+      hyperv: {}
+      pit:
+        tickPolicy: delay
+      rtc:
+        tickPolicy: catchup
+  cpu:
+    preferredCPUTopology: preferSockets
+  devices:
+    preferredAutoattachInputDevice: true
+    preferredDiskBus: sata
+    preferredInterfaceModel: e1000e
+  features:
+    preferredAcpi: {}
+    preferredApic: {}
+    preferredHyperv:
+      frequencies: {}
+      ipi: {}
+      reenlightenment: {}
+      relaxed: {}
+      reset: {}
+      runtime: {}
+      spinlocks:
+        spinlocks: 8191
+      synic: {}
+      synictimer:
+        direct: {}
+      tlbflush: {}
+      vapic: {}
+      vpindex: {}
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachineClusterPreference
+metadata:
+  name: windows.2k12.virtio
+spec:
+  clock:
+    preferredClockOffset:
+      utc: {}
+    preferredTimer:
+      hpet:
+        present: false
+      hyperv: {}
+      pit:
+        tickPolicy: delay
+      rtc:
+        tickPolicy: catchup
+  cpu:
+    preferredCPUTopology: preferSockets
+  devices:
+    preferredAutoattachInputDevice: true
+    preferredDiskBus: virtio
+    preferredInterfaceModel: virtio
+  features:
+    preferredAcpi: {}
+    preferredApic: {}
+    preferredHyperv:
+      frequencies: {}
+      ipi: {}
+      reenlightenment: {}
+      relaxed: {}
+      reset: {}
+      runtime: {}
+      spinlocks:
+        spinlocks: 8191
+      synic: {}
+      synictimer:
+        direct: {}
+      tlbflush: {}
+      vapic: {}
+      vpindex: {}
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachineClusterPreference
+metadata:
+  name: windows.2k16
+spec:
+  clock:
+    preferredClockOffset:
+      utc: {}
+    preferredTimer:
+      hpet:
+        present: false
+      hyperv: {}
+      pit:
+        tickPolicy: delay
+      rtc:
+        tickPolicy: catchup
+  cpu:
+    preferredCPUTopology: preferSockets
+  devices:
+    preferredAutoattachInputDevice: true
+    preferredDiskBus: sata
+    preferredInterfaceModel: e1000e
+  features:
+    preferredAcpi: {}
+    preferredApic: {}
+    preferredHyperv:
+      frequencies: {}
+      ipi: {}
+      reenlightenment: {}
+      relaxed: {}
+      reset: {}
+      runtime: {}
+      spinlocks:
+        spinlocks: 8191
+      synic: {}
+      synictimer:
+        direct: {}
+      tlbflush: {}
+      vapic: {}
+      vpindex: {}
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachineClusterPreference
+metadata:
+  name: windows.2k16.virtio
+spec:
+  clock:
+    preferredClockOffset:
+      utc: {}
+    preferredTimer:
+      hpet:
+        present: false
+      hyperv: {}
+      pit:
+        tickPolicy: delay
+      rtc:
+        tickPolicy: catchup
+  cpu:
+    preferredCPUTopology: preferSockets
+  devices:
+    preferredAutoattachInputDevice: true
+    preferredDiskBus: virtio
+    preferredInterfaceModel: virtio
+  features:
+    preferredAcpi: {}
+    preferredApic: {}
+    preferredHyperv:
+      frequencies: {}
+      ipi: {}
+      reenlightenment: {}
+      relaxed: {}
+      reset: {}
+      runtime: {}
+      spinlocks:
+        spinlocks: 8191
+      synic: {}
+      synictimer:
+        direct: {}
+      tlbflush: {}
+      vapic: {}
+      vpindex: {}
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachineClusterPreference
+metadata:
+  name: windows.2k19
+spec:
+  clock:
+    preferredClockOffset:
+      utc: {}
+    preferredTimer:
+      hpet:
+        present: false
+      hyperv: {}
+      pit:
+        tickPolicy: delay
+      rtc:
+        tickPolicy: catchup
+  cpu:
+    preferredCPUTopology: preferSockets
+  devices:
+    preferredAutoattachInputDevice: true
+    preferredDiskBus: sata
+    preferredInterfaceModel: e1000e
+  features:
+    preferredAcpi: {}
+    preferredApic: {}
+    preferredHyperv:
+      frequencies: {}
+      ipi: {}
+      reenlightenment: {}
+      relaxed: {}
+      reset: {}
+      runtime: {}
+      spinlocks:
+        spinlocks: 8191
+      synic: {}
+      synictimer:
+        direct: {}
+      tlbflush: {}
+      vapic: {}
+      vpindex: {}
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachineClusterPreference
+metadata:
+  name: windows.2k19.virtio
+spec:
+  clock:
+    preferredClockOffset:
+      utc: {}
+    preferredTimer:
+      hpet:
+        present: false
+      hyperv: {}
+      pit:
+        tickPolicy: delay
+      rtc:
+        tickPolicy: catchup
+  cpu:
+    preferredCPUTopology: preferSockets
+  devices:
+    preferredAutoattachInputDevice: true
+    preferredDiskBus: virtio
+    preferredInterfaceModel: virtio
+  features:
+    preferredAcpi: {}
+    preferredApic: {}
+    preferredHyperv:
+      frequencies: {}
+      ipi: {}
+      reenlightenment: {}
+      relaxed: {}
+      reset: {}
+      runtime: {}
+      spinlocks:
+        spinlocks: 8191
+      synic: {}
+      synictimer:
+        direct: {}
+      tlbflush: {}
+      vapic: {}
+      vpindex: {}
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
 kind: VirtualMachinePreference
 metadata:
   name: rhel.9
