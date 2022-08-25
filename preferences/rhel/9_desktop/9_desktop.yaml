@@ -7,7 +7,7 @@ spec:
   devices:
     preferredAutoattachInputDevice: true
     preferredInputBus: virtio
-    PreferredInputType: tablet
+    preferredInputType: tablet
     preferredDiskDedicatedIoThread: true
     preferredRng: {}
   features:

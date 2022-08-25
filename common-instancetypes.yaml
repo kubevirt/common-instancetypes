@@ -122,10 +122,10 @@ metadata:
   name: centos.7.desktop
 spec:
   devices:
-    PreferredInputType: tablet
     preferredAutoattachInputDevice: true
     preferredDiskBus: virtio
     preferredInputBus: virtio
+    preferredInputType: tablet
     preferredInterfaceModel: virtio
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha1
@@ -143,10 +143,10 @@ metadata:
   name: centos.8.desktop
 spec:
   devices:
-    PreferredInputType: tablet
     preferredAutoattachInputDevice: true
     preferredDiskBus: virtio
     preferredInputBus: virtio
+    preferredInputType: tablet
     preferredInterfaceModel: virtio
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha1
@@ -171,11 +171,11 @@ metadata:
   name: centos.9.desktop
 spec:
   devices:
-    PreferredInputType: tablet
     preferredAutoattachInputDevice: true
     preferredDiskBus: virtio
     preferredDiskDedicatedIoThread: true
     preferredInputBus: virtio
+    preferredInputType: tablet
     preferredInterfaceModel: virtio
     preferredRng: {}
   features:
@@ -231,10 +231,10 @@ metadata:
   name: rhel.7.desktop
 spec:
   devices:
-    PreferredInputType: tablet
     preferredAutoattachInputDevice: true
     preferredDiskBus: virtio
     preferredInputBus: virtio
+    preferredInputType: tablet
     preferredInterfaceModel: virtio
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha1
@@ -252,10 +252,10 @@ metadata:
   name: rhel.8.desktop
 spec:
   devices:
-    PreferredInputType: tablet
     preferredAutoattachInputDevice: true
     preferredDiskBus: virtio
     preferredInputBus: virtio
+    preferredInputType: tablet
     preferredInterfaceModel: virtio
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha1
@@ -280,11 +280,11 @@ metadata:
   name: rhel.9.desktop
 spec:
   devices:
-    PreferredInputType: tablet
     preferredAutoattachInputDevice: true
     preferredDiskBus: virtio
     preferredDiskDedicatedIoThread: true
     preferredInputBus: virtio
+    preferredInputType: tablet
     preferredInterfaceModel: virtio
     preferredRng: {}
   features:
@@ -846,10 +846,10 @@ metadata:
   name: centos.7.desktop
 spec:
   devices:
-    PreferredInputType: tablet
     preferredAutoattachInputDevice: true
     preferredDiskBus: virtio
     preferredInputBus: virtio
+    preferredInputType: tablet
     preferredInterfaceModel: virtio
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha1
@@ -867,10 +867,10 @@ metadata:
   name: centos.8.desktop
 spec:
   devices:
-    PreferredInputType: tablet
     preferredAutoattachInputDevice: true
     preferredDiskBus: virtio
     preferredInputBus: virtio
+    preferredInputType: tablet
     preferredInterfaceModel: virtio
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha1
@@ -895,11 +895,11 @@ metadata:
   name: centos.9.desktop
 spec:
   devices:
-    PreferredInputType: tablet
     preferredAutoattachInputDevice: true
     preferredDiskBus: virtio
     preferredDiskDedicatedIoThread: true
     preferredInputBus: virtio
+    preferredInputType: tablet
     preferredInterfaceModel: virtio
     preferredRng: {}
   features:
@@ -955,10 +955,10 @@ metadata:
   name: rhel.7.desktop
 spec:
   devices:
-    PreferredInputType: tablet
     preferredAutoattachInputDevice: true
     preferredDiskBus: virtio
     preferredInputBus: virtio
+    preferredInputType: tablet
     preferredInterfaceModel: virtio
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha1
@@ -976,10 +976,10 @@ metadata:
   name: rhel.8.desktop
 spec:
   devices:
-    PreferredInputType: tablet
     preferredAutoattachInputDevice: true
     preferredDiskBus: virtio
     preferredInputBus: virtio
+    preferredInputType: tablet
     preferredInterfaceModel: virtio
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha1
@@ -1004,11 +1004,11 @@ metadata:
   name: rhel.9.desktop
 spec:
   devices:
-    PreferredInputType: tablet
     preferredAutoattachInputDevice: true
     preferredDiskBus: virtio
     preferredDiskDedicatedIoThread: true
     preferredInputBus: virtio
+    preferredInputType: tablet
     preferredInterfaceModel: virtio
     preferredRng: {}
   features:
