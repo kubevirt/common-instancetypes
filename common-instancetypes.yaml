@@ -4,54 +4,6 @@ kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
     kubevirt.io/size: large
-  name: desktop.large
-spec:
-  cpu:
-    guest: 2
-  memory:
-    guest: 8Gi
----
-apiVersion: instancetype.kubevirt.io/v1alpha1
-kind: VirtualMachineClusterInstancetype
-metadata:
-  labels:
-    kubevirt.io/size: medium
-  name: desktop.medium
-spec:
-  cpu:
-    guest: 1
-  memory:
-    guest: 4Gi
----
-apiVersion: instancetype.kubevirt.io/v1alpha1
-kind: VirtualMachineClusterInstancetype
-metadata:
-  labels:
-    kubevirt.io/size: small
-  name: desktop.small
-spec:
-  cpu:
-    guest: 1
-  memory:
-    guest: 2Gi
----
-apiVersion: instancetype.kubevirt.io/v1alpha1
-kind: VirtualMachineClusterInstancetype
-metadata:
-  labels:
-    kubevirt.io/size: tiny
-  name: desktop.tiny
-spec:
-  cpu:
-    guest: 1
-  memory:
-    guest: 1.5Gi
----
-apiVersion: instancetype.kubevirt.io/v1alpha1
-kind: VirtualMachineClusterInstancetype
-metadata:
-  labels:
-    kubevirt.io/size: large
   name: highperformance.large
 spec:
   cpu:
@@ -149,54 +101,6 @@ metadata:
   labels:
     kubevirt.io/size: tiny
   name: server.tiny
-spec:
-  cpu:
-    guest: 1
-  memory:
-    guest: 1.5Gi
----
-apiVersion: instancetype.kubevirt.io/v1alpha1
-kind: VirtualMachineInstancetype
-metadata:
-  labels:
-    kubevirt.io/size: large
-  name: desktop.large
-spec:
-  cpu:
-    guest: 2
-  memory:
-    guest: 8Gi
----
-apiVersion: instancetype.kubevirt.io/v1alpha1
-kind: VirtualMachineInstancetype
-metadata:
-  labels:
-    kubevirt.io/size: medium
-  name: desktop.medium
-spec:
-  cpu:
-    guest: 1
-  memory:
-    guest: 4Gi
----
-apiVersion: instancetype.kubevirt.io/v1alpha1
-kind: VirtualMachineInstancetype
-metadata:
-  labels:
-    kubevirt.io/size: small
-  name: desktop.small
-spec:
-  cpu:
-    guest: 1
-  memory:
-    guest: 2Gi
----
-apiVersion: instancetype.kubevirt.io/v1alpha1
-kind: VirtualMachineInstancetype
-metadata:
-  labels:
-    kubevirt.io/size: tiny
-  name: desktop.tiny
 spec:
   cpu:
     guest: 1
