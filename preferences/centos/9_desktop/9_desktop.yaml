@@ -1,0 +1,17 @@
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachinePreference
+metadata:
+  name: "9_desktop"
+spec:
+  devices:
+    preferredAutoattachInputDevice: true
+    preferredInputBus: virtio
+    PreferredInputType: tablet
+    preferredDiskDedicatedIoThread: true
+    preferredRng: {}
+  features:
+    preferredSmm: {}
+  firmware:
+    preferredUseEfi: true
+    preferredUseSecureBoot: true

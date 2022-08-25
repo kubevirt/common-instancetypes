@@ -218,6 +218,83 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha1
 kind: VirtualMachineClusterPreference
 metadata:
+  name: centos.7
+spec:
+  devices:
+    preferredDiskBus: virtio
+    preferredInterfaceModel: virtio
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachineClusterPreference
+metadata:
+  name: centos.7.desktop
+spec:
+  devices:
+    PreferredInputType: tablet
+    preferredAutoattachInputDevice: true
+    preferredDiskBus: virtio
+    preferredInputBus: virtio
+    preferredInterfaceModel: virtio
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachineClusterPreference
+metadata:
+  name: centos.8
+spec:
+  devices:
+    preferredDiskBus: virtio
+    preferredInterfaceModel: virtio
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachineClusterPreference
+metadata:
+  name: centos.8.desktop
+spec:
+  devices:
+    PreferredInputType: tablet
+    preferredAutoattachInputDevice: true
+    preferredDiskBus: virtio
+    preferredInputBus: virtio
+    preferredInterfaceModel: virtio
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachineClusterPreference
+metadata:
+  name: centos.9
+spec:
+  devices:
+    preferredDiskBus: virtio
+    preferredDiskDedicatedIoThread: true
+    preferredInterfaceModel: virtio
+    preferredRng: {}
+  features:
+    preferredSmm: {}
+  firmware:
+    preferredUseEfi: true
+    preferredUseSecureBoot: true
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachineClusterPreference
+metadata:
+  name: centos.9.desktop
+spec:
+  devices:
+    PreferredInputType: tablet
+    preferredAutoattachInputDevice: true
+    preferredDiskBus: virtio
+    preferredDiskDedicatedIoThread: true
+    preferredInputBus: virtio
+    preferredInterfaceModel: virtio
+    preferredRng: {}
+  features:
+    preferredSmm: {}
+  firmware:
+    preferredUseEfi: true
+    preferredUseSecureBoot: true
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachineClusterPreference
+metadata:
   name: rhel.7
 spec:
   devices:
@@ -711,6 +788,83 @@ spec:
       tlbflush: {}
       vapic: {}
       vpindex: {}
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachinePreference
+metadata:
+  name: centos.7
+spec:
+  devices:
+    preferredDiskBus: virtio
+    preferredInterfaceModel: virtio
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachinePreference
+metadata:
+  name: centos.7.desktop
+spec:
+  devices:
+    PreferredInputType: tablet
+    preferredAutoattachInputDevice: true
+    preferredDiskBus: virtio
+    preferredInputBus: virtio
+    preferredInterfaceModel: virtio
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachinePreference
+metadata:
+  name: centos.8
+spec:
+  devices:
+    preferredDiskBus: virtio
+    preferredInterfaceModel: virtio
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachinePreference
+metadata:
+  name: centos.8.desktop
+spec:
+  devices:
+    PreferredInputType: tablet
+    preferredAutoattachInputDevice: true
+    preferredDiskBus: virtio
+    preferredInputBus: virtio
+    preferredInterfaceModel: virtio
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachinePreference
+metadata:
+  name: centos.9
+spec:
+  devices:
+    preferredDiskBus: virtio
+    preferredDiskDedicatedIoThread: true
+    preferredInterfaceModel: virtio
+    preferredRng: {}
+  features:
+    preferredSmm: {}
+  firmware:
+    preferredUseEfi: true
+    preferredUseSecureBoot: true
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachinePreference
+metadata:
+  name: centos.9.desktop
+spec:
+  devices:
+    PreferredInputType: tablet
+    preferredAutoattachInputDevice: true
+    preferredDiskBus: virtio
+    preferredDiskDedicatedIoThread: true
+    preferredInputBus: virtio
+    preferredInterfaceModel: virtio
+    preferredRng: {}
+  features:
+    preferredSmm: {}
+  firmware:
+    preferredUseEfi: true
+    preferredUseSecureBoot: true
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha1
 kind: VirtualMachinePreference
