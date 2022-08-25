@@ -1,0 +1,16 @@
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachinePreference
+metadata:
+  name: fedora
+spec:
+  devices:
+    preferredDiskBus: virtio
+    preferredInterfaceModel: virtio
+    preferredRng: {}
+    preferredNetworkInterfaceMultiQueue: true
+  features:
+    preferredSmm: {}
+  firmware:
+    preferredUseEfi: true
+    preferredUseSecureBoot: true

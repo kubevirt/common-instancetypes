@@ -295,6 +295,38 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha1
 kind: VirtualMachineClusterPreference
 metadata:
+  name: fedora.35
+spec:
+  devices:
+    preferredDiskBus: virtio
+    preferredInterfaceModel: virtio
+    preferredNetworkInterfaceMultiQueue: true
+    preferredRng: {}
+  features:
+    preferredSmm: {}
+  firmware:
+    preferredUseEfi: true
+    preferredUseSecureBoot: true
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachineClusterPreference
+metadata:
+  name: fedora.36
+spec:
+  devices:
+    preferredDiskBus: virtio
+    preferredInterfaceModel: virtio
+    preferredNetworkInterfaceMultiQueue: true
+    preferredRng: {}
+  features:
+    preferredSmm: {}
+  firmware:
+    preferredUseEfi: true
+    preferredUseSecureBoot: true
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachineClusterPreference
+metadata:
   name: rhel.7
 spec:
   devices:
@@ -869,6 +901,38 @@ spec:
     preferredDiskDedicatedIoThread: true
     preferredInputBus: virtio
     preferredInterfaceModel: virtio
+    preferredRng: {}
+  features:
+    preferredSmm: {}
+  firmware:
+    preferredUseEfi: true
+    preferredUseSecureBoot: true
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachinePreference
+metadata:
+  name: fedora.35
+spec:
+  devices:
+    preferredDiskBus: virtio
+    preferredInterfaceModel: virtio
+    preferredNetworkInterfaceMultiQueue: true
+    preferredRng: {}
+  features:
+    preferredSmm: {}
+  firmware:
+    preferredUseEfi: true
+    preferredUseSecureBoot: true
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachinePreference
+metadata:
+  name: fedora.36
+spec:
+  devices:
+    preferredDiskBus: virtio
+    preferredInterfaceModel: virtio
+    preferredNetworkInterfaceMultiQueue: true
     preferredRng: {}
   features:
     preferredSmm: {}
