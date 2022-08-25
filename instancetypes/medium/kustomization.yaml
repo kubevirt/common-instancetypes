@@ -6,9 +6,9 @@ resources:
   - ../server
 nameSuffix: .medium
 patches:
-  - path: highperformance.yaml
+  - path: medium.yaml
     target:
       name: highperformance
-  - path: server.yaml
+  - path: medium.yaml
     target:
       name: server

@@ -6,9 +6,9 @@ resources:
   - ../server
 nameSuffix: .large
 patches:
-  - path: highperformance.yaml
+  - path: large.yaml
     target:
       name: highperformance
-  - path: server.yaml
+  - path: large.yaml
     target:
       name: server

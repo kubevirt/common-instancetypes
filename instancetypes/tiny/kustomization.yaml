@@ -6,9 +6,9 @@ resources:
   - ../server
 nameSuffix: .tiny
 patches:
-  - path: highperformance.yaml
+  - path: tiny.yaml
     target:
       name: highperformance
-  - path: server.yaml
+  - path: tiny.yaml
     target:
       name: server
