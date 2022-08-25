@@ -4,7 +4,3 @@ kind: Kustomization
 resources:
   - ../base
 nameSuffix: .2k16
-patches:
-  - path: ./2k16.yaml
-    target:
-      name: windows

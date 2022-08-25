@@ -4,7 +4,3 @@ kind: Kustomization
 resources:
   - ../base
 nameSuffix: ".10"
-patches:
-  - path: ./10.yaml
-    target:
-      name: windows

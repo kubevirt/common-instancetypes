@@ -4,7 +4,3 @@ kind: Kustomization
 resources:
   - ../base
 nameSuffix: .2k19
-patches:
-  - path: ./2k19.yaml
-    target:
-      name: windows

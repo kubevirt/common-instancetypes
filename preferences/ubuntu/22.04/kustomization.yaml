@@ -4,7 +4,3 @@ kind: Kustomization
 resources:
   - ../base
 nameSuffix: ".22.04"
-patches:
-  - path: ./jammy.yaml
-    target:
-      name: ubuntu

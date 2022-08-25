@@ -4,7 +4,3 @@ kind: Kustomization
 resources:
   - ../base
 nameSuffix: ".36"
-patches:
-  - path: ./36.yaml
-    target:
-      name: fedora

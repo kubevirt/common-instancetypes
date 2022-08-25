@@ -4,7 +4,3 @@ kind: Kustomization
 resources:
   - ../base
 nameSuffix: ".20.04"
-patches:
-  - path: ./focal.yaml
-    target:
-      name: ubuntu
