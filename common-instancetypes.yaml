@@ -227,11 +227,42 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha1
 kind: VirtualMachineClusterPreference
 metadata:
+  name: rhel.8.desktop
+spec:
+  devices:
+    PreferredInputType: tablet
+    preferredAutoattachInputDevice: true
+    preferredDiskBus: virtio
+    preferredInputBus: virtio
+    preferredInterfaceModel: virtio
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachineClusterPreference
+metadata:
   name: rhel.9
 spec:
   devices:
     preferredDiskBus: virtio
     preferredDiskDedicatedIoThread: true
+    preferredInterfaceModel: virtio
+    preferredRng: {}
+  features:
+    preferredSmm: {}
+  firmware:
+    preferredUseEfi: true
+    preferredUseSecureBoot: true
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachineClusterPreference
+metadata:
+  name: rhel.9.desktop
+spec:
+  devices:
+    PreferredInputType: tablet
+    preferredAutoattachInputDevice: true
+    preferredDiskBus: virtio
+    preferredDiskDedicatedIoThread: true
+    preferredInputBus: virtio
     preferredInterfaceModel: virtio
     preferredRng: {}
   features:
@@ -672,11 +703,42 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha1
 kind: VirtualMachinePreference
 metadata:
+  name: rhel.8.desktop
+spec:
+  devices:
+    PreferredInputType: tablet
+    preferredAutoattachInputDevice: true
+    preferredDiskBus: virtio
+    preferredInputBus: virtio
+    preferredInterfaceModel: virtio
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachinePreference
+metadata:
   name: rhel.9
 spec:
   devices:
     preferredDiskBus: virtio
     preferredDiskDedicatedIoThread: true
+    preferredInterfaceModel: virtio
+    preferredRng: {}
+  features:
+    preferredSmm: {}
+  firmware:
+    preferredUseEfi: true
+    preferredUseSecureBoot: true
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachinePreference
+metadata:
+  name: rhel.9.desktop
+spec:
+  devices:
+    PreferredInputType: tablet
+    preferredAutoattachInputDevice: true
+    preferredDiskBus: virtio
+    preferredDiskDedicatedIoThread: true
+    preferredInputBus: virtio
     preferredInterfaceModel: virtio
     preferredRng: {}
   features:

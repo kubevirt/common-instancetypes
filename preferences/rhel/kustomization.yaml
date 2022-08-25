@@ -4,3 +4,5 @@ kind: Kustomization
 resources:
   - ./9
   - ./8
+  - ./8_desktop
+  - ./9_desktop
