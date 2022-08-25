@@ -2,5 +2,25 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./VirtualMachinePreference.yaml
-  - ./VirtualMachineClusterPreference.yaml
+  - ../../base
+
+components:
+  - ../../components/hyperv
+  - ../../components/cpu-topology-sockets
+  - ../../components/diskbus-sata
+  - ../../components/interfacemodel-e1000e
+  - ../../components/tablet-usb
+
+patches:
+  - target:
+      kind: VirtualMachinePreference
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: windows
+  - target:
+      kind: VirtualMachineClusterPreference
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: windows

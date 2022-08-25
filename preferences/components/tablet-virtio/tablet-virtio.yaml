@@ -1,0 +1,10 @@
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachinePreference
+metadata:
+  name: tablet-virtio
+spec:
+  devices:
+    preferredAutoattachInputDevice: true
+    preferredInputBus: virtio
+    preferredInputType: tablet

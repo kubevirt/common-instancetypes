@@ -1,0 +1,10 @@
+---
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+patches:
+  - path: ./tablet-virtio.yaml
+    target:
+      kind: VirtualMachinePreference
+  - path: ./tablet-virtio.yaml
+    target:
+      kind: VirtualMachineClusterPreference
