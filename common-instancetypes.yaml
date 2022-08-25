@@ -296,6 +296,26 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha1
 kind: VirtualMachineClusterPreference
 metadata:
+  name: ubuntu.18.04
+spec:
+  devices:
+    preferredDiskBus: virtio
+    preferredInterfaceModel: virtio
+    preferredRng: {}
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachineClusterPreference
+metadata:
+  name: ubuntu.20.04
+spec:
+  devices:
+    preferredDiskBus: virtio
+    preferredInterfaceModel: virtio
+    preferredRng: {}
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachineClusterPreference
+metadata:
   name: ubuntu.22.04
 spec:
   devices:
@@ -1016,6 +1036,26 @@ spec:
   firmware:
     preferredUseEfi: true
     preferredUseSecureBoot: true
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachinePreference
+metadata:
+  name: ubuntu.18.04
+spec:
+  devices:
+    preferredDiskBus: virtio
+    preferredInterfaceModel: virtio
+    preferredRng: {}
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachinePreference
+metadata:
+  name: ubuntu.20.04
+spec:
+  devices:
+    preferredDiskBus: virtio
+    preferredInterfaceModel: virtio
+    preferredRng: {}
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha1
 kind: VirtualMachinePreference
