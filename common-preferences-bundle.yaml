@@ -277,6 +277,8 @@ spec:
   devices:
     preferredAutoattachInputDevice: true
     preferredDiskBus: virtio
+    preferredInputBus: virtio
+    preferredInputType: tablet
     preferredInterfaceModel: virtio
   features:
     preferredAcpi: {}
@@ -364,6 +366,8 @@ spec:
   devices:
     preferredAutoattachInputDevice: true
     preferredDiskBus: virtio
+    preferredInputBus: virtio
+    preferredInputType: tablet
     preferredInterfaceModel: virtio
     preferredTPM: {}
   features:
@@ -451,6 +455,8 @@ spec:
   devices:
     preferredAutoattachInputDevice: true
     preferredDiskBus: virtio
+    preferredInputBus: virtio
+    preferredInputType: tablet
     preferredInterfaceModel: virtio
   features:
     preferredAcpi: {}
@@ -533,6 +539,8 @@ spec:
   devices:
     preferredAutoattachInputDevice: true
     preferredDiskBus: virtio
+    preferredInputBus: virtio
+    preferredInputType: tablet
     preferredInterfaceModel: virtio
   features:
     preferredAcpi: {}
@@ -615,6 +623,8 @@ spec:
   devices:
     preferredAutoattachInputDevice: true
     preferredDiskBus: virtio
+    preferredInputBus: virtio
+    preferredInputType: tablet
     preferredInterfaceModel: virtio
   features:
     preferredAcpi: {}
