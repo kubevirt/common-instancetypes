@@ -11,7 +11,6 @@ selecting docker as container runtime
 virtualmachineclusterinstancetype.instancetype.kubevirt.io/highperformance.large created
 virtualmachineclusterinstancetype.instancetype.kubevirt.io/highperformance.medium created
 virtualmachineclusterinstancetype.instancetype.kubevirt.io/highperformance.small created
-virtualmachineclusterinstancetype.instancetype.kubevirt.io/highperformance.tiny created
 virtualmachineclusterinstancetype.instancetype.kubevirt.io/server.large created
 virtualmachineclusterinstancetype.instancetype.kubevirt.io/server.medium created
 virtualmachineclusterinstancetype.instancetype.kubevirt.io/server.small created
@@ -46,7 +45,6 @@ virtualmachineclusterpreference.instancetype.kubevirt.io/windows.2k19.virtio cre
 virtualmachineinstancetype.instancetype.kubevirt.io/highperformance.large created
 virtualmachineinstancetype.instancetype.kubevirt.io/highperformance.medium created
 virtualmachineinstancetype.instancetype.kubevirt.io/highperformance.small created
-virtualmachineinstancetype.instancetype.kubevirt.io/highperformance.tiny created
 virtualmachineinstancetype.instancetype.kubevirt.io/server.large created
 virtualmachineinstancetype.instancetype.kubevirt.io/server.medium created
 virtualmachineinstancetype.instancetype.kubevirt.io/server.small created

@@ -48,21 +48,6 @@ apiVersion: instancetype.kubevirt.io/v1alpha1
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
-    kubevirt.io/size: tiny
-  name: highperformance.tiny
-spec:
-  cpu:
-    dedicatedCPUPlacement: true
-    guest: 1
-    isolateEmulatorThread: true
-  ioThreadsPolicy: shared
-  memory:
-    guest: 1.5Gi
----
-apiVersion: instancetype.kubevirt.io/v1alpha1
-kind: VirtualMachineClusterInstancetype
-metadata:
-  labels:
     kubevirt.io/size: large
   name: server.large
 spec:
@@ -787,21 +772,6 @@ spec:
   ioThreadsPolicy: shared
   memory:
     guest: 2Gi
----
-apiVersion: instancetype.kubevirt.io/v1alpha1
-kind: VirtualMachineInstancetype
-metadata:
-  labels:
-    kubevirt.io/size: tiny
-  name: highperformance.tiny
-spec:
-  cpu:
-    dedicatedCPUPlacement: true
-    guest: 1
-    isolateEmulatorThread: true
-  ioThreadsPolicy: shared
-  memory:
-    guest: 1.5Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha1
 kind: VirtualMachineInstancetype

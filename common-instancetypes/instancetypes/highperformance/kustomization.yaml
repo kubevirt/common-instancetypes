@@ -6,4 +6,3 @@ resources:
   - ./large
   - ./medium
   - ./small
-  - ./tiny
