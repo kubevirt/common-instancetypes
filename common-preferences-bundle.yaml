@@ -111,6 +111,14 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha1
 kind: VirtualMachinePreference
 metadata:
+  name: pc-i440fx
+spec:
+  machine:
+    preferredMachineType: pc
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachinePreference
+metadata:
   name: rhel.7
 spec:
   devices:

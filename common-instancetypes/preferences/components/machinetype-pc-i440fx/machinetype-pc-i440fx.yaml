@@ -1,0 +1,8 @@
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachinePreference
+metadata:
+  name: machinetype-pc-i440fx
+spec:
+  machine:
+    preferredMachineType: pc
