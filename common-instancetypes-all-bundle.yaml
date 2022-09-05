@@ -116,6 +116,17 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha1
 kind: VirtualMachineClusterPreference
 metadata:
+  name: centos.7.i440fx
+spec:
+  devices:
+    preferredDiskBus: virtio
+    preferredInterfaceModel: virtio
+  machine:
+    preferredMachineType: pc
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachineClusterPreference
+metadata:
   name: centos.8
 spec:
   devices:
@@ -229,6 +240,17 @@ spec:
     preferredInputBus: virtio
     preferredInputType: tablet
     preferredInterfaceModel: virtio
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachineClusterPreference
+metadata:
+  name: rhel.7.i440fx
+spec:
+  devices:
+    preferredDiskBus: virtio
+    preferredInterfaceModel: virtio
+  machine:
+    preferredMachineType: pc
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha1
 kind: VirtualMachineClusterPreference
@@ -863,6 +885,17 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha1
 kind: VirtualMachinePreference
 metadata:
+  name: centos.7.i440fx
+spec:
+  devices:
+    preferredDiskBus: virtio
+    preferredInterfaceModel: virtio
+  machine:
+    preferredMachineType: pc
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachinePreference
+metadata:
   name: centos.8
 spec:
   devices:
@@ -976,6 +1009,17 @@ spec:
     preferredInputBus: virtio
     preferredInputType: tablet
     preferredInterfaceModel: virtio
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachinePreference
+metadata:
+  name: rhel.7.i440fx
+spec:
+  devices:
+    preferredDiskBus: virtio
+    preferredInterfaceModel: virtio
+  machine:
+    preferredMachineType: pc
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha1
 kind: VirtualMachinePreference
