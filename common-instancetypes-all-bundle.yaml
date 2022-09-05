@@ -116,6 +116,9 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha1
 kind: VirtualMachineClusterPreference
 metadata:
+  annotations:
+    description: |
+      pc-i440fx is deprecated and will be removed in a future release.
   name: centos.7.i440fx
 spec:
   devices:
@@ -215,6 +218,9 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha1
 kind: VirtualMachineClusterPreference
 metadata:
+  annotations:
+    description: |
+      pc-i440fx is deprecated and will be removed in a future release.
   name: pc-i440fx
 spec:
   machine:
@@ -244,6 +250,9 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha1
 kind: VirtualMachineClusterPreference
 metadata:
+  annotations:
+    description: |
+      pc-i440fx is deprecated and will be removed in a future release.
   name: rhel.7.i440fx
 spec:
   devices:
@@ -885,6 +894,9 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha1
 kind: VirtualMachinePreference
 metadata:
+  annotations:
+    description: |
+      pc-i440fx is deprecated and will be removed in a future release.
   name: centos.7.i440fx
 spec:
   devices:
@@ -984,6 +996,9 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha1
 kind: VirtualMachinePreference
 metadata:
+  annotations:
+    description: |
+      pc-i440fx is deprecated and will be removed in a future release.
   name: pc-i440fx
 spec:
   machine:
@@ -1013,6 +1028,9 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha1
 kind: VirtualMachinePreference
 metadata:
+  annotations:
+    description: |
+      pc-i440fx is deprecated and will be removed in a future release.
   name: rhel.7.i440fx
 spec:
   devices:
