@@ -1,5 +1,5 @@
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
@@ -14,7 +14,7 @@ spec:
   memory:
     guest: 8Gi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
@@ -29,7 +29,7 @@ spec:
   memory:
     guest: 4Gi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
@@ -44,7 +44,7 @@ spec:
   memory:
     guest: 2Gi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
@@ -56,7 +56,7 @@ spec:
   memory:
     guest: 8Gi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
@@ -68,7 +68,7 @@ spec:
   memory:
     guest: 4Gi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
@@ -80,7 +80,7 @@ spec:
   memory:
     guest: 2Gi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
@@ -92,7 +92,7 @@ spec:
   memory:
     guest: 1.5Gi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   name: centos.7
@@ -101,7 +101,7 @@ spec:
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   name: centos.7.desktop
@@ -113,7 +113,7 @@ spec:
     preferredInputType: tablet
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
@@ -127,7 +127,7 @@ spec:
   machine:
     preferredMachineType: pc
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   name: centos.8
@@ -136,7 +136,7 @@ spec:
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   name: centos.8.desktop
@@ -148,7 +148,7 @@ spec:
     preferredInputType: tablet
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   name: centos.9
@@ -164,7 +164,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   name: centos.9.desktop
@@ -183,7 +183,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   name: fedora.35
@@ -199,7 +199,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   name: fedora.36
@@ -215,7 +215,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
@@ -226,7 +226,7 @@ spec:
   machine:
     preferredMachineType: pc
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   name: rhel.7
@@ -235,7 +235,7 @@ spec:
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   name: rhel.7.desktop
@@ -247,7 +247,7 @@ spec:
     preferredInputType: tablet
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
@@ -261,7 +261,7 @@ spec:
   machine:
     preferredMachineType: pc
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   name: rhel.8
@@ -270,7 +270,7 @@ spec:
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   name: rhel.8.desktop
@@ -282,7 +282,7 @@ spec:
     preferredInputType: tablet
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   name: rhel.9
@@ -298,7 +298,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   name: rhel.9.desktop
@@ -317,7 +317,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   name: ubuntu.18.04
@@ -327,7 +327,7 @@ spec:
     preferredInterfaceModel: virtio
     preferredRng: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   name: ubuntu.20.04
@@ -337,7 +337,7 @@ spec:
     preferredInterfaceModel: virtio
     preferredRng: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   name: ubuntu.22.04
@@ -347,7 +347,7 @@ spec:
     preferredInterfaceModel: virtio
     preferredRng: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   name: windows.10
@@ -388,7 +388,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   name: windows.10.virtio
@@ -431,7 +431,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   name: windows.11
@@ -477,7 +477,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   name: windows.11.virtio
@@ -525,7 +525,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   name: windows.2k12
@@ -566,7 +566,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   name: windows.2k12.virtio
@@ -609,7 +609,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   name: windows.2k16
@@ -650,7 +650,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   name: windows.2k16.virtio
@@ -693,7 +693,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   name: windows.2k19
@@ -734,7 +734,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   name: windows.2k19.virtio
@@ -777,7 +777,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineInstancetype
 metadata:
   labels:
@@ -792,7 +792,7 @@ spec:
   memory:
     guest: 8Gi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineInstancetype
 metadata:
   labels:
@@ -807,7 +807,7 @@ spec:
   memory:
     guest: 4Gi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineInstancetype
 metadata:
   labels:
@@ -822,7 +822,7 @@ spec:
   memory:
     guest: 2Gi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineInstancetype
 metadata:
   labels:
@@ -834,7 +834,7 @@ spec:
   memory:
     guest: 8Gi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineInstancetype
 metadata:
   labels:
@@ -846,7 +846,7 @@ spec:
   memory:
     guest: 4Gi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineInstancetype
 metadata:
   labels:
@@ -858,7 +858,7 @@ spec:
   memory:
     guest: 2Gi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineInstancetype
 metadata:
   labels:
@@ -870,7 +870,7 @@ spec:
   memory:
     guest: 1.5Gi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   name: centos.7
@@ -879,7 +879,7 @@ spec:
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   name: centos.7.desktop
@@ -891,7 +891,7 @@ spec:
     preferredInputType: tablet
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -905,7 +905,7 @@ spec:
   machine:
     preferredMachineType: pc
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   name: centos.8
@@ -914,7 +914,7 @@ spec:
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   name: centos.8.desktop
@@ -926,7 +926,7 @@ spec:
     preferredInputType: tablet
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   name: centos.9
@@ -942,7 +942,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   name: centos.9.desktop
@@ -961,7 +961,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   name: fedora.35
@@ -977,7 +977,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   name: fedora.36
@@ -993,7 +993,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -1004,7 +1004,7 @@ spec:
   machine:
     preferredMachineType: pc
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   name: rhel.7
@@ -1013,7 +1013,7 @@ spec:
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   name: rhel.7.desktop
@@ -1025,7 +1025,7 @@ spec:
     preferredInputType: tablet
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -1039,7 +1039,7 @@ spec:
   machine:
     preferredMachineType: pc
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   name: rhel.8
@@ -1048,7 +1048,7 @@ spec:
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   name: rhel.8.desktop
@@ -1060,7 +1060,7 @@ spec:
     preferredInputType: tablet
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   name: rhel.9
@@ -1076,7 +1076,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   name: rhel.9.desktop
@@ -1095,7 +1095,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   name: ubuntu.18.04
@@ -1105,7 +1105,7 @@ spec:
     preferredInterfaceModel: virtio
     preferredRng: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   name: ubuntu.20.04
@@ -1115,7 +1115,7 @@ spec:
     preferredInterfaceModel: virtio
     preferredRng: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   name: ubuntu.22.04
@@ -1125,7 +1125,7 @@ spec:
     preferredInterfaceModel: virtio
     preferredRng: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   name: windows.10
@@ -1166,7 +1166,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   name: windows.10.virtio
@@ -1209,7 +1209,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   name: windows.11
@@ -1255,7 +1255,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   name: windows.11.virtio
@@ -1303,7 +1303,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   name: windows.2k12
@@ -1344,7 +1344,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   name: windows.2k12.virtio
@@ -1387,7 +1387,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   name: windows.2k16
@@ -1428,7 +1428,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   name: windows.2k16.virtio
@@ -1471,7 +1471,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   name: windows.2k19
@@ -1512,7 +1512,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha1
+apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   name: windows.2k19.virtio
