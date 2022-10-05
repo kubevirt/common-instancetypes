@@ -8,3 +8,4 @@ resources:
   - ./ubuntu
   - ./fedora
   - ./pc-i440fx
+  - ./cirros
