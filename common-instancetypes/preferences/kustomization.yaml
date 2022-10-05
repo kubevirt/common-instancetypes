@@ -9,3 +9,4 @@ resources:
   - ./fedora
   - ./pc-i440fx
   - ./cirros
+  - ./alpine

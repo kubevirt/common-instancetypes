@@ -2,6 +2,15 @@
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
+  name: alpine
+spec:
+  devices:
+    preferredDiskBus: virtio
+    preferredInterfaceModel: virtio
+---
+apiVersion: instancetype.kubevirt.io/v1alpha2
+kind: VirtualMachinePreference
+metadata:
   name: centos.7
 spec:
   devices:

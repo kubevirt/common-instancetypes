@@ -95,6 +95,15 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
+  name: alpine
+spec:
+  devices:
+    preferredDiskBus: virtio
+    preferredInterfaceModel: virtio
+---
+apiVersion: instancetype.kubevirt.io/v1alpha2
+kind: VirtualMachineClusterPreference
+metadata:
   name: centos.7
 spec:
   devices:
@@ -878,6 +887,15 @@ spec:
     guest: 1
   memory:
     guest: 1.5Gi
+---
+apiVersion: instancetype.kubevirt.io/v1alpha2
+kind: VirtualMachinePreference
+metadata:
+  name: alpine
+spec:
+  devices:
+    preferredDiskBus: virtio
+    preferredInterfaceModel: virtio
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
