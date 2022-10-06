@@ -7,6 +7,5 @@ resources:
   - ./centos
   - ./ubuntu
   - ./fedora
-  - ./pc-i440fx
   - ./cirros
   - ./alpine

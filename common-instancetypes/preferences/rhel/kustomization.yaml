@@ -6,6 +6,5 @@ resources:
   - ./9
   - ./8_desktop
   - ./8
-  - ./7_i440fx
   - ./7_desktop
   - ./7
