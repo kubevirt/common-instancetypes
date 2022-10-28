@@ -76,6 +76,9 @@ VirtualMachineClusterInstancetype
 server.medium
 ---
 VirtualMachineClusterInstancetype
+server.micro
+---
+VirtualMachineClusterInstancetype
 server.small
 ---
 VirtualMachineClusterInstancetype
@@ -182,6 +185,9 @@ server.large
 ---
 VirtualMachineInstancetype
 server.medium
+---
+VirtualMachineInstancetype
+server.micro
 ---
 VirtualMachineInstancetype
 server.small
