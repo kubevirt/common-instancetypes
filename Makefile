@@ -7,7 +7,7 @@ export KUBEVIRT_VERSION = main
 all: lint generate validate
 
 lint:
-	yamllint .
+	./scripts/lint.sh
 
 generate:
 	./scripts/generate.sh
