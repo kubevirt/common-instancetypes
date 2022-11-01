@@ -1,0 +1,25 @@
+{
+  "description": "KubeVirtWorkloadUpdateStrategy defines options related to updating a KubeVirt install",
+  "type": "object",
+  "properties": {
+    "batchEvictionInterval": {
+      "description": "Duration is a wrapper around time.Duration which supports correct marshaling to YAML and JSON. In particular, it marshals into strings, which can be used as map keys in json.",
+      "type": "string"
+    },
+    "batchEvictionSize": {
+      "description": "BatchEvictionSize Represents the number of VMIs that can be forced updated per the BatchShutdownInteral interval\n\nDefaults to 10",
+      "type": "integer",
+      "format": "int32"
+    },
+    "workloadUpdateMethods": {
+      "description": "WorkloadUpdateMethods defines the methods that can be used to disrupt workloads during automated workload updates. When multiple methods are present, the least disruptive method takes precedence over more disruptive methods. For example if both LiveMigrate and Shutdown methods are listed, only VMs which are not live migratable will be restarted/shutdown\n\nAn empty list defaults to no automated workload updating",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "x-kubernetes-list-type": "atomic"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

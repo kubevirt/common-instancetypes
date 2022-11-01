@@ -1,0 +1,60 @@
+{
+  "type": "object",
+  "properties": {
+    "flags": {
+      "description": "Flags will create a patch that will replace all flags for the container's command field. The only flags that will be used are those define. There are no guarantees around forward/backward compatibility.  If set incorrectly this will cause the resource when rolled out to error until flags are updated.",
+      "type": "object",
+      "properties": {
+        "api": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "controller": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "handler": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "patches": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "resourceName",
+          "resourceType",
+          "patch",
+          "type"
+        ],
+        "properties": {
+          "patch": {
+            "type": "string"
+          },
+          "resourceName": {
+            "type": "string"
+          },
+          "resourceType": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "x-kubernetes-list-type": "atomic"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

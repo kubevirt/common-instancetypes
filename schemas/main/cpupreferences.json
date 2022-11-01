@@ -1,0 +1,12 @@
+{
+  "description": "CPUPreferences contains various optional CPU preferences.",
+  "type": "object",
+  "properties": {
+    "preferredCPUTopology": {
+      "description": "PreferredCPUTopology optionally defines the preferred guest visible CPU topology, defaults to PreferSockets.",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

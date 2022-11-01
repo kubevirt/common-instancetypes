@@ -1,0 +1,483 @@
+{
+  "description": "VirtualMachineInstanceStatus represents information about the status of a VirtualMachineInstance. Status may trail the actual state of a system.",
+  "type": "object",
+  "nullable": true,
+  "properties": {
+    "VSOCKCID": {
+      "description": "VSOCKCID is used to track the allocated VSOCK CID in the VM.",
+      "type": "integer",
+      "format": "int64"
+    },
+    "activePods": {
+      "description": "ActivePods is a mapping of pod UID to node name. It is possible for multiple pods to be running for a single VMI during migration.",
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "conditions": {
+      "description": "Conditions are specific points in VirtualMachineInstance's pod runtime.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "type",
+          "status"
+        ],
+        "properties": {
+          "lastProbeTime": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "lastTransitionTime": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "evacuationNodeName": {
+      "description": "EvacuationNodeName is used to track the eviction process of a VMI. It stores the name of the node that we want to evacuate. It is meant to be used by KubeVirt core components only and can't be set or modified by users.",
+      "type": "string"
+    },
+    "fsFreezeStatus": {
+      "description": "FSFreezeStatus is the state of the fs of the guest it can be either frozen or thawed",
+      "type": "string"
+    },
+    "guestOSInfo": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Guest OS Id",
+          "type": "string"
+        },
+        "kernelRelease": {
+          "description": "Guest OS Kernel Release",
+          "type": "string"
+        },
+        "kernelVersion": {
+          "description": "Kernel version of the Guest OS",
+          "type": "string"
+        },
+        "machine": {
+          "description": "Machine type of the Guest OS",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name of the Guest OS",
+          "type": "string"
+        },
+        "prettyName": {
+          "description": "Guest OS Pretty Name",
+          "type": "string"
+        },
+        "version": {
+          "description": "Guest OS Version",
+          "type": "string"
+        },
+        "versionId": {
+          "description": "Version ID of the Guest OS",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "interfaces": {
+      "description": "Interfaces represent the details of available network interfaces.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "infoSource": {
+            "description": "Specifies the origin of the interface data collected. values: domain, guest-agent, or both",
+            "type": "string"
+          },
+          "interfaceName": {
+            "description": "The interface name inside the Virtual Machine",
+            "type": "string"
+          },
+          "ipAddress": {
+            "description": "IP address of a Virtual Machine interface. It is always the first item of IPs",
+            "type": "string"
+          },
+          "ipAddresses": {
+            "description": "List of all IP addresses of a Virtual Machine interface",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "mac": {
+            "description": "Hardware address of a Virtual Machine interface",
+            "type": "string"
+          },
+          "name": {
+            "description": "Name of the interface, corresponds to name of the network assigned to the interface",
+            "type": "string"
+          },
+          "queueCount": {
+            "description": "Specifies how many queues are allocated by MultiQueue",
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "launcherContainerImageVersion": {
+      "description": "LauncherContainerImageVersion indicates what container image is currently active for the vmi.",
+      "type": "string"
+    },
+    "migrationMethod": {
+      "description": "Represents the method using which the vmi can be migrated: live migration or block migration",
+      "type": "string"
+    },
+    "migrationState": {
+      "type": "object",
+      "properties": {
+        "abortRequested": {
+          "description": "Indicates that the migration has been requested to abort",
+          "type": "boolean"
+        },
+        "abortStatus": {
+          "description": "Indicates the final status of the live migration abortion",
+          "type": "string"
+        },
+        "completed": {
+          "description": "Indicates the migration completed",
+          "type": "boolean"
+        },
+        "endTimestamp": {
+          "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "failed": {
+          "description": "Indicates that the migration failed",
+          "type": "boolean"
+        },
+        "migrationConfiguration": {
+          "description": "MigrationConfiguration holds migration options. Can be overridden for specific groups of VMs though migration policies. Visit https://kubevirt.io/user-guide/operations/migration_policies/ for more information.",
+          "type": "object",
+          "properties": {
+            "allowAutoConverge": {
+              "description": "AllowAutoConverge allows the platform to compromise performance/availability of VMIs to guarantee successful VMI live migrations. Defaults to false",
+              "type": "boolean"
+            },
+            "allowPostCopy": {
+              "description": "AllowPostCopy enables post-copy live migrations. Such migrations allow even the busiest VMIs to successfully live-migrate. However, events like a network failure can cause a VMI crash. If set to true, migrations will still start in pre-copy, but switch to post-copy when CompletionTimeoutPerGiB triggers. Defaults to false",
+              "type": "boolean"
+            },
+            "bandwidthPerMigration": {
+              "description": "Quantity is a fixed-point representation of a number. It provides convenient marshaling/unmarshaling in JSON and YAML, in addition to String() and AsInt64() accessors.\n\nThe serialization format is:\n\n<quantity>        ::= <signedNumber><suffix>\n  (Note that <suffix> may be empty, from the \"\" case in <decimalSI>.)\n<digit>           ::= 0 | 1 | ... | 9 <digits>          ::= <digit> | <digit><digits> <number>          ::= <digits> | <digits>.<digits> | <digits>. | .<digits> <sign>            ::= \"+\" | \"-\" <signedNumber>    ::= <number> | <sign><number> <suffix>          ::= <binarySI> | <decimalExponent> | <decimalSI> <binarySI>        ::= Ki | Mi | Gi | Ti | Pi | Ei\n  (International System of units; See: http://physics.nist.gov/cuu/Units/binary.html)\n<decimalSI>       ::= m | \"\" | k | M | G | T | P | E\n  (Note that 1024 = 1Ki but 1000 = 1k; I didn't choose the capitalization.)\n<decimalExponent> ::= \"e\" <signedNumber> | \"E\" <signedNumber>\n\nNo matter which of the three exponent forms is used, no quantity may represent a number greater than 2^63-1 in magnitude, nor may it have more than 3 decimal places. Numbers larger or more precise will be capped or rounded up. (E.g.: 0.1m will rounded up to 1m.) This may be extended in the future if we require larger or smaller quantities.\n\nWhen a Quantity is parsed from a string, it will remember the type of suffix it had, and will use the same type again when it is serialized.\n\nBefore serializing, Quantity will be put in \"canonical form\". This means that Exponent/suffix will be adjusted up or down (with a corresponding increase or decrease in Mantissa) such that:\n  a. No precision is lost\n  b. No fractional digits will be emitted\n  c. The exponent (or suffix) is as large as possible.\nThe sign will be omitted unless the number is negative.\n\nExamples:\n  1.5 will be serialized as \"1500m\"\n  1.5Gi will be serialized as \"1536Mi\"\n\nNote that the quantity will NEVER be internally represented by a floating point number. That is the whole point of this exercise.\n\nNon-canonical values will still parse as long as they are well formed, but will be re-emitted in their canonical form. (So always use canonical form, or don't diff.)\n\nThis format is intended to make it difficult to use these numbers without writing some sort of special handling code in the hopes that that will cause implementors to also use a fixed point implementation.",
+              "type": "string"
+            },
+            "completionTimeoutPerGiB": {
+              "description": "CompletionTimeoutPerGiB is the maximum number of seconds per GiB a migration is allowed to take. If a live-migration takes longer to migrate than this value multiplied by the size of the VMI, the migration will be cancelled, unless AllowPostCopy is true. Defaults to 800",
+              "type": "integer",
+              "format": "int64"
+            },
+            "disableTLS": {
+              "description": "When set to true, DisableTLS will disable the additional layer of live migration encryption provided by KubeVirt. This is usually a bad idea. Defaults to false",
+              "type": "boolean"
+            },
+            "network": {
+              "description": "Network is the name of the CNI network to use for live migrations. By default, migrations go through the pod network.",
+              "type": "string"
+            },
+            "nodeDrainTaintKey": {
+              "description": "NodeDrainTaintKey defines the taint key that indicates a node should be drained. Note: this option relies on the deprecated node taint feature. Default: kubevirt.io/drain",
+              "type": "string"
+            },
+            "parallelMigrationsPerCluster": {
+              "description": "ParallelMigrationsPerCluster is the total number of concurrent live migrations allowed cluster-wide. Defaults to 5",
+              "type": "integer",
+              "format": "int64"
+            },
+            "parallelOutboundMigrationsPerNode": {
+              "description": "ParallelOutboundMigrationsPerNode is the maximum number of concurrent outgoing live migrations allowed per node. Defaults to 2",
+              "type": "integer",
+              "format": "int64"
+            },
+            "progressTimeout": {
+              "description": "ProgressTimeout is the maximum number of seconds a live migration is allowed to make no progress. Hitting this timeout means a migration transferred 0 data for that many seconds. The migration is then considered stuck and therefore cancelled. Defaults to 150",
+              "type": "integer",
+              "format": "int64"
+            },
+            "unsafeMigrationOverride": {
+              "description": "UnsafeMigrationOverride allows live migrations to occur even if the compatibility check indicates the migration will be unsafe to the guest. Defaults to false",
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "migrationPolicyName": {
+          "description": "Name of the migration policy. If string is empty, no policy is matched",
+          "type": "string"
+        },
+        "migrationUid": {
+          "description": "The VirtualMachineInstanceMigration object associated with this migration",
+          "type": "string"
+        },
+        "mode": {
+          "description": "Lets us know if the vmi is currently running pre or post copy migration",
+          "type": "string"
+        },
+        "sourceNode": {
+          "description": "The source node that the VMI originated on",
+          "type": "string"
+        },
+        "startTimestamp": {
+          "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "targetAttachmentPodUID": {
+          "description": "The UID of the target attachment pod for hotplug volumes",
+          "type": "string"
+        },
+        "targetCPUSet": {
+          "description": "If the VMI requires dedicated CPUs, this field will hold the dedicated CPU set on the target node",
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "x-kubernetes-list-type": "atomic"
+        },
+        "targetDirectMigrationNodePorts": {
+          "description": "The list of ports opened for live migration on the destination node",
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "targetNode": {
+          "description": "The target node that the VMI is moving to",
+          "type": "string"
+        },
+        "targetNodeAddress": {
+          "description": "The address of the target node to use for the migration",
+          "type": "string"
+        },
+        "targetNodeDomainDetected": {
+          "description": "The Target Node has seen the Domain Start Event",
+          "type": "boolean"
+        },
+        "targetNodeTopology": {
+          "description": "If the VMI requires dedicated CPUs, this field will hold the numa topology on the target node",
+          "type": "string"
+        },
+        "targetPod": {
+          "description": "The target pod that the VMI is moving to",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "migrationTransport": {
+      "description": "This represents the migration transport",
+      "type": "string"
+    },
+    "nodeName": {
+      "description": "NodeName is the name where the VirtualMachineInstance is currently running.",
+      "type": "string"
+    },
+    "phase": {
+      "description": "Phase is the status of the VirtualMachineInstance in kubernetes world. It is not the VirtualMachineInstance status, but partially correlates to it.",
+      "type": "string"
+    },
+    "phaseTransitionTimestamps": {
+      "description": "PhaseTransitionTimestamp is the timestamp of when the last phase change occurred",
+      "type": "array",
+      "items": {
+        "description": "VirtualMachineInstancePhaseTransitionTimestamp gives a timestamp in relation to when a phase is set on a vmi",
+        "type": "object",
+        "properties": {
+          "phase": {
+            "description": "Phase is the status of the VirtualMachineInstance in kubernetes world. It is not the VirtualMachineInstance status, but partially correlates to it.",
+            "type": "string"
+          },
+          "phaseTransitionTimestamp": {
+            "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.",
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "x-kubernetes-list-type": "atomic"
+    },
+    "qosClass": {
+      "description": "The Quality of Service (QOS) classification assigned to the virtual machine instance based on resource requirements See PodQOSClass type for available QOS classes More info: https://git.k8s.io/community/contributors/design-proposals/node/resource-qos.md",
+      "type": "string"
+    },
+    "reason": {
+      "description": "A brief CamelCase message indicating details about why the VMI is in this state. e.g. 'NodeUnresponsive'",
+      "type": "string"
+    },
+    "runtimeUser": {
+      "description": "RuntimeUser is used to determine what user will be used in launcher",
+      "type": "integer",
+      "format": "int64"
+    },
+    "topologyHints": {
+      "type": "object",
+      "properties": {
+        "tscFrequency": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "additionalProperties": false
+    },
+    "virtualMachineRevisionName": {
+      "description": "VirtualMachineRevisionName is used to get the vm revision of the vmi when doing an online vm snapshot",
+      "type": "string"
+    },
+    "volumeStatus": {
+      "description": "VolumeStatus contains the statuses of all the volumes",
+      "type": "array",
+      "items": {
+        "description": "VolumeStatus represents information about the status of volumes attached to the VirtualMachineInstance.",
+        "type": "object",
+        "required": [
+          "name",
+          "target"
+        ],
+        "properties": {
+          "hotplugVolume": {
+            "description": "HotplugVolumeStatus represents the hotplug status of the volume",
+            "type": "object",
+            "properties": {
+              "attachPodName": {
+                "description": "AttachPodName is the name of the pod used to attach the volume to the node.",
+                "type": "string"
+              },
+              "attachPodUID": {
+                "description": "AttachPodUID is the UID of the pod used to attach the volume to the node.",
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          "memoryDumpVolume": {
+            "description": "DomainMemoryDumpInfo represents the memory dump information",
+            "type": "object",
+            "properties": {
+              "claimName": {
+                "description": "ClaimName is the name of the pvc the memory was dumped to",
+                "type": "string"
+              },
+              "endTimestamp": {
+                "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.",
+                "type": "string",
+                "format": "date-time"
+              },
+              "startTimestamp": {
+                "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.",
+                "type": "string",
+                "format": "date-time"
+              },
+              "targetFileName": {
+                "description": "TargetFileName is the name of the memory dump output",
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          "message": {
+            "description": "Message is a detailed message about the current hotplug volume phase",
+            "type": "string"
+          },
+          "name": {
+            "description": "Name is the name of the volume",
+            "type": "string"
+          },
+          "persistentVolumeClaimInfo": {
+            "description": "PersistentVolumeClaimInfo contains the relavant information virt-handler needs cached about a PVC",
+            "type": "object",
+            "properties": {
+              "accessModes": {
+                "description": "AccessModes contains the desired access modes the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "x-kubernetes-list-type": "atomic"
+              },
+              "capacity": {
+                "description": "Capacity represents the capacity set on the corresponding PVC status",
+                "type": "object",
+                "additionalProperties": {
+                  "description": "Quantity is a fixed-point representation of a number. It provides convenient marshaling/unmarshaling in JSON and YAML, in addition to String() and AsInt64() accessors.\n\nThe serialization format is:\n\n<quantity>        ::= <signedNumber><suffix>\n  (Note that <suffix> may be empty, from the \"\" case in <decimalSI>.)\n<digit>           ::= 0 | 1 | ... | 9 <digits>          ::= <digit> | <digit><digits> <number>          ::= <digits> | <digits>.<digits> | <digits>. | .<digits> <sign>            ::= \"+\" | \"-\" <signedNumber>    ::= <number> | <sign><number> <suffix>          ::= <binarySI> | <decimalExponent> | <decimalSI> <binarySI>        ::= Ki | Mi | Gi | Ti | Pi | Ei\n  (International System of units; See: http://physics.nist.gov/cuu/Units/binary.html)\n<decimalSI>       ::= m | \"\" | k | M | G | T | P | E\n  (Note that 1024 = 1Ki but 1000 = 1k; I didn't choose the capitalization.)\n<decimalExponent> ::= \"e\" <signedNumber> | \"E\" <signedNumber>\n\nNo matter which of the three exponent forms is used, no quantity may represent a number greater than 2^63-1 in magnitude, nor may it have more than 3 decimal places. Numbers larger or more precise will be capped or rounded up. (E.g.: 0.1m will rounded up to 1m.) This may be extended in the future if we require larger or smaller quantities.\n\nWhen a Quantity is parsed from a string, it will remember the type of suffix it had, and will use the same type again when it is serialized.\n\nBefore serializing, Quantity will be put in \"canonical form\". This means that Exponent/suffix will be adjusted up or down (with a corresponding increase or decrease in Mantissa) such that:\n  a. No precision is lost\n  b. No fractional digits will be emitted\n  c. The exponent (or suffix) is as large as possible.\nThe sign will be omitted unless the number is negative.\n\nExamples:\n  1.5 will be serialized as \"1500m\"\n  1.5Gi will be serialized as \"1536Mi\"\n\nNote that the quantity will NEVER be internally represented by a floating point number. That is the whole point of this exercise.\n\nNon-canonical values will still parse as long as they are well formed, but will be re-emitted in their canonical form. (So always use canonical form, or don't diff.)\n\nThis format is intended to make it difficult to use these numbers without writing some sort of special handling code in the hopes that that will cause implementors to also use a fixed point implementation.",
+                  "type": "string"
+                }
+              },
+              "filesystemOverhead": {
+                "description": "Percentage of filesystem's size to be reserved when resizing the PVC",
+                "type": "string"
+              },
+              "preallocated": {
+                "description": "Preallocated indicates if the PVC's storage is preallocated or not",
+                "type": "boolean"
+              },
+              "requests": {
+                "description": "Requests represents the resources requested by the corresponding PVC spec",
+                "type": "object",
+                "additionalProperties": {
+                  "description": "Quantity is a fixed-point representation of a number. It provides convenient marshaling/unmarshaling in JSON and YAML, in addition to String() and AsInt64() accessors.\n\nThe serialization format is:\n\n<quantity>        ::= <signedNumber><suffix>\n  (Note that <suffix> may be empty, from the \"\" case in <decimalSI>.)\n<digit>           ::= 0 | 1 | ... | 9 <digits>          ::= <digit> | <digit><digits> <number>          ::= <digits> | <digits>.<digits> | <digits>. | .<digits> <sign>            ::= \"+\" | \"-\" <signedNumber>    ::= <number> | <sign><number> <suffix>          ::= <binarySI> | <decimalExponent> | <decimalSI> <binarySI>        ::= Ki | Mi | Gi | Ti | Pi | Ei\n  (International System of units; See: http://physics.nist.gov/cuu/Units/binary.html)\n<decimalSI>       ::= m | \"\" | k | M | G | T | P | E\n  (Note that 1024 = 1Ki but 1000 = 1k; I didn't choose the capitalization.)\n<decimalExponent> ::= \"e\" <signedNumber> | \"E\" <signedNumber>\n\nNo matter which of the three exponent forms is used, no quantity may represent a number greater than 2^63-1 in magnitude, nor may it have more than 3 decimal places. Numbers larger or more precise will be capped or rounded up. (E.g.: 0.1m will rounded up to 1m.) This may be extended in the future if we require larger or smaller quantities.\n\nWhen a Quantity is parsed from a string, it will remember the type of suffix it had, and will use the same type again when it is serialized.\n\nBefore serializing, Quantity will be put in \"canonical form\". This means that Exponent/suffix will be adjusted up or down (with a corresponding increase or decrease in Mantissa) such that:\n  a. No precision is lost\n  b. No fractional digits will be emitted\n  c. The exponent (or suffix) is as large as possible.\nThe sign will be omitted unless the number is negative.\n\nExamples:\n  1.5 will be serialized as \"1500m\"\n  1.5Gi will be serialized as \"1536Mi\"\n\nNote that the quantity will NEVER be internally represented by a floating point number. That is the whole point of this exercise.\n\nNon-canonical values will still parse as long as they are well formed, but will be re-emitted in their canonical form. (So always use canonical form, or don't diff.)\n\nThis format is intended to make it difficult to use these numbers without writing some sort of special handling code in the hopes that that will cause implementors to also use a fixed point implementation.",
+                  "type": "string"
+                }
+              },
+              "volumeMode": {
+                "description": "VolumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec.",
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          "phase": {
+            "description": "Phase is the phase",
+            "type": "string"
+          },
+          "reason": {
+            "description": "Reason is a brief description of why we are in the current hotplug volume phase",
+            "type": "string"
+          },
+          "size": {
+            "description": "Represents the size of the volume",
+            "type": "integer",
+            "format": "int64"
+          },
+          "target": {
+            "description": "Target is the target name used when adding the volume to the VM, eg: vda",
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "x-kubernetes-list-type": "atomic"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

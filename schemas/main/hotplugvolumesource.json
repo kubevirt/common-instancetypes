@@ -1,0 +1,47 @@
+{
+  "description": "HotplugVolumeSource Represents the source of a volume to mount which are capable of being hotplugged on a live running VMI. Only one of its members may be specified.",
+  "type": "object",
+  "properties": {
+    "dataVolume": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "hotpluggable": {
+          "description": "Hotpluggable indicates whether the volume can be hotplugged and hotunplugged.",
+          "type": "boolean"
+        },
+        "name": {
+          "description": "Name represents the name of the DataVolume in the same namespace",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "persistentVolumeClaim": {
+      "description": "PersistentVolumeClaimVolumeSource represents a reference to a PersistentVolumeClaim in the same namespace. Directly attached to the vmi via qemu. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims",
+      "type": "object",
+      "required": [
+        "claimName"
+      ],
+      "properties": {
+        "claimName": {
+          "description": "ClaimName is the name of a PersistentVolumeClaim in the same namespace as the pod using this volume. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims",
+          "type": "string"
+        },
+        "hotpluggable": {
+          "description": "Hotpluggable indicates whether the volume can be hotplugged and hotunplugged.",
+          "type": "boolean"
+        },
+        "readOnly": {
+          "description": "Will force the ReadOnly setting in VolumeMounts. Default false.",
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

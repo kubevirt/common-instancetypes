@@ -1,0 +1,242 @@
+{
+  "description": "FeaturePreferences contains various optional defaults for Features.",
+  "type": "object",
+  "properties": {
+    "preferredAcpi": {
+      "description": "Represents if a feature is enabled or disabled.",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "preferredApic": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+          "type": "boolean"
+        },
+        "endOfInterrupt": {
+          "description": "EndOfInterrupt enables the end of interrupt notification in the guest. Defaults to false.",
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "preferredHyperv": {
+      "description": "Hyperv specific features.",
+      "type": "object",
+      "properties": {
+        "evmcs": {
+          "description": "Represents if a feature is enabled or disabled.",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "frequencies": {
+          "description": "Represents if a feature is enabled or disabled.",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "ipi": {
+          "description": "Represents if a feature is enabled or disabled.",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "reenlightenment": {
+          "description": "Represents if a feature is enabled or disabled.",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "relaxed": {
+          "description": "Represents if a feature is enabled or disabled.",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "reset": {
+          "description": "Represents if a feature is enabled or disabled.",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "runtime": {
+          "description": "Represents if a feature is enabled or disabled.",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "spinlocks": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+              "type": "boolean"
+            },
+            "spinlocks": {
+              "description": "Retries indicates the number of retries. Must be a value greater or equal 4096. Defaults to 4096.",
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          "additionalProperties": false
+        },
+        "synic": {
+          "description": "Represents if a feature is enabled or disabled.",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "synictimer": {
+          "type": "object",
+          "properties": {
+            "direct": {
+              "description": "Represents if a feature is enabled or disabled.",
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
+            "enabled": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "tlbflush": {
+          "description": "Represents if a feature is enabled or disabled.",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "vapic": {
+          "description": "Represents if a feature is enabled or disabled.",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "vendorid": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+              "type": "boolean"
+            },
+            "vendorid": {
+              "description": "VendorID sets the hypervisor vendor id, visible to the vmi. String up to twelve characters.",
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "vpindex": {
+          "description": "Represents if a feature is enabled or disabled.",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "preferredKvm": {
+      "type": "object",
+      "properties": {
+        "hidden": {
+          "description": "Hide the KVM hypervisor from standard MSR based discovery. Defaults to false",
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "preferredPvspinlock": {
+      "description": "Represents if a feature is enabled or disabled.",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "preferredSmm": {
+      "description": "Represents if a feature is enabled or disabled.",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

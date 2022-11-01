@@ -1,0 +1,47 @@
+{
+  "description": "Extra DHCP options to use in the interface.",
+  "type": "object",
+  "properties": {
+    "bootFileName": {
+      "description": "If specified will pass option 67 to interface's DHCP server",
+      "type": "string"
+    },
+    "ntpServers": {
+      "description": "If specified will pass the configured NTP server to the VM via DHCP option 042.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "privateOptions": {
+      "description": "If specified will pass extra DHCP options for private use, range: 224-254",
+      "type": "array",
+      "items": {
+        "description": "DHCPExtraOptions defines Extra DHCP options for a VM.",
+        "type": "object",
+        "required": [
+          "option",
+          "value"
+        ],
+        "properties": {
+          "option": {
+            "description": "Option is an Integer value from 224-254 Required.",
+            "type": "integer",
+            "format": "int32"
+          },
+          "value": {
+            "description": "Value is a String value for the Option provided Required.",
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "tftpServerName": {
+      "description": "If specified will pass option 66 to interface's DHCP server",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

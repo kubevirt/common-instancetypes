@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+      "type": "boolean"
+    },
+    "spinlocks": {
+      "description": "Retries indicates the number of retries. Must be a value greater or equal 4096. Defaults to 4096.",
+      "type": "integer",
+      "format": "int64"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

@@ -1,0 +1,26 @@
+{
+  "description": "Named watchdog device.",
+  "type": "object",
+  "required": [
+    "name"
+  ],
+  "properties": {
+    "i6300esb": {
+      "description": "i6300esb watchdog device.",
+      "type": "object",
+      "properties": {
+        "action": {
+          "description": "The action to take. Valid values are poweroff, reset, shutdown. Defaults to reset.",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "name": {
+      "description": "Name of the watchdog.",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

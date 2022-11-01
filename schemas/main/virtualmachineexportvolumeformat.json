@@ -1,0 +1,20 @@
+{
+  "description": "VirtualMachineExportVolumeFormat contains the format type and URL to get the volume in that format",
+  "type": "object",
+  "required": [
+    "format",
+    "url"
+  ],
+  "properties": {
+    "format": {
+      "description": "Format is the format of the image at the specified URL",
+      "type": "string"
+    },
+    "url": {
+      "description": "Url is the url that contains the volume in the format specified",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

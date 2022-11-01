@@ -1,0 +1,534 @@
+{
+  "description": "KubeVirtConfiguration holds all kubevirt configurations",
+  "type": "object",
+  "properties": {
+    "apiConfiguration": {
+      "description": "ReloadableComponentConfiguration holds all generic k8s configuration options which can be reloaded by components without requiring a restart.",
+      "type": "object",
+      "properties": {
+        "restClient": {
+          "description": "RESTClientConfiguration allows configuring certain aspects of the k8s rest client.",
+          "type": "object",
+          "properties": {
+            "rateLimiter": {
+              "type": "object",
+              "properties": {
+                "tokenBucketRateLimiter": {
+                  "type": "object",
+                  "required": [
+                    "qps",
+                    "burst"
+                  ],
+                  "properties": {
+                    "burst": {
+                      "description": "Maximum burst for throttle. If it's zero, the component default will be used",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "qps": {
+                      "description": "QPS indicates the maximum QPS to the apiserver from this client. If it's zero, the component default will be used",
+                      "type": "number",
+                      "format": "float"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "controllerConfiguration": {
+      "description": "ReloadableComponentConfiguration holds all generic k8s configuration options which can be reloaded by components without requiring a restart.",
+      "type": "object",
+      "properties": {
+        "restClient": {
+          "description": "RESTClientConfiguration allows configuring certain aspects of the k8s rest client.",
+          "type": "object",
+          "properties": {
+            "rateLimiter": {
+              "type": "object",
+              "properties": {
+                "tokenBucketRateLimiter": {
+                  "type": "object",
+                  "required": [
+                    "qps",
+                    "burst"
+                  ],
+                  "properties": {
+                    "burst": {
+                      "description": "Maximum burst for throttle. If it's zero, the component default will be used",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "qps": {
+                      "description": "QPS indicates the maximum QPS to the apiserver from this client. If it's zero, the component default will be used",
+                      "type": "number",
+                      "format": "float"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "cpuModel": {
+      "type": "string"
+    },
+    "cpuRequest": {
+      "description": "Quantity is a fixed-point representation of a number. It provides convenient marshaling/unmarshaling in JSON and YAML, in addition to String() and AsInt64() accessors.\n\nThe serialization format is:\n\n<quantity>        ::= <signedNumber><suffix>\n  (Note that <suffix> may be empty, from the \"\" case in <decimalSI>.)\n<digit>           ::= 0 | 1 | ... | 9 <digits>          ::= <digit> | <digit><digits> <number>          ::= <digits> | <digits>.<digits> | <digits>. | .<digits> <sign>            ::= \"+\" | \"-\" <signedNumber>    ::= <number> | <sign><number> <suffix>          ::= <binarySI> | <decimalExponent> | <decimalSI> <binarySI>        ::= Ki | Mi | Gi | Ti | Pi | Ei\n  (International System of units; See: http://physics.nist.gov/cuu/Units/binary.html)\n<decimalSI>       ::= m | \"\" | k | M | G | T | P | E\n  (Note that 1024 = 1Ki but 1000 = 1k; I didn't choose the capitalization.)\n<decimalExponent> ::= \"e\" <signedNumber> | \"E\" <signedNumber>\n\nNo matter which of the three exponent forms is used, no quantity may represent a number greater than 2^63-1 in magnitude, nor may it have more than 3 decimal places. Numbers larger or more precise will be capped or rounded up. (E.g.: 0.1m will rounded up to 1m.) This may be extended in the future if we require larger or smaller quantities.\n\nWhen a Quantity is parsed from a string, it will remember the type of suffix it had, and will use the same type again when it is serialized.\n\nBefore serializing, Quantity will be put in \"canonical form\". This means that Exponent/suffix will be adjusted up or down (with a corresponding increase or decrease in Mantissa) such that:\n  a. No precision is lost\n  b. No fractional digits will be emitted\n  c. The exponent (or suffix) is as large as possible.\nThe sign will be omitted unless the number is negative.\n\nExamples:\n  1.5 will be serialized as \"1500m\"\n  1.5Gi will be serialized as \"1536Mi\"\n\nNote that the quantity will NEVER be internally represented by a floating point number. That is the whole point of this exercise.\n\nNon-canonical values will still parse as long as they are well formed, but will be re-emitted in their canonical form. (So always use canonical form, or don't diff.)\n\nThis format is intended to make it difficult to use these numbers without writing some sort of special handling code in the hopes that that will cause implementors to also use a fixed point implementation.",
+      "type": "string"
+    },
+    "defaultRuntimeClass": {
+      "type": "string"
+    },
+    "developerConfiguration": {
+      "description": "DeveloperConfiguration holds developer options",
+      "type": "object",
+      "properties": {
+        "cpuAllocationRatio": {
+          "description": "For each requested virtual CPU, CPUAllocationRatio defines how much physical CPU to request per VMI from the hosting node. The value is in fraction of a CPU thread (or core on non-hyperthreaded nodes). For example, a value of 1 means 1 physical CPU thread per VMI CPU thread. A value of 100 would be 1% of a physical thread allocated for each requested VMI thread. This option has no effect on VMIs that request dedicated CPUs. More information at: https://kubevirt.io/user-guide/operations/node_overcommit/#node-cpu-allocation-ratio Defaults to 10",
+          "type": "integer",
+          "format": "int32"
+        },
+        "diskVerification": {
+          "description": "DiskVerification holds container disks verification limits",
+          "type": "object",
+          "required": [
+            "memoryLimit"
+          ],
+          "properties": {
+            "memoryLimit": {
+              "description": "Quantity is a fixed-point representation of a number. It provides convenient marshaling/unmarshaling in JSON and YAML, in addition to String() and AsInt64() accessors.\n\nThe serialization format is:\n\n<quantity>        ::= <signedNumber><suffix>\n  (Note that <suffix> may be empty, from the \"\" case in <decimalSI>.)\n<digit>           ::= 0 | 1 | ... | 9 <digits>          ::= <digit> | <digit><digits> <number>          ::= <digits> | <digits>.<digits> | <digits>. | .<digits> <sign>            ::= \"+\" | \"-\" <signedNumber>    ::= <number> | <sign><number> <suffix>          ::= <binarySI> | <decimalExponent> | <decimalSI> <binarySI>        ::= Ki | Mi | Gi | Ti | Pi | Ei\n  (International System of units; See: http://physics.nist.gov/cuu/Units/binary.html)\n<decimalSI>       ::= m | \"\" | k | M | G | T | P | E\n  (Note that 1024 = 1Ki but 1000 = 1k; I didn't choose the capitalization.)\n<decimalExponent> ::= \"e\" <signedNumber> | \"E\" <signedNumber>\n\nNo matter which of the three exponent forms is used, no quantity may represent a number greater than 2^63-1 in magnitude, nor may it have more than 3 decimal places. Numbers larger or more precise will be capped or rounded up. (E.g.: 0.1m will rounded up to 1m.) This may be extended in the future if we require larger or smaller quantities.\n\nWhen a Quantity is parsed from a string, it will remember the type of suffix it had, and will use the same type again when it is serialized.\n\nBefore serializing, Quantity will be put in \"canonical form\". This means that Exponent/suffix will be adjusted up or down (with a corresponding increase or decrease in Mantissa) such that:\n  a. No precision is lost\n  b. No fractional digits will be emitted\n  c. The exponent (or suffix) is as large as possible.\nThe sign will be omitted unless the number is negative.\n\nExamples:\n  1.5 will be serialized as \"1500m\"\n  1.5Gi will be serialized as \"1536Mi\"\n\nNote that the quantity will NEVER be internally represented by a floating point number. That is the whole point of this exercise.\n\nNon-canonical values will still parse as long as they are well formed, but will be re-emitted in their canonical form. (So always use canonical form, or don't diff.)\n\nThis format is intended to make it difficult to use these numbers without writing some sort of special handling code in the hopes that that will cause implementors to also use a fixed point implementation.",
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "featureGates": {
+          "description": "FeatureGates is the list of experimental features to enable. Defaults to none",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "logVerbosity": {
+          "description": "LogVerbosity sets log verbosity level of  various components",
+          "type": "object",
+          "properties": {
+            "nodeVerbosity": {
+              "description": "NodeVerbosity represents a map of nodes with a specific verbosity level",
+              "type": "object",
+              "additionalProperties": {
+                "type": "integer",
+                "format": "int32"
+              }
+            },
+            "virtAPI": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "virtController": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "virtHandler": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "virtLauncher": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "virtOperator": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "additionalProperties": false
+        },
+        "memoryOvercommit": {
+          "description": "MemoryOvercommit is the percentage of memory we want to give VMIs compared to the amount given to its parent pod (virt-launcher). For example, a value of 102 means the VMI will \"see\" 2% more memory than its parent pod. Values under 100 are effectively \"undercommits\". Overcommits can lead to memory exhaustion, which in turn can lead to crashes. Use carefully. Defaults to 100",
+          "type": "integer",
+          "format": "int32"
+        },
+        "minimumClusterTSCFrequency": {
+          "description": "Allow overriding the automatically determined minimum TSC frequency of the cluster and fixate the minimum to this frequency.",
+          "type": "integer",
+          "format": "int64"
+        },
+        "minimumReservePVCBytes": {
+          "description": "MinimumReservePVCBytes is the amount of space, in bytes, to leave unused on disks. Defaults to 131072 (128KiB)",
+          "type": "integer",
+          "format": "int64"
+        },
+        "nodeSelectors": {
+          "description": "NodeSelectors allows restricting VMI creation to nodes that match a set of labels. Defaults to none",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "pvcTolerateLessSpaceUpToPercent": {
+          "description": "LessPVCSpaceToleration determines how much smaller, in percentage, disk PVCs are allowed to be compared to the requested size (to account for various overheads). Defaults to 10",
+          "type": "integer",
+          "format": "int32"
+        },
+        "useEmulation": {
+          "description": "UseEmulation can be set to true to allow fallback to software emulation in case hardware-assisted emulation is not available. Defaults to false",
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "emulatedMachines": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "evictionStrategy": {
+      "description": "EvictionStrategy defines at the cluster level if the VirtualMachineInstance should be migrated instead of shut-off in case of a node drain. If the VirtualMachineInstance specific field is set it overrides the cluster level one.",
+      "type": "string"
+    },
+    "handlerConfiguration": {
+      "description": "ReloadableComponentConfiguration holds all generic k8s configuration options which can be reloaded by components without requiring a restart.",
+      "type": "object",
+      "properties": {
+        "restClient": {
+          "description": "RESTClientConfiguration allows configuring certain aspects of the k8s rest client.",
+          "type": "object",
+          "properties": {
+            "rateLimiter": {
+              "type": "object",
+              "properties": {
+                "tokenBucketRateLimiter": {
+                  "type": "object",
+                  "required": [
+                    "qps",
+                    "burst"
+                  ],
+                  "properties": {
+                    "burst": {
+                      "description": "Maximum burst for throttle. If it's zero, the component default will be used",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "qps": {
+                      "description": "QPS indicates the maximum QPS to the apiserver from this client. If it's zero, the component default will be used",
+                      "type": "number",
+                      "format": "float"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "imagePullPolicy": {
+      "type": "string"
+    },
+    "machineType": {
+      "type": "string"
+    },
+    "mediatedDevicesConfiguration": {
+      "description": "MediatedDevicesConfiguration holds information about MDEV types to be defined, if available",
+      "type": "object",
+      "properties": {
+        "mediatedDevicesTypes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-kubernetes-list-type": "atomic"
+        },
+        "nodeMediatedDeviceTypes": {
+          "type": "array",
+          "items": {
+            "description": "NodeMediatedDeviceTypesConfig holds information about MDEV types to be defined in a specifc node that matches the NodeSelector field.",
+            "type": "object",
+            "required": [
+              "nodeSelector",
+              "mediatedDevicesTypes"
+            ],
+            "properties": {
+              "mediatedDevicesTypes": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "x-kubernetes-list-type": "atomic"
+              },
+              "nodeSelector": {
+                "description": "NodeSelector is a selector which must be true for the vmi to fit on a node. Selector which must match a node's labels for the vmi to be scheduled on that node. More info: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/",
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          },
+          "x-kubernetes-list-type": "atomic"
+        }
+      },
+      "additionalProperties": false
+    },
+    "memBalloonStatsPeriod": {
+      "type": "integer",
+      "format": "int64"
+    },
+    "migrations": {
+      "description": "MigrationConfiguration holds migration options. Can be overridden for specific groups of VMs though migration policies. Visit https://kubevirt.io/user-guide/operations/migration_policies/ for more information.",
+      "type": "object",
+      "properties": {
+        "allowAutoConverge": {
+          "description": "AllowAutoConverge allows the platform to compromise performance/availability of VMIs to guarantee successful VMI live migrations. Defaults to false",
+          "type": "boolean"
+        },
+        "allowPostCopy": {
+          "description": "AllowPostCopy enables post-copy live migrations. Such migrations allow even the busiest VMIs to successfully live-migrate. However, events like a network failure can cause a VMI crash. If set to true, migrations will still start in pre-copy, but switch to post-copy when CompletionTimeoutPerGiB triggers. Defaults to false",
+          "type": "boolean"
+        },
+        "bandwidthPerMigration": {
+          "description": "Quantity is a fixed-point representation of a number. It provides convenient marshaling/unmarshaling in JSON and YAML, in addition to String() and AsInt64() accessors.\n\nThe serialization format is:\n\n<quantity>        ::= <signedNumber><suffix>\n  (Note that <suffix> may be empty, from the \"\" case in <decimalSI>.)\n<digit>           ::= 0 | 1 | ... | 9 <digits>          ::= <digit> | <digit><digits> <number>          ::= <digits> | <digits>.<digits> | <digits>. | .<digits> <sign>            ::= \"+\" | \"-\" <signedNumber>    ::= <number> | <sign><number> <suffix>          ::= <binarySI> | <decimalExponent> | <decimalSI> <binarySI>        ::= Ki | Mi | Gi | Ti | Pi | Ei\n  (International System of units; See: http://physics.nist.gov/cuu/Units/binary.html)\n<decimalSI>       ::= m | \"\" | k | M | G | T | P | E\n  (Note that 1024 = 1Ki but 1000 = 1k; I didn't choose the capitalization.)\n<decimalExponent> ::= \"e\" <signedNumber> | \"E\" <signedNumber>\n\nNo matter which of the three exponent forms is used, no quantity may represent a number greater than 2^63-1 in magnitude, nor may it have more than 3 decimal places. Numbers larger or more precise will be capped or rounded up. (E.g.: 0.1m will rounded up to 1m.) This may be extended in the future if we require larger or smaller quantities.\n\nWhen a Quantity is parsed from a string, it will remember the type of suffix it had, and will use the same type again when it is serialized.\n\nBefore serializing, Quantity will be put in \"canonical form\". This means that Exponent/suffix will be adjusted up or down (with a corresponding increase or decrease in Mantissa) such that:\n  a. No precision is lost\n  b. No fractional digits will be emitted\n  c. The exponent (or suffix) is as large as possible.\nThe sign will be omitted unless the number is negative.\n\nExamples:\n  1.5 will be serialized as \"1500m\"\n  1.5Gi will be serialized as \"1536Mi\"\n\nNote that the quantity will NEVER be internally represented by a floating point number. That is the whole point of this exercise.\n\nNon-canonical values will still parse as long as they are well formed, but will be re-emitted in their canonical form. (So always use canonical form, or don't diff.)\n\nThis format is intended to make it difficult to use these numbers without writing some sort of special handling code in the hopes that that will cause implementors to also use a fixed point implementation.",
+          "type": "string"
+        },
+        "completionTimeoutPerGiB": {
+          "description": "CompletionTimeoutPerGiB is the maximum number of seconds per GiB a migration is allowed to take. If a live-migration takes longer to migrate than this value multiplied by the size of the VMI, the migration will be cancelled, unless AllowPostCopy is true. Defaults to 800",
+          "type": "integer",
+          "format": "int64"
+        },
+        "disableTLS": {
+          "description": "When set to true, DisableTLS will disable the additional layer of live migration encryption provided by KubeVirt. This is usually a bad idea. Defaults to false",
+          "type": "boolean"
+        },
+        "network": {
+          "description": "Network is the name of the CNI network to use for live migrations. By default, migrations go through the pod network.",
+          "type": "string"
+        },
+        "nodeDrainTaintKey": {
+          "description": "NodeDrainTaintKey defines the taint key that indicates a node should be drained. Note: this option relies on the deprecated node taint feature. Default: kubevirt.io/drain",
+          "type": "string"
+        },
+        "parallelMigrationsPerCluster": {
+          "description": "ParallelMigrationsPerCluster is the total number of concurrent live migrations allowed cluster-wide. Defaults to 5",
+          "type": "integer",
+          "format": "int64"
+        },
+        "parallelOutboundMigrationsPerNode": {
+          "description": "ParallelOutboundMigrationsPerNode is the maximum number of concurrent outgoing live migrations allowed per node. Defaults to 2",
+          "type": "integer",
+          "format": "int64"
+        },
+        "progressTimeout": {
+          "description": "ProgressTimeout is the maximum number of seconds a live migration is allowed to make no progress. Hitting this timeout means a migration transferred 0 data for that many seconds. The migration is then considered stuck and therefore cancelled. Defaults to 150",
+          "type": "integer",
+          "format": "int64"
+        },
+        "unsafeMigrationOverride": {
+          "description": "UnsafeMigrationOverride allows live migrations to occur even if the compatibility check indicates the migration will be unsafe to the guest. Defaults to false",
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "minCPUModel": {
+      "type": "string"
+    },
+    "network": {
+      "description": "NetworkConfiguration holds network options",
+      "type": "object",
+      "properties": {
+        "defaultNetworkInterface": {
+          "type": "string"
+        },
+        "permitBridgeInterfaceOnPodNetwork": {
+          "type": "boolean"
+        },
+        "permitSlirpInterface": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "obsoleteCPUModels": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "ovmfPath": {
+      "type": "string"
+    },
+    "permittedHostDevices": {
+      "description": "PermittedHostDevices holds information about devices allowed for passthrough",
+      "type": "object",
+      "properties": {
+        "mediatedDevices": {
+          "type": "array",
+          "items": {
+            "description": "MediatedHostDevice represents a host mediated device allowed for passthrough",
+            "type": "object",
+            "required": [
+              "mdevNameSelector",
+              "resourceName"
+            ],
+            "properties": {
+              "externalResourceProvider": {
+                "type": "boolean"
+              },
+              "mdevNameSelector": {
+                "type": "string"
+              },
+              "resourceName": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          "x-kubernetes-list-type": "atomic"
+        },
+        "pciHostDevices": {
+          "type": "array",
+          "items": {
+            "description": "PciHostDevice represents a host PCI device allowed for passthrough",
+            "type": "object",
+            "required": [
+              "pciVendorSelector",
+              "resourceName"
+            ],
+            "properties": {
+              "externalResourceProvider": {
+                "description": "If true, KubeVirt will leave the allocation and monitoring to an external device plugin",
+                "type": "boolean"
+              },
+              "pciVendorSelector": {
+                "description": "The vendor_id:product_id tuple of the PCI device",
+                "type": "string"
+              },
+              "resourceName": {
+                "description": "The name of the resource that is representing the device. Exposed by a device plugin and requested by VMs. Typically of the form vendor.com/product_nameThe name of the resource that is representing the device. Exposed by a device plugin and requested by VMs. Typically of the form vendor.com/product_name",
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          "x-kubernetes-list-type": "atomic"
+        }
+      },
+      "additionalProperties": false
+    },
+    "selinuxLauncherType": {
+      "type": "string"
+    },
+    "smbios": {
+      "type": "object",
+      "properties": {
+        "family": {
+          "type": "string"
+        },
+        "manufacturer": {
+          "type": "string"
+        },
+        "product": {
+          "type": "string"
+        },
+        "sku": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "supportedGuestAgentVersions": {
+      "description": "deprecated",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tlsConfiguration": {
+      "description": "TLSConfiguration holds TLS options",
+      "type": "object",
+      "properties": {
+        "ciphers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-kubernetes-list-type": "set"
+        },
+        "minTLSVersion": {
+          "description": "MinTLSVersion is a way to specify the minimum protocol version that is acceptable for TLS connections. Protocol versions are based on the following most common TLS configurations:\n\n  https://ssl-config.mozilla.org/\n\nNote that SSLv3.0 is not a supported protocol version due to well known vulnerabilities such as POODLE: https://en.wikipedia.org/wiki/POODLE",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "virtualMachineInstancesPerNode": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "webhookConfiguration": {
+      "description": "ReloadableComponentConfiguration holds all generic k8s configuration options which can be reloaded by components without requiring a restart.",
+      "type": "object",
+      "properties": {
+        "restClient": {
+          "description": "RESTClientConfiguration allows configuring certain aspects of the k8s rest client.",
+          "type": "object",
+          "properties": {
+            "rateLimiter": {
+              "type": "object",
+              "properties": {
+                "tokenBucketRateLimiter": {
+                  "type": "object",
+                  "required": [
+                    "qps",
+                    "burst"
+                  ],
+                  "properties": {
+                    "burst": {
+                      "description": "Maximum burst for throttle. If it's zero, the component default will be used",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "qps": {
+                      "description": "QPS indicates the maximum QPS to the apiserver from this client. If it's zero, the component default will be used",
+                      "type": "number",
+                      "format": "float"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

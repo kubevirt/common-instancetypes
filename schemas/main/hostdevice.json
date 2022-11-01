@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "required": [
+    "name",
+    "deviceName"
+  ],
+  "properties": {
+    "deviceName": {
+      "description": "DeviceName is the resource name of the host device exposed by a device plugin",
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "tag": {
+      "description": "If specified, the virtual network interface address and its tag will be provided to the guest via config drive",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

@@ -1,0 +1,6 @@
+{
+  "description": "DataVolumeSourceUpload provides the parameters to create a Data Volume by uploading the source",
+  "type": "object",
+  "$schema": "http://json-schema.org/schema#",
+  "additionalProperties": false
+}

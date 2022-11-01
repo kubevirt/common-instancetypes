@@ -1,0 +1,20 @@
+{
+  "description": "DataVolumeSourcePVC provides the parameters to create a Data Volume from an existing PVC",
+  "type": "object",
+  "required": [
+    "namespace",
+    "name"
+  ],
+  "properties": {
+    "name": {
+      "description": "The name of the source PVC",
+      "type": "string"
+    },
+    "namespace": {
+      "description": "The namespace of the source PVC",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

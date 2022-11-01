@@ -1,0 +1,59 @@
+{
+  "description": "PermittedHostDevices holds information about devices allowed for passthrough",
+  "type": "object",
+  "properties": {
+    "mediatedDevices": {
+      "type": "array",
+      "items": {
+        "description": "MediatedHostDevice represents a host mediated device allowed for passthrough",
+        "type": "object",
+        "required": [
+          "mdevNameSelector",
+          "resourceName"
+        ],
+        "properties": {
+          "externalResourceProvider": {
+            "type": "boolean"
+          },
+          "mdevNameSelector": {
+            "type": "string"
+          },
+          "resourceName": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "x-kubernetes-list-type": "atomic"
+    },
+    "pciHostDevices": {
+      "type": "array",
+      "items": {
+        "description": "PciHostDevice represents a host PCI device allowed for passthrough",
+        "type": "object",
+        "required": [
+          "pciVendorSelector",
+          "resourceName"
+        ],
+        "properties": {
+          "externalResourceProvider": {
+            "description": "If true, KubeVirt will leave the allocation and monitoring to an external device plugin",
+            "type": "boolean"
+          },
+          "pciVendorSelector": {
+            "description": "The vendor_id:product_id tuple of the PCI device",
+            "type": "string"
+          },
+          "resourceName": {
+            "description": "The name of the resource that is representing the device. Exposed by a device plugin and requested by VMs. Typically of the form vendor.com/product_nameThe name of the resource that is representing the device. Exposed by a device plugin and requested by VMs. Typically of the form vendor.com/product_name",
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "x-kubernetes-list-type": "atomic"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

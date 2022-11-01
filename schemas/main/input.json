@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "required": [
+    "type",
+    "name"
+  ],
+  "properties": {
+    "bus": {
+      "description": "Bus indicates the bus of input device to emulate. Supported values: virtio, usb.",
+      "type": "string"
+    },
+    "name": {
+      "description": "Name is the device name",
+      "type": "string"
+    },
+    "type": {
+      "description": "Type indicated the type of input device. Supported values: tablet.",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

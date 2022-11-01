@@ -1,0 +1,36 @@
+{
+  "description": "LogVerbosity sets log verbosity level of  various components",
+  "type": "object",
+  "properties": {
+    "nodeVerbosity": {
+      "description": "NodeVerbosity represents a map of nodes with a specific verbosity level",
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer",
+        "format": "int32"
+      }
+    },
+    "virtAPI": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "virtController": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "virtHandler": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "virtLauncher": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "virtOperator": {
+      "type": "integer",
+      "format": "int32"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

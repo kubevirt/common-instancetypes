@@ -1,0 +1,21 @@
+{
+  "description": "MediatedHostDevice represents a host mediated device allowed for passthrough",
+  "type": "object",
+  "required": [
+    "mdevNameSelector",
+    "resourceName"
+  ],
+  "properties": {
+    "externalResourceProvider": {
+      "type": "boolean"
+    },
+    "mdevNameSelector": {
+      "type": "string"
+    },
+    "resourceName": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

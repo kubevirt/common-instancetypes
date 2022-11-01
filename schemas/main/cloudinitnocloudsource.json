@@ -1,0 +1,46 @@
+{
+  "description": "Represents a cloud-init nocloud user data source. More info: http://cloudinit.readthedocs.io/en/latest/topics/datasources/nocloud.html",
+  "type": "object",
+  "properties": {
+    "networkData": {
+      "description": "NetworkData contains NoCloud inline cloud-init networkdata.",
+      "type": "string"
+    },
+    "networkDataBase64": {
+      "description": "NetworkDataBase64 contains NoCloud cloud-init networkdata as a base64 encoded string.",
+      "type": "string"
+    },
+    "networkDataSecretRef": {
+      "description": "LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "secretRef": {
+      "description": "LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "userData": {
+      "description": "UserData contains NoCloud inline cloud-init userdata.",
+      "type": "string"
+    },
+    "userDataBase64": {
+      "description": "UserDataBase64 contains NoCloud cloud-init userdata as a base64 encoded string.",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

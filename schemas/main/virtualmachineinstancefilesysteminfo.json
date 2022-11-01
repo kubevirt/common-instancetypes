@@ -1,0 +1,45 @@
+{
+  "description": "VirtualMachineInstanceFileSystemInfo represents information regarding single guest os filesystem",
+  "type": "object",
+  "required": [
+    "disks"
+  ],
+  "properties": {
+    "disks": {
+      "type": "array",
+      "items": {
+        "description": "VirtualMachineInstanceFileSystem represents guest os disk",
+        "type": "object",
+        "required": [
+          "diskName",
+          "mountPoint",
+          "fileSystemType",
+          "usedBytes",
+          "totalBytes"
+        ],
+        "properties": {
+          "diskName": {
+            "type": "string"
+          },
+          "fileSystemType": {
+            "type": "string"
+          },
+          "mountPoint": {
+            "type": "string"
+          },
+          "totalBytes": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "usedBytes": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

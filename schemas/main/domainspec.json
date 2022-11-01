@@ -1,0 +1,1087 @@
+{
+  "type": "object",
+  "required": [
+    "devices"
+  ],
+  "properties": {
+    "chassis": {
+      "description": "Chassis specifies the chassis info passed to the domain.",
+      "type": "object",
+      "properties": {
+        "asset": {
+          "type": "string"
+        },
+        "manufacturer": {
+          "type": "string"
+        },
+        "serial": {
+          "type": "string"
+        },
+        "sku": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "clock": {
+      "description": "Represents the clock and timers of a vmi.",
+      "type": "object",
+      "properties": {
+        "timer": {
+          "description": "Represents all available timers in a vmi.",
+          "type": "object",
+          "properties": {
+            "hpet": {
+              "type": "object",
+              "properties": {
+                "present": {
+                  "description": "Enabled set to false makes sure that the machine type or a preset can't add the timer. Defaults to true.",
+                  "type": "boolean"
+                },
+                "tickPolicy": {
+                  "description": "TickPolicy determines what happens when QEMU misses a deadline for injecting a tick to the guest. One of \"delay\", \"catchup\", \"merge\", \"discard\".",
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            },
+            "hyperv": {
+              "type": "object",
+              "properties": {
+                "present": {
+                  "description": "Enabled set to false makes sure that the machine type or a preset can't add the timer. Defaults to true.",
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
+            "kvm": {
+              "type": "object",
+              "properties": {
+                "present": {
+                  "description": "Enabled set to false makes sure that the machine type or a preset can't add the timer. Defaults to true.",
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
+            "pit": {
+              "type": "object",
+              "properties": {
+                "present": {
+                  "description": "Enabled set to false makes sure that the machine type or a preset can't add the timer. Defaults to true.",
+                  "type": "boolean"
+                },
+                "tickPolicy": {
+                  "description": "TickPolicy determines what happens when QEMU misses a deadline for injecting a tick to the guest. One of \"delay\", \"catchup\", \"discard\".",
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            },
+            "rtc": {
+              "type": "object",
+              "properties": {
+                "present": {
+                  "description": "Enabled set to false makes sure that the machine type or a preset can't add the timer. Defaults to true.",
+                  "type": "boolean"
+                },
+                "tickPolicy": {
+                  "description": "TickPolicy determines what happens when QEMU misses a deadline for injecting a tick to the guest. One of \"delay\", \"catchup\".",
+                  "type": "string"
+                },
+                "track": {
+                  "description": "Track the guest or the wall clock.",
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "timezone": {
+          "description": "Timezone sets the guest clock to the specified timezone. Zone name follows the TZ environment variable format (e.g. 'America/New_York').",
+          "type": "string"
+        },
+        "utc": {
+          "description": "UTC sets the guest clock to UTC on each boot.",
+          "type": "object",
+          "properties": {
+            "offsetSeconds": {
+              "description": "OffsetSeconds specifies an offset in seconds, relative to UTC. If set, guest changes to the clock will be kept during reboots and not reset.",
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "cpu": {
+      "description": "CPU allows specifying the CPU topology.",
+      "type": "object",
+      "properties": {
+        "cores": {
+          "description": "Cores specifies the number of cores inside the vmi. Must be a value greater or equal 1.",
+          "type": "integer",
+          "format": "int64"
+        },
+        "dedicatedCpuPlacement": {
+          "description": "DedicatedCPUPlacement requests the scheduler to place the VirtualMachineInstance on a node with enough dedicated pCPUs and pin the vCPUs to it.",
+          "type": "boolean"
+        },
+        "features": {
+          "description": "Features specifies the CPU features list inside the VMI.",
+          "type": "array",
+          "items": {
+            "description": "CPUFeature allows specifying a CPU feature.",
+            "type": "object",
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "description": "Name of the CPU feature",
+                "type": "string"
+              },
+              "policy": {
+                "description": "Policy is the CPU feature attribute which can have the following attributes: force    - The virtual CPU will claim the feature is supported regardless of it being supported by host CPU. require  - Guest creation will fail unless the feature is supported by the host CPU or the hypervisor is able to emulate it. optional - The feature will be supported by virtual CPU if and only if it is supported by host CPU. disable  - The feature will not be supported by virtual CPU. forbid   - Guest creation will fail if the feature is supported by host CPU. Defaults to require",
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "isolateEmulatorThread": {
+          "description": "IsolateEmulatorThread requests one more dedicated pCPU to be allocated for the VMI to place the emulator thread on it.",
+          "type": "boolean"
+        },
+        "model": {
+          "description": "Model specifies the CPU model inside the VMI. List of available models https://github.com/libvirt/libvirt/tree/master/src/cpu_map. It is possible to specify special cases like \"host-passthrough\" to get the same CPU as the node and \"host-model\" to get CPU closest to the node one. Defaults to host-model.",
+          "type": "string"
+        },
+        "numa": {
+          "type": "object",
+          "properties": {
+            "guestMappingPassthrough": {
+              "description": "NUMAGuestMappingPassthrough instructs kubevirt to model numa topology which is compatible with the CPU pinning on the guest. This will result in a subset of the node numa topology being passed through, ensuring that virtual numa nodes and their memory never cross boundaries coming from the node numa mapping.",
+              "type": "object"
+            }
+          },
+          "additionalProperties": false
+        },
+        "realtime": {
+          "description": "Realtime holds the tuning knobs specific for realtime workloads.",
+          "type": "object",
+          "properties": {
+            "mask": {
+              "description": "Mask defines the vcpu mask expression that defines which vcpus are used for realtime. Format matches libvirt's expressions. Example: \"0-3,^1\",\"0,2,3\",\"2-3\"",
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "sockets": {
+          "description": "Sockets specifies the number of sockets inside the vmi. Must be a value greater or equal 1.",
+          "type": "integer",
+          "format": "int64"
+        },
+        "threads": {
+          "description": "Threads specifies the number of threads inside the vmi. Must be a value greater or equal 1.",
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "additionalProperties": false
+    },
+    "devices": {
+      "type": "object",
+      "properties": {
+        "autoattachGraphicsDevice": {
+          "description": "Whether to attach the default graphics device or not. VNC will not be available if set to false. Defaults to true.",
+          "type": "boolean"
+        },
+        "autoattachInputDevice": {
+          "description": "Whether to attach an Input Device. Defaults to false.",
+          "type": "boolean"
+        },
+        "autoattachMemBalloon": {
+          "description": "Whether to attach the Memory balloon device with default period. Period can be adjusted in virt-config. Defaults to true.",
+          "type": "boolean"
+        },
+        "autoattachPodInterface": {
+          "description": "Whether to attach a pod network interface. Defaults to true.",
+          "type": "boolean"
+        },
+        "autoattachSerialConsole": {
+          "description": "Whether to attach the default serial console or not. Serial console access will not be available if set to false. Defaults to true.",
+          "type": "boolean"
+        },
+        "autoattachVSOCK": {
+          "description": "Whether to attach the VSOCK CID to the VM or not. VSOCK access will be available if set to true. Defaults to false.",
+          "type": "boolean"
+        },
+        "blockMultiQueue": {
+          "description": "Whether or not to enable virtio multi-queue for block devices. Defaults to false.",
+          "type": "boolean"
+        },
+        "clientPassthrough": {
+          "description": "Represent a subset of client devices that can be accessed by VMI. At the moment only, USB devices using Usbredir's library and tooling. Another fit would be a smartcard with libcacard.\n\nThe struct is currently empty as there is no immediate request for user-facing APIs. This structure simply turns on USB redirection of UsbClientPassthroughMaxNumberOf devices.",
+          "type": "object"
+        },
+        "disableHotplug": {
+          "description": "DisableHotplug disabled the ability to hotplug disks.",
+          "type": "boolean"
+        },
+        "disks": {
+          "description": "Disks describes disks, cdroms and luns which are connected to the vmi.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "blockSize": {
+                "description": "BlockSize provides the option to change the block size presented to the VM for a disk. Only one of its members may be specified.",
+                "type": "object",
+                "properties": {
+                  "custom": {
+                    "description": "CustomBlockSize represents the desired logical and physical block size for a VM disk.",
+                    "type": "object",
+                    "required": [
+                      "logical",
+                      "physical"
+                    ],
+                    "properties": {
+                      "logical": {
+                        "type": "integer",
+                        "format": "int32"
+                      },
+                      "physical": {
+                        "type": "integer",
+                        "format": "int32"
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "matchVolume": {
+                    "description": "Represents if a feature is enabled or disabled.",
+                    "type": "object",
+                    "properties": {
+                      "enabled": {
+                        "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+                        "type": "boolean"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
+              },
+              "bootOrder": {
+                "description": "BootOrder is an integer value > 0, used to determine ordering of boot devices. Lower values take precedence. Each disk or interface that has a boot order must have a unique value. Disks without a boot order are not tried if a disk with a boot order exists.",
+                "type": "integer",
+                "format": "int32"
+              },
+              "cache": {
+                "description": "Cache specifies which kvm disk cache mode should be used. Supported values are: CacheNone, CacheWriteThrough.",
+                "type": "string"
+              },
+              "cdrom": {
+                "type": "object",
+                "properties": {
+                  "bus": {
+                    "description": "Bus indicates the type of disk device to emulate. supported values: virtio, sata, scsi.",
+                    "type": "string"
+                  },
+                  "readonly": {
+                    "description": "ReadOnly. Defaults to true.",
+                    "type": "boolean"
+                  },
+                  "tray": {
+                    "description": "Tray indicates if the tray of the device is open or closed. Allowed values are \"open\" and \"closed\". Defaults to closed.",
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "dedicatedIOThread": {
+                "description": "dedicatedIOThread indicates this disk should have an exclusive IO Thread. Enabling this implies useIOThreads = true. Defaults to false.",
+                "type": "boolean"
+              },
+              "disk": {
+                "type": "object",
+                "properties": {
+                  "bus": {
+                    "description": "Bus indicates the type of disk device to emulate. supported values: virtio, sata, scsi, usb.",
+                    "type": "string"
+                  },
+                  "pciAddress": {
+                    "description": "If specified, the virtual disk will be placed on the guests pci address with the specified PCI address. For example: 0000:81:01.10",
+                    "type": "string"
+                  },
+                  "readonly": {
+                    "description": "ReadOnly. Defaults to false.",
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "io": {
+                "description": "IO specifies which QEMU disk IO mode should be used. Supported values are: native, default, threads.",
+                "type": "string"
+              },
+              "lun": {
+                "type": "object",
+                "properties": {
+                  "bus": {
+                    "description": "Bus indicates the type of disk device to emulate. supported values: virtio, sata, scsi.",
+                    "type": "string"
+                  },
+                  "readonly": {
+                    "description": "ReadOnly. Defaults to false.",
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "name": {
+                "description": "Name is the device name",
+                "type": "string"
+              },
+              "serial": {
+                "description": "Serial provides the ability to specify a serial number for the disk device.",
+                "type": "string"
+              },
+              "shareable": {
+                "description": "If specified the disk is made sharable and multiple write from different VMs are permitted",
+                "type": "boolean"
+              },
+              "tag": {
+                "description": "If specified, disk address and its tag will be provided to the guest via config drive metadata",
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "filesystems": {
+          "description": "Filesystems describes filesystem which is connected to the vmi.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "virtiofs"
+            ],
+            "properties": {
+              "name": {
+                "description": "Name is the device name",
+                "type": "string"
+              },
+              "virtiofs": {
+                "type": "object"
+              }
+            },
+            "additionalProperties": false
+          },
+          "x-kubernetes-list-type": "atomic"
+        },
+        "gpus": {
+          "description": "Whether to attach a GPU device to the vmi.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "deviceName"
+            ],
+            "properties": {
+              "deviceName": {
+                "type": "string"
+              },
+              "name": {
+                "description": "Name of the GPU device as exposed by a device plugin",
+                "type": "string"
+              },
+              "tag": {
+                "description": "If specified, the virtual network interface address and its tag will be provided to the guest via config drive",
+                "type": "string"
+              },
+              "virtualGPUOptions": {
+                "type": "object",
+                "properties": {
+                  "display": {
+                    "type": "object",
+                    "properties": {
+                      "enabled": {
+                        "description": "Enabled determines if a display addapter backed by a vGPU should be enabled or disabled on the guest. Defaults to true.",
+                        "type": "boolean"
+                      },
+                      "ramFB": {
+                        "description": "Represents if a feature is enabled or disabled.",
+                        "type": "object",
+                        "properties": {
+                          "enabled": {
+                            "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+                            "type": "boolean"
+                          }
+                        },
+                        "additionalProperties": false
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
+          "x-kubernetes-list-type": "atomic"
+        },
+        "hostDevices": {
+          "description": "Whether to attach a host device to the vmi.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "deviceName"
+            ],
+            "properties": {
+              "deviceName": {
+                "description": "DeviceName is the resource name of the host device exposed by a device plugin",
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "tag": {
+                "description": "If specified, the virtual network interface address and its tag will be provided to the guest via config drive",
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          "x-kubernetes-list-type": "atomic"
+        },
+        "inputs": {
+          "description": "Inputs describe input devices",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "type",
+              "name"
+            ],
+            "properties": {
+              "bus": {
+                "description": "Bus indicates the bus of input device to emulate. Supported values: virtio, usb.",
+                "type": "string"
+              },
+              "name": {
+                "description": "Name is the device name",
+                "type": "string"
+              },
+              "type": {
+                "description": "Type indicated the type of input device. Supported values: tablet.",
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "interfaces": {
+          "description": "Interfaces describe network interfaces which are added to the vmi.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "bootOrder": {
+                "description": "BootOrder is an integer value > 0, used to determine ordering of boot devices. Lower values take precedence. Each interface or disk that has a boot order must have a unique value. Interfaces without a boot order are not tried.",
+                "type": "integer",
+                "format": "int32"
+              },
+              "bridge": {
+                "description": "InterfaceBridge connects to a given network via a linux bridge.",
+                "type": "object"
+              },
+              "dhcpOptions": {
+                "description": "Extra DHCP options to use in the interface.",
+                "type": "object",
+                "properties": {
+                  "bootFileName": {
+                    "description": "If specified will pass option 67 to interface's DHCP server",
+                    "type": "string"
+                  },
+                  "ntpServers": {
+                    "description": "If specified will pass the configured NTP server to the VM via DHCP option 042.",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "privateOptions": {
+                    "description": "If specified will pass extra DHCP options for private use, range: 224-254",
+                    "type": "array",
+                    "items": {
+                      "description": "DHCPExtraOptions defines Extra DHCP options for a VM.",
+                      "type": "object",
+                      "required": [
+                        "option",
+                        "value"
+                      ],
+                      "properties": {
+                        "option": {
+                          "description": "Option is an Integer value from 224-254 Required.",
+                          "type": "integer",
+                          "format": "int32"
+                        },
+                        "value": {
+                          "description": "Value is a String value for the Option provided Required.",
+                          "type": "string"
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  },
+                  "tftpServerName": {
+                    "description": "If specified will pass option 66 to interface's DHCP server",
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "macAddress": {
+                "description": "Interface MAC address. For example: de:ad:00:00:be:af or DE-AD-00-00-BE-AF.",
+                "type": "string"
+              },
+              "macvtap": {
+                "description": "InterfaceMacvtap connects to a given network by extending the Kubernetes node's L2 networks via a macvtap interface.",
+                "type": "object"
+              },
+              "masquerade": {
+                "description": "InterfaceMasquerade connects to a given network using netfilter rules to nat the traffic.",
+                "type": "object"
+              },
+              "model": {
+                "description": "Interface model. One of: e1000, e1000e, ne2k_pci, pcnet, rtl8139, virtio. Defaults to virtio.",
+                "type": "string"
+              },
+              "name": {
+                "description": "Logical name of the interface as well as a reference to the associated networks. Must match the Name of a Network.",
+                "type": "string"
+              },
+              "passt": {
+                "description": "InterfacePasst connects to a given network.",
+                "type": "object"
+              },
+              "pciAddress": {
+                "description": "If specified, the virtual network interface will be placed on the guests pci address with the specified PCI address. For example: 0000:81:01.10",
+                "type": "string"
+              },
+              "ports": {
+                "description": "List of ports to be forwarded to the virtual machine.",
+                "type": "array",
+                "items": {
+                  "description": "Port represents a port to expose from the virtual machine. Default protocol TCP. The port field is mandatory",
+                  "type": "object",
+                  "required": [
+                    "port"
+                  ],
+                  "properties": {
+                    "name": {
+                      "description": "If specified, this must be an IANA_SVC_NAME and unique within the pod. Each named port in a pod must have a unique name. Name for the port that can be referred to by services.",
+                      "type": "string"
+                    },
+                    "port": {
+                      "description": "Number of port to expose for the virtual machine. This must be a valid port number, 0 < x < 65536.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "protocol": {
+                      "description": "Protocol for port. Must be UDP or TCP. Defaults to \"TCP\".",
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "slirp": {
+                "description": "InterfaceSlirp connects to a given network using QEMU user networking mode.",
+                "type": "object"
+              },
+              "sriov": {
+                "description": "InterfaceSRIOV connects to a given network by passing-through an SR-IOV PCI device via vfio.",
+                "type": "object"
+              },
+              "tag": {
+                "description": "If specified, the virtual network interface address and its tag will be provided to the guest via config drive",
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "networkInterfaceMultiqueue": {
+          "description": "If specified, virtual network interfaces configured with a virtio bus will also enable the vhost multiqueue feature for network devices. The number of queues created depends on additional factors of the VirtualMachineInstance, like the number of guest CPUs.",
+          "type": "boolean"
+        },
+        "rng": {
+          "description": "Rng represents the random device passed from host",
+          "type": "object"
+        },
+        "sound": {
+          "description": "Represents the user's configuration to emulate sound cards in the VMI.",
+          "type": "object",
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "model": {
+              "description": "We only support ich9 or ac97. If SoundDevice is not set: No sound card is emulated. If SoundDevice is set but Model is not: ich9",
+              "type": "string"
+            },
+            "name": {
+              "description": "User's defined name for this sound device",
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "tpm": {
+          "type": "object"
+        },
+        "useVirtioTransitional": {
+          "description": "Fall back to legacy virtio 0.9 support if virtio bus is selected on devices. This is helpful for old machines like CentOS6 or RHEL6 which do not understand virtio_non_transitional (virtio 1.0).",
+          "type": "boolean"
+        },
+        "watchdog": {
+          "description": "Named watchdog device.",
+          "type": "object",
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "i6300esb": {
+              "description": "i6300esb watchdog device.",
+              "type": "object",
+              "properties": {
+                "action": {
+                  "description": "The action to take. Valid values are poweroff, reset, shutdown. Defaults to reset.",
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            },
+            "name": {
+              "description": "Name of the watchdog.",
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "features": {
+      "type": "object",
+      "properties": {
+        "acpi": {
+          "description": "Represents if a feature is enabled or disabled.",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "apic": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+              "type": "boolean"
+            },
+            "endOfInterrupt": {
+              "description": "EndOfInterrupt enables the end of interrupt notification in the guest. Defaults to false.",
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "hyperv": {
+          "description": "Hyperv specific features.",
+          "type": "object",
+          "properties": {
+            "evmcs": {
+              "description": "Represents if a feature is enabled or disabled.",
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
+            "frequencies": {
+              "description": "Represents if a feature is enabled or disabled.",
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
+            "ipi": {
+              "description": "Represents if a feature is enabled or disabled.",
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
+            "reenlightenment": {
+              "description": "Represents if a feature is enabled or disabled.",
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
+            "relaxed": {
+              "description": "Represents if a feature is enabled or disabled.",
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
+            "reset": {
+              "description": "Represents if a feature is enabled or disabled.",
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
+            "runtime": {
+              "description": "Represents if a feature is enabled or disabled.",
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
+            "spinlocks": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+                  "type": "boolean"
+                },
+                "spinlocks": {
+                  "description": "Retries indicates the number of retries. Must be a value greater or equal 4096. Defaults to 4096.",
+                  "type": "integer",
+                  "format": "int64"
+                }
+              },
+              "additionalProperties": false
+            },
+            "synic": {
+              "description": "Represents if a feature is enabled or disabled.",
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
+            "synictimer": {
+              "type": "object",
+              "properties": {
+                "direct": {
+                  "description": "Represents if a feature is enabled or disabled.",
+                  "type": "object",
+                  "properties": {
+                    "enabled": {
+                      "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+                      "type": "boolean"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "enabled": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
+            "tlbflush": {
+              "description": "Represents if a feature is enabled or disabled.",
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
+            "vapic": {
+              "description": "Represents if a feature is enabled or disabled.",
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
+            "vendorid": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+                  "type": "boolean"
+                },
+                "vendorid": {
+                  "description": "VendorID sets the hypervisor vendor id, visible to the vmi. String up to twelve characters.",
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            },
+            "vpindex": {
+              "description": "Represents if a feature is enabled or disabled.",
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "kvm": {
+          "type": "object",
+          "properties": {
+            "hidden": {
+              "description": "Hide the KVM hypervisor from standard MSR based discovery. Defaults to false",
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "pvspinlock": {
+          "description": "Represents if a feature is enabled or disabled.",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        },
+        "smm": {
+          "description": "Represents if a feature is enabled or disabled.",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "firmware": {
+      "type": "object",
+      "properties": {
+        "bootloader": {
+          "description": "Represents the firmware blob used to assist in the domain creation process. Used for setting the QEMU BIOS file path for the libvirt domain.",
+          "type": "object",
+          "properties": {
+            "bios": {
+              "description": "If set (default), BIOS will be used.",
+              "type": "object",
+              "properties": {
+                "useSerial": {
+                  "description": "If set, the BIOS output will be transmitted over serial",
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
+            "efi": {
+              "description": "If set, EFI will be used instead of BIOS.",
+              "type": "object",
+              "properties": {
+                "secureBoot": {
+                  "description": "If set, SecureBoot will be enabled and the OVMF roms will be swapped for SecureBoot-enabled ones. Requires SMM to be enabled. Defaults to true",
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "kernelBoot": {
+          "description": "Represents the firmware blob used to assist in the kernel boot process. Used for setting the kernel, initrd and command line arguments",
+          "type": "object",
+          "properties": {
+            "container": {
+              "description": "If set, the VM will be booted from the defined kernel / initrd.",
+              "type": "object",
+              "required": [
+                "image"
+              ],
+              "properties": {
+                "image": {
+                  "description": "Image that contains initrd / kernel files.",
+                  "type": "string"
+                },
+                "imagePullPolicy": {
+                  "description": "Image pull policy. One of Always, Never, IfNotPresent. Defaults to Always if :latest tag is specified, or IfNotPresent otherwise. Cannot be updated. More info: https://kubernetes.io/docs/concepts/containers/images#updating-images",
+                  "type": "string"
+                },
+                "imagePullSecret": {
+                  "description": "ImagePullSecret is the name of the Docker registry secret required to pull the image. The secret must already exist.",
+                  "type": "string"
+                },
+                "initrdPath": {
+                  "description": "the fully-qualified path to the ramdisk image in the host OS",
+                  "type": "string"
+                },
+                "kernelPath": {
+                  "description": "The fully-qualified path to the kernel image in the host OS",
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            },
+            "kernelArgs": {
+              "description": "Arguments to be passed to the kernel at boot time",
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "serial": {
+          "description": "The system-serial-number in SMBIOS",
+          "type": "string"
+        },
+        "uuid": {
+          "description": "UUID reported by the vmi bios. Defaults to a random generated uid.",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ioThreadsPolicy": {
+      "description": "Controls whether or not disks will share IOThreads. Omitting IOThreadsPolicy disables use of IOThreads. One of: shared, auto",
+      "type": "string"
+    },
+    "launchSecurity": {
+      "type": "object",
+      "properties": {
+        "sev": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    },
+    "machine": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "description": "QEMU machine type is the actual chipset of the VirtualMachineInstance.",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "memory": {
+      "description": "Memory allows specifying the VirtualMachineInstance memory features.",
+      "type": "object",
+      "properties": {
+        "guest": {
+          "description": "Quantity is a fixed-point representation of a number. It provides convenient marshaling/unmarshaling in JSON and YAML, in addition to String() and AsInt64() accessors.\n\nThe serialization format is:\n\n<quantity>        ::= <signedNumber><suffix>\n  (Note that <suffix> may be empty, from the \"\" case in <decimalSI>.)\n<digit>           ::= 0 | 1 | ... | 9 <digits>          ::= <digit> | <digit><digits> <number>          ::= <digits> | <digits>.<digits> | <digits>. | .<digits> <sign>            ::= \"+\" | \"-\" <signedNumber>    ::= <number> | <sign><number> <suffix>          ::= <binarySI> | <decimalExponent> | <decimalSI> <binarySI>        ::= Ki | Mi | Gi | Ti | Pi | Ei\n  (International System of units; See: http://physics.nist.gov/cuu/Units/binary.html)\n<decimalSI>       ::= m | \"\" | k | M | G | T | P | E\n  (Note that 1024 = 1Ki but 1000 = 1k; I didn't choose the capitalization.)\n<decimalExponent> ::= \"e\" <signedNumber> | \"E\" <signedNumber>\n\nNo matter which of the three exponent forms is used, no quantity may represent a number greater than 2^63-1 in magnitude, nor may it have more than 3 decimal places. Numbers larger or more precise will be capped or rounded up. (E.g.: 0.1m will rounded up to 1m.) This may be extended in the future if we require larger or smaller quantities.\n\nWhen a Quantity is parsed from a string, it will remember the type of suffix it had, and will use the same type again when it is serialized.\n\nBefore serializing, Quantity will be put in \"canonical form\". This means that Exponent/suffix will be adjusted up or down (with a corresponding increase or decrease in Mantissa) such that:\n  a. No precision is lost\n  b. No fractional digits will be emitted\n  c. The exponent (or suffix) is as large as possible.\nThe sign will be omitted unless the number is negative.\n\nExamples:\n  1.5 will be serialized as \"1500m\"\n  1.5Gi will be serialized as \"1536Mi\"\n\nNote that the quantity will NEVER be internally represented by a floating point number. That is the whole point of this exercise.\n\nNon-canonical values will still parse as long as they are well formed, but will be re-emitted in their canonical form. (So always use canonical form, or don't diff.)\n\nThis format is intended to make it difficult to use these numbers without writing some sort of special handling code in the hopes that that will cause implementors to also use a fixed point implementation.",
+          "type": "string"
+        },
+        "hugepages": {
+          "description": "Hugepages allow to use hugepages for the VirtualMachineInstance instead of regular memory.",
+          "type": "object",
+          "properties": {
+            "pageSize": {
+              "description": "PageSize specifies the hugepage size, for x86_64 architecture valid values are 1Gi and 2Mi.",
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "resources": {
+      "type": "object",
+      "properties": {
+        "limits": {
+          "description": "Limits describes the maximum amount of compute resources allowed. Valid resource keys are \"memory\" and \"cpu\".",
+          "type": "object"
+        },
+        "overcommitGuestOverhead": {
+          "description": "Don't ask the scheduler to take the guest-management overhead into account. Instead put the overhead only into the container's memory limit. This can lead to crashes if all memory is in use on a node. Defaults to false.",
+          "type": "boolean"
+        },
+        "requests": {
+          "description": "Requests is a description of the initial vmi resources. Valid resource keys are \"memory\" and \"cpu\".",
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

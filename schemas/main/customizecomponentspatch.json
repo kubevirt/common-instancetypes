@@ -1,0 +1,25 @@
+{
+  "type": "object",
+  "required": [
+    "resourceName",
+    "resourceType",
+    "patch",
+    "type"
+  ],
+  "properties": {
+    "patch": {
+      "type": "string"
+    },
+    "resourceName": {
+      "type": "string"
+    },
+    "resourceType": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

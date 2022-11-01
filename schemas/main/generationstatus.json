@@ -1,0 +1,39 @@
+{
+  "description": "GenerationStatus keeps track of the generation for a given resource so that decisions about forced updates can be made.",
+  "type": "object",
+  "required": [
+    "group",
+    "resource",
+    "name",
+    "lastGeneration"
+  ],
+  "properties": {
+    "group": {
+      "description": "group is the group of the thing you're tracking",
+      "type": "string"
+    },
+    "hash": {
+      "description": "hash is an optional field set for resources without generation that are content sensitive like secrets and configmaps",
+      "type": "string"
+    },
+    "lastGeneration": {
+      "description": "lastGeneration is the last generation of the workload controller involved",
+      "type": "integer",
+      "format": "int64"
+    },
+    "name": {
+      "description": "name is the name of the thing you're tracking",
+      "type": "string"
+    },
+    "namespace": {
+      "description": "namespace is where the thing you're tracking is",
+      "type": "string"
+    },
+    "resource": {
+      "description": "resource is the resource type of the thing you're tracking",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

@@ -1,0 +1,25 @@
+{
+  "description": "VolumeRestore contains the data neeed to restore a PVC",
+  "type": "object",
+  "required": [
+    "volumeName",
+    "persistentVolumeClaim",
+    "volumeSnapshotName"
+  ],
+  "properties": {
+    "dataVolumeName": {
+      "type": "string"
+    },
+    "persistentVolumeClaim": {
+      "type": "string"
+    },
+    "volumeName": {
+      "type": "string"
+    },
+    "volumeSnapshotName": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

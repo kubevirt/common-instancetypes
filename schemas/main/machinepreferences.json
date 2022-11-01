@@ -1,0 +1,12 @@
+{
+  "description": "MachinePreferences contains various optional defaults for Machine.",
+  "type": "object",
+  "properties": {
+    "preferredMachineType": {
+      "description": "PreferredMachineType optionally defines the preferred machine type to use.",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

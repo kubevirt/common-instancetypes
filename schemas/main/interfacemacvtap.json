@@ -1,0 +1,6 @@
+{
+  "description": "InterfaceMacvtap connects to a given network by extending the Kubernetes node's L2 networks via a macvtap interface.",
+  "type": "object",
+  "$schema": "http://json-schema.org/schema#",
+  "additionalProperties": false
+}
