@@ -1,6 +1,6 @@
 # kubevirt/common-instancetypes
 
-A set of instancetypes and preferences to help create KubeVirt VirtualMachines.
+A set of instance types and preferences to help create KubeVirt VirtualMachines.
 
 ## Requirements
 
