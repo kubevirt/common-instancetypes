@@ -9,6 +9,6 @@ generate:
 	./scripts/generate.sh
 
 clean: 
-	rm -f *.yaml
+	rm -f common*.yaml
 
 .PHONY: all lint generate
