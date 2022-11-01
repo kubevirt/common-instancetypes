@@ -2,171 +2,226 @@
 
 A set of instancetypes and preferences to help create KubeVirt VirtualMachines.
 
-Currently providing the following VirtualMachineClusterInstancetype, VirtualMachineClusterPreference, VirtualMachineInstancetype and VirtualMachinePreference resources:
+## Resources
+
+The following instance type and preference resources are provided by this project:
 
 ```
-$ ./cluster-up/kubectl.sh kustomize https://github.com/lyarwood/common-instancetypes.git/VirtualMachineInstancetypes | ./cluster-up/kubectl.sh apply -f -
-selecting docker as container runtime
-selecting docker as container runtime
-virtualmachineinstancetype.instancetype.kubevirt.io/highperformance.large created
-virtualmachineinstancetype.instancetype.kubevirt.io/highperformance.medium created
-virtualmachineinstancetype.instancetype.kubevirt.io/highperformance.small created
-virtualmachineinstancetype.instancetype.kubevirt.io/server.large created
-virtualmachineinstancetype.instancetype.kubevirt.io/server.medium created
-virtualmachineinstancetype.instancetype.kubevirt.io/server.small created
-virtualmachineinstancetype.instancetype.kubevirt.io/server.tiny created
-$ ./cluster-up/kubectl.sh kustomize https://github.com/lyarwood/common-instancetypes.git/VirtualMachineClusterInstancetypes | ./cluster-up/kubectl.sh apply -f -
-selecting docker as container runtime
-selecting docker as container runtime
-virtualmachineclusterinstancetype.instancetype.kubevirt.io/highperformance.large created
-virtualmachineclusterinstancetype.instancetype.kubevirt.io/highperformance.medium created
-virtualmachineclusterinstancetype.instancetype.kubevirt.io/highperformance.small created
-virtualmachineclusterinstancetype.instancetype.kubevirt.io/server.large created
-virtualmachineclusterinstancetype.instancetype.kubevirt.io/server.medium created
-virtualmachineclusterinstancetype.instancetype.kubevirt.io/server.small created
-virtualmachineclusterinstancetype.instancetype.kubevirt.io/server.tiny created
-$ ./cluster-up/kubectl.sh kustomize https://github.com/lyarwood/common-instancetypes.git/VirtualMachinePreferences | ./cluster-up/kubectl.sh apply -f -
-selecting docker as container runtime
-selecting docker as container runtime
-virtualmachinepreference.instancetype.kubevirt.io/centos.7 created
-virtualmachinepreference.instancetype.kubevirt.io/centos.7.desktop created
-virtualmachinepreference.instancetype.kubevirt.io/centos.8 created
-virtualmachinepreference.instancetype.kubevirt.io/centos.8.desktop created
-virtualmachinepreference.instancetype.kubevirt.io/centos.9 created
-virtualmachinepreference.instancetype.kubevirt.io/centos.9.desktop created
-virtualmachinepreference.instancetype.kubevirt.io/fedora.35 created
-virtualmachinepreference.instancetype.kubevirt.io/fedora.36 created
-virtualmachinepreference.instancetype.kubevirt.io/rhel.7 created
-virtualmachinepreference.instancetype.kubevirt.io/rhel.7.desktop created
-virtualmachinepreference.instancetype.kubevirt.io/rhel.8 created
-virtualmachinepreference.instancetype.kubevirt.io/rhel.8.desktop created
-virtualmachinepreference.instancetype.kubevirt.io/rhel.9 created
-virtualmachinepreference.instancetype.kubevirt.io/rhel.9.desktop created
-virtualmachinepreference.instancetype.kubevirt.io/ubuntu.18.04 created
-virtualmachinepreference.instancetype.kubevirt.io/ubuntu.20.04 created
-virtualmachinepreference.instancetype.kubevirt.io/ubuntu.22.04 created
-virtualmachinepreference.instancetype.kubevirt.io/windows.10 created
-virtualmachinepreference.instancetype.kubevirt.io/windows.10.virtio created
-virtualmachinepreference.instancetype.kubevirt.io/windows.11 created
-virtualmachinepreference.instancetype.kubevirt.io/windows.11.virtio created
-virtualmachinepreference.instancetype.kubevirt.io/windows.2k12 created
-virtualmachinepreference.instancetype.kubevirt.io/windows.2k12.virtio created
-virtualmachinepreference.instancetype.kubevirt.io/windows.2k16 created
-virtualmachinepreference.instancetype.kubevirt.io/windows.2k16.virtio created
-virtualmachinepreference.instancetype.kubevirt.io/windows.2k19 created
-virtualmachinepreference.instancetype.kubevirt.io/windows.2k19.virtio created
-$ ./cluster-up/kubectl.sh kustomize https://github.com/lyarwood/common-instancetypes.git/VirtualMachineClusterPreferences | ./cluster-up/kubectl.sh apply -f -
-selecting docker as container runtime
-selecting docker as container runtime
-virtualmachineclusterpreference.instancetype.kubevirt.io/centos.7 created
-virtualmachineclusterpreference.instancetype.kubevirt.io/centos.7.desktop created
-virtualmachineclusterpreference.instancetype.kubevirt.io/centos.8 created
-virtualmachineclusterpreference.instancetype.kubevirt.io/centos.8.desktop created
-virtualmachineclusterpreference.instancetype.kubevirt.io/centos.9 created
-virtualmachineclusterpreference.instancetype.kubevirt.io/centos.9.desktop created
-virtualmachineclusterpreference.instancetype.kubevirt.io/fedora.35 created
-virtualmachineclusterpreference.instancetype.kubevirt.io/fedora.36 created
-virtualmachineclusterpreference.instancetype.kubevirt.io/rhel.7 created
-virtualmachineclusterpreference.instancetype.kubevirt.io/rhel.7.desktop created
-virtualmachineclusterpreference.instancetype.kubevirt.io/rhel.8 created
-virtualmachineclusterpreference.instancetype.kubevirt.io/rhel.8.desktop created
-virtualmachineclusterpreference.instancetype.kubevirt.io/rhel.9 created
-virtualmachineclusterpreference.instancetype.kubevirt.io/rhel.9.desktop created
-virtualmachineclusterpreference.instancetype.kubevirt.io/ubuntu.18.04 created
-virtualmachineclusterpreference.instancetype.kubevirt.io/ubuntu.20.04 created
-virtualmachineclusterpreference.instancetype.kubevirt.io/ubuntu.22.04 created
-virtualmachineclusterpreference.instancetype.kubevirt.io/windows.10 created
-virtualmachineclusterpreference.instancetype.kubevirt.io/windows.10.virtio created
-virtualmachineclusterpreference.instancetype.kubevirt.io/windows.11 created
-virtualmachineclusterpreference.instancetype.kubevirt.io/windows.11.virtio created
-virtualmachineclusterpreference.instancetype.kubevirt.io/windows.2k12 created
-virtualmachineclusterpreference.instancetype.kubevirt.io/windows.2k12.virtio created
-virtualmachineclusterpreference.instancetype.kubevirt.io/windows.2k16 created
-virtualmachineclusterpreference.instancetype.kubevirt.io/windows.2k16.virtio created
-virtualmachineclusterpreference.instancetype.kubevirt.io/windows.2k19 created
-virtualmachineclusterpreference.instancetype.kubevirt.io/windows.2k19.virtio created
 
-# Note that all of the above resources can be installed at once using the following URI:
+VirtualMachineClusterInstancetype
+highperformance.large
+---
+VirtualMachineClusterInstancetype
+highperformance.medium
+---
+VirtualMachineClusterInstancetype
+highperformance.small
+---
+VirtualMachineClusterInstancetype
+server.large
+---
+VirtualMachineClusterInstancetype
+server.medium
+---
+VirtualMachineClusterInstancetype
+server.small
+---
+VirtualMachineClusterInstancetype
+server.tiny
+---
+VirtualMachineClusterPreference
+alpine
+---
+VirtualMachineClusterPreference
+centos.7
+---
+VirtualMachineClusterPreference
+centos.7.desktop
+---
+VirtualMachineClusterPreference
+centos.8
+---
+VirtualMachineClusterPreference
+centos.8.desktop
+---
+VirtualMachineClusterPreference
+centos.9
+---
+VirtualMachineClusterPreference
+centos.9.desktop
+---
+VirtualMachineClusterPreference
+cirros
+---
+VirtualMachineClusterPreference
+fedora.35
+---
+VirtualMachineClusterPreference
+fedora.36
+---
+VirtualMachineClusterPreference
+rhel.7
+---
+VirtualMachineClusterPreference
+rhel.7.desktop
+---
+VirtualMachineClusterPreference
+rhel.8
+---
+VirtualMachineClusterPreference
+rhel.8.desktop
+---
+VirtualMachineClusterPreference
+rhel.9
+---
+VirtualMachineClusterPreference
+rhel.9.desktop
+---
+VirtualMachineClusterPreference
+ubuntu.18.04
+---
+VirtualMachineClusterPreference
+ubuntu.20.04
+---
+VirtualMachineClusterPreference
+ubuntu.22.04
+---
+VirtualMachineClusterPreference
+windows.10
+---
+VirtualMachineClusterPreference
+windows.10.virtio
+---
+VirtualMachineClusterPreference
+windows.11
+---
+VirtualMachineClusterPreference
+windows.11.virtio
+---
+VirtualMachineClusterPreference
+windows.2k12
+---
+VirtualMachineClusterPreference
+windows.2k12.virtio
+---
+VirtualMachineClusterPreference
+windows.2k16
+---
+VirtualMachineClusterPreference
+windows.2k16.virtio
+---
+VirtualMachineClusterPreference
+windows.2k19
+---
+VirtualMachineClusterPreference
+windows.2k19.virtio
+---
+VirtualMachineInstancetype
+highperformance.large
+---
+VirtualMachineInstancetype
+highperformance.medium
+---
+VirtualMachineInstancetype
+highperformance.small
+---
+VirtualMachineInstancetype
+server.large
+---
+VirtualMachineInstancetype
+server.medium
+---
+VirtualMachineInstancetype
+server.small
+---
+VirtualMachineInstancetype
+server.tiny
+---
+VirtualMachinePreference
+alpine
+---
+VirtualMachinePreference
+centos.7
+---
+VirtualMachinePreference
+centos.7.desktop
+---
+VirtualMachinePreference
+centos.8
+---
+VirtualMachinePreference
+centos.8.desktop
+---
+VirtualMachinePreference
+centos.9
+---
+VirtualMachinePreference
+centos.9.desktop
+---
+VirtualMachinePreference
+cirros
+---
+VirtualMachinePreference
+fedora.35
+---
+VirtualMachinePreference
+fedora.36
+---
+VirtualMachinePreference
+rhel.7
+---
+VirtualMachinePreference
+rhel.7.desktop
+---
+VirtualMachinePreference
+rhel.8
+---
+VirtualMachinePreference
+rhel.8.desktop
+---
+VirtualMachinePreference
+rhel.9
+---
+VirtualMachinePreference
+rhel.9.desktop
+---
+VirtualMachinePreference
+ubuntu.18.04
+---
+VirtualMachinePreference
+ubuntu.20.04
+---
+VirtualMachinePreference
+ubuntu.22.04
+---
+VirtualMachinePreference
+windows.10
+---
+VirtualMachinePreference
+windows.10.virtio
+---
+VirtualMachinePreference
+windows.11
+---
+VirtualMachinePreference
+windows.11.virtio
+---
+VirtualMachinePreference
+windows.2k12
+---
+VirtualMachinePreference
+windows.2k12.virtio
+---
+VirtualMachinePreference
+windows.2k16
+---
+VirtualMachinePreference
+windows.2k16.virtio
+---
+VirtualMachinePreference
+windows.2k19
+---
+VirtualMachinePreference
+windows.2k19.virtio
 
-$ ./cluster-up/kubectl.sh kustomize https://github.com/lyarwood/common-instancetypes | ./cluster-up/kubectl.sh apply -f -
-selecting docker as container runtime
-selecting docker as container runtime
-virtualmachineclusterinstancetype.instancetype.kubevirt.io/highperformance.large unchanged
-virtualmachineclusterinstancetype.instancetype.kubevirt.io/highperformance.medium unchanged
-virtualmachineclusterinstancetype.instancetype.kubevirt.io/highperformance.small unchanged
-virtualmachineclusterinstancetype.instancetype.kubevirt.io/server.large unchanged
-virtualmachineclusterinstancetype.instancetype.kubevirt.io/server.medium unchanged
-virtualmachineclusterinstancetype.instancetype.kubevirt.io/server.small unchanged
-virtualmachineclusterinstancetype.instancetype.kubevirt.io/server.tiny unchanged
-virtualmachineclusterpreference.instancetype.kubevirt.io/centos.7 unchanged
-virtualmachineclusterpreference.instancetype.kubevirt.io/centos.7.desktop unchanged
-virtualmachineclusterpreference.instancetype.kubevirt.io/centos.8 unchanged
-virtualmachineclusterpreference.instancetype.kubevirt.io/centos.8.desktop unchanged
-virtualmachineclusterpreference.instancetype.kubevirt.io/centos.9 unchanged
-virtualmachineclusterpreference.instancetype.kubevirt.io/centos.9.desktop unchanged
-virtualmachineclusterpreference.instancetype.kubevirt.io/fedora.35 unchanged
-virtualmachineclusterpreference.instancetype.kubevirt.io/fedora.36 unchanged
-virtualmachineclusterpreference.instancetype.kubevirt.io/rhel.7 unchanged
-virtualmachineclusterpreference.instancetype.kubevirt.io/rhel.7.desktop unchanged
-virtualmachineclusterpreference.instancetype.kubevirt.io/rhel.8 unchanged
-virtualmachineclusterpreference.instancetype.kubevirt.io/rhel.8.desktop unchanged
-virtualmachineclusterpreference.instancetype.kubevirt.io/rhel.9 unchanged
-virtualmachineclusterpreference.instancetype.kubevirt.io/rhel.9.desktop unchanged
-virtualmachineclusterpreference.instancetype.kubevirt.io/ubuntu.18.04 unchanged
-virtualmachineclusterpreference.instancetype.kubevirt.io/ubuntu.20.04 unchanged
-virtualmachineclusterpreference.instancetype.kubevirt.io/ubuntu.22.04 unchanged
-virtualmachineclusterpreference.instancetype.kubevirt.io/windows.10 unchanged
-virtualmachineclusterpreference.instancetype.kubevirt.io/windows.10.virtio unchanged
-virtualmachineclusterpreference.instancetype.kubevirt.io/windows.11 unchanged
-virtualmachineclusterpreference.instancetype.kubevirt.io/windows.11.virtio unchanged
-virtualmachineclusterpreference.instancetype.kubevirt.io/windows.2k12 unchanged
-virtualmachineclusterpreference.instancetype.kubevirt.io/windows.2k12.virtio unchanged
-virtualmachineclusterpreference.instancetype.kubevirt.io/windows.2k16 unchanged
-virtualmachineclusterpreference.instancetype.kubevirt.io/windows.2k16.virtio unchanged
-virtualmachineclusterpreference.instancetype.kubevirt.io/windows.2k19 unchanged
-virtualmachineclusterpreference.instancetype.kubevirt.io/windows.2k19.virtio unchanged
-virtualmachineinstancetype.instancetype.kubevirt.io/highperformance.large unchanged
-virtualmachineinstancetype.instancetype.kubevirt.io/highperformance.medium unchanged
-virtualmachineinstancetype.instancetype.kubevirt.io/highperformance.small unchanged
-virtualmachineinstancetype.instancetype.kubevirt.io/server.large unchanged
-virtualmachineinstancetype.instancetype.kubevirt.io/server.medium unchanged
-virtualmachineinstancetype.instancetype.kubevirt.io/server.small unchanged
-virtualmachineinstancetype.instancetype.kubevirt.io/server.tiny unchanged
-virtualmachinepreference.instancetype.kubevirt.io/centos.7 unchanged
-virtualmachinepreference.instancetype.kubevirt.io/centos.7.desktop unchanged
-virtualmachinepreference.instancetype.kubevirt.io/centos.8 unchanged
-virtualmachinepreference.instancetype.kubevirt.io/centos.8.desktop unchanged
-virtualmachinepreference.instancetype.kubevirt.io/centos.9 unchanged
-virtualmachinepreference.instancetype.kubevirt.io/centos.9.desktop unchanged
-virtualmachinepreference.instancetype.kubevirt.io/fedora.35 unchanged
-virtualmachinepreference.instancetype.kubevirt.io/fedora.36 unchanged
-virtualmachinepreference.instancetype.kubevirt.io/rhel.7 unchanged
-virtualmachinepreference.instancetype.kubevirt.io/rhel.7.desktop unchanged
-virtualmachinepreference.instancetype.kubevirt.io/rhel.8 unchanged
-virtualmachinepreference.instancetype.kubevirt.io/rhel.8.desktop unchanged
-virtualmachinepreference.instancetype.kubevirt.io/rhel.9 unchanged
-virtualmachinepreference.instancetype.kubevirt.io/rhel.9.desktop unchanged
-virtualmachinepreference.instancetype.kubevirt.io/ubuntu.18.04 unchanged
-virtualmachinepreference.instancetype.kubevirt.io/ubuntu.20.04 unchanged
-virtualmachinepreference.instancetype.kubevirt.io/ubuntu.22.04 unchanged
-virtualmachinepreference.instancetype.kubevirt.io/windows.10 unchanged
-virtualmachinepreference.instancetype.kubevirt.io/windows.10.virtio unchanged
-virtualmachinepreference.instancetype.kubevirt.io/windows.11 unchanged
-virtualmachinepreference.instancetype.kubevirt.io/windows.11.virtio unchanged
-virtualmachinepreference.instancetype.kubevirt.io/windows.2k12 unchanged
-virtualmachinepreference.instancetype.kubevirt.io/windows.2k12.virtio unchanged
-virtualmachinepreference.instancetype.kubevirt.io/windows.2k16 unchanged
-virtualmachinepreference.instancetype.kubevirt.io/windows.2k16.virtio unchanged
-virtualmachinepreference.instancetype.kubevirt.io/windows.2k19 unchanged
-virtualmachinepreference.instancetype.kubevirt.io/windows.2k19.virtio unchanged
-```
-## Requirements
-
-- kustomize
-- yamllint
-
-## Build
-
-```
-$ make
 ```

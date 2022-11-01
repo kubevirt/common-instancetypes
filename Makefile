@@ -4,7 +4,7 @@ SHELL=/bin/bash
 # TODO(lyarwood) - Host the expanded JSON schema elsewhere under the kubevirt namespace
 export KUBEVIRT_VERSION = main
 
-all: lint generate validate
+all: lint generate validate readme
 
 lint:
 	./scripts/lint.sh
@@ -18,7 +18,10 @@ validate:
 schema:
 	./scripts/schema.sh
 
+readme:
+	./scripts/readme.sh
+
 clean: 
 	rm -f common*.yaml
 
-.PHONY: all lint generate validate
+.PHONY: all lint generate validate readme
