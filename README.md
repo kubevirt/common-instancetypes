@@ -2,6 +2,23 @@
 
 A set of instancetypes and preferences to help create KubeVirt VirtualMachines.
 
+## Requirements
+
+The following tools are required by each `Makefile` target:
+
+* `make`
+  * `make lint`
+    * [yamllint](https://github.com/adrienverge/yamllint)
+    * [bashate](https://github.com/openstack/bashate)
+  * `make generate`
+    * [kustomize](https://kustomize.io/)
+  * `make validate`
+    * [kustomize](https://kustomize.io/)
+    * [kubeconform](https://github.com/yannh/kubeconform)
+
+* `make schema` (optional)
+  * [openapi2jsonschema](https://github.com/instrumenta/openapi2jsonschema)
+
 ## Resources
 
 The following instance type and preference resources are provided by this project:
