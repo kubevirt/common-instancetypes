@@ -1,0 +1,22 @@
+name: Main
+on:
+  push:
+    tags:
+      - "v*.*.*"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build
+        run: |
+          for f in $(ls *bundle.yaml); do
+            cp ${f} ${f/\.yaml/-${{ github.ref_name }}\.yaml}
+          done
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            *bundle-${{ github.ref_name }}.yaml
+            LICENSE
