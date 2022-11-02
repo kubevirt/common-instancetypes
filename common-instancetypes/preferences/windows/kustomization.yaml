@@ -8,6 +8,8 @@ resources:
   - ./2k16_virtio
   - ./2k19
   - ./2k19_virtio
+  - ./2k22
+  - ./2k22_virtio
   - ./10
   - ./10_virtio
   - ./11
