@@ -20,6 +20,24 @@ The following tools are required by each `Makefile` target:
 * `make schema` (optional)
   * [openapi2jsonschema](https://github.com/instrumenta/openapi2jsonschema)
 
+## Running Makefile targets within a container
+
+A [`Dockerfile`](./Dockerfile) is available that provides all of the above dependencies.
+
+To build and use this simply set the `COMMON_INSTANCETYPES_CRI` env variable to `docker` or `podman` before running `make`:
+
+```
+$ COMMON_INSTANCETYPES_CRI=docker make
+```
+
+Alternatively you can also build the image and run individual Makefile targets:
+
+```
+$ COMMON_INSTANCETYPES_CRI=docker make build_image
+[..]
+$ COMMON_INSTANCETYPES_CRI=docker make lint
+```
+
 ## Resources
 
 The following instance type and preference resources are provided by this project:

@@ -4,24 +4,31 @@ SHELL=/bin/bash
 # TODO(lyarwood) - Host the expanded JSON schema elsewhere under the kubevirt namespace
 export KUBEVIRT_VERSION = main
 
-all: lint generate validate readme
+# Use the COMMON_INSTANCETYPES_CRI env variable to control if the following targets are executed within a container.
+# Supported runtimes are docker and podman. By default targets run directly on the host.
+export COMMON_INSTANCETYPES_IMAGE = common-instancetypes-builder
 
-lint:
-	./scripts/lint.sh
+all: build_image lint generate validate readme
 
-generate:
-	./scripts/generate.sh
+build_image:
+	./scripts/build_image.sh
+
+lint: 
+	./scripts/cri.sh  "./scripts/lint.sh"
+
+generate: 
+	./scripts/cri.sh  "./scripts/generate.sh"
 
 validate:
-	./scripts/validate.sh
+	./scripts/cri.sh  "./scripts/validate.sh"
 
 schema:
-	./scripts/schema.sh
+	./scripts/cri.sh  "./scripts/schema.sh"
 
 readme:
-	./scripts/readme.sh
+	./scripts/cri.sh  "./scripts/readme.sh"
 
 clean: 
 	rm -f common*.yaml
 
-.PHONY: all lint generate validate readme
+.PHONY: all build_image lint generate validate readme
