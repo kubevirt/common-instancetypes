@@ -15,7 +15,8 @@ The following tools are required by each `Makefile` target:
   * `make validate`
     * [kustomize](https://kustomize.io/)
     * [kubeconform](https://github.com/yannh/kubeconform)
-
+  * `make readme`
+    * [yq](https://github.com/mikefarah/yq)
 * `make schema` (optional)
   * [openapi2jsonschema](https://github.com/instrumenta/openapi2jsonschema)
 
