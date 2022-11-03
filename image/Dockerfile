@@ -14,12 +14,12 @@
 #* `make schema` (optional)
 #  * [openapi2jsonschema](https://github.com/instrumenta/openapi2jsonschema)
 
-FROM quay.io/fedora/fedora:latest
+FROM quay.io/fedora/fedora-minimal:latest
 
-RUN dnf install -y make git golang python3-pip
+RUN microdnf install -y make git golang python3-pip tar && microdnf clean all -y
 
 # yamllint bashate openapi2jsonschema
-RUN pip install yamllint bashate openapi2jsonschema
+RUN pip install yamllint bashate openapi2jsonschema && pip cache purge
 
 # kustomize
 RUN curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh"  | bash && mv /kustomize /bin/kustomize
