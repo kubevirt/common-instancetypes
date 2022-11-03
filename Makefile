@@ -8,7 +8,7 @@ export KUBEVIRT_VERSION = main
 # Supported runtimes are docker and podman. By default targets run directly on the host.
 export COMMON_INSTANCETYPES_IMAGE = quay.io/kubevirtci/common-instancetypes-builder
 
-all: lint generate validate readme
+all: lint generate validate readme check
 
 build_image:
 	./scripts/build_image.sh
@@ -27,6 +27,9 @@ schema:
 
 readme:
 	./scripts/cri.sh  "./scripts/readme.sh"
+
+check:
+	./scripts/cri.sh  "./scripts/check.sh"
 
 clean: 
 	rm -f common*.yaml
