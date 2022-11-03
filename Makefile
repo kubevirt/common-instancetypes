@@ -13,6 +13,9 @@ all: lint generate validate readme check
 build_image:
 	./scripts/build_image.sh
 
+push_image: build_image
+	./scripts/push_image.sh
+
 lint: 
 	./scripts/cri.sh  "./scripts/lint.sh"
 
