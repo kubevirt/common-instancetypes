@@ -6,9 +6,9 @@ export KUBEVIRT_VERSION = main
 
 # Use the COMMON_INSTANCETYPES_CRI env variable to control if the following targets are executed within a container.
 # Supported runtimes are docker and podman. By default targets run directly on the host.
-export COMMON_INSTANCETYPES_IMAGE = common-instancetypes-builder
+export COMMON_INSTANCETYPES_IMAGE = quay.io/kubevirtci/common-instancetypes-builder
 
-all: build_image lint generate validate readme
+all: lint generate validate readme
 
 build_image:
 	./scripts/build_image.sh
