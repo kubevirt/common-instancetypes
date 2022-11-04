@@ -3,7 +3,7 @@
 #* `make`
 #  * `make lint`
 #    * [yamllint](https://github.com/adrienverge/yamllint)
-#    * [bashate](https://github.com/openstack/bashate)
+#    * [ShellCheck](https://github.com/koalaman/shellcheck)
 #  * `make generate`
 #    * [kustomize](https://kustomize.io/)
 #  * `make validate`

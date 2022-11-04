@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if !command -v kustomize &> /dev/null; then
+if ! command -v kustomize &> /dev/null; then
     echo "kustomize is not installed, see https://kubectl.docs.kubernetes.io/installation/kustomize/ for more details."
     exit 1
 fi
