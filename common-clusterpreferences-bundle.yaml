@@ -32,27 +32,6 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
-  name: centos.8
-spec:
-  devices:
-    preferredDiskBus: virtio
-    preferredInterfaceModel: virtio
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterPreference
-metadata:
-  name: centos.8.desktop
-spec:
-  devices:
-    preferredAutoattachInputDevice: true
-    preferredDiskBus: virtio
-    preferredInputBus: virtio
-    preferredInputType: tablet
-    preferredInterfaceModel: virtio
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterPreference
-metadata:
   name: centos.8.stream
 spec:
   devices:

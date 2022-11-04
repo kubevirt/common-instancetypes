@@ -91,12 +91,6 @@ VirtualMachineClusterPreference
 centos.7.desktop
 ---
 VirtualMachineClusterPreference
-centos.8
----
-VirtualMachineClusterPreference
-centos.8.desktop
----
-VirtualMachineClusterPreference
 centos.8.stream
 ---
 VirtualMachineClusterPreference
@@ -203,12 +197,6 @@ centos.7
 ---
 VirtualMachinePreference
 centos.7.desktop
----
-VirtualMachinePreference
-centos.8
----
-VirtualMachinePreference
-centos.8.desktop
 ---
 VirtualMachinePreference
 centos.8.stream

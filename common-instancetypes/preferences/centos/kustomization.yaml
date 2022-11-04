@@ -4,8 +4,6 @@ kind: Kustomization
 resources:
   - ./9_stream_desktop
   - ./9_stream
-  - ./8_desktop
-  - ./8
   - ./8_stream
   - ./8_stream_desktop
   - ./7_desktop
