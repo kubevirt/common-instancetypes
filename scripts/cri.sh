@@ -5,4 +5,4 @@ if [ "${COMMON_INSTANCETYPES_CRI}" == "" ]; then
     exit $?
 fi
 
-${COMMON_INSTANCETYPES_CRI} run -v "$(pwd):/common-instancetypes" -e KUBEVIRT_VERSION=${KUBEVIRT_VERSION} --rm ${COMMON_INSTANCETYPES_IMAGE} /usr/bin/bash -c "cd /common-instancetypes &&  $@"
+${COMMON_INSTANCETYPES_CRI} run -v "$(pwd):/common-instancetypes:rw,Z" -e KUBEVIRT_VERSION=${KUBEVIRT_VERSION} --rm ${COMMON_INSTANCETYPES_IMAGE} /usr/bin/bash -c "cd /common-instancetypes &&  $@"
