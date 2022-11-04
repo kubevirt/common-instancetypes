@@ -30,6 +30,3 @@ RUN go install github.com/yannh/kubeconform/cmd/kubeconform@v0.5.0 && mv /root/g
 # Download latest yq binary
 RUN curl -L https://github.com/mikefarah/yq/releases/download/v4.29.2/yq_linux_amd64 -o /usr/local/bin/yq && \
     chmod +x /usr/local/bin/yq
-
-# We need to create a directory for the code and add it as a safe.directory before use, allowing git commands to work correctly.
-RUN mkdir /common-instancetypes && git config --global --add safe.directory /common-instancetypes
