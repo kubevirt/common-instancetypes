@@ -16,7 +16,7 @@
 
 FROM quay.io/fedora/fedora-minimal:36
 
-RUN microdnf install -y make git golang python3-pip tar && microdnf clean all -y
+RUN microdnf install -y make git golang python3-pip tar ShellCheck && microdnf clean all -y
 
 # yamllint bashate openapi2jsonschema
 RUN pip install yamllint bashate openapi2jsonschema && pip cache purge
