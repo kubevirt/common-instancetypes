@@ -1,0 +1,155 @@
+{
+  "description": "DevicePreferences contains various optional Device preferences.",
+  "type": "object",
+  "properties": {
+    "preferredAutoattachGraphicsDevice": {
+      "description": "PreferredAutoattachGraphicsDevice optionally defines the preferred value of AutoattachGraphicsDevice",
+      "type": "boolean"
+    },
+    "preferredAutoattachInputDevice": {
+      "description": "PreferredAutoattachInputDevice optionally defines the preferred value of AutoattachInputDevice",
+      "type": "boolean"
+    },
+    "preferredAutoattachMemBalloon": {
+      "description": "PreferredAutoattachMemBalloon optionally defines the preferred value of AutoattachMemBalloon",
+      "type": "boolean"
+    },
+    "preferredAutoattachPodInterface": {
+      "description": "PreferredAutoattachPodInterface optionally defines the preferred value of AutoattachPodInterface",
+      "type": "boolean"
+    },
+    "preferredAutoattachSerialConsole": {
+      "description": "PreferredAutoattachSerialConsole optionally defines the preferred value of AutoattachSerialConsole",
+      "type": "boolean"
+    },
+    "preferredBlockMultiQueue": {
+      "description": "PreferredBlockMultiQueue optionally enables the vhost multiqueue feature for virtio disks.",
+      "type": "boolean"
+    },
+    "preferredCdromBus": {
+      "description": "PreferredCdromBus optionally defines the preferred bus for Cdrom Disk devices.",
+      "type": "string"
+    },
+    "preferredDisableHotplug": {
+      "description": "PreferredDisableHotplug optionally defines the preferred value of DisableHotplug",
+      "type": "boolean"
+    },
+    "preferredDiskBlockSize": {
+      "description": "BlockSize provides the option to change the block size presented to the VM for a disk. Only one of its members may be specified.",
+      "type": "object",
+      "properties": {
+        "custom": {
+          "description": "CustomBlockSize represents the desired logical and physical block size for a VM disk.",
+          "type": "object",
+          "required": [
+            "logical",
+            "physical"
+          ],
+          "properties": {
+            "logical": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "physical": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "additionalProperties": false
+        },
+        "matchVolume": {
+          "description": "Represents if a feature is enabled or disabled.",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "preferredDiskBus": {
+      "description": "PreferredDiskBus optionally defines the preferred bus for Disk Disk devices.",
+      "type": "string"
+    },
+    "preferredDiskCache": {
+      "description": "PreferredCache optionally defines the DriverCache to be used by Disk devices.",
+      "type": "string"
+    },
+    "preferredDiskDedicatedIoThread": {
+      "description": "PreferredDedicatedIoThread optionally enables dedicated IO threads for Disk devices.",
+      "type": "boolean"
+    },
+    "preferredDiskIO": {
+      "description": "PreferredIo optionally defines the QEMU disk IO mode to be used by Disk devices.",
+      "type": "string"
+    },
+    "preferredInputBus": {
+      "description": "PreferredInputBus optionally defines the preferred bus for Input devices.",
+      "type": "string"
+    },
+    "preferredInputType": {
+      "description": "PreferredInputType optionally defines the preferred type for Input devices.",
+      "type": "string"
+    },
+    "preferredInterfaceModel": {
+      "description": "PreferredInterfaceModel optionally defines the preferred model to be used by Interface devices.",
+      "type": "string"
+    },
+    "preferredLunBus": {
+      "description": "PreferredLunBus optionally defines the preferred bus for Lun Disk devices.",
+      "type": "string"
+    },
+    "preferredNetworkInterfaceMultiQueue": {
+      "description": "PreferredNetworkInterfaceMultiQueue optionally enables the vhost multiqueue feature for virtio interfaces.",
+      "type": "boolean"
+    },
+    "preferredRng": {
+      "description": "Rng represents the random device passed from host",
+      "type": "object"
+    },
+    "preferredSoundModel": {
+      "description": "PreferredSoundModel optionally defines the preferred model for Sound devices.",
+      "type": "string"
+    },
+    "preferredTPM": {
+      "type": "object"
+    },
+    "preferredUseVirtioTransitional": {
+      "description": "PreferredUseVirtioTransitional optionally defines the preferred value of UseVirtioTransitional",
+      "type": "boolean"
+    },
+    "preferredVirtualGPUOptions": {
+      "type": "object",
+      "properties": {
+        "display": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Enabled determines if a display addapter backed by a vGPU should be enabled or disabled on the guest. Defaults to true.",
+              "type": "boolean"
+            },
+            "ramFB": {
+              "description": "Represents if a feature is enabled or disabled.",
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

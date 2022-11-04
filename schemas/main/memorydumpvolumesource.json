@@ -1,0 +1,22 @@
+{
+  "type": "object",
+  "required": [
+    "claimName"
+  ],
+  "properties": {
+    "claimName": {
+      "description": "ClaimName is the name of a PersistentVolumeClaim in the same namespace as the pod using this volume. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims",
+      "type": "string"
+    },
+    "hotpluggable": {
+      "description": "Hotpluggable indicates whether the volume can be hotplugged and hotunplugged.",
+      "type": "boolean"
+    },
+    "readOnly": {
+      "description": "Will force the ReadOnly setting in VolumeMounts. Default false.",
+      "type": "boolean"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

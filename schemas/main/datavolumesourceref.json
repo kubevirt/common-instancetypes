@@ -1,0 +1,24 @@
+{
+  "description": "DataVolumeSourceRef defines an indirect reference to the source of data for the DataVolume",
+  "type": "object",
+  "required": [
+    "kind",
+    "name"
+  ],
+  "properties": {
+    "kind": {
+      "description": "The kind of the source reference, currently only \"DataSource\" is supported",
+      "type": "string"
+    },
+    "name": {
+      "description": "The name of the source reference",
+      "type": "string"
+    },
+    "namespace": {
+      "description": "The namespace of the source reference, defaults to the DataVolume namespace",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

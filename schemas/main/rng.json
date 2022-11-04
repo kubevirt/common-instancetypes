@@ -1,0 +1,6 @@
+{
+  "description": "Rng represents the random device passed from host",
+  "type": "object",
+  "$schema": "http://json-schema.org/schema#",
+  "additionalProperties": false
+}

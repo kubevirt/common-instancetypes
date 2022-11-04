@@ -1,0 +1,64 @@
+{
+  "type": "object",
+  "nullable": true,
+  "properties": {
+    "conditions": {
+      "type": "array",
+      "items": {
+        "description": "Condition defines conditions",
+        "type": "object",
+        "required": [
+          "type",
+          "status"
+        ],
+        "properties": {
+          "lastProbeTime": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "lastTransitionTime": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "x-kubernetes-list-type": "atomic"
+    },
+    "creationTime": {
+      "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "phase": {
+      "type": "string"
+    },
+    "restoreName": {
+      "type": "string"
+    },
+    "snapshotName": {
+      "type": "string"
+    },
+    "targetName": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

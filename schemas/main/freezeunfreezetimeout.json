@@ -1,0 +1,15 @@
+{
+  "description": "FreezeUnfreezeTimeout represent the time unfreeze will be triggered if guest was not unfrozen by unfreeze command",
+  "type": "object",
+  "required": [
+    "unfreezeTimeout"
+  ],
+  "properties": {
+    "unfreezeTimeout": {
+      "description": "Duration is a wrapper around time.Duration which supports correct marshaling to YAML and JSON. In particular, it marshals into strings, which can be used as map keys in json.",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

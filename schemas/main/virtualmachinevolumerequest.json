@@ -1,0 +1,228 @@
+{
+  "type": "object",
+  "properties": {
+    "addVolumeOptions": {
+      "description": "AddVolumeOptions is provided when dynamically hot plugging a volume and disk",
+      "type": "object",
+      "required": [
+        "name",
+        "disk",
+        "volumeSource"
+      ],
+      "properties": {
+        "disk": {
+          "type": "object",
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "blockSize": {
+              "description": "BlockSize provides the option to change the block size presented to the VM for a disk. Only one of its members may be specified.",
+              "type": "object",
+              "properties": {
+                "custom": {
+                  "description": "CustomBlockSize represents the desired logical and physical block size for a VM disk.",
+                  "type": "object",
+                  "required": [
+                    "logical",
+                    "physical"
+                  ],
+                  "properties": {
+                    "logical": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "physical": {
+                      "type": "integer",
+                      "format": "int32"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "matchVolume": {
+                  "description": "Represents if a feature is enabled or disabled.",
+                  "type": "object",
+                  "properties": {
+                    "enabled": {
+                      "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+                      "type": "boolean"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            },
+            "bootOrder": {
+              "description": "BootOrder is an integer value > 0, used to determine ordering of boot devices. Lower values take precedence. Each disk or interface that has a boot order must have a unique value. Disks without a boot order are not tried if a disk with a boot order exists.",
+              "type": "integer",
+              "format": "int32"
+            },
+            "cache": {
+              "description": "Cache specifies which kvm disk cache mode should be used. Supported values are: CacheNone, CacheWriteThrough.",
+              "type": "string"
+            },
+            "cdrom": {
+              "type": "object",
+              "properties": {
+                "bus": {
+                  "description": "Bus indicates the type of disk device to emulate. supported values: virtio, sata, scsi.",
+                  "type": "string"
+                },
+                "readonly": {
+                  "description": "ReadOnly. Defaults to true.",
+                  "type": "boolean"
+                },
+                "tray": {
+                  "description": "Tray indicates if the tray of the device is open or closed. Allowed values are \"open\" and \"closed\". Defaults to closed.",
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            },
+            "dedicatedIOThread": {
+              "description": "dedicatedIOThread indicates this disk should have an exclusive IO Thread. Enabling this implies useIOThreads = true. Defaults to false.",
+              "type": "boolean"
+            },
+            "disk": {
+              "type": "object",
+              "properties": {
+                "bus": {
+                  "description": "Bus indicates the type of disk device to emulate. supported values: virtio, sata, scsi, usb.",
+                  "type": "string"
+                },
+                "pciAddress": {
+                  "description": "If specified, the virtual disk will be placed on the guests pci address with the specified PCI address. For example: 0000:81:01.10",
+                  "type": "string"
+                },
+                "readonly": {
+                  "description": "ReadOnly. Defaults to false.",
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
+            "io": {
+              "description": "IO specifies which QEMU disk IO mode should be used. Supported values are: native, default, threads.",
+              "type": "string"
+            },
+            "lun": {
+              "type": "object",
+              "properties": {
+                "bus": {
+                  "description": "Bus indicates the type of disk device to emulate. supported values: virtio, sata, scsi.",
+                  "type": "string"
+                },
+                "readonly": {
+                  "description": "ReadOnly. Defaults to false.",
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
+            "name": {
+              "description": "Name is the device name",
+              "type": "string"
+            },
+            "serial": {
+              "description": "Serial provides the ability to specify a serial number for the disk device.",
+              "type": "string"
+            },
+            "shareable": {
+              "description": "If specified the disk is made sharable and multiple write from different VMs are permitted",
+              "type": "boolean"
+            },
+            "tag": {
+              "description": "If specified, disk address and its tag will be provided to the guest via config drive metadata",
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "dryRun": {
+          "description": "When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-kubernetes-list-type": "atomic"
+        },
+        "name": {
+          "description": "Name represents the name that will be used to map the disk to the corresponding volume. This overrides any name set inside the Disk struct itself.",
+          "type": "string"
+        },
+        "volumeSource": {
+          "description": "HotplugVolumeSource Represents the source of a volume to mount which are capable of being hotplugged on a live running VMI. Only one of its members may be specified.",
+          "type": "object",
+          "properties": {
+            "dataVolume": {
+              "type": "object",
+              "required": [
+                "name"
+              ],
+              "properties": {
+                "hotpluggable": {
+                  "description": "Hotpluggable indicates whether the volume can be hotplugged and hotunplugged.",
+                  "type": "boolean"
+                },
+                "name": {
+                  "description": "Name represents the name of the DataVolume in the same namespace",
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            },
+            "persistentVolumeClaim": {
+              "description": "PersistentVolumeClaimVolumeSource represents a reference to a PersistentVolumeClaim in the same namespace. Directly attached to the vmi via qemu. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims",
+              "type": "object",
+              "required": [
+                "claimName"
+              ],
+              "properties": {
+                "claimName": {
+                  "description": "ClaimName is the name of a PersistentVolumeClaim in the same namespace as the pod using this volume. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims",
+                  "type": "string"
+                },
+                "hotpluggable": {
+                  "description": "Hotpluggable indicates whether the volume can be hotplugged and hotunplugged.",
+                  "type": "boolean"
+                },
+                "readOnly": {
+                  "description": "Will force the ReadOnly setting in VolumeMounts. Default false.",
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "removeVolumeOptions": {
+      "description": "RemoveVolumeOptions is provided when dynamically hot unplugging volume and disk",
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "dryRun": {
+          "description": "When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-kubernetes-list-type": "atomic"
+        },
+        "name": {
+          "description": "Name represents the name that maps to both the disk and volume that should be removed",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

@@ -1,0 +1,6 @@
+{
+  "description": "InterfaceSlirp connects to a given network using QEMU user networking mode.",
+  "type": "object",
+  "$schema": "http://json-schema.org/schema#",
+  "additionalProperties": false
+}

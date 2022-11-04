@@ -1,0 +1,496 @@
+{
+  "type": "object",
+  "properties": {
+    "autoattachGraphicsDevice": {
+      "description": "Whether to attach the default graphics device or not. VNC will not be available if set to false. Defaults to true.",
+      "type": "boolean"
+    },
+    "autoattachInputDevice": {
+      "description": "Whether to attach an Input Device. Defaults to false.",
+      "type": "boolean"
+    },
+    "autoattachMemBalloon": {
+      "description": "Whether to attach the Memory balloon device with default period. Period can be adjusted in virt-config. Defaults to true.",
+      "type": "boolean"
+    },
+    "autoattachPodInterface": {
+      "description": "Whether to attach a pod network interface. Defaults to true.",
+      "type": "boolean"
+    },
+    "autoattachSerialConsole": {
+      "description": "Whether to attach the default serial console or not. Serial console access will not be available if set to false. Defaults to true.",
+      "type": "boolean"
+    },
+    "autoattachVSOCK": {
+      "description": "Whether to attach the VSOCK CID to the VM or not. VSOCK access will be available if set to true. Defaults to false.",
+      "type": "boolean"
+    },
+    "blockMultiQueue": {
+      "description": "Whether or not to enable virtio multi-queue for block devices. Defaults to false.",
+      "type": "boolean"
+    },
+    "clientPassthrough": {
+      "description": "Represent a subset of client devices that can be accessed by VMI. At the moment only, USB devices using Usbredir's library and tooling. Another fit would be a smartcard with libcacard.\n\nThe struct is currently empty as there is no immediate request for user-facing APIs. This structure simply turns on USB redirection of UsbClientPassthroughMaxNumberOf devices.",
+      "type": "object"
+    },
+    "disableHotplug": {
+      "description": "DisableHotplug disabled the ability to hotplug disks.",
+      "type": "boolean"
+    },
+    "disks": {
+      "description": "Disks describes disks, cdroms and luns which are connected to the vmi.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "blockSize": {
+            "description": "BlockSize provides the option to change the block size presented to the VM for a disk. Only one of its members may be specified.",
+            "type": "object",
+            "properties": {
+              "custom": {
+                "description": "CustomBlockSize represents the desired logical and physical block size for a VM disk.",
+                "type": "object",
+                "required": [
+                  "logical",
+                  "physical"
+                ],
+                "properties": {
+                  "logical": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "physical": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "matchVolume": {
+                "description": "Represents if a feature is enabled or disabled.",
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
+          "bootOrder": {
+            "description": "BootOrder is an integer value > 0, used to determine ordering of boot devices. Lower values take precedence. Each disk or interface that has a boot order must have a unique value. Disks without a boot order are not tried if a disk with a boot order exists.",
+            "type": "integer",
+            "format": "int32"
+          },
+          "cache": {
+            "description": "Cache specifies which kvm disk cache mode should be used. Supported values are: CacheNone, CacheWriteThrough.",
+            "type": "string"
+          },
+          "cdrom": {
+            "type": "object",
+            "properties": {
+              "bus": {
+                "description": "Bus indicates the type of disk device to emulate. supported values: virtio, sata, scsi.",
+                "type": "string"
+              },
+              "readonly": {
+                "description": "ReadOnly. Defaults to true.",
+                "type": "boolean"
+              },
+              "tray": {
+                "description": "Tray indicates if the tray of the device is open or closed. Allowed values are \"open\" and \"closed\". Defaults to closed.",
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          "dedicatedIOThread": {
+            "description": "dedicatedIOThread indicates this disk should have an exclusive IO Thread. Enabling this implies useIOThreads = true. Defaults to false.",
+            "type": "boolean"
+          },
+          "disk": {
+            "type": "object",
+            "properties": {
+              "bus": {
+                "description": "Bus indicates the type of disk device to emulate. supported values: virtio, sata, scsi, usb.",
+                "type": "string"
+              },
+              "pciAddress": {
+                "description": "If specified, the virtual disk will be placed on the guests pci address with the specified PCI address. For example: 0000:81:01.10",
+                "type": "string"
+              },
+              "readonly": {
+                "description": "ReadOnly. Defaults to false.",
+                "type": "boolean"
+              }
+            },
+            "additionalProperties": false
+          },
+          "io": {
+            "description": "IO specifies which QEMU disk IO mode should be used. Supported values are: native, default, threads.",
+            "type": "string"
+          },
+          "lun": {
+            "type": "object",
+            "properties": {
+              "bus": {
+                "description": "Bus indicates the type of disk device to emulate. supported values: virtio, sata, scsi.",
+                "type": "string"
+              },
+              "readonly": {
+                "description": "ReadOnly. Defaults to false.",
+                "type": "boolean"
+              }
+            },
+            "additionalProperties": false
+          },
+          "name": {
+            "description": "Name is the device name",
+            "type": "string"
+          },
+          "serial": {
+            "description": "Serial provides the ability to specify a serial number for the disk device.",
+            "type": "string"
+          },
+          "shareable": {
+            "description": "If specified the disk is made sharable and multiple write from different VMs are permitted",
+            "type": "boolean"
+          },
+          "tag": {
+            "description": "If specified, disk address and its tag will be provided to the guest via config drive metadata",
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "filesystems": {
+      "description": "Filesystems describes filesystem which is connected to the vmi.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "virtiofs"
+        ],
+        "properties": {
+          "name": {
+            "description": "Name is the device name",
+            "type": "string"
+          },
+          "virtiofs": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false
+      },
+      "x-kubernetes-list-type": "atomic"
+    },
+    "gpus": {
+      "description": "Whether to attach a GPU device to the vmi.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "deviceName"
+        ],
+        "properties": {
+          "deviceName": {
+            "type": "string"
+          },
+          "name": {
+            "description": "Name of the GPU device as exposed by a device plugin",
+            "type": "string"
+          },
+          "tag": {
+            "description": "If specified, the virtual network interface address and its tag will be provided to the guest via config drive",
+            "type": "string"
+          },
+          "virtualGPUOptions": {
+            "type": "object",
+            "properties": {
+              "display": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "description": "Enabled determines if a display addapter backed by a vGPU should be enabled or disabled on the guest. Defaults to true.",
+                    "type": "boolean"
+                  },
+                  "ramFB": {
+                    "description": "Represents if a feature is enabled or disabled.",
+                    "type": "object",
+                    "properties": {
+                      "enabled": {
+                        "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+                        "type": "boolean"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      "x-kubernetes-list-type": "atomic"
+    },
+    "hostDevices": {
+      "description": "Whether to attach a host device to the vmi.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "deviceName"
+        ],
+        "properties": {
+          "deviceName": {
+            "description": "DeviceName is the resource name of the host device exposed by a device plugin",
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "tag": {
+            "description": "If specified, the virtual network interface address and its tag will be provided to the guest via config drive",
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "x-kubernetes-list-type": "atomic"
+    },
+    "inputs": {
+      "description": "Inputs describe input devices",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "type",
+          "name"
+        ],
+        "properties": {
+          "bus": {
+            "description": "Bus indicates the bus of input device to emulate. Supported values: virtio, usb.",
+            "type": "string"
+          },
+          "name": {
+            "description": "Name is the device name",
+            "type": "string"
+          },
+          "type": {
+            "description": "Type indicated the type of input device. Supported values: tablet.",
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "interfaces": {
+      "description": "Interfaces describe network interfaces which are added to the vmi.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "bootOrder": {
+            "description": "BootOrder is an integer value > 0, used to determine ordering of boot devices. Lower values take precedence. Each interface or disk that has a boot order must have a unique value. Interfaces without a boot order are not tried.",
+            "type": "integer",
+            "format": "int32"
+          },
+          "bridge": {
+            "description": "InterfaceBridge connects to a given network via a linux bridge.",
+            "type": "object"
+          },
+          "dhcpOptions": {
+            "description": "Extra DHCP options to use in the interface.",
+            "type": "object",
+            "properties": {
+              "bootFileName": {
+                "description": "If specified will pass option 67 to interface's DHCP server",
+                "type": "string"
+              },
+              "ntpServers": {
+                "description": "If specified will pass the configured NTP server to the VM via DHCP option 042.",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "privateOptions": {
+                "description": "If specified will pass extra DHCP options for private use, range: 224-254",
+                "type": "array",
+                "items": {
+                  "description": "DHCPExtraOptions defines Extra DHCP options for a VM.",
+                  "type": "object",
+                  "required": [
+                    "option",
+                    "value"
+                  ],
+                  "properties": {
+                    "option": {
+                      "description": "Option is an Integer value from 224-254 Required.",
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "value": {
+                      "description": "Value is a String value for the Option provided Required.",
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "tftpServerName": {
+                "description": "If specified will pass option 66 to interface's DHCP server",
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          },
+          "macAddress": {
+            "description": "Interface MAC address. For example: de:ad:00:00:be:af or DE-AD-00-00-BE-AF.",
+            "type": "string"
+          },
+          "macvtap": {
+            "description": "InterfaceMacvtap connects to a given network by extending the Kubernetes node's L2 networks via a macvtap interface.",
+            "type": "object"
+          },
+          "masquerade": {
+            "description": "InterfaceMasquerade connects to a given network using netfilter rules to nat the traffic.",
+            "type": "object"
+          },
+          "model": {
+            "description": "Interface model. One of: e1000, e1000e, ne2k_pci, pcnet, rtl8139, virtio. Defaults to virtio.",
+            "type": "string"
+          },
+          "name": {
+            "description": "Logical name of the interface as well as a reference to the associated networks. Must match the Name of a Network.",
+            "type": "string"
+          },
+          "passt": {
+            "description": "InterfacePasst connects to a given network.",
+            "type": "object"
+          },
+          "pciAddress": {
+            "description": "If specified, the virtual network interface will be placed on the guests pci address with the specified PCI address. For example: 0000:81:01.10",
+            "type": "string"
+          },
+          "ports": {
+            "description": "List of ports to be forwarded to the virtual machine.",
+            "type": "array",
+            "items": {
+              "description": "Port represents a port to expose from the virtual machine. Default protocol TCP. The port field is mandatory",
+              "type": "object",
+              "required": [
+                "port"
+              ],
+              "properties": {
+                "name": {
+                  "description": "If specified, this must be an IANA_SVC_NAME and unique within the pod. Each named port in a pod must have a unique name. Name for the port that can be referred to by services.",
+                  "type": "string"
+                },
+                "port": {
+                  "description": "Number of port to expose for the virtual machine. This must be a valid port number, 0 < x < 65536.",
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "protocol": {
+                  "description": "Protocol for port. Must be UDP or TCP. Defaults to \"TCP\".",
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "slirp": {
+            "description": "InterfaceSlirp connects to a given network using QEMU user networking mode.",
+            "type": "object"
+          },
+          "sriov": {
+            "description": "InterfaceSRIOV connects to a given network by passing-through an SR-IOV PCI device via vfio.",
+            "type": "object"
+          },
+          "tag": {
+            "description": "If specified, the virtual network interface address and its tag will be provided to the guest via config drive",
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "networkInterfaceMultiqueue": {
+      "description": "If specified, virtual network interfaces configured with a virtio bus will also enable the vhost multiqueue feature for network devices. The number of queues created depends on additional factors of the VirtualMachineInstance, like the number of guest CPUs.",
+      "type": "boolean"
+    },
+    "rng": {
+      "description": "Rng represents the random device passed from host",
+      "type": "object"
+    },
+    "sound": {
+      "description": "Represents the user's configuration to emulate sound cards in the VMI.",
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "model": {
+          "description": "We only support ich9 or ac97. If SoundDevice is not set: No sound card is emulated. If SoundDevice is set but Model is not: ich9",
+          "type": "string"
+        },
+        "name": {
+          "description": "User's defined name for this sound device",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "tpm": {
+      "type": "object"
+    },
+    "useVirtioTransitional": {
+      "description": "Fall back to legacy virtio 0.9 support if virtio bus is selected on devices. This is helpful for old machines like CentOS6 or RHEL6 which do not understand virtio_non_transitional (virtio 1.0).",
+      "type": "boolean"
+    },
+    "watchdog": {
+      "description": "Named watchdog device.",
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "i6300esb": {
+          "description": "i6300esb watchdog device.",
+          "type": "object",
+          "properties": {
+            "action": {
+              "description": "The action to take. Valid values are poweroff, reset, shutdown. Defaults to reset.",
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        "name": {
+          "description": "Name of the watchdog.",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

@@ -1,0 +1,16 @@
+{
+  "description": "HotplugVolumeStatus represents the hotplug status of the volume",
+  "type": "object",
+  "properties": {
+    "attachPodName": {
+      "description": "AttachPodName is the name of the pod used to attach the volume to the node.",
+      "type": "string"
+    },
+    "attachPodUID": {
+      "description": "AttachPodUID is the UID of the pod used to attach the volume to the node.",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

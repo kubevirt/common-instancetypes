@@ -1,0 +1,6 @@
+{
+  "description": "InterfaceBridge connects to a given network via a linux bridge.",
+  "type": "object",
+  "$schema": "http://json-schema.org/schema#",
+  "additionalProperties": false
+}

@@ -1,0 +1,49 @@
+{
+  "type": "object",
+  "required": [
+    "name",
+    "deviceName"
+  ],
+  "properties": {
+    "deviceName": {
+      "type": "string"
+    },
+    "name": {
+      "description": "Name of the GPU device as exposed by a device plugin",
+      "type": "string"
+    },
+    "tag": {
+      "description": "If specified, the virtual network interface address and its tag will be provided to the guest via config drive",
+      "type": "string"
+    },
+    "virtualGPUOptions": {
+      "type": "object",
+      "properties": {
+        "display": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Enabled determines if a display addapter backed by a vGPU should be enabled or disabled on the guest. Defaults to true.",
+              "type": "boolean"
+            },
+            "ramFB": {
+              "description": "Represents if a feature is enabled or disabled.",
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

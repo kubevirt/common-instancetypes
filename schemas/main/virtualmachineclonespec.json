@@ -1,0 +1,81 @@
+{
+  "type": "object",
+  "required": [
+    "source"
+  ],
+  "properties": {
+    "annotationFilters": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "x-kubernetes-list-type": "atomic"
+    },
+    "labelFilters": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "x-kubernetes-list-type": "atomic"
+    },
+    "newMacAddresses": {
+      "description": "NewMacAddresses manually sets that target interfaces' mac addresses. The key is the interface name and the value is the new mac address. If this field is not specified, a new MAC address will be generated automatically, as for any interface that is not included in this map.",
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "newSMBiosSerial": {
+      "description": "NewSMBiosSerial manually sets that target's SMbios serial. If this field is not specified, a new serial will be generated automatically.",
+      "type": "string"
+    },
+    "source": {
+      "description": "TypedLocalObjectReference contains enough information to let you locate the typed referenced object inside the same namespace.",
+      "type": "object",
+      "required": [
+        "kind",
+        "name"
+      ],
+      "properties": {
+        "apiGroup": {
+          "description": "APIGroup is the group for the resource being referenced. If APIGroup is not specified, the specified Kind must be in the core API group. For any other third-party types, APIGroup is required.",
+          "type": "string"
+        },
+        "kind": {
+          "description": "Kind is the type of resource being referenced",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name is the name of resource being referenced",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "target": {
+      "description": "TypedLocalObjectReference contains enough information to let you locate the typed referenced object inside the same namespace.",
+      "type": "object",
+      "required": [
+        "kind",
+        "name"
+      ],
+      "properties": {
+        "apiGroup": {
+          "description": "APIGroup is the group for the resource being referenced. If APIGroup is not specified, the specified Kind must be in the core API group. For any other third-party types, APIGroup is required.",
+          "type": "string"
+        },
+        "kind": {
+          "description": "Kind is the type of resource being referenced",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name is the name of resource being referenced",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

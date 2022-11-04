@@ -1,0 +1,42 @@
+{
+  "description": "VirtualMachineMemoryDumpRequest represent the memory dump request phase and info",
+  "type": "object",
+  "required": [
+    "claimName",
+    "phase"
+  ],
+  "properties": {
+    "claimName": {
+      "description": "ClaimName is the name of the pvc that will contain the memory dump",
+      "type": "string"
+    },
+    "endTimestamp": {
+      "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.",
+      "type": "string",
+      "format": "date-time"
+    },
+    "fileName": {
+      "description": "FileName represents the name of the output file",
+      "type": "string"
+    },
+    "message": {
+      "description": "Message is a detailed message about failure of the memory dump",
+      "type": "string"
+    },
+    "phase": {
+      "description": "Phase represents the memory dump phase",
+      "type": "string"
+    },
+    "remove": {
+      "description": "Remove represents request of dissociating the memory dump pvc",
+      "type": "boolean"
+    },
+    "startTimestamp": {
+      "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.",
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

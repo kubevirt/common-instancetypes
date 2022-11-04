@@ -1,0 +1,21 @@
+{
+  "description": "DHCPExtraOptions defines Extra DHCP options for a VM.",
+  "type": "object",
+  "required": [
+    "option",
+    "value"
+  ],
+  "properties": {
+    "option": {
+      "description": "Option is an Integer value from 224-254 Required.",
+      "type": "integer",
+      "format": "int32"
+    },
+    "value": {
+      "description": "Value is a String value for the Option provided Required.",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

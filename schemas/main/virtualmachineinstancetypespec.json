@@ -1,0 +1,177 @@
+{
+  "description": "VirtualMachineInstancetypeSpec is a description of the VirtualMachineInstancetype or VirtualMachineClusterInstancetype.\n\nCPU and Memory are required attributes with both requiring that their Guest attribute is defined, ensuring a number of vCPUs and amount of RAM is always provided by each instancetype.",
+  "type": "object",
+  "required": [
+    "cpu",
+    "memory"
+  ],
+  "properties": {
+    "cpu": {
+      "description": "CPUInstancetype contains the CPU related configuration of a given VirtualMachineInstancetypeSpec.\n\nGuest is a required attribute and defines the number of vCPUs to be exposed to the guest by the instancetype.",
+      "type": "object",
+      "required": [
+        "guest"
+      ],
+      "properties": {
+        "dedicatedCPUPlacement": {
+          "description": "DedicatedCPUPlacement requests the scheduler to place the VirtualMachineInstance on a node with enough dedicated pCPUs and pin the vCPUs to it.",
+          "type": "boolean"
+        },
+        "guest": {
+          "description": "Required number of vCPUs to expose to the guest.\n\nThe resulting CPU topology being derived from the optional PreferredCPUTopology attribute of CPUPreferences that itself defaults to PreferCores.",
+          "type": "integer",
+          "format": "int64"
+        },
+        "isolateEmulatorThread": {
+          "description": "IsolateEmulatorThread requests one more dedicated pCPU to be allocated for the VMI to place the emulator thread on it.",
+          "type": "boolean"
+        },
+        "model": {
+          "description": "Model specifies the CPU model inside the VMI. List of available models https://github.com/libvirt/libvirt/tree/master/src/cpu_map. It is possible to specify special cases like \"host-passthrough\" to get the same CPU as the node and \"host-model\" to get CPU closest to the node one. Defaults to host-model.",
+          "type": "string"
+        },
+        "numa": {
+          "type": "object",
+          "properties": {
+            "guestMappingPassthrough": {
+              "description": "NUMAGuestMappingPassthrough instructs kubevirt to model numa topology which is compatible with the CPU pinning on the guest. This will result in a subset of the node numa topology being passed through, ensuring that virtual numa nodes and their memory never cross boundaries coming from the node numa mapping.",
+              "type": "object"
+            }
+          },
+          "additionalProperties": false
+        },
+        "realtime": {
+          "description": "Realtime holds the tuning knobs specific for realtime workloads.",
+          "type": "object",
+          "properties": {
+            "mask": {
+              "description": "Mask defines the vcpu mask expression that defines which vcpus are used for realtime. Format matches libvirt's expressions. Example: \"0-3,^1\",\"0,2,3\",\"2-3\"",
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "gpus": {
+      "description": "Optionally defines any GPU devices associated with the instancetype.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "deviceName"
+        ],
+        "properties": {
+          "deviceName": {
+            "type": "string"
+          },
+          "name": {
+            "description": "Name of the GPU device as exposed by a device plugin",
+            "type": "string"
+          },
+          "tag": {
+            "description": "If specified, the virtual network interface address and its tag will be provided to the guest via config drive",
+            "type": "string"
+          },
+          "virtualGPUOptions": {
+            "type": "object",
+            "properties": {
+              "display": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "description": "Enabled determines if a display addapter backed by a vGPU should be enabled or disabled on the guest. Defaults to true.",
+                    "type": "boolean"
+                  },
+                  "ramFB": {
+                    "description": "Represents if a feature is enabled or disabled.",
+                    "type": "object",
+                    "properties": {
+                      "enabled": {
+                        "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+                        "type": "boolean"
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      "x-kubernetes-list-type": "atomic"
+    },
+    "hostDevices": {
+      "description": "Optionally defines any HostDevices associated with the instancetype.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "deviceName"
+        ],
+        "properties": {
+          "deviceName": {
+            "description": "DeviceName is the resource name of the host device exposed by a device plugin",
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "tag": {
+            "description": "If specified, the virtual network interface address and its tag will be provided to the guest via config drive",
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "x-kubernetes-list-type": "atomic"
+    },
+    "ioThreadsPolicy": {
+      "description": "Optionally defines the IOThreadsPolicy to be used by the instancetype.",
+      "type": "string"
+    },
+    "launchSecurity": {
+      "type": "object",
+      "properties": {
+        "sev": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    },
+    "memory": {
+      "description": "MemoryInstancetype contains the Memory related configuration of a given VirtualMachineInstancetypeSpec.\n\nGuest is a required attribute and defines the amount of RAM to be exposed to the guest by the instancetype.",
+      "type": "object",
+      "required": [
+        "guest"
+      ],
+      "properties": {
+        "guest": {
+          "description": "Quantity is a fixed-point representation of a number. It provides convenient marshaling/unmarshaling in JSON and YAML, in addition to String() and AsInt64() accessors.\n\nThe serialization format is:\n\n<quantity>        ::= <signedNumber><suffix>\n  (Note that <suffix> may be empty, from the \"\" case in <decimalSI>.)\n<digit>           ::= 0 | 1 | ... | 9 <digits>          ::= <digit> | <digit><digits> <number>          ::= <digits> | <digits>.<digits> | <digits>. | .<digits> <sign>            ::= \"+\" | \"-\" <signedNumber>    ::= <number> | <sign><number> <suffix>          ::= <binarySI> | <decimalExponent> | <decimalSI> <binarySI>        ::= Ki | Mi | Gi | Ti | Pi | Ei\n  (International System of units; See: http://physics.nist.gov/cuu/Units/binary.html)\n<decimalSI>       ::= m | \"\" | k | M | G | T | P | E\n  (Note that 1024 = 1Ki but 1000 = 1k; I didn't choose the capitalization.)\n<decimalExponent> ::= \"e\" <signedNumber> | \"E\" <signedNumber>\n\nNo matter which of the three exponent forms is used, no quantity may represent a number greater than 2^63-1 in magnitude, nor may it have more than 3 decimal places. Numbers larger or more precise will be capped or rounded up. (E.g.: 0.1m will rounded up to 1m.) This may be extended in the future if we require larger or smaller quantities.\n\nWhen a Quantity is parsed from a string, it will remember the type of suffix it had, and will use the same type again when it is serialized.\n\nBefore serializing, Quantity will be put in \"canonical form\". This means that Exponent/suffix will be adjusted up or down (with a corresponding increase or decrease in Mantissa) such that:\n  a. No precision is lost\n  b. No fractional digits will be emitted\n  c. The exponent (or suffix) is as large as possible.\nThe sign will be omitted unless the number is negative.\n\nExamples:\n  1.5 will be serialized as \"1500m\"\n  1.5Gi will be serialized as \"1536Mi\"\n\nNote that the quantity will NEVER be internally represented by a floating point number. That is the whole point of this exercise.\n\nNon-canonical values will still parse as long as they are well formed, but will be re-emitted in their canonical form. (So always use canonical form, or don't diff.)\n\nThis format is intended to make it difficult to use these numbers without writing some sort of special handling code in the hopes that that will cause implementors to also use a fixed point implementation.",
+          "type": "string"
+        },
+        "hugepages": {
+          "description": "Hugepages allow to use hugepages for the VirtualMachineInstance instead of regular memory.",
+          "type": "object",
+          "properties": {
+            "pageSize": {
+              "description": "PageSize specifies the hugepage size, for x86_64 architecture valid values are 1Gi and 2Mi.",
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

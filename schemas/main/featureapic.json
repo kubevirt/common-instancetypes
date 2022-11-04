@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+      "type": "boolean"
+    },
+    "endOfInterrupt": {
+      "description": "EndOfInterrupt enables the end of interrupt notification in the guest. Defaults to false.",
+      "type": "boolean"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

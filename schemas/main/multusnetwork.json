@@ -1,0 +1,19 @@
+{
+  "description": "Represents the multus cni network.",
+  "type": "object",
+  "required": [
+    "networkName"
+  ],
+  "properties": {
+    "default": {
+      "description": "Select the default network and add it to the multus-cni.io/default-network annotation.",
+      "type": "boolean"
+    },
+    "networkName": {
+      "description": "References to a NetworkAttachmentDefinition CRD object. Format: <networkName>, <namespace>/<networkName>. If namespace is not specified, VMI namespace is assumed.",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

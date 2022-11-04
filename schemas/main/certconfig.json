@@ -1,0 +1,16 @@
+{
+  "description": "CertConfig contains the tunables for TLS certificates",
+  "type": "object",
+  "properties": {
+    "duration": {
+      "description": "Duration is a wrapper around time.Duration which supports correct marshaling to YAML and JSON. In particular, it marshals into strings, which can be used as map keys in json.",
+      "type": "string"
+    },
+    "renewBefore": {
+      "description": "Duration is a wrapper around time.Duration which supports correct marshaling to YAML and JSON. In particular, it marshals into strings, which can be used as map keys in json.",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

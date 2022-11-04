@@ -1,0 +1,78 @@
+{
+  "description": "CPU allows specifying the CPU topology.",
+  "type": "object",
+  "properties": {
+    "cores": {
+      "description": "Cores specifies the number of cores inside the vmi. Must be a value greater or equal 1.",
+      "type": "integer",
+      "format": "int64"
+    },
+    "dedicatedCpuPlacement": {
+      "description": "DedicatedCPUPlacement requests the scheduler to place the VirtualMachineInstance on a node with enough dedicated pCPUs and pin the vCPUs to it.",
+      "type": "boolean"
+    },
+    "features": {
+      "description": "Features specifies the CPU features list inside the VMI.",
+      "type": "array",
+      "items": {
+        "description": "CPUFeature allows specifying a CPU feature.",
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "description": "Name of the CPU feature",
+            "type": "string"
+          },
+          "policy": {
+            "description": "Policy is the CPU feature attribute which can have the following attributes: force    - The virtual CPU will claim the feature is supported regardless of it being supported by host CPU. require  - Guest creation will fail unless the feature is supported by the host CPU or the hypervisor is able to emulate it. optional - The feature will be supported by virtual CPU if and only if it is supported by host CPU. disable  - The feature will not be supported by virtual CPU. forbid   - Guest creation will fail if the feature is supported by host CPU. Defaults to require",
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "isolateEmulatorThread": {
+      "description": "IsolateEmulatorThread requests one more dedicated pCPU to be allocated for the VMI to place the emulator thread on it.",
+      "type": "boolean"
+    },
+    "model": {
+      "description": "Model specifies the CPU model inside the VMI. List of available models https://github.com/libvirt/libvirt/tree/master/src/cpu_map. It is possible to specify special cases like \"host-passthrough\" to get the same CPU as the node and \"host-model\" to get CPU closest to the node one. Defaults to host-model.",
+      "type": "string"
+    },
+    "numa": {
+      "type": "object",
+      "properties": {
+        "guestMappingPassthrough": {
+          "description": "NUMAGuestMappingPassthrough instructs kubevirt to model numa topology which is compatible with the CPU pinning on the guest. This will result in a subset of the node numa topology being passed through, ensuring that virtual numa nodes and their memory never cross boundaries coming from the node numa mapping.",
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    },
+    "realtime": {
+      "description": "Realtime holds the tuning knobs specific for realtime workloads.",
+      "type": "object",
+      "properties": {
+        "mask": {
+          "description": "Mask defines the vcpu mask expression that defines which vcpus are used for realtime. Format matches libvirt's expressions. Example: \"0-3,^1\",\"0,2,3\",\"2-3\"",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "sockets": {
+      "description": "Sockets specifies the number of sockets inside the vmi. Must be a value greater or equal 1.",
+      "type": "integer",
+      "format": "int64"
+    },
+    "threads": {
+      "description": "Threads specifies the number of threads inside the vmi. Must be a value greater or equal 1.",
+      "type": "integer",
+      "format": "int64"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

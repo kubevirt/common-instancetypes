@@ -1,0 +1,20 @@
+{
+  "description": "DataVolumeCheckpoint defines a stage in a warm migration.",
+  "type": "object",
+  "required": [
+    "previous",
+    "current"
+  ],
+  "properties": {
+    "current": {
+      "description": "Current is the identifier of the snapshot created for this checkpoint.",
+      "type": "string"
+    },
+    "previous": {
+      "description": "Previous is the identifier of the snapshot from the previous checkpoint.",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

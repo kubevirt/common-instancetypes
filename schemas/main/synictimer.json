@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "direct": {
+      "description": "Represents if a feature is enabled or disabled.",
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "enabled": {
+      "type": "boolean"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

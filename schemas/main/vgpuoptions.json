@@ -1,0 +1,28 @@
+{
+  "type": "object",
+  "properties": {
+    "display": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "description": "Enabled determines if a display addapter backed by a vGPU should be enabled or disabled on the guest. Defaults to true.",
+          "type": "boolean"
+        },
+        "ramFB": {
+          "description": "Represents if a feature is enabled or disabled.",
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "description": "Enabled determines if the feature should be enabled or disabled on the guest. Defaults to true.",
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

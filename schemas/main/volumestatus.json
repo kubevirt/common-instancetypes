@@ -1,0 +1,120 @@
+{
+  "description": "VolumeStatus represents information about the status of volumes attached to the VirtualMachineInstance.",
+  "type": "object",
+  "required": [
+    "name",
+    "target"
+  ],
+  "properties": {
+    "hotplugVolume": {
+      "description": "HotplugVolumeStatus represents the hotplug status of the volume",
+      "type": "object",
+      "properties": {
+        "attachPodName": {
+          "description": "AttachPodName is the name of the pod used to attach the volume to the node.",
+          "type": "string"
+        },
+        "attachPodUID": {
+          "description": "AttachPodUID is the UID of the pod used to attach the volume to the node.",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "memoryDumpVolume": {
+      "description": "DomainMemoryDumpInfo represents the memory dump information",
+      "type": "object",
+      "properties": {
+        "claimName": {
+          "description": "ClaimName is the name of the pvc the memory was dumped to",
+          "type": "string"
+        },
+        "endTimestamp": {
+          "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "startTimestamp": {
+          "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.",
+          "type": "string",
+          "format": "date-time"
+        },
+        "targetFileName": {
+          "description": "TargetFileName is the name of the memory dump output",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "message": {
+      "description": "Message is a detailed message about the current hotplug volume phase",
+      "type": "string"
+    },
+    "name": {
+      "description": "Name is the name of the volume",
+      "type": "string"
+    },
+    "persistentVolumeClaimInfo": {
+      "description": "PersistentVolumeClaimInfo contains the relavant information virt-handler needs cached about a PVC",
+      "type": "object",
+      "properties": {
+        "accessModes": {
+          "description": "AccessModes contains the desired access modes the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-kubernetes-list-type": "atomic"
+        },
+        "capacity": {
+          "description": "Capacity represents the capacity set on the corresponding PVC status",
+          "type": "object",
+          "additionalProperties": {
+            "description": "Quantity is a fixed-point representation of a number. It provides convenient marshaling/unmarshaling in JSON and YAML, in addition to String() and AsInt64() accessors.\n\nThe serialization format is:\n\n<quantity>        ::= <signedNumber><suffix>\n  (Note that <suffix> may be empty, from the \"\" case in <decimalSI>.)\n<digit>           ::= 0 | 1 | ... | 9 <digits>          ::= <digit> | <digit><digits> <number>          ::= <digits> | <digits>.<digits> | <digits>. | .<digits> <sign>            ::= \"+\" | \"-\" <signedNumber>    ::= <number> | <sign><number> <suffix>          ::= <binarySI> | <decimalExponent> | <decimalSI> <binarySI>        ::= Ki | Mi | Gi | Ti | Pi | Ei\n  (International System of units; See: http://physics.nist.gov/cuu/Units/binary.html)\n<decimalSI>       ::= m | \"\" | k | M | G | T | P | E\n  (Note that 1024 = 1Ki but 1000 = 1k; I didn't choose the capitalization.)\n<decimalExponent> ::= \"e\" <signedNumber> | \"E\" <signedNumber>\n\nNo matter which of the three exponent forms is used, no quantity may represent a number greater than 2^63-1 in magnitude, nor may it have more than 3 decimal places. Numbers larger or more precise will be capped or rounded up. (E.g.: 0.1m will rounded up to 1m.) This may be extended in the future if we require larger or smaller quantities.\n\nWhen a Quantity is parsed from a string, it will remember the type of suffix it had, and will use the same type again when it is serialized.\n\nBefore serializing, Quantity will be put in \"canonical form\". This means that Exponent/suffix will be adjusted up or down (with a corresponding increase or decrease in Mantissa) such that:\n  a. No precision is lost\n  b. No fractional digits will be emitted\n  c. The exponent (or suffix) is as large as possible.\nThe sign will be omitted unless the number is negative.\n\nExamples:\n  1.5 will be serialized as \"1500m\"\n  1.5Gi will be serialized as \"1536Mi\"\n\nNote that the quantity will NEVER be internally represented by a floating point number. That is the whole point of this exercise.\n\nNon-canonical values will still parse as long as they are well formed, but will be re-emitted in their canonical form. (So always use canonical form, or don't diff.)\n\nThis format is intended to make it difficult to use these numbers without writing some sort of special handling code in the hopes that that will cause implementors to also use a fixed point implementation.",
+            "type": "string"
+          }
+        },
+        "filesystemOverhead": {
+          "description": "Percentage of filesystem's size to be reserved when resizing the PVC",
+          "type": "string"
+        },
+        "preallocated": {
+          "description": "Preallocated indicates if the PVC's storage is preallocated or not",
+          "type": "boolean"
+        },
+        "requests": {
+          "description": "Requests represents the resources requested by the corresponding PVC spec",
+          "type": "object",
+          "additionalProperties": {
+            "description": "Quantity is a fixed-point representation of a number. It provides convenient marshaling/unmarshaling in JSON and YAML, in addition to String() and AsInt64() accessors.\n\nThe serialization format is:\n\n<quantity>        ::= <signedNumber><suffix>\n  (Note that <suffix> may be empty, from the \"\" case in <decimalSI>.)\n<digit>           ::= 0 | 1 | ... | 9 <digits>          ::= <digit> | <digit><digits> <number>          ::= <digits> | <digits>.<digits> | <digits>. | .<digits> <sign>            ::= \"+\" | \"-\" <signedNumber>    ::= <number> | <sign><number> <suffix>          ::= <binarySI> | <decimalExponent> | <decimalSI> <binarySI>        ::= Ki | Mi | Gi | Ti | Pi | Ei\n  (International System of units; See: http://physics.nist.gov/cuu/Units/binary.html)\n<decimalSI>       ::= m | \"\" | k | M | G | T | P | E\n  (Note that 1024 = 1Ki but 1000 = 1k; I didn't choose the capitalization.)\n<decimalExponent> ::= \"e\" <signedNumber> | \"E\" <signedNumber>\n\nNo matter which of the three exponent forms is used, no quantity may represent a number greater than 2^63-1 in magnitude, nor may it have more than 3 decimal places. Numbers larger or more precise will be capped or rounded up. (E.g.: 0.1m will rounded up to 1m.) This may be extended in the future if we require larger or smaller quantities.\n\nWhen a Quantity is parsed from a string, it will remember the type of suffix it had, and will use the same type again when it is serialized.\n\nBefore serializing, Quantity will be put in \"canonical form\". This means that Exponent/suffix will be adjusted up or down (with a corresponding increase or decrease in Mantissa) such that:\n  a. No precision is lost\n  b. No fractional digits will be emitted\n  c. The exponent (or suffix) is as large as possible.\nThe sign will be omitted unless the number is negative.\n\nExamples:\n  1.5 will be serialized as \"1500m\"\n  1.5Gi will be serialized as \"1536Mi\"\n\nNote that the quantity will NEVER be internally represented by a floating point number. That is the whole point of this exercise.\n\nNon-canonical values will still parse as long as they are well formed, but will be re-emitted in their canonical form. (So always use canonical form, or don't diff.)\n\nThis format is intended to make it difficult to use these numbers without writing some sort of special handling code in the hopes that that will cause implementors to also use a fixed point implementation.",
+            "type": "string"
+          }
+        },
+        "volumeMode": {
+          "description": "VolumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec.",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "phase": {
+      "description": "Phase is the phase",
+      "type": "string"
+    },
+    "reason": {
+      "description": "Reason is a brief description of why we are in the current hotplug volume phase",
+      "type": "string"
+    },
+    "size": {
+      "description": "Represents the size of the volume",
+      "type": "integer",
+      "format": "int64"
+    },
+    "target": {
+      "description": "Target is the target name used when adding the volume to the VM, eg: vda",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

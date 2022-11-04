@@ -1,0 +1,19 @@
+{
+  "description": "Represents the user's configuration to emulate sound cards in the VMI.",
+  "type": "object",
+  "required": [
+    "name"
+  ],
+  "properties": {
+    "model": {
+      "description": "We only support ich9 or ac97. If SoundDevice is not set: No sound card is emulated. If SoundDevice is set but Model is not: ich9",
+      "type": "string"
+    },
+    "name": {
+      "description": "User's defined name for this sound device",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

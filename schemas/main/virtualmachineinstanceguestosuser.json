@@ -1,0 +1,21 @@
+{
+  "description": "VirtualMachineGuestOSUser is the single user of the guest os",
+  "type": "object",
+  "required": [
+    "userName"
+  ],
+  "properties": {
+    "domain": {
+      "type": "string"
+    },
+    "loginTime": {
+      "type": "number",
+      "format": "double"
+    },
+    "userName": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

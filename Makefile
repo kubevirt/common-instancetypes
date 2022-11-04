@@ -1,23 +1,40 @@
 SHELL=/bin/bash
 
-all: lint generate
+# Run `make schema` when updating this version and commit the created files.
+# TODO(lyarwood) - Host the expanded JSON schema elsewhere under the kubevirt namespace
+export KUBEVIRT_VERSION = main
 
-lint:
-	yamllint .
+# Use the COMMON_INSTANCETYPES_CRI env variable to control if the following targets are executed within a container.
+# Supported runtimes are docker and podman. By default targets run directly on the host.
+export COMMON_INSTANCETYPES_IMAGE = quay.io/kubevirtci/common-instancetypes-builder
+
+all: lint generate validate readme check
+
+build_image:
+	./scripts/build_image.sh
+
+push_image: build_image
+	./scripts/push_image.sh
+
+lint: 
+	./scripts/cri.sh  "./scripts/lint.sh"
 
 generate: 
-	echo "---" > common-instancetypes-all-bundle.yaml
-	kustomize build >> common-instancetypes-all-bundle.yaml
-	echo "---" > common-instancetypes-bundle.yaml
-	kustomize build VirtualMachineInstancetypes >> common-instancetypes-bundle.yaml
-	echo "---" > common-clusterinstancetypes-bundle.yaml
-	kustomize build VirtualMachineClusterInstancetypes >> common-clusterinstancetypes-bundle.yaml
-	echo "---" > common-preferences-bundle.yaml
-	kustomize build VirtualMachinePreferences >> common-preferences-bundle.yaml
-	echo "---" > common-clusterpreferences-bundle.yaml
-	kustomize build VirtualMachineClusterPreferences >> common-clusterpreferences-bundle.yaml
+	./scripts/cri.sh  "./scripts/generate.sh"
+
+validate:
+	./scripts/cri.sh  "./scripts/validate.sh"
+
+schema:
+	./scripts/cri.sh  "./scripts/schema.sh"
+
+readme:
+	./scripts/cri.sh  "./scripts/readme.sh"
+
+check:
+	./scripts/cri.sh  "./scripts/check.sh"
 
 clean: 
-	rm -f *.yaml
+	rm -f common*.yaml
 
-.PHONY: all lint generate
+.PHONY: all build_image lint generate validate readme
