@@ -5,7 +5,7 @@ kind: Kustomization
 resources:
   - ../base
 
-nameSuffix: ".9"
+nameSuffix: ".9.stream"
 
 components:
   - ../../components/rng

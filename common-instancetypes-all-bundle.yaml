@@ -125,7 +125,7 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
-  name: centos.8
+  name: centos.8.stream
 spec:
   devices:
     preferredDiskBus: virtio
@@ -134,7 +134,7 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
-  name: centos.8.desktop
+  name: centos.8.stream.desktop
 spec:
   devices:
     preferredAutoattachInputDevice: true
@@ -146,7 +146,7 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
-  name: centos.9
+  name: centos.9.stream
 spec:
   devices:
     preferredDiskBus: virtio
@@ -162,7 +162,7 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
-  name: centos.9.desktop
+  name: centos.9.stream.desktop
 spec:
   devices:
     preferredAutoattachInputDevice: true
@@ -976,7 +976,7 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
-  name: centos.8
+  name: centos.8.stream
 spec:
   devices:
     preferredDiskBus: virtio
@@ -985,7 +985,7 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
-  name: centos.8.desktop
+  name: centos.8.stream.desktop
 spec:
   devices:
     preferredAutoattachInputDevice: true
@@ -997,7 +997,7 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
-  name: centos.9
+  name: centos.9.stream
 spec:
   devices:
     preferredDiskBus: virtio
@@ -1013,7 +1013,7 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
-  name: centos.9.desktop
+  name: centos.9.stream.desktop
 spec:
   devices:
     preferredAutoattachInputDevice: true
