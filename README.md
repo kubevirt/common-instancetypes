@@ -168,6 +168,12 @@ windows.2k19
 VirtualMachineClusterPreference
 windows.2k19.virtio
 ---
+VirtualMachineClusterPreference
+windows.2k22
+---
+VirtualMachineClusterPreference
+windows.2k22.virtio
+---
 VirtualMachineInstancetype
 highperformance.large
 ---
@@ -275,5 +281,11 @@ windows.2k19
 ---
 VirtualMachinePreference
 windows.2k19.virtio
+---
+VirtualMachinePreference
+windows.2k22
+---
+VirtualMachinePreference
+windows.2k22.virtio
 
 ```
