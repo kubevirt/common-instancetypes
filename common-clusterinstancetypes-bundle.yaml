@@ -72,7 +72,7 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
-    kubevirt.io/size: mirco
+    kubevirt.io/size: micro
   name: server.micro
 spec:
   cpu:
