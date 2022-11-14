@@ -32,7 +32,7 @@ The following tools are required by each `Makefile` target:
 * `make`
   * `make lint`
     * [yamllint](https://github.com/adrienverge/yamllint)
-    * [bashate](https://github.com/openstack/bashate)
+    * [shellcheck](https://github.com/koalaman/shellcheck)
   * `make generate`
     * [kustomize](https://kustomize.io/)
   * `make validate`
