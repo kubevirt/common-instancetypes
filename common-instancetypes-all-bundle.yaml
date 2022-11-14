@@ -72,6 +72,18 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
+    kubevirt.io/size: mirco
+  name: server.micro
+spec:
+  cpu:
+    guest: 1
+  memory:
+    guest: 256Mi
+---
+apiVersion: instancetype.kubevirt.io/v1alpha2
+kind: VirtualMachineClusterInstancetype
+metadata:
+  labels:
     kubevirt.io/size: small
   name: server.small
 spec:
@@ -918,6 +930,18 @@ spec:
     guest: 1
   memory:
     guest: 4Gi
+---
+apiVersion: instancetype.kubevirt.io/v1alpha2
+kind: VirtualMachineInstancetype
+metadata:
+  labels:
+    kubevirt.io/size: mirco
+  name: server.micro
+spec:
+  cpu:
+    guest: 1
+  memory:
+    guest: 256Mi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineInstancetype
