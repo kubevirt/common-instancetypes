@@ -3,18 +3,24 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - ../../base
+  - ../../../base
 
 patches:
   - patch: |-
       - op: replace
         path: /metadata/name
-        value: server
+        value: highperformance
     target:
       kind: VirtualMachineInstancetype
   - patch: |-
       - op: replace
         path: /metadata/name
-        value: server
+        value: highperformance
+    target:
+      kind: VirtualMachineClusterInstancetype
+  - path: highperformance.yaml
+    target:
+      kind: VirtualMachineInstancetype
+  - path: highperformance.yaml
     target:
       kind: VirtualMachineClusterInstancetype
