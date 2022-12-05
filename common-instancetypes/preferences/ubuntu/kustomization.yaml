@@ -2,6 +2,23 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./22.04
-  - ./20.04
-  - ./18.04
+  - ../base
+
+components:
+  - ../components/diskbus-virtio-blk
+  - ../components/interfacemodel-virtio-net
+  - ../components/rng
+
+patches:
+  - target:
+      kind: VirtualMachinePreference
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: ubuntu
+  - target:
+      kind: VirtualMachineClusterPreference
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: ubuntu

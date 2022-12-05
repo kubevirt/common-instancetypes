@@ -97,23 +97,7 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
-  name: fedora.35
-spec:
-  devices:
-    preferredDiskBus: virtio
-    preferredInterfaceModel: virtio
-    preferredNetworkInterfaceMultiQueue: true
-    preferredRng: {}
-  features:
-    preferredSmm: {}
-  firmware:
-    preferredUseEfi: true
-    preferredUseSecureBoot: true
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterPreference
-metadata:
-  name: fedora.36
+  name: fedora
 spec:
   devices:
     preferredDiskBus: virtio
@@ -206,27 +190,7 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
-  name: ubuntu.18.04
-spec:
-  devices:
-    preferredDiskBus: virtio
-    preferredInterfaceModel: virtio
-    preferredRng: {}
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterPreference
-metadata:
-  name: ubuntu.20.04
-spec:
-  devices:
-    preferredDiskBus: virtio
-    preferredInterfaceModel: virtio
-    preferredRng: {}
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterPreference
-metadata:
-  name: ubuntu.22.04
+  name: ubuntu
 spec:
   devices:
     preferredDiskBus: virtio
