@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if ! command -v openapi2jsonschema &> /dev/null; then
-    echo "openapi2jsonschema is not installed, see https://github.com/mikefarah/yq#install for more details."
+    echo "openapi2jsonschema is not installed, see https://github.com/instrumenta/openapi2jsonschema#installation for more details."
     exit 1
 fi
 
