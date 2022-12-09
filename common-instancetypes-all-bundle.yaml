@@ -685,9 +685,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
+    iconClass: icon-centos
+    openshift.io/display-name: CentOS 7
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,linux,centos-stream
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.7
@@ -700,9 +703,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
+    iconClass: icon-centos
+    openshift.io/display-name: CentOS 7
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,linux,centos-stream
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.7.desktop
@@ -718,9 +724,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
+    iconClass: icon-centos
+    openshift.io/display-name: CentOS Stream 8
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,linux,centos-stream
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.8.stream
@@ -733,9 +742,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
+    iconClass: icon-centos
+    openshift.io/display-name: CentOS Stream 8
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,linux,centos-stream
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.8.stream.desktop
@@ -751,9 +763,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
+    iconClass: icon-centos
+    openshift.io/display-name: CentOS Stream 9
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,linux,centos-stream
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.9.stream
@@ -773,9 +788,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
+    iconClass: icon-centos
+    openshift.io/display-name: CentOS Stream 9
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,linux,centos-stream
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.9.stream.desktop
@@ -2242,9 +2260,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   annotations:
+    iconClass: icon-centos
+    openshift.io/display-name: CentOS 7
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,linux,centos-stream
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.7
@@ -2257,9 +2278,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   annotations:
+    iconClass: icon-centos
+    openshift.io/display-name: CentOS 7
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,linux,centos-stream
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.7.desktop
@@ -2275,9 +2299,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   annotations:
+    iconClass: icon-centos
+    openshift.io/display-name: CentOS Stream 8
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,linux,centos-stream
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.8.stream
@@ -2290,9 +2317,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   annotations:
+    iconClass: icon-centos
+    openshift.io/display-name: CentOS Stream 8
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,linux,centos-stream
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.8.stream.desktop
@@ -2308,9 +2338,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   annotations:
+    iconClass: icon-centos
+    openshift.io/display-name: CentOS Stream 9
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,linux,centos-stream
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.9.stream
@@ -2330,9 +2363,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   annotations:
+    iconClass: icon-centos
+    openshift.io/display-name: CentOS Stream 9
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,linux,centos-stream
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.9.stream.desktop
