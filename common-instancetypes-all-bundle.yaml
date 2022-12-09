@@ -3,6 +3,7 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
     kubevirt.io/size: large
   name: highperformance.large
 spec:
@@ -18,6 +19,7 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
     kubevirt.io/size: medium
   name: highperformance.medium
 spec:
@@ -33,6 +35,7 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
     kubevirt.io/size: small
   name: highperformance.small
 spec:
@@ -48,6 +51,7 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
     kubevirt.io/size: large
   name: server.large
 spec:
@@ -60,6 +64,7 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
     kubevirt.io/size: medium
   name: server.medium
 spec:
@@ -72,6 +77,7 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
     kubevirt.io/size: micro
   name: server.micro
 spec:
@@ -84,6 +90,7 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
     kubevirt.io/size: small
   name: server.small
 spec:
@@ -96,6 +103,7 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
     kubevirt.io/size: tiny
   name: server.tiny
 spec:
@@ -107,6 +115,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: alpine
 spec:
   devices:
@@ -116,6 +126,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.7
 spec:
   devices:
@@ -125,6 +137,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.7.desktop
 spec:
   devices:
@@ -137,6 +151,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.8.stream
 spec:
   devices:
@@ -146,6 +162,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.8.stream.desktop
 spec:
   devices:
@@ -158,6 +176,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.9.stream
 spec:
   devices:
@@ -174,6 +194,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.9.stream.desktop
 spec:
   devices:
@@ -193,6 +215,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: cirros
 spec:
   devices:
@@ -202,6 +226,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: fedora
 spec:
   devices:
@@ -218,6 +244,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: rhel.7
 spec:
   devices:
@@ -227,6 +255,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: rhel.7.desktop
 spec:
   devices:
@@ -239,6 +269,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: rhel.8
 spec:
   devices:
@@ -248,6 +280,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: rhel.8.desktop
 spec:
   devices:
@@ -260,6 +294,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: rhel.9
 spec:
   devices:
@@ -276,6 +312,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: rhel.9.desktop
 spec:
   devices:
@@ -295,6 +333,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: ubuntu
 spec:
   devices:
@@ -305,6 +345,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.10
 spec:
   clock:
@@ -346,6 +388,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.10.virtio
 spec:
   clock:
@@ -389,6 +433,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.11
 spec:
   clock:
@@ -435,6 +481,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.11.virtio
 spec:
   clock:
@@ -483,6 +531,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k12
 spec:
   clock:
@@ -524,6 +574,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k12.virtio
 spec:
   clock:
@@ -567,6 +619,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k16
 spec:
   clock:
@@ -608,6 +662,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k16.virtio
 spec:
   clock:
@@ -651,6 +707,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k19
 spec:
   clock:
@@ -692,6 +750,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k19.virtio
 spec:
   clock:
@@ -735,6 +795,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k22
 spec:
   clock:
@@ -781,6 +843,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k22.virtio
 spec:
   clock:
@@ -830,6 +894,7 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineInstancetype
 metadata:
   labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
     kubevirt.io/size: large
   name: highperformance.large
 spec:
@@ -845,6 +910,7 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineInstancetype
 metadata:
   labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
     kubevirt.io/size: medium
   name: highperformance.medium
 spec:
@@ -860,6 +926,7 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineInstancetype
 metadata:
   labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
     kubevirt.io/size: small
   name: highperformance.small
 spec:
@@ -875,6 +942,7 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineInstancetype
 metadata:
   labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
     kubevirt.io/size: large
   name: server.large
 spec:
@@ -887,6 +955,7 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineInstancetype
 metadata:
   labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
     kubevirt.io/size: medium
   name: server.medium
 spec:
@@ -899,6 +968,7 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineInstancetype
 metadata:
   labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
     kubevirt.io/size: micro
   name: server.micro
 spec:
@@ -911,6 +981,7 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineInstancetype
 metadata:
   labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
     kubevirt.io/size: small
   name: server.small
 spec:
@@ -923,6 +994,7 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineInstancetype
 metadata:
   labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
     kubevirt.io/size: tiny
   name: server.tiny
 spec:
@@ -934,6 +1006,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: alpine
 spec:
   devices:
@@ -943,6 +1017,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.7
 spec:
   devices:
@@ -952,6 +1028,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.7.desktop
 spec:
   devices:
@@ -964,6 +1042,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.8.stream
 spec:
   devices:
@@ -973,6 +1053,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.8.stream.desktop
 spec:
   devices:
@@ -985,6 +1067,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.9.stream
 spec:
   devices:
@@ -1001,6 +1085,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.9.stream.desktop
 spec:
   devices:
@@ -1020,6 +1106,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: cirros
 spec:
   devices:
@@ -1029,6 +1117,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: fedora
 spec:
   devices:
@@ -1045,6 +1135,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: rhel.7
 spec:
   devices:
@@ -1054,6 +1146,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: rhel.7.desktop
 spec:
   devices:
@@ -1066,6 +1160,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: rhel.8
 spec:
   devices:
@@ -1075,6 +1171,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: rhel.8.desktop
 spec:
   devices:
@@ -1087,6 +1185,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: rhel.9
 spec:
   devices:
@@ -1103,6 +1203,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: rhel.9.desktop
 spec:
   devices:
@@ -1122,6 +1224,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: ubuntu
 spec:
   devices:
@@ -1132,6 +1236,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.10
 spec:
   clock:
@@ -1173,6 +1279,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.10.virtio
 spec:
   clock:
@@ -1216,6 +1324,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.11
 spec:
   clock:
@@ -1262,6 +1372,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.11.virtio
 spec:
   clock:
@@ -1310,6 +1422,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k12
 spec:
   clock:
@@ -1351,6 +1465,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k12.virtio
 spec:
   clock:
@@ -1394,6 +1510,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k16
 spec:
   clock:
@@ -1435,6 +1553,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k16.virtio
 spec:
   clock:
@@ -1478,6 +1598,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k19
 spec:
   clock:
@@ -1519,6 +1641,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k19.virtio
 spec:
   clock:
@@ -1562,6 +1686,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k22
 spec:
   clock:
@@ -1608,6 +1734,8 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k22.virtio
 spec:
   clock:

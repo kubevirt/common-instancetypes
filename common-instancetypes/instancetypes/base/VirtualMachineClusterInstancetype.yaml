@@ -3,3 +3,5 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterInstancetype
 metadata:
   name: VirtualMachineClusterInstancetype
+  labels:
+    instancetype.kubevirt.io/vendor: "kubevirt.io"
