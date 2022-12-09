@@ -10,6 +10,6 @@ if ! command -v shellcheck &> /dev/null; then
     exit 1
 fi
 
-yamllint .
+yamllint -d relaxed .
 
 shellcheck ./scripts/*
