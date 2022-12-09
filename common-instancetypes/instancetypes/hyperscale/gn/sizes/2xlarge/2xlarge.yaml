@@ -1,0 +1,10 @@
+---
+apiVersion: kubevirt.io/v1alpha2
+kind: VirtualMachineInstancetype
+metadata:
+  name: "gn"
+spec:
+  cpu:
+    guest: 8
+  memory:
+    guest: "32Gi"
