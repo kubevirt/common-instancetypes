@@ -2,11 +2,18 @@
   "description": "NodeMediatedDeviceTypesConfig holds information about MDEV types to be defined in a specifc node that matches the NodeSelector field.",
   "type": "object",
   "required": [
-    "nodeSelector",
-    "mediatedDevicesTypes"
+    "nodeSelector"
   ],
   "properties": {
+    "mediatedDeviceTypes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "x-kubernetes-list-type": "atomic"
+    },
     "mediatedDevicesTypes": {
+      "description": "Deprecated. Use mediatedDeviceTypes instead.",
       "type": "array",
       "items": {
         "type": "string"

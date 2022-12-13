@@ -734,6 +734,16 @@
                   }
                 },
                 "additionalProperties": false
+              },
+              "volumes": {
+                "type": "object",
+                "properties": {
+                  "preferredStorageClassName": {
+                    "description": "PreffereedStorageClassName optionally defines the preferred storageClass",
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
               }
             },
             "additionalProperties": false

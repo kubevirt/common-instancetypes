@@ -1748,7 +1748,7 @@
           "type": "boolean"
         },
         "name": {
-          "description": "Name represents the name of the DataVolume in the same namespace",
+          "description": "Name of both the DataVolume and the PVC in the same namespace. After PVC population the DataVolume is garbage collected by default.",
           "type": "string"
         }
       },
@@ -3041,6 +3041,14 @@
           "description": "The ImagePullPolicy to use.",
           "type": "string"
         },
+        "imagePullSecrets": {
+          "description": "The imagePullSecrets to pull the container images from Defaults to none",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/k8s.io.api.core.v1.LocalObjectReference"
+          },
+          "x-kubernetes-list-type": "atomic"
+        },
         "imageRegistry": {
           "description": "The image registry to pull the container images from Defaults to the same registry the operator's container image is pulled from.",
           "type": "string"
@@ -3248,7 +3256,15 @@
       "description": "MediatedDevicesConfiguration holds information about MDEV types to be defined, if available",
       "type": "object",
       "properties": {
+        "mediatedDeviceTypes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-kubernetes-list-type": "atomic"
+        },
         "mediatedDevicesTypes": {
+          "description": "Deprecated. Use mediatedDeviceTypes instead.",
           "type": "array",
           "items": {
             "type": "string"
@@ -3471,11 +3487,18 @@
       "description": "NodeMediatedDeviceTypesConfig holds information about MDEV types to be defined in a specifc node that matches the NodeSelector field.",
       "type": "object",
       "required": [
-        "nodeSelector",
-        "mediatedDevicesTypes"
+        "nodeSelector"
       ],
       "properties": {
+        "mediatedDeviceTypes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-kubernetes-list-type": "atomic"
+        },
         "mediatedDevicesTypes": {
+          "description": "Deprecated. Use mediatedDeviceTypes instead.",
           "type": "array",
           "items": {
             "type": "string"
@@ -5345,6 +5368,10 @@
           "type": "integer",
           "format": "int64"
         },
+        "selinuxContext": {
+          "description": "SELinuxContext is the actual SELinux context of the virt-launcher pod",
+          "type": "string"
+        },
         "topologyHints": {
           "$ref": "#/definitions/v1.TopologyHints"
         },
@@ -5921,6 +5948,27 @@
           "additionalProperties": {
             "type": "string"
           }
+        }
+      },
+      "additionalProperties": false
+    },
+    "v1alpha1.SnapshotVolumesLists": {
+      "description": "SnapshotVolumesLists includes the list of volumes which were included in the snapshot and volumes which were excluded from the snapshot",
+      "type": "object",
+      "properties": {
+        "excludedVolumes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-kubernetes-list-type": "set"
+        },
+        "includedVolumes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "x-kubernetes-list-type": "set"
         }
       },
       "additionalProperties": false
@@ -6723,6 +6771,9 @@
         "readyToUse": {
           "type": "boolean"
         },
+        "snapshotVolumes": {
+          "$ref": "#/definitions/v1alpha1.SnapshotVolumesLists"
+        },
         "sourceUID": {
           "type": "string"
         },
@@ -7334,6 +7385,20 @@
         "machine": {
           "description": "Machine optionally defines preferences associated with the Machine attribute of a VirtualMachineInstance DomainSpec",
           "$ref": "#/definitions/v1alpha2.MachinePreferences"
+        },
+        "volumes": {
+          "description": "Volumes optionally defines preferences associated with the Volumes attribute of a VirtualMachineInstace DomainSpec",
+          "$ref": "#/definitions/v1alpha2.VolumePreferences"
+        }
+      },
+      "additionalProperties": false
+    },
+    "v1alpha2.VolumePreferences": {
+      "type": "object",
+      "properties": {
+        "preferredStorageClassName": {
+          "description": "PreffereedStorageClassName optionally defines the preferred storageClass",
+          "type": "string"
         }
       },
       "additionalProperties": false
