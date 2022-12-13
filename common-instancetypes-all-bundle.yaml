@@ -8,7 +8,6 @@ metadata:
   name: highperformance.large
 spec:
   cpu:
-    dedicatedCPUPlacement: true
     guest: 2
     isolateEmulatorThread: true
   ioThreadsPolicy: shared
@@ -24,7 +23,6 @@ metadata:
   name: highperformance.medium
 spec:
   cpu:
-    dedicatedCPUPlacement: true
     guest: 1
     isolateEmulatorThread: true
   ioThreadsPolicy: shared
@@ -40,7 +38,6 @@ metadata:
   name: highperformance.small
 spec:
   cpu:
-    dedicatedCPUPlacement: true
     guest: 1
     isolateEmulatorThread: true
   ioThreadsPolicy: shared
@@ -899,7 +896,6 @@ metadata:
   name: highperformance.large
 spec:
   cpu:
-    dedicatedCPUPlacement: true
     guest: 2
     isolateEmulatorThread: true
   ioThreadsPolicy: shared
@@ -915,7 +911,6 @@ metadata:
   name: highperformance.medium
 spec:
   cpu:
-    dedicatedCPUPlacement: true
     guest: 1
     isolateEmulatorThread: true
   ioThreadsPolicy: shared
@@ -931,7 +926,6 @@ metadata:
   name: highperformance.small
 spec:
   cpu:
-    dedicatedCPUPlacement: true
     guest: 1
     isolateEmulatorThread: true
   ioThreadsPolicy: shared
