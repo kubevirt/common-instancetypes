@@ -751,6 +751,9 @@
       "$ref": "_definitions.json#/definitions/v1alpha1.Selectors"
     },
     {
+      "$ref": "_definitions.json#/definitions/v1alpha1.SnapshotVolumesLists"
+    },
+    {
       "$ref": "_definitions.json#/definitions/v1alpha1.SourceSpec"
     },
     {
@@ -908,6 +911,9 @@
     },
     {
       "$ref": "_definitions.json#/definitions/v1alpha2.VirtualMachinePreferenceSpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha2.VolumePreferences"
     },
     {
       "$ref": "_definitions.json#/definitions/v1beta1.DataVolumeBlankImage"

@@ -498,7 +498,15 @@
                     "description": "MediatedDevicesConfiguration holds information about MDEV types to be defined, if available",
                     "type": "object",
                     "properties": {
+                      "mediatedDeviceTypes": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "x-kubernetes-list-type": "atomic"
+                      },
                       "mediatedDevicesTypes": {
+                        "description": "Deprecated. Use mediatedDeviceTypes instead.",
                         "type": "array",
                         "items": {
                           "type": "string"
@@ -511,11 +519,18 @@
                           "description": "NodeMediatedDeviceTypesConfig holds information about MDEV types to be defined in a specifc node that matches the NodeSelector field.",
                           "type": "object",
                           "required": [
-                            "nodeSelector",
-                            "mediatedDevicesTypes"
+                            "nodeSelector"
                           ],
                           "properties": {
+                            "mediatedDeviceTypes": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              },
+                              "x-kubernetes-list-type": "atomic"
+                            },
                             "mediatedDevicesTypes": {
+                              "description": "Deprecated. Use mediatedDeviceTypes instead.",
                               "type": "array",
                               "items": {
                                 "type": "string"
@@ -840,6 +855,22 @@
               "imagePullPolicy": {
                 "description": "The ImagePullPolicy to use.",
                 "type": "string"
+              },
+              "imagePullSecrets": {
+                "description": "The imagePullSecrets to pull the container images from Defaults to none",
+                "type": "array",
+                "items": {
+                  "description": "LocalObjectReference contains enough information to let you locate the referenced object inside the same namespace.",
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "description": "Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names",
+                      "type": "string"
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "x-kubernetes-list-type": "atomic"
               },
               "imageRegistry": {
                 "description": "The image registry to pull the container images from Defaults to the same registry the operator's container image is pulled from.",

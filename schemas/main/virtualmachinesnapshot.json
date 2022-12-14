@@ -291,6 +291,27 @@
         "readyToUse": {
           "type": "boolean"
         },
+        "snapshotVolumes": {
+          "description": "SnapshotVolumesLists includes the list of volumes which were included in the snapshot and volumes which were excluded from the snapshot",
+          "type": "object",
+          "properties": {
+            "excludedVolumes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "x-kubernetes-list-type": "set"
+            },
+            "includedVolumes": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "x-kubernetes-list-type": "set"
+            }
+          },
+          "additionalProperties": false
+        },
         "sourceUID": {
           "type": "string"
         },
