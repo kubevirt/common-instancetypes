@@ -5,6 +5,7 @@ resources:
   - ../../base
 
 components:
+  - ./metadata
   - ../../components/hyperv
   - ../../components/cpu-topology-sockets
   - ../../components/diskbus-sata

@@ -333,9 +333,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   annotations:
+    iconClass: icon-windows
+    openshift.io/display-name: Microsoft Windows 10
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,windows
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.10
@@ -380,9 +383,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   annotations:
+    iconClass: icon-windows
+    openshift.io/display-name: Microsoft Windows 10
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,windows
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.10.virtio
@@ -429,9 +435,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   annotations:
+    iconClass: icon-windows
+    openshift.io/display-name: Microsoft Windows 11
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,windows
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.11
@@ -481,9 +490,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   annotations:
+    iconClass: icon-windows
+    openshift.io/display-name: Microsoft Windows 11
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,windows
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.11.virtio
@@ -535,9 +547,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   annotations:
+    iconClass: icon-windows
+    openshift.io/display-name: Microsoft Windows Server 2012
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,windows
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k12
@@ -582,9 +597,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   annotations:
+    iconClass: icon-windows
+    openshift.io/display-name: Microsoft Windows Server 2012
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,windows
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k12.virtio
@@ -631,9 +649,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   annotations:
+    iconClass: icon-windows
+    openshift.io/display-name: Microsoft Windows Server 2016
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,windows
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k16
@@ -678,9 +699,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   annotations:
+    iconClass: icon-windows
+    openshift.io/display-name: Microsoft Windows Server 2016
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,windows
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k16.virtio
@@ -727,9 +751,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   annotations:
+    iconClass: icon-windows
+    openshift.io/display-name: Microsoft Windows Server 2019
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,windows
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k19
@@ -774,9 +801,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   annotations:
+    iconClass: icon-windows
+    openshift.io/display-name: Microsoft Windows Server 2019
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,windows
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k19.virtio
@@ -823,9 +853,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   annotations:
+    iconClass: icon-windows
+    openshift.io/display-name: Microsoft Windows Server 2022
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,windows
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k22
@@ -875,9 +908,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   annotations:
+    iconClass: icon-windows
+    openshift.io/display-name: Microsoft Windows Server 2022
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,windows
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k22.virtio
