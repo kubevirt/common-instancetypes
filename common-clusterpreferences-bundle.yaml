@@ -186,9 +186,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
+    iconClass: icon-rhel
+    openshift.io/display-name: Red Hat Enterprise Linux 7
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,linux,rhel
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: rhel.7
@@ -201,9 +204,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
+    iconClass: icon-rhel
+    openshift.io/display-name: Red Hat Enterprise Linux 7
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,linux,rhel
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: rhel.7.desktop
@@ -219,9 +225,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
+    iconClass: icon-rhel
+    openshift.io/display-name: Red Hat Enterprise Linux 8
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,linux,rhel
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: rhel.8
@@ -234,9 +243,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
+    iconClass: icon-rhel
+    openshift.io/display-name: Red Hat Enterprise Linux 8
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,linux,rhel
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: rhel.8.desktop
@@ -252,9 +264,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
+    iconClass: icon-rhel
+    openshift.io/display-name: Red Hat Enterprise Linux 9
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,linux,rhel
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: rhel.9
@@ -274,9 +289,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
+    iconClass: icon-rhel
+    openshift.io/display-name: Red Hat Enterprise Linux 9
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,linux,rhel
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: rhel.9.desktop
