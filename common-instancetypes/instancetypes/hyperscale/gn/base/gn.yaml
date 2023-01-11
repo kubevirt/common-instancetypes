@@ -1,0 +1,21 @@
+---
+apiVersion: kubevirt.io/v1alpha2
+kind: VirtualMachineClusterInstancetype
+metadata:
+  name: "gn"
+  annotations:
+    instancetype.kubevirt.io/description: |-
+      The GN Series provides instances types intended for VMs with
+      NVIDIA GPU resources attached.
+
+      *GN* is the abbreviation of "GPU NVIDIA".
+
+      This series is intended to be used with VMs consuming GPUs
+      provided by the
+      [NVIDIA GPU Operator](https://github.com/NVIDIA/gpu-operator)
+      which is made available on OpenShift via OperatorHub.
+    instancetype.kubevirt.io/class: "GPU NVIDIA"
+spec:
+  gpus:
+    - name: "gpu1"
+      deviceName: "nvidia.com/A400"

@@ -1,0 +1,6 @@
+---
+resources:
+  - ./8xlarge
+  - ./4xlarge
+  - ./2xlarge
+  - ./xlarge

@@ -1,0 +1,20 @@
+---
+apiVersion: kubevirt.io/v1alpha2
+kind: VirtualMachineClusterInstancetype
+metadata:
+  name: "m1"
+  annotations:
+    instancetype.kubevirt.io/description: |-
+      The M Series provides resources for memory intensive
+      applications.
+
+      *M* is the abbreviation of "Memory".
+    instancetype.kubevirt.io/class: "Memory Intensive"
+spec:
+  cpu:
+    guest: 1
+    isolateEmulatorThread: true
+  memory:
+    guest: 1Gi
+    hugepages:
+      pageSize: "2Mi"

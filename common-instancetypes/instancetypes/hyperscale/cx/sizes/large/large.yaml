@@ -1,0 +1,10 @@
+---
+apiVersion: kubevirt.io/v1alpha2
+kind: VirtualMachineInstancetype
+metadata:
+  name: "cx"
+spec:
+  cpu:
+    guest: 2
+  memory:
+    guest: "4Gi"

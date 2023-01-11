@@ -1,0 +1,21 @@
+---
+apiVersion: kubevirt.io/v1alpha2
+kind: VirtualMachineClusterInstancetype
+metadata:
+  name: "n"
+  annotations:
+    instancetype.kubevirt.io/description: |-
+      The N Series is quite neutral and provides resources for
+      general purpose applications.
+
+      *N* is the abbreviation for "Neutral", hinting at the neutral
+      attitude towards workloads.
+
+      VMs of instance types will share physical CPU cores on a
+      time-slice basis with other VMs.
+    instancetype.kubevirt.io/class: "General Purpose"
+spec:
+  cpu:
+    guest: 1
+  memory:
+    guest: 1Gi

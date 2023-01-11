@@ -1,0 +1,7 @@
+---
+apiVersion: kubevirt.io/v1alpha2
+kind: VirtualMachineClusterInstancetype
+metadata:
+  name: "gn1"
+  annotations:
+    instancetype.kubevirt.io/version: "1"
