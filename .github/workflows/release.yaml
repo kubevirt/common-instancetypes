@@ -21,3 +21,49 @@ jobs:
           files: |
             *bundle-${{ github.ref_name }}.yaml
             LICENSE
+      - name: Update SSP Operator
+        run: |
+          # Define vars
+          export VERSION="${{ steps.get_release.outputs.tag_name }}"
+
+          # Set git configs to sign the commit
+          git config --global user.email "${{ secrets.RELEASE_FORK_USER }}@redhat.com"
+          git config --global user.name "common-instancetypes Release Automation"
+
+          # Clone the operator repo with a token to allow pushing before creating a PR
+          git clone https://${{ secrets.RELEASE_FORK_USER }}:${{ secrets.RELEASE_FORK_TOKEN }}@github.com/${{ secrets.RELEASE_FORK_USER }}/ssp-operator
+
+          # Authenticate with gh cli
+          echo ${{ secrets.RELEASE_FORK_TOKEN }} > token.txt
+          gh auth login --with-token < token.txt
+          rm token.txt
+          cd ssp-operator
+          git remote add upstream https://github.com/kubevirt/ssp-operator
+          git fetch upstream
+          git checkout master
+          git rebase upstream/master
+          git checkout -b update-common-instancetypes-${VERSION}
+
+          # Update the new common-instancetypes file
+          cp ../common-clusterinstancetypes-bundle.yaml data/common-instancetypes-bundle/
+          cp ../common-clusterpreferences-bundle.yaml data/common-instancetypes-bundle/
+
+          # Commit and push the changes to the update branch
+          git add data
+          git commit -sm "Update common-instancetypes bundle to version ${VERSION}"
+          git push --set-upstream origin update-common-instancetypes-${VERSION}
+
+          # Create a new PR in the operator repo
+          gh pr create --repo kubevirt/ssp-operator \
+            --base master \
+            --head ${RELEASE_FORK_USER}:update-common-templates-${VERSION} \
+            --title "Update common-templates to ${VERSION}" \
+            --body "$(cat << EOF
+          Update common-templates bundle to ${VERSION}
+          **Release note**:
+          \`\`\`release-note
+          Update common-templates bundle to ${VERSION}
+          \`\`\`
+          EOF
+          )
+          "
