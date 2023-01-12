@@ -8,6 +8,7 @@ resources:
 nameSuffix: ".9.stream"
 
 components:
+  - ./metadata
   - ../../components/rng
   - ../../components/secureboot
   - ../../components/disk-dedicatediothread

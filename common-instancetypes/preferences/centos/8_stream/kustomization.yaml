@@ -5,4 +5,7 @@ kind: Kustomization
 resources:
   - ../base
 
+components:
+  - ./metadata
+
 nameSuffix: ".8.stream"
