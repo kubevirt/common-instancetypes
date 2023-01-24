@@ -152,9 +152,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
+    iconClass: icon-cirros
+    openshift.io/display-name: Cirros
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,cirros
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: cirros

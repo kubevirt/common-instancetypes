@@ -1,0 +1,9 @@
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachinePreference
+metadata:
+  name: metadata
+  annotations:
+    tags: "hidden,kubevirt,cirros"
+    iconClass: "icon-cirros"
+    openshift.io/display-name: "Cirros"
