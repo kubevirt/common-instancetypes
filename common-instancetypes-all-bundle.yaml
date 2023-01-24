@@ -831,9 +831,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
+    iconClass: icon-fedora
+    openshift.io/display-name: Fedora
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,fedora
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: fedora
@@ -2460,9 +2463,12 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
 metadata:
   annotations:
+    iconClass: icon-fedora
+    openshift.io/display-name: Fedora
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
+    tags: hidden,kubevirt,fedora
   labels:
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: fedora
