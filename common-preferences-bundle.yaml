@@ -396,7 +396,7 @@ kind: VirtualMachinePreference
 metadata:
   annotations:
     iconClass: icon-windows
-    openshift.io/display-name: Microsoft Windows 10
+    openshift.io/display-name: Microsoft Windows 10 (virtio)
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
@@ -610,7 +610,7 @@ kind: VirtualMachinePreference
 metadata:
   annotations:
     iconClass: icon-windows
-    openshift.io/display-name: Microsoft Windows Server 2012
+    openshift.io/display-name: Microsoft Windows Server 2012 (virtio)
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
@@ -712,7 +712,7 @@ kind: VirtualMachinePreference
 metadata:
   annotations:
     iconClass: icon-windows
-    openshift.io/display-name: Microsoft Windows Server 2016
+    openshift.io/display-name: Microsoft Windows Server 2016 (virtio)
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
@@ -921,7 +921,7 @@ kind: VirtualMachinePreference
 metadata:
   annotations:
     iconClass: icon-windows
-    openshift.io/display-name: Microsoft Windows Server 2022
+    openshift.io/display-name: Microsoft Windows Server 2022 (virtio)
     openshift.io/documentation-url: https://github.com/kubevirt/common-instancetypes
     openshift.io/provider-display-name: KubeVirt
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues

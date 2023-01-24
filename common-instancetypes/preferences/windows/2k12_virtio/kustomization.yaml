@@ -8,6 +8,7 @@ resources:
   - ../2k12
 
 components:
+  - ./metadata
   - ../../components/diskbus-virtio-blk
   - ../../components/interfacemodel-virtio-net
   - ../../components/tablet-virtio
