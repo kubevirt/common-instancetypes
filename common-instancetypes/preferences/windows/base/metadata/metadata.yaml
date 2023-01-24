@@ -6,3 +6,5 @@ metadata:
   annotations:
     tags: "hidden,kubevirt,windows"
     iconClass: "icon-windows"
+  labels:
+    instancetype.kubevirt.io/os-type: "windows"

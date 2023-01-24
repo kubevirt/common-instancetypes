@@ -677,6 +677,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,alpine
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: alpine
 spec:
@@ -695,6 +696,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,linux,centos-stream
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.7
 spec:
@@ -713,6 +715,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,linux,centos-stream
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.7.desktop
 spec:
@@ -734,6 +737,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,linux,centos-stream
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.8.stream
 spec:
@@ -752,6 +756,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,linux,centos-stream
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.8.stream.desktop
 spec:
@@ -773,6 +778,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,linux,centos-stream
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.9.stream
 spec:
@@ -798,6 +804,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,linux,centos-stream
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.9.stream.desktop
 spec:
@@ -826,6 +833,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,cirros
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: cirros
 spec:
@@ -844,6 +852,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,fedora
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: fedora
 spec:
@@ -869,6 +878,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,linux,rhel
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: rhel.7
 spec:
@@ -887,6 +897,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,linux,rhel
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: rhel.7.desktop
 spec:
@@ -908,6 +919,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,linux,rhel
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: rhel.8
 spec:
@@ -926,6 +938,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,linux,rhel
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: rhel.8.desktop
 spec:
@@ -947,6 +960,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,linux,rhel
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: rhel.9
 spec:
@@ -972,6 +986,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,linux,rhel
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: rhel.9.desktop
 spec:
@@ -1000,6 +1015,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,ubuntu
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: ubuntu
 spec:
@@ -1019,6 +1035,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,windows
   labels:
+    instancetype.kubevirt.io/os-type: windows
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.10
 spec:
@@ -1069,6 +1086,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,windows
   labels:
+    instancetype.kubevirt.io/os-type: windows
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.10.virtio
 spec:
@@ -1121,6 +1139,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,windows
   labels:
+    instancetype.kubevirt.io/os-type: windows
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.11
 spec:
@@ -1176,6 +1195,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,windows
   labels:
+    instancetype.kubevirt.io/os-type: windows
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.11.virtio
 spec:
@@ -1233,6 +1253,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,windows
   labels:
+    instancetype.kubevirt.io/os-type: windows
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k12
 spec:
@@ -1283,6 +1304,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,windows
   labels:
+    instancetype.kubevirt.io/os-type: windows
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k12.virtio
 spec:
@@ -1335,6 +1357,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,windows
   labels:
+    instancetype.kubevirt.io/os-type: windows
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k16
 spec:
@@ -1385,6 +1408,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,windows
   labels:
+    instancetype.kubevirt.io/os-type: windows
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k16.virtio
 spec:
@@ -1437,6 +1461,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,windows
   labels:
+    instancetype.kubevirt.io/os-type: windows
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k19
 spec:
@@ -1487,6 +1512,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,windows
   labels:
+    instancetype.kubevirt.io/os-type: windows
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k19.virtio
 spec:
@@ -1539,6 +1565,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,windows
   labels:
+    instancetype.kubevirt.io/os-type: windows
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k22
 spec:
@@ -1594,6 +1621,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,windows
   labels:
+    instancetype.kubevirt.io/os-type: windows
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k22.virtio
 spec:
@@ -2318,6 +2346,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,alpine
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: alpine
 spec:
@@ -2336,6 +2365,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,linux,centos-stream
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.7
 spec:
@@ -2354,6 +2384,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,linux,centos-stream
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.7.desktop
 spec:
@@ -2375,6 +2406,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,linux,centos-stream
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.8.stream
 spec:
@@ -2393,6 +2425,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,linux,centos-stream
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.8.stream.desktop
 spec:
@@ -2414,6 +2447,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,linux,centos-stream
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.9.stream
 spec:
@@ -2439,6 +2473,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,linux,centos-stream
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: centos.9.stream.desktop
 spec:
@@ -2467,6 +2502,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,cirros
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: cirros
 spec:
@@ -2485,6 +2521,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,fedora
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: fedora
 spec:
@@ -2510,6 +2547,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,linux,rhel
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: rhel.7
 spec:
@@ -2528,6 +2566,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,linux,rhel
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: rhel.7.desktop
 spec:
@@ -2549,6 +2588,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,linux,rhel
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: rhel.8
 spec:
@@ -2567,6 +2607,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,linux,rhel
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: rhel.8.desktop
 spec:
@@ -2588,6 +2629,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,linux,rhel
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: rhel.9
 spec:
@@ -2613,6 +2655,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,linux,rhel
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: rhel.9.desktop
 spec:
@@ -2641,6 +2684,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,ubuntu
   labels:
+    instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: ubuntu
 spec:
@@ -2660,6 +2704,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,windows
   labels:
+    instancetype.kubevirt.io/os-type: windows
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.10
 spec:
@@ -2710,6 +2755,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,windows
   labels:
+    instancetype.kubevirt.io/os-type: windows
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.10.virtio
 spec:
@@ -2762,6 +2808,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,windows
   labels:
+    instancetype.kubevirt.io/os-type: windows
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.11
 spec:
@@ -2817,6 +2864,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,windows
   labels:
+    instancetype.kubevirt.io/os-type: windows
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.11.virtio
 spec:
@@ -2874,6 +2922,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,windows
   labels:
+    instancetype.kubevirt.io/os-type: windows
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k12
 spec:
@@ -2924,6 +2973,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,windows
   labels:
+    instancetype.kubevirt.io/os-type: windows
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k12.virtio
 spec:
@@ -2976,6 +3026,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,windows
   labels:
+    instancetype.kubevirt.io/os-type: windows
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k16
 spec:
@@ -3026,6 +3077,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,windows
   labels:
+    instancetype.kubevirt.io/os-type: windows
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k16.virtio
 spec:
@@ -3078,6 +3130,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,windows
   labels:
+    instancetype.kubevirt.io/os-type: windows
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k19
 spec:
@@ -3128,6 +3181,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,windows
   labels:
+    instancetype.kubevirt.io/os-type: windows
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k19.virtio
 spec:
@@ -3180,6 +3234,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,windows
   labels:
+    instancetype.kubevirt.io/os-type: windows
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k22
 spec:
@@ -3235,6 +3290,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,windows
   labels:
+    instancetype.kubevirt.io/os-type: windows
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k22.virtio
 spec:
