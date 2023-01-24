@@ -1,0 +1,9 @@
+---
+apiVersion: instancetype.kubevirt.io/v1alpha1
+kind: VirtualMachinePreference
+metadata:
+  name: metadata
+  annotations:
+    tags: "hidden,kubevirt,alpine"
+    iconClass: "icon-alpine"
+    openshift.io/display-name: "Alpine"
