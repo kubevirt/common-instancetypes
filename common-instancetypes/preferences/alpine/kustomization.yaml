@@ -6,6 +6,7 @@ resources:
   - ../base
 
 components:
+  - ./metadata
   - ../components/diskbus-virtio-blk
   - ../components/interfacemodel-virtio-net
 

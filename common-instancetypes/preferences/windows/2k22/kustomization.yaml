@@ -6,6 +6,7 @@ resources:
   - ../base
 
 components:
+  - ./metadata
   - ../../components/tpm
   - ../../components/secureboot
 
