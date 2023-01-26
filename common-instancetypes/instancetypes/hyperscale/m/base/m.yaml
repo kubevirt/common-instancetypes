@@ -13,7 +13,10 @@ metadata:
 spec:
   cpu:
     guest: 1
-    isolateEmulatorThread: true
+  # FIXME(lyarwood): Reintroduce once we can use DedicatedCPUPlacement again
+  # cpu:
+  #  isolateEmulatorThread: true
+  #  dedicatedCPUPlacement: true
   memory:
     guest: 1Gi
     hugepages:
