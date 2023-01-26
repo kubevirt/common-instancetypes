@@ -46,6 +46,18 @@ cluster-down:
 cluster-sync:
 	./scripts/kubevirtci.sh sync
 
+.PHONY: kubevirt-up
+kubevirt-up:
+	./scripts/kubevirt.sh up
+
+.PHONY: kubevirt-down
+kubevirt-down:
+	./scripts/kubevirt.sh down
+
+.PHONY: kubevirt-sync
+kubevirt-sync:
+	./scripts/kubevirt.sh sync
+
 clean: 
 	rm -f common*.yaml
 
