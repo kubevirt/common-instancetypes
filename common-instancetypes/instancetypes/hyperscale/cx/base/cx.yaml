@@ -19,6 +19,4 @@ metadata:
 spec:
   cpu:
     isolateEmulatorThread: true
-    numa:
-      guestMappingPassthrough: {}
   ioThreadsPolicy: "auto"

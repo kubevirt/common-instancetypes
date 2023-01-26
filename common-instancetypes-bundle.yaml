@@ -24,8 +24,6 @@ spec:
   cpu:
     guest: 8
     isolateEmulatorThread: true
-    numa:
-      guestMappingPassthrough: {}
   ioThreadsPolicy: auto
   memory:
     guest: 16Gi
@@ -55,8 +53,6 @@ spec:
   cpu:
     guest: 16
     isolateEmulatorThread: true
-    numa:
-      guestMappingPassthrough: {}
   ioThreadsPolicy: auto
   memory:
     guest: 32Gi
@@ -86,8 +82,6 @@ spec:
   cpu:
     guest: 32
     isolateEmulatorThread: true
-    numa:
-      guestMappingPassthrough: {}
   ioThreadsPolicy: auto
   memory:
     guest: 64Gi
@@ -117,8 +111,6 @@ spec:
   cpu:
     guest: 2
     isolateEmulatorThread: true
-    numa:
-      guestMappingPassthrough: {}
   ioThreadsPolicy: auto
   memory:
     guest: 4Gi
@@ -148,8 +140,6 @@ spec:
   cpu:
     guest: 1
     isolateEmulatorThread: true
-    numa:
-      guestMappingPassthrough: {}
   ioThreadsPolicy: auto
   memory:
     guest: 2Gi
@@ -179,8 +169,6 @@ spec:
   cpu:
     guest: 4
     isolateEmulatorThread: true
-    numa:
-      guestMappingPassthrough: {}
   ioThreadsPolicy: auto
   memory:
     guest: 8Gi
