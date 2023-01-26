@@ -46,6 +46,10 @@ cluster-down:
 cluster-sync:
 	./scripts/kubevirtci.sh sync
 
+.PHONY: cluster-functest
+cluster-functest:
+	./scripts/kubevirtci.sh functest
+
 .PHONY: kubevirt-up
 kubevirt-up:
 	./scripts/kubevirt.sh up
@@ -57,6 +61,10 @@ kubevirt-down:
 .PHONY: kubevirt-sync
 kubevirt-sync:
 	./scripts/kubevirt.sh sync
+
+.PHONY: kubevirt-functest
+kubevirt-functest:
+	./scripts/kubevirt.sh functest
 
 clean: 
 	rm -f common*.yaml

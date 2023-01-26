@@ -49,6 +49,10 @@ function kubevirt::registry() {
   echo "localhost:${port}"
 }
 
+function kubevirtci::functest() {
+  KUBECTL=${_kubectl} "${_base_dir}/scripts/functest.sh"
+}
+
 kubevirt::install
 
 case ${_action} in
@@ -73,8 +77,11 @@ case ${_action} in
   "kubectl")
     ${_kubectl} "$@"
     ;;
+  "functest")
+    kubevirtci::functest
+    ;;
   *)
-    echo "No command provided, known commands are 'up', 'down', 'sync', 'ssh', 'kubeconfig', 'registry', 'kubectl'"
+    echo "No command provided, known commands are 'up', 'down', 'sync', 'ssh', 'kubeconfig', 'registry', 'kubectl', 'functest'"
     exit 1
     ;;
 esac
