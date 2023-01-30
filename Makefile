@@ -34,6 +34,38 @@ readme:
 check:
 	./scripts/cri.sh  "./scripts/check.sh"
 
+.PHONY: cluster-up
+cluster-up:
+	./scripts/kubevirtci.sh up
+
+.PHONY: cluster-down
+cluster-down:
+	./scripts/kubevirtci.sh down
+
+.PHONY: cluster-sync
+cluster-sync:
+	./scripts/kubevirtci.sh sync
+
+.PHONY: cluster-functest
+cluster-functest:
+	./scripts/kubevirtci.sh functest
+
+.PHONY: kubevirt-up
+kubevirt-up:
+	./scripts/kubevirt.sh up
+
+.PHONY: kubevirt-down
+kubevirt-down:
+	./scripts/kubevirt.sh down
+
+.PHONY: kubevirt-sync
+kubevirt-sync:
+	./scripts/kubevirt.sh sync
+
+.PHONY: kubevirt-functest
+kubevirt-functest:
+	./scripts/kubevirt.sh functest
+
 clean: 
 	rm -f common*.yaml
 
