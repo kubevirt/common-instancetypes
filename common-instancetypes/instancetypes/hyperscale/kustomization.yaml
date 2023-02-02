@@ -1,6 +1,5 @@
 ---
 resources:
-  - ./cx
   - ./gn
   - ./m
   - ./n
