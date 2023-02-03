@@ -7,3 +7,4 @@ spec:
   ioThreadsPolicy: shared
   cpu:
     isolateEmulatorThread: true
+    dedicatedCPUPlacement: true
