@@ -17,10 +17,6 @@ metadata:
       cores is provided to the VM.
     instancetype.kubevirt.io/class: "Compute Exclusive"
 spec:
+  cpu:
+    isolateEmulatorThread: true
   ioThreadsPolicy: "auto"
-  # FIXME(lyarwood): Reintroduce once we can use dedicatedCPUPlacement again
-  # cpu:
-  #  isolateEmulatorThread: true
-  #  dedicatedCPUPlacement: true
-  #  numa:
-  #    guestMappingPassthrough: {}

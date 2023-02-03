@@ -23,6 +23,7 @@ metadata:
 spec:
   cpu:
     guest: 8
+    isolateEmulatorThread: true
   ioThreadsPolicy: auto
   memory:
     guest: 16Gi
@@ -51,6 +52,7 @@ metadata:
 spec:
   cpu:
     guest: 16
+    isolateEmulatorThread: true
   ioThreadsPolicy: auto
   memory:
     guest: 32Gi
@@ -79,6 +81,7 @@ metadata:
 spec:
   cpu:
     guest: 32
+    isolateEmulatorThread: true
   ioThreadsPolicy: auto
   memory:
     guest: 64Gi
@@ -107,6 +110,7 @@ metadata:
 spec:
   cpu:
     guest: 2
+    isolateEmulatorThread: true
   ioThreadsPolicy: auto
   memory:
     guest: 4Gi
@@ -135,6 +139,7 @@ metadata:
 spec:
   cpu:
     guest: 1
+    isolateEmulatorThread: true
   ioThreadsPolicy: auto
   memory:
     guest: 2Gi
@@ -163,6 +168,7 @@ metadata:
 spec:
   cpu:
     guest: 4
+    isolateEmulatorThread: true
   ioThreadsPolicy: auto
   memory:
     guest: 8Gi
@@ -289,6 +295,7 @@ metadata:
 spec:
   cpu:
     guest: 2
+    isolateEmulatorThread: true
   ioThreadsPolicy: shared
   memory:
     guest: 8Gi
@@ -303,6 +310,7 @@ metadata:
 spec:
   cpu:
     guest: 1
+    isolateEmulatorThread: true
   ioThreadsPolicy: shared
   memory:
     guest: 4Gi
@@ -317,6 +325,7 @@ metadata:
 spec:
   cpu:
     guest: 1
+    isolateEmulatorThread: true
   ioThreadsPolicy: shared
   memory:
     guest: 2Gi
@@ -338,6 +347,7 @@ metadata:
 spec:
   cpu:
     guest: 8
+    isolateEmulatorThread: true
   memory:
     guest: 64Gi
     hugepages:
@@ -360,6 +370,7 @@ metadata:
 spec:
   cpu:
     guest: 16
+    isolateEmulatorThread: true
   memory:
     guest: 128Gi
     hugepages:
@@ -382,6 +393,7 @@ metadata:
 spec:
   cpu:
     guest: 32
+    isolateEmulatorThread: true
   memory:
     guest: 256Gi
     hugepages:
@@ -404,6 +416,7 @@ metadata:
 spec:
   cpu:
     guest: 2
+    isolateEmulatorThread: true
   memory:
     guest: 16Gi
     hugepages:
@@ -426,6 +439,7 @@ metadata:
 spec:
   cpu:
     guest: 4
+    isolateEmulatorThread: true
   memory:
     guest: 32Gi
     hugepages:
@@ -1666,6 +1680,7 @@ metadata:
 spec:
   cpu:
     guest: 8
+    isolateEmulatorThread: true
   ioThreadsPolicy: auto
   memory:
     guest: 16Gi
@@ -1694,6 +1709,7 @@ metadata:
 spec:
   cpu:
     guest: 16
+    isolateEmulatorThread: true
   ioThreadsPolicy: auto
   memory:
     guest: 32Gi
@@ -1722,6 +1738,7 @@ metadata:
 spec:
   cpu:
     guest: 32
+    isolateEmulatorThread: true
   ioThreadsPolicy: auto
   memory:
     guest: 64Gi
@@ -1750,6 +1767,7 @@ metadata:
 spec:
   cpu:
     guest: 2
+    isolateEmulatorThread: true
   ioThreadsPolicy: auto
   memory:
     guest: 4Gi
@@ -1778,6 +1796,7 @@ metadata:
 spec:
   cpu:
     guest: 1
+    isolateEmulatorThread: true
   ioThreadsPolicy: auto
   memory:
     guest: 2Gi
@@ -1806,6 +1825,7 @@ metadata:
 spec:
   cpu:
     guest: 4
+    isolateEmulatorThread: true
   ioThreadsPolicy: auto
   memory:
     guest: 8Gi
@@ -1932,6 +1952,7 @@ metadata:
 spec:
   cpu:
     guest: 2
+    isolateEmulatorThread: true
   ioThreadsPolicy: shared
   memory:
     guest: 8Gi
@@ -1946,6 +1967,7 @@ metadata:
 spec:
   cpu:
     guest: 1
+    isolateEmulatorThread: true
   ioThreadsPolicy: shared
   memory:
     guest: 4Gi
@@ -1960,6 +1982,7 @@ metadata:
 spec:
   cpu:
     guest: 1
+    isolateEmulatorThread: true
   ioThreadsPolicy: shared
   memory:
     guest: 2Gi
@@ -1981,6 +2004,7 @@ metadata:
 spec:
   cpu:
     guest: 8
+    isolateEmulatorThread: true
   memory:
     guest: 64Gi
     hugepages:
@@ -2003,6 +2027,7 @@ metadata:
 spec:
   cpu:
     guest: 16
+    isolateEmulatorThread: true
   memory:
     guest: 128Gi
     hugepages:
@@ -2025,6 +2050,7 @@ metadata:
 spec:
   cpu:
     guest: 32
+    isolateEmulatorThread: true
   memory:
     guest: 256Gi
     hugepages:
@@ -2047,6 +2073,7 @@ metadata:
 spec:
   cpu:
     guest: 2
+    isolateEmulatorThread: true
   memory:
     guest: 16Gi
     hugepages:
@@ -2069,6 +2096,7 @@ metadata:
 spec:
   cpu:
     guest: 4
+    isolateEmulatorThread: true
   memory:
     guest: 32Gi
     hugepages:
