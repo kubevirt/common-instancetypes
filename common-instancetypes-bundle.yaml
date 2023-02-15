@@ -680,4 +680,4 @@ spec:
   cpu:
     guest: 1
   memory:
-    guest: 1.5Gi
+    guest: 1Gi

@@ -680,7 +680,7 @@ spec:
   cpu:
     guest: 1
   memory:
-    guest: 1.5Gi
+    guest: 1Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterPreference
@@ -2365,7 +2365,7 @@ spec:
   cpu:
     guest: 1
   memory:
-    guest: 1.5Gi
+    guest: 1Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachinePreference
