@@ -5,7 +5,6 @@ metadata:
   name: highperformance
 spec:
   ioThreadsPolicy: shared
-  # FIXME(lyarwood): Reintroduce once we can use DedicatedCPUPlacement again
-  # cpu:
-  #  isolateEmulatorThread: true
-  #  dedicatedCPUPlacement: true
+  cpu:
+    isolateEmulatorThread: true
+    dedicatedCPUPlacement: true
