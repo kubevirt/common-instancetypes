@@ -1,0 +1,90 @@
+{
+  "description": "VirtualMachineExportLink contains a list of volumes available for export, as well as the URLs to obtain these volumes",
+  "type": "object",
+  "required": [
+    "cert"
+  ],
+  "properties": {
+    "cert": {
+      "description": "Cert is the public CA certificate base64 encoded",
+      "type": "string"
+    },
+    "manifests": {
+      "description": "Manifests is a list of available manifests for the export",
+      "type": "array",
+      "items": {
+        "description": "VirtualMachineExportManifest contains the type and URL of the exported manifest",
+        "type": "object",
+        "required": [
+          "type",
+          "url"
+        ],
+        "properties": {
+          "type": {
+            "description": "Type is the type of manifest returned",
+            "type": "string"
+          },
+          "url": {
+            "description": "Url is the url of the endpoint that returns the manifest",
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "x-kubernetes-list-map-keys": [
+        "type"
+      ],
+      "x-kubernetes-list-type": "map"
+    },
+    "volumes": {
+      "description": "Volumes is a list of available volumes to export",
+      "type": "array",
+      "items": {
+        "description": "VirtualMachineExportVolume contains the name and available formats for the exported volume",
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "formats": {
+            "type": "array",
+            "items": {
+              "description": "VirtualMachineExportVolumeFormat contains the format type and URL to get the volume in that format",
+              "type": "object",
+              "required": [
+                "format",
+                "url"
+              ],
+              "properties": {
+                "format": {
+                  "description": "Format is the format of the image at the specified URL",
+                  "type": "string"
+                },
+                "url": {
+                  "description": "Url is the url that contains the volume in the format specified",
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            },
+            "x-kubernetes-list-map-keys": [
+              "format"
+            ],
+            "x-kubernetes-list-type": "map"
+          },
+          "name": {
+            "description": "Name is the name of the exported volume",
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "x-kubernetes-list-map-keys": [
+        "name"
+      ],
+      "x-kubernetes-list-type": "map"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

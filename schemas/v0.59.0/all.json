@@ -1,0 +1,970 @@
+{
+  "oneOf": [
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.api.core.v1.Affinity"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.api.core.v1.DownwardAPIVolumeFile"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.api.core.v1.ExecAction"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.api.core.v1.HTTPGetAction"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.api.core.v1.HTTPHeader"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.api.core.v1.LocalObjectReference"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.api.core.v1.NodeAffinity"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.api.core.v1.NodeSelector"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.api.core.v1.NodeSelectorRequirement"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.api.core.v1.NodeSelectorTerm"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.api.core.v1.ObjectFieldSelector"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.api.core.v1.PersistentVolumeClaimSpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.api.core.v1.PersistentVolumeClaimVolumeSource"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.api.core.v1.PodAffinity"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.api.core.v1.PodAffinityTerm"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.api.core.v1.PodAntiAffinity"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.api.core.v1.PodDNSConfig"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.api.core.v1.PodDNSConfigOption"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.api.core.v1.PreferredSchedulingTerm"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.api.core.v1.ResourceFieldSelector"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.api.core.v1.ResourceRequirements"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.api.core.v1.TCPSocketAction"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.api.core.v1.Toleration"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.api.core.v1.TopologySpreadConstraint"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.api.core.v1.TypedLocalObjectReference"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.api.core.v1.WeightedPodAffinityTerm"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.apimachinery.pkg.api.resource.Quantity"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.apimachinery.pkg.apis.meta.v1.APIGroup"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.apimachinery.pkg.apis.meta.v1.APIGroupList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.apimachinery.pkg.apis.meta.v1.APIResource"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.apimachinery.pkg.apis.meta.v1.APIResourceList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.apimachinery.pkg.apis.meta.v1.DeleteOptions"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.apimachinery.pkg.apis.meta.v1.Duration"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.apimachinery.pkg.apis.meta.v1.FieldsV1"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.apimachinery.pkg.apis.meta.v1.GroupVersionForDiscovery"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.apimachinery.pkg.apis.meta.v1.LabelSelector"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.apimachinery.pkg.apis.meta.v1.LabelSelectorRequirement"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.apimachinery.pkg.apis.meta.v1.ListMeta"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.apimachinery.pkg.apis.meta.v1.ManagedFieldsEntry"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.apimachinery.pkg.apis.meta.v1.ObjectMeta"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.apimachinery.pkg.apis.meta.v1.OwnerReference"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.apimachinery.pkg.apis.meta.v1.Patch"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.apimachinery.pkg.apis.meta.v1.Preconditions"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.apimachinery.pkg.apis.meta.v1.RootPaths"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.apimachinery.pkg.apis.meta.v1.ServerAddressByClientCIDR"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.apimachinery.pkg.apis.meta.v1.Status"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.apimachinery.pkg.apis.meta.v1.StatusCause"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.apimachinery.pkg.apis.meta.v1.StatusDetails"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.apimachinery.pkg.apis.meta.v1.Time"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.apimachinery.pkg.apis.meta.v1.WatchEvent"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.apimachinery.pkg.runtime.RawExtension"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/k8s.io.apimachinery.pkg.util.intstr.IntOrString"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.AccessCredential"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.AccessCredentialSecretSource"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.AddVolumeOptions"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.BIOS"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.BlockSize"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.Bootloader"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.CDRomTarget"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.CPU"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.CPUFeature"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.CertConfig"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.Chassis"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.ClientPassthroughDevices"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.Clock"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.ClockOffset"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.ClockOffsetUTC"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.CloudInitConfigDriveSource"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.CloudInitNoCloudSource"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.ComponentConfig"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.ConfigDriveSSHPublicKeyAccessCredentialPropagation"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.ConfigMapVolumeSource"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.ContainerDiskSource"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.CustomBlockSize"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.CustomProfile"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.CustomizeComponents"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.CustomizeComponentsPatch"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.DHCPOptions"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.DHCPPrivateOptions"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.DataVolumeSource"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.DataVolumeTemplateDummyStatus"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.DataVolumeTemplateSpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.DeveloperConfiguration"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.Devices"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.Disk"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.DiskTarget"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.DiskVerification"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.DomainMemoryDumpInfo"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.DomainSpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.DownwardAPIVolumeSource"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.DownwardMetricsVolumeSource"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.EFI"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.EmptyDiskSource"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.EphemeralVolumeSource"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.FeatureAPIC"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.FeatureHyperv"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.FeatureKVM"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.FeatureSpinlocks"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.FeatureState"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.FeatureVendorID"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.Features"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.Filesystem"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.FilesystemVirtiofs"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.Firmware"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.Flags"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.FreezeUnfreezeTimeout"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.GPU"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.GenerationStatus"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.GuestAgentCommandInfo"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.GuestAgentPing"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.HPETTimer"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.HostDevice"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.HostDisk"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.HotplugVolumeSource"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.HotplugVolumeStatus"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.Hugepages"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.HypervTimer"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.I6300ESBWatchdog"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.Input"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.InstancetypeMatcher"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.Interface"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.InterfaceBridge"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.InterfaceMacvtap"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.InterfaceMasquerade"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.InterfacePasst"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.InterfaceSRIOV"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.InterfaceSlirp"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.KVMTimer"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.KernelBoot"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.KernelBootContainer"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.KubeVirt"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.KubeVirtCertificateRotateStrategy"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.KubeVirtCondition"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.KubeVirtConfiguration"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.KubeVirtList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.KubeVirtSelfSignConfiguration"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.KubeVirtSpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.KubeVirtStatus"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.KubeVirtWorkloadUpdateStrategy"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.LaunchSecurity"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.LogVerbosity"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.LunTarget"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.Machine"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.MediatedDevicesConfiguration"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.MediatedHostDevice"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.Memory"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.MemoryDumpVolumeSource"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.MigrateOptions"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.MigrationConfiguration"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.MultusNetwork"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.NUMA"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.NUMAGuestMappingPassthrough"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.Network"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.NetworkConfiguration"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.NodeMediatedDeviceTypesConfig"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.NodePlacement"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.PITTimer"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.PauseOptions"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.PciHostDevice"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.PermittedHostDevices"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.PersistentVolumeClaimInfo"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.PersistentVolumeClaimVolumeSource"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.PodNetwork"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.Port"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.PreferenceMatcher"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.Probe"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.QemuGuestAgentSSHPublicKeyAccessCredentialPropagation"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.QemuGuestAgentUserPasswordAccessCredentialPropagation"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.RESTClientConfiguration"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.RTCTimer"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.RateLimiter"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.Realtime"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.ReloadableComponentConfiguration"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.RemoveVolumeOptions"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.ResourceRequirements"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.RestartOptions"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.Rng"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.SEV"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.SMBiosConfiguration"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.SSHPublicKeyAccessCredential"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.SSHPublicKeyAccessCredentialPropagationMethod"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.SSHPublicKeyAccessCredentialSource"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.SeccompConfiguration"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.SecretVolumeSource"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.ServiceAccountVolumeSource"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.SoundDevice"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.StartOptions"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.StopOptions"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.SyNICTimer"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.SysprepSource"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.TLSConfiguration"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.TPMDevice"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.Timer"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.TokenBucketRateLimiter"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.TopologyHints"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.UnpauseOptions"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.UserPasswordAccessCredential"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.UserPasswordAccessCredentialPropagationMethod"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.UserPasswordAccessCredentialSource"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VGPUDisplayOptions"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VGPUOptions"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachine"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineCondition"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstance"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstanceCondition"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstanceFileSystem"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstanceFileSystemInfo"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstanceFileSystemList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstanceGuestAgentInfo"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstanceGuestOSInfo"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstanceGuestOSUser"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstanceGuestOSUserList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstanceList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstanceMigration"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstanceMigrationCondition"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstanceMigrationList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstanceMigrationPhaseTransitionTimestamp"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstanceMigrationSpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstanceMigrationState"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstanceMigrationStatus"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstanceNetworkInterface"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstancePhaseTransitionTimestamp"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstancePreset"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstancePresetList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstancePresetSpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstanceProfile"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstanceReplicaSet"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstanceReplicaSetCondition"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstanceReplicaSetList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstanceReplicaSetSpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstanceReplicaSetStatus"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstanceSpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstanceStatus"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstanceTemplateSpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineMemoryDumpRequest"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineSpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineStartFailure"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineStateChangeRequest"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineStatus"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineVolumeRequest"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.Volume"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VolumeSnapshotStatus"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.VolumeStatus"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1.Watchdog"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.Condition"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.Error"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.MigrationPolicy"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.MigrationPolicyList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.MigrationPolicySpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.MigrationPolicyStatus"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.PersistentVolumeClaim"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.Selectors"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.SnapshotVolumesLists"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.SourceSpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachine"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachineClone"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachineCloneList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachineCloneSpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachineCloneStatus"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachineExport"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachineExportLink"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachineExportLinks"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachineExportList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachineExportManifest"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachineExportSpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachineExportStatus"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachineExportVolume"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachineExportVolumeFormat"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachinePool"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachinePoolCondition"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachinePoolList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachinePoolSpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachinePoolStatus"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachineRestore"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachineRestoreList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachineRestoreSpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachineRestoreStatus"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachineSnapshot"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachineSnapshotContent"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachineSnapshotContentList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachineSnapshotContentSpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachineSnapshotContentStatus"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachineSnapshotList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachineSnapshotSpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachineSnapshotStatus"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachineTemplateSpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VolumeBackup"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VolumeRestore"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VolumeSnapshotStatus"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha2.CPUInstancetype"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha2.CPUPreferences"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha2.ClockPreferences"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha2.DevicePreferences"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha2.FeaturePreferences"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha2.FirmwarePreferences"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha2.MachinePreferences"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha2.MemoryInstancetype"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha2.VirtualMachineClusterInstancetype"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha2.VirtualMachineClusterInstancetypeList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha2.VirtualMachineClusterPreference"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha2.VirtualMachineClusterPreferenceList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha2.VirtualMachineInstancetype"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha2.VirtualMachineInstancetypeList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha2.VirtualMachineInstancetypeSpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha2.VirtualMachinePreference"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha2.VirtualMachinePreferenceList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha2.VirtualMachinePreferenceSpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha2.VolumePreferences"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1beta1.DataVolumeBlankImage"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1beta1.DataVolumeCheckpoint"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1beta1.DataVolumeSource"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1beta1.DataVolumeSourceHTTP"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1beta1.DataVolumeSourceImageIO"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1beta1.DataVolumeSourcePVC"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1beta1.DataVolumeSourceRef"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1beta1.DataVolumeSourceRegistry"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1beta1.DataVolumeSourceS3"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1beta1.DataVolumeSourceUpload"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1beta1.DataVolumeSourceVDDK"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1beta1.DataVolumeSpec"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1beta1.StorageSpec"
+    }
+  ]
+}
