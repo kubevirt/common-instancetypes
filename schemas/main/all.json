@@ -223,6 +223,9 @@
       "$ref": "_definitions.json#/definitions/v1.CustomBlockSize"
     },
     {
+      "$ref": "_definitions.json#/definitions/v1.CustomProfile"
+    },
+    {
       "$ref": "_definitions.json#/definitions/v1.CustomizeComponents"
     },
     {
@@ -544,6 +547,9 @@
       "$ref": "_definitions.json#/definitions/v1.SSHPublicKeyAccessCredentialSource"
     },
     {
+      "$ref": "_definitions.json#/definitions/v1.SeccompConfiguration"
+    },
+    {
       "$ref": "_definitions.json#/definitions/v1.SecretVolumeSource"
     },
     {
@@ -670,6 +676,9 @@
       "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstancePresetSpec"
     },
     {
+      "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstanceProfile"
+    },
+    {
       "$ref": "_definitions.json#/definitions/v1.VirtualMachineInstanceReplicaSet"
     },
     {
@@ -782,6 +791,9 @@
     },
     {
       "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachineExportList"
+    },
+    {
+      "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachineExportManifest"
     },
     {
       "$ref": "_definitions.json#/definitions/v1alpha1.VirtualMachineExportSpec"

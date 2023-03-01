@@ -684,6 +684,31 @@
               },
               "additionalProperties": false
             },
+            "seccompConfiguration": {
+              "description": "SeccompConfiguration holds Seccomp configuration for Kubevirt components",
+              "type": "object",
+              "properties": {
+                "virtualMachineInstanceProfile": {
+                  "type": "object",
+                  "properties": {
+                    "customProfile": {
+                      "type": "object",
+                      "properties": {
+                        "localhostProfile": {
+                          "type": "string"
+                        },
+                        "runtimeDefaultProfile": {
+                          "type": "boolean"
+                        }
+                      },
+                      "additionalProperties": false
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            },
             "selinuxLauncherType": {
               "type": "string"
             },

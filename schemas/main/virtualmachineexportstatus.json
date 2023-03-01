@@ -57,6 +57,33 @@
               "description": "Cert is the public CA certificate base64 encoded",
               "type": "string"
             },
+            "manifests": {
+              "description": "Manifests is a list of available manifests for the export",
+              "type": "array",
+              "items": {
+                "description": "VirtualMachineExportManifest contains the type and URL of the exported manifest",
+                "type": "object",
+                "required": [
+                  "type",
+                  "url"
+                ],
+                "properties": {
+                  "type": {
+                    "description": "Type is the type of manifest returned",
+                    "type": "string"
+                  },
+                  "url": {
+                    "description": "Url is the url of the endpoint that returns the manifest",
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "x-kubernetes-list-map-keys": [
+                "type"
+              ],
+              "x-kubernetes-list-type": "map"
+            },
             "volumes": {
               "description": "Volumes is a list of available volumes to export",
               "type": "array",
@@ -118,6 +145,33 @@
             "cert": {
               "description": "Cert is the public CA certificate base64 encoded",
               "type": "string"
+            },
+            "manifests": {
+              "description": "Manifests is a list of available manifests for the export",
+              "type": "array",
+              "items": {
+                "description": "VirtualMachineExportManifest contains the type and URL of the exported manifest",
+                "type": "object",
+                "required": [
+                  "type",
+                  "url"
+                ],
+                "properties": {
+                  "type": {
+                    "description": "Type is the type of manifest returned",
+                    "type": "string"
+                  },
+                  "url": {
+                    "description": "Url is the url of the endpoint that returns the manifest",
+                    "type": "string"
+                  }
+                },
+                "additionalProperties": false
+              },
+              "x-kubernetes-list-map-keys": [
+                "type"
+              ],
+              "x-kubernetes-list-type": "map"
             },
             "volumes": {
               "description": "Volumes is a list of available volumes to export",
@@ -188,6 +242,10 @@
       "description": "Time is a wrapper around time.Time which supports correct marshaling to YAML and JSON.  Wrappers are provided for many of the factory methods that the time package offers.",
       "type": "string",
       "format": "date-time"
+    },
+    "virtualMachineName": {
+      "description": "VirtualMachineName shows the name of the source virtual machine if the source is either a VirtualMachine or a VirtualMachineSnapshot. This is mainly to easily identify the source VirtualMachine in case of a VirtualMachineSnapshot",
+      "type": "string"
     }
   },
   "additionalProperties": false,

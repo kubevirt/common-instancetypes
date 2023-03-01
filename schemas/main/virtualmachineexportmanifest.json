@@ -1,0 +1,20 @@
+{
+  "description": "VirtualMachineExportManifest contains the type and URL of the exported manifest",
+  "type": "object",
+  "required": [
+    "type",
+    "url"
+  ],
+  "properties": {
+    "type": {
+      "description": "Type is the type of manifest returned",
+      "type": "string"
+    },
+    "url": {
+      "description": "Url is the url of the endpoint that returns the manifest",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

@@ -1647,6 +1647,18 @@
       },
       "additionalProperties": false
     },
+    "v1.CustomProfile": {
+      "type": "object",
+      "properties": {
+        "localhostProfile": {
+          "type": "string"
+        },
+        "runtimeDefaultProfile": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
     "v1.CustomizeComponents": {
       "type": "object",
       "properties": {
@@ -2644,10 +2656,11 @@
     "v1.InstancetypeMatcher": {
       "description": "InstancetypeMatcher references a instancetype that is used to fill fields in the VMI template.",
       "type": "object",
-      "required": [
-        "name"
-      ],
       "properties": {
+        "inferFromVolume": {
+          "description": "InferFromVolume lists the name of a volume that should be used to infer or discover the instancetype to be used through known annotations on the underlying resource. Once applied to the InstancetypeMatcher this field is removed.",
+          "type": "string"
+        },
         "kind": {
           "description": "Kind specifies which instancetype resource is referenced. Allowed values are: \"VirtualMachineInstancetype\" and \"VirtualMachineClusterInstancetype\". If not specified, \"VirtualMachineClusterInstancetype\" is used by default.",
           "type": "string"
@@ -2669,6 +2682,11 @@
         "name"
       ],
       "properties": {
+        "acpiIndex": {
+          "description": "If specified, the ACPI index is used to provide network interface device naming, that is stable across changes in PCI addresses assigned to the device. This value is required to be unique across all devices and be between 1 and (16*1024-1).",
+          "type": "integer",
+          "format": "int32"
+        },
         "bootOrder": {
           "description": "BootOrder is an integer value > 0, used to determine ordering of boot devices. Lower values take precedence. Each interface or disk that has a boot order must have a unique value. Interfaces without a boot order are not tried.",
           "type": "integer",
@@ -2944,6 +2962,9 @@
         },
         "permittedHostDevices": {
           "$ref": "#/definitions/v1.PermittedHostDevices"
+        },
+        "seccompConfiguration": {
+          "$ref": "#/definitions/v1.SeccompConfiguration"
         },
         "selinuxLauncherType": {
           "type": "string"
@@ -3725,10 +3746,11 @@
     "v1.PreferenceMatcher": {
       "description": "PreferenceMatcher references a set of preference that is used to fill fields in the VMI template.",
       "type": "object",
-      "required": [
-        "name"
-      ],
       "properties": {
+        "inferFromVolume": {
+          "description": "InferFromVolume lists the name of a volume that should be used to infer or discover the preference to be used through known annotations on the underlying resource. Once applied to the PreferenceMatcher this field is removed.",
+          "type": "string"
+        },
         "kind": {
           "description": "Kind specifies which preference resource is referenced. Allowed values are: \"VirtualMachinePreference\" and \"VirtualMachineClusterPreference\". If not specified, \"VirtualMachineClusterPreference\" is used by default.",
           "type": "string"
@@ -4009,6 +4031,17 @@
         "secret": {
           "description": "Secret means that the access credential is pulled from a kubernetes secret",
           "$ref": "#/definitions/v1.AccessCredentialSecretSource"
+        }
+      },
+      "additionalProperties": false
+    },
+    "v1.SeccompConfiguration": {
+      "description": "SeccompConfiguration holds Seccomp configuration for Kubevirt components",
+      "type": "object",
+      "properties": {
+        "virtualMachineInstanceProfile": {
+          "description": "VirtualMachineInstanceProfile defines what profile should be used with virt-launcher. Defaults to none",
+          "$ref": "#/definitions/v1.VirtualMachineInstanceProfile"
         }
       },
       "additionalProperties": false
@@ -4890,6 +4923,10 @@
             "$ref": "#/definitions/v1.VirtualMachineInstanceMigrationCondition"
           }
         },
+        "migrationState": {
+          "description": "Represents the status of a live migration",
+          "$ref": "#/definitions/v1.VirtualMachineInstanceMigrationState"
+        },
         "phase": {
           "type": "string"
         },
@@ -5019,6 +5056,16 @@
         "selector": {
           "description": "Selector is a label query over a set of VMIs. Required.",
           "$ref": "#/definitions/k8s.io.apimachinery.pkg.apis.meta.v1.LabelSelector"
+        }
+      },
+      "additionalProperties": false
+    },
+    "v1.VirtualMachineInstanceProfile": {
+      "type": "object",
+      "properties": {
+        "customProfile": {
+          "description": "CustomProfile allows to request arbitrary profile for virt-launcher",
+          "$ref": "#/definitions/v1.CustomProfile"
         }
       },
       "additionalProperties": false
@@ -6163,6 +6210,17 @@
           "description": "Cert is the public CA certificate base64 encoded",
           "type": "string"
         },
+        "manifests": {
+          "description": "Manifests is a list of available manifests for the export",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/v1alpha1.VirtualMachineExportManifest"
+          },
+          "x-kubernetes-list-map-keys": [
+            "type"
+          ],
+          "x-kubernetes-list-type": "map"
+        },
         "volumes": {
           "description": "Volumes is a list of available volumes to export",
           "type": "array",
@@ -6219,6 +6277,25 @@
       },
       "additionalProperties": false
     },
+    "v1alpha1.VirtualMachineExportManifest": {
+      "description": "VirtualMachineExportManifest contains the type and URL of the exported manifest",
+      "type": "object",
+      "required": [
+        "type",
+        "url"
+      ],
+      "properties": {
+        "type": {
+          "description": "Type is the type of manifest returned",
+          "type": "string"
+        },
+        "url": {
+          "description": "Url is the url of the endpoint that returns the manifest",
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
     "v1alpha1.VirtualMachineExportSpec": {
       "description": "VirtualMachineExportSpec is the spec for a VirtualMachineExport resource",
       "type": "object",
@@ -6269,6 +6346,10 @@
         "ttlExpirationTime": {
           "description": "The time at which the VM Export will be completely removed according to specified TTL Formula is CreationTimestamp + TTL",
           "$ref": "#/definitions/k8s.io.apimachinery.pkg.apis.meta.v1.Time"
+        },
+        "virtualMachineName": {
+          "description": "VirtualMachineName shows the name of the source virtual machine if the source is either a VirtualMachine or a VirtualMachineSnapshot. This is mainly to easily identify the source VirtualMachine in case of a VirtualMachineSnapshot",
+          "type": "string"
         }
       },
       "additionalProperties": false
@@ -6445,6 +6526,10 @@
         "labelSelector": {
           "description": "Canonical form of the label selector for HPA which consumes it through the scale subresource.",
           "type": "string"
+        },
+        "readyReplicas": {
+          "type": "integer",
+          "format": "int32"
         },
         "replicas": {
           "type": "integer",
