@@ -3,3 +3,4 @@
 .idea
 _cluster-up/
 _kubevirt/
+_schemas/main/*

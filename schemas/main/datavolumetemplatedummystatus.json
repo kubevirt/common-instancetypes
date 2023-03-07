@@ -1,6 +1,0 @@
-{
-  "type": "object",
-  "nullable": true,
-  "$schema": "http://json-schema.org/schema#",
-  "additionalProperties": false
-}
