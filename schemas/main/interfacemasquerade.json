@@ -1,6 +1,0 @@
-{
-  "description": "InterfaceMasquerade connects to a given network using netfilter rules to nat the traffic.",
-  "type": "object",
-  "$schema": "http://json-schema.org/schema#",
-  "additionalProperties": false
-}
