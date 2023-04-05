@@ -1,0 +1,58 @@
+{
+  "type": "object",
+  "nullable": true,
+  "properties": {
+    "conditions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "type",
+          "status"
+        ],
+        "properties": {
+          "lastProbeTime": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "lastTransitionTime": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "x-kubernetes-list-type": "atomic"
+    },
+    "labelSelector": {
+      "description": "Canonical form of the label selector for HPA which consumes it through the scale subresource.",
+      "type": "string"
+    },
+    "readyReplicas": {
+      "type": "integer",
+      "format": "int32"
+    },
+    "replicas": {
+      "type": "integer",
+      "format": "int32"
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

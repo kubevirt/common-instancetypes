@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "properties": {
+    "customProfile": {
+      "type": "object",
+      "properties": {
+        "localhostProfile": {
+          "type": "string"
+        },
+        "runtimeDefaultProfile": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}

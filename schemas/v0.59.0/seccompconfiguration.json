@@ -1,0 +1,26 @@
+{
+  "description": "SeccompConfiguration holds Seccomp configuration for Kubevirt components",
+  "type": "object",
+  "properties": {
+    "virtualMachineInstanceProfile": {
+      "type": "object",
+      "properties": {
+        "customProfile": {
+          "type": "object",
+          "properties": {
+            "localhostProfile": {
+              "type": "string"
+            },
+            "runtimeDefaultProfile": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "$schema": "http://json-schema.org/schema#"
+}
