@@ -5,3 +5,6 @@ kind: Kustomization
 resources:
   - ./highperformance
   - ./server
+
+components:
+  - ./deprecated

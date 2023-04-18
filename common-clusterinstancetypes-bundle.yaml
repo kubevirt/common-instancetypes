@@ -319,6 +319,7 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
+    instancetype.kubevirt.io/deprecated: "true"
     instancetype.kubevirt.io/vendor: kubevirt.io
     kubevirt.io/size: large
   name: highperformance.large
@@ -335,6 +336,7 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
+    instancetype.kubevirt.io/deprecated: "true"
     instancetype.kubevirt.io/vendor: kubevirt.io
     kubevirt.io/size: medium
   name: highperformance.medium
@@ -351,6 +353,7 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
+    instancetype.kubevirt.io/deprecated: "true"
     instancetype.kubevirt.io/vendor: kubevirt.io
     kubevirt.io/size: small
   name: highperformance.small
@@ -621,6 +624,7 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
+    instancetype.kubevirt.io/deprecated: "true"
     instancetype.kubevirt.io/vendor: kubevirt.io
     kubevirt.io/size: large
   name: server.large
@@ -634,6 +638,7 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
+    instancetype.kubevirt.io/deprecated: "true"
     instancetype.kubevirt.io/vendor: kubevirt.io
     kubevirt.io/size: medium
   name: server.medium
@@ -647,6 +652,7 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
+    instancetype.kubevirt.io/deprecated: "true"
     instancetype.kubevirt.io/vendor: kubevirt.io
     kubevirt.io/size: micro
   name: server.micro
@@ -660,6 +666,7 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
+    instancetype.kubevirt.io/deprecated: "true"
     instancetype.kubevirt.io/vendor: kubevirt.io
     kubevirt.io/size: small
   name: server.small
@@ -673,6 +680,7 @@ apiVersion: instancetype.kubevirt.io/v1alpha2
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
+    instancetype.kubevirt.io/deprecated: "true"
     instancetype.kubevirt.io/vendor: kubevirt.io
     kubevirt.io/size: tiny
   name: server.tiny
