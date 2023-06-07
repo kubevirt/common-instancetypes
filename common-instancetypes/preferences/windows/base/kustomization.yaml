@@ -11,6 +11,7 @@ components:
   - ../../components/diskbus-sata
   - ../../components/interfacemodel-e1000e
   - ../../components/tablet-usb
+  - ../../components/termination-grace-period
 
 patches:
   - target:
