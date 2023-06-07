@@ -1,6 +1,6 @@
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterInstancetype
+kind: VirtualMachineInstancetype
 metadata:
   annotations:
     instancetype.kubevirt.io/class: Compute Exclusive
@@ -34,7 +34,7 @@ spec:
       pageSize: 2Mi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterInstancetype
+kind: VirtualMachineInstancetype
 metadata:
   annotations:
     instancetype.kubevirt.io/class: Compute Exclusive
@@ -68,7 +68,7 @@ spec:
       pageSize: 2Mi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterInstancetype
+kind: VirtualMachineInstancetype
 metadata:
   annotations:
     instancetype.kubevirt.io/class: Compute Exclusive
@@ -102,7 +102,7 @@ spec:
       pageSize: 2Mi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterInstancetype
+kind: VirtualMachineInstancetype
 metadata:
   annotations:
     instancetype.kubevirt.io/class: Compute Exclusive
@@ -136,7 +136,7 @@ spec:
       pageSize: 2Mi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterInstancetype
+kind: VirtualMachineInstancetype
 metadata:
   annotations:
     instancetype.kubevirt.io/class: Compute Exclusive
@@ -170,7 +170,7 @@ spec:
       pageSize: 2Mi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterInstancetype
+kind: VirtualMachineInstancetype
 metadata:
   annotations:
     instancetype.kubevirt.io/class: Compute Exclusive
@@ -204,7 +204,7 @@ spec:
       pageSize: 2Mi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterInstancetype
+kind: VirtualMachineInstancetype
 metadata:
   annotations:
     instancetype.kubevirt.io/class: GPU NVIDIA
@@ -232,7 +232,7 @@ spec:
     guest: 32Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterInstancetype
+kind: VirtualMachineInstancetype
 metadata:
   annotations:
     instancetype.kubevirt.io/class: GPU NVIDIA
@@ -260,7 +260,7 @@ spec:
     guest: 64Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterInstancetype
+kind: VirtualMachineInstancetype
 metadata:
   annotations:
     instancetype.kubevirt.io/class: GPU NVIDIA
@@ -288,7 +288,7 @@ spec:
     guest: 128Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterInstancetype
+kind: VirtualMachineInstancetype
 metadata:
   annotations:
     instancetype.kubevirt.io/class: GPU NVIDIA
@@ -316,7 +316,7 @@ spec:
     guest: 16Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterInstancetype
+kind: VirtualMachineInstancetype
 metadata:
   labels:
     instancetype.kubevirt.io/deprecated: "true"
@@ -333,7 +333,7 @@ spec:
     guest: 8Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterInstancetype
+kind: VirtualMachineInstancetype
 metadata:
   labels:
     instancetype.kubevirt.io/deprecated: "true"
@@ -350,7 +350,7 @@ spec:
     guest: 4Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterInstancetype
+kind: VirtualMachineInstancetype
 metadata:
   labels:
     instancetype.kubevirt.io/deprecated: "true"
@@ -367,7 +367,7 @@ spec:
     guest: 2Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterInstancetype
+kind: VirtualMachineInstancetype
 metadata:
   annotations:
     instancetype.kubevirt.io/class: Memory Intensive
@@ -389,7 +389,7 @@ spec:
       pageSize: 2Mi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterInstancetype
+kind: VirtualMachineInstancetype
 metadata:
   annotations:
     instancetype.kubevirt.io/class: Memory Intensive
@@ -411,7 +411,7 @@ spec:
       pageSize: 2Mi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterInstancetype
+kind: VirtualMachineInstancetype
 metadata:
   annotations:
     instancetype.kubevirt.io/class: Memory Intensive
@@ -433,7 +433,7 @@ spec:
       pageSize: 2Mi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterInstancetype
+kind: VirtualMachineInstancetype
 metadata:
   annotations:
     instancetype.kubevirt.io/class: Memory Intensive
@@ -455,7 +455,7 @@ spec:
       pageSize: 2Mi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterInstancetype
+kind: VirtualMachineInstancetype
 metadata:
   annotations:
     instancetype.kubevirt.io/class: Memory Intensive
@@ -477,7 +477,7 @@ spec:
       pageSize: 2Mi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterInstancetype
+kind: VirtualMachineInstancetype
 metadata:
   annotations:
     instancetype.kubevirt.io/class: General Purpose
@@ -501,7 +501,7 @@ spec:
     guest: 32Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterInstancetype
+kind: VirtualMachineInstancetype
 metadata:
   annotations:
     instancetype.kubevirt.io/class: General Purpose
@@ -525,7 +525,7 @@ spec:
     guest: 64Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterInstancetype
+kind: VirtualMachineInstancetype
 metadata:
   annotations:
     instancetype.kubevirt.io/class: General Purpose
@@ -549,7 +549,7 @@ spec:
     guest: 128Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterInstancetype
+kind: VirtualMachineInstancetype
 metadata:
   annotations:
     instancetype.kubevirt.io/class: General Purpose
@@ -573,7 +573,7 @@ spec:
     guest: 8Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterInstancetype
+kind: VirtualMachineInstancetype
 metadata:
   annotations:
     instancetype.kubevirt.io/class: General Purpose
@@ -597,7 +597,7 @@ spec:
     guest: 4Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterInstancetype
+kind: VirtualMachineInstancetype
 metadata:
   annotations:
     instancetype.kubevirt.io/class: General Purpose
@@ -621,7 +621,7 @@ spec:
     guest: 16Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterInstancetype
+kind: VirtualMachineInstancetype
 metadata:
   labels:
     instancetype.kubevirt.io/deprecated: "true"
@@ -635,7 +635,7 @@ spec:
     guest: 8Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterInstancetype
+kind: VirtualMachineInstancetype
 metadata:
   labels:
     instancetype.kubevirt.io/deprecated: "true"
@@ -649,7 +649,7 @@ spec:
     guest: 4Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterInstancetype
+kind: VirtualMachineInstancetype
 metadata:
   labels:
     instancetype.kubevirt.io/deprecated: "true"
@@ -663,7 +663,7 @@ spec:
     guest: 256Mi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineClusterInstancetype
+kind: VirtualMachineInstancetype
 metadata:
   labels:
     instancetype.kubevirt.io/deprecated: "true"
@@ -677,6 +677,697 @@ spec:
     guest: 2Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1alpha2
+kind: VirtualMachineInstancetype
+metadata:
+  labels:
+    instancetype.kubevirt.io/deprecated: "true"
+    instancetype.kubevirt.io/vendor: kubevirt.io
+    kubevirt.io/size: tiny
+  name: server.tiny
+spec:
+  cpu:
+    guest: 1
+  memory:
+    guest: 1.5Gi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: Compute Exclusive
+    instancetype.kubevirt.io/description: |-
+      The CX Series provides exclusive compute resources for compute
+      intensive applications.
+
+      *CX* is the abbreviation of "Compute Exclusive".
+
+      The exclusive resources are given to the compute threads of the
+      VM. In order to ensure this, some additional cores (depending
+      on the number of disks and NICs) will be requested to offload
+      the IO threading from cores dedicated to the workload.
+      In addition, in this series, the NUMA topology of the used
+      cores is provided to the VM.
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: cx1.2xlarge
+spec:
+  cpu:
+    dedicatedCPUPlacement: true
+    guest: 8
+    isolateEmulatorThread: true
+    numa:
+      guestMappingPassthrough: {}
+  ioThreadsPolicy: auto
+  memory:
+    guest: 16Gi
+    hugepages:
+      pageSize: 2Mi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: Compute Exclusive
+    instancetype.kubevirt.io/description: |-
+      The CX Series provides exclusive compute resources for compute
+      intensive applications.
+
+      *CX* is the abbreviation of "Compute Exclusive".
+
+      The exclusive resources are given to the compute threads of the
+      VM. In order to ensure this, some additional cores (depending
+      on the number of disks and NICs) will be requested to offload
+      the IO threading from cores dedicated to the workload.
+      In addition, in this series, the NUMA topology of the used
+      cores is provided to the VM.
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: cx1.4xlarge
+spec:
+  cpu:
+    dedicatedCPUPlacement: true
+    guest: 16
+    isolateEmulatorThread: true
+    numa:
+      guestMappingPassthrough: {}
+  ioThreadsPolicy: auto
+  memory:
+    guest: 32Gi
+    hugepages:
+      pageSize: 2Mi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: Compute Exclusive
+    instancetype.kubevirt.io/description: |-
+      The CX Series provides exclusive compute resources for compute
+      intensive applications.
+
+      *CX* is the abbreviation of "Compute Exclusive".
+
+      The exclusive resources are given to the compute threads of the
+      VM. In order to ensure this, some additional cores (depending
+      on the number of disks and NICs) will be requested to offload
+      the IO threading from cores dedicated to the workload.
+      In addition, in this series, the NUMA topology of the used
+      cores is provided to the VM.
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: cx1.8xlarge
+spec:
+  cpu:
+    dedicatedCPUPlacement: true
+    guest: 32
+    isolateEmulatorThread: true
+    numa:
+      guestMappingPassthrough: {}
+  ioThreadsPolicy: auto
+  memory:
+    guest: 64Gi
+    hugepages:
+      pageSize: 2Mi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: Compute Exclusive
+    instancetype.kubevirt.io/description: |-
+      The CX Series provides exclusive compute resources for compute
+      intensive applications.
+
+      *CX* is the abbreviation of "Compute Exclusive".
+
+      The exclusive resources are given to the compute threads of the
+      VM. In order to ensure this, some additional cores (depending
+      on the number of disks and NICs) will be requested to offload
+      the IO threading from cores dedicated to the workload.
+      In addition, in this series, the NUMA topology of the used
+      cores is provided to the VM.
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: cx1.large
+spec:
+  cpu:
+    dedicatedCPUPlacement: true
+    guest: 2
+    isolateEmulatorThread: true
+    numa:
+      guestMappingPassthrough: {}
+  ioThreadsPolicy: auto
+  memory:
+    guest: 4Gi
+    hugepages:
+      pageSize: 2Mi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: Compute Exclusive
+    instancetype.kubevirt.io/description: |-
+      The CX Series provides exclusive compute resources for compute
+      intensive applications.
+
+      *CX* is the abbreviation of "Compute Exclusive".
+
+      The exclusive resources are given to the compute threads of the
+      VM. In order to ensure this, some additional cores (depending
+      on the number of disks and NICs) will be requested to offload
+      the IO threading from cores dedicated to the workload.
+      In addition, in this series, the NUMA topology of the used
+      cores is provided to the VM.
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: cx1.medium
+spec:
+  cpu:
+    dedicatedCPUPlacement: true
+    guest: 1
+    isolateEmulatorThread: true
+    numa:
+      guestMappingPassthrough: {}
+  ioThreadsPolicy: auto
+  memory:
+    guest: 2Gi
+    hugepages:
+      pageSize: 2Mi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: Compute Exclusive
+    instancetype.kubevirt.io/description: |-
+      The CX Series provides exclusive compute resources for compute
+      intensive applications.
+
+      *CX* is the abbreviation of "Compute Exclusive".
+
+      The exclusive resources are given to the compute threads of the
+      VM. In order to ensure this, some additional cores (depending
+      on the number of disks and NICs) will be requested to offload
+      the IO threading from cores dedicated to the workload.
+      In addition, in this series, the NUMA topology of the used
+      cores is provided to the VM.
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: cx1.xlarge
+spec:
+  cpu:
+    dedicatedCPUPlacement: true
+    guest: 4
+    isolateEmulatorThread: true
+    numa:
+      guestMappingPassthrough: {}
+  ioThreadsPolicy: auto
+  memory:
+    guest: 8Gi
+    hugepages:
+      pageSize: 2Mi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: GPU NVIDIA
+    instancetype.kubevirt.io/description: |-
+      The GN Series provides instances types intended for VMs with
+      NVIDIA GPU resources attached.
+
+      *GN* is the abbreviation of "GPU NVIDIA".
+
+      This series is intended to be used with VMs consuming GPUs
+      provided by the
+      [NVIDIA GPU Operator](https://github.com/NVIDIA/gpu-operator)
+      which is made available on OpenShift via OperatorHub.
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: gn1.2xlarge
+spec:
+  cpu:
+    guest: 8
+  gpus:
+  - deviceName: nvidia.com/A400
+    name: gpu1
+  memory:
+    guest: 32Gi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: GPU NVIDIA
+    instancetype.kubevirt.io/description: |-
+      The GN Series provides instances types intended for VMs with
+      NVIDIA GPU resources attached.
+
+      *GN* is the abbreviation of "GPU NVIDIA".
+
+      This series is intended to be used with VMs consuming GPUs
+      provided by the
+      [NVIDIA GPU Operator](https://github.com/NVIDIA/gpu-operator)
+      which is made available on OpenShift via OperatorHub.
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: gn1.4xlarge
+spec:
+  cpu:
+    guest: 16
+  gpus:
+  - deviceName: nvidia.com/A400
+    name: gpu1
+  memory:
+    guest: 64Gi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: GPU NVIDIA
+    instancetype.kubevirt.io/description: |-
+      The GN Series provides instances types intended for VMs with
+      NVIDIA GPU resources attached.
+
+      *GN* is the abbreviation of "GPU NVIDIA".
+
+      This series is intended to be used with VMs consuming GPUs
+      provided by the
+      [NVIDIA GPU Operator](https://github.com/NVIDIA/gpu-operator)
+      which is made available on OpenShift via OperatorHub.
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: gn1.8xlarge
+spec:
+  cpu:
+    guest: 32
+  gpus:
+  - deviceName: nvidia.com/A400
+    name: gpu1
+  memory:
+    guest: 128Gi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: GPU NVIDIA
+    instancetype.kubevirt.io/description: |-
+      The GN Series provides instances types intended for VMs with
+      NVIDIA GPU resources attached.
+
+      *GN* is the abbreviation of "GPU NVIDIA".
+
+      This series is intended to be used with VMs consuming GPUs
+      provided by the
+      [NVIDIA GPU Operator](https://github.com/NVIDIA/gpu-operator)
+      which is made available on OpenShift via OperatorHub.
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: gn1.xlarge
+spec:
+  cpu:
+    guest: 4
+  gpus:
+  - deviceName: nvidia.com/A400
+    name: gpu1
+  memory:
+    guest: 16Gi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  labels:
+    instancetype.kubevirt.io/deprecated: "true"
+    instancetype.kubevirt.io/vendor: kubevirt.io
+    kubevirt.io/size: large
+  name: highperformance.large
+spec:
+  cpu:
+    dedicatedCPUPlacement: true
+    guest: 2
+    isolateEmulatorThread: true
+  ioThreadsPolicy: shared
+  memory:
+    guest: 8Gi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  labels:
+    instancetype.kubevirt.io/deprecated: "true"
+    instancetype.kubevirt.io/vendor: kubevirt.io
+    kubevirt.io/size: medium
+  name: highperformance.medium
+spec:
+  cpu:
+    dedicatedCPUPlacement: true
+    guest: 1
+    isolateEmulatorThread: true
+  ioThreadsPolicy: shared
+  memory:
+    guest: 4Gi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  labels:
+    instancetype.kubevirt.io/deprecated: "true"
+    instancetype.kubevirt.io/vendor: kubevirt.io
+    kubevirt.io/size: small
+  name: highperformance.small
+spec:
+  cpu:
+    dedicatedCPUPlacement: true
+    guest: 1
+    isolateEmulatorThread: true
+  ioThreadsPolicy: shared
+  memory:
+    guest: 2Gi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: Memory Intensive
+    instancetype.kubevirt.io/description: |-
+      The M Series provides resources for memory intensive
+      applications.
+
+      *M* is the abbreviation of "Memory".
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: m1.2xlarge
+spec:
+  cpu:
+    guest: 8
+  memory:
+    guest: 64Gi
+    hugepages:
+      pageSize: 2Mi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: Memory Intensive
+    instancetype.kubevirt.io/description: |-
+      The M Series provides resources for memory intensive
+      applications.
+
+      *M* is the abbreviation of "Memory".
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: m1.4xlarge
+spec:
+  cpu:
+    guest: 16
+  memory:
+    guest: 128Gi
+    hugepages:
+      pageSize: 2Mi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: Memory Intensive
+    instancetype.kubevirt.io/description: |-
+      The M Series provides resources for memory intensive
+      applications.
+
+      *M* is the abbreviation of "Memory".
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: m1.8xlarge
+spec:
+  cpu:
+    guest: 32
+  memory:
+    guest: 256Gi
+    hugepages:
+      pageSize: 2Mi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: Memory Intensive
+    instancetype.kubevirt.io/description: |-
+      The M Series provides resources for memory intensive
+      applications.
+
+      *M* is the abbreviation of "Memory".
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: m1.large
+spec:
+  cpu:
+    guest: 2
+  memory:
+    guest: 16Gi
+    hugepages:
+      pageSize: 2Mi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: Memory Intensive
+    instancetype.kubevirt.io/description: |-
+      The M Series provides resources for memory intensive
+      applications.
+
+      *M* is the abbreviation of "Memory".
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: m1.xlarge
+spec:
+  cpu:
+    guest: 4
+  memory:
+    guest: 32Gi
+    hugepages:
+      pageSize: 2Mi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: General Purpose
+    instancetype.kubevirt.io/description: |-
+      The N Series is quite neutral and provides resources for
+      general purpose applications.
+
+      *N* is the abbreviation for "Neutral", hinting at the neutral
+      attitude towards workloads.
+
+      VMs of instance types will share physical CPU cores on a
+      time-slice basis with other VMs.
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: n1.2xlarge
+spec:
+  cpu:
+    guest: 8
+  memory:
+    guest: 32Gi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: General Purpose
+    instancetype.kubevirt.io/description: |-
+      The N Series is quite neutral and provides resources for
+      general purpose applications.
+
+      *N* is the abbreviation for "Neutral", hinting at the neutral
+      attitude towards workloads.
+
+      VMs of instance types will share physical CPU cores on a
+      time-slice basis with other VMs.
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: n1.4xlarge
+spec:
+  cpu:
+    guest: 16
+  memory:
+    guest: 64Gi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: General Purpose
+    instancetype.kubevirt.io/description: |-
+      The N Series is quite neutral and provides resources for
+      general purpose applications.
+
+      *N* is the abbreviation for "Neutral", hinting at the neutral
+      attitude towards workloads.
+
+      VMs of instance types will share physical CPU cores on a
+      time-slice basis with other VMs.
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: n1.8xlarge
+spec:
+  cpu:
+    guest: 32
+  memory:
+    guest: 128Gi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: General Purpose
+    instancetype.kubevirt.io/description: |-
+      The N Series is quite neutral and provides resources for
+      general purpose applications.
+
+      *N* is the abbreviation for "Neutral", hinting at the neutral
+      attitude towards workloads.
+
+      VMs of instance types will share physical CPU cores on a
+      time-slice basis with other VMs.
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: n1.large
+spec:
+  cpu:
+    guest: 2
+  memory:
+    guest: 8Gi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: General Purpose
+    instancetype.kubevirt.io/description: |-
+      The N Series is quite neutral and provides resources for
+      general purpose applications.
+
+      *N* is the abbreviation for "Neutral", hinting at the neutral
+      attitude towards workloads.
+
+      VMs of instance types will share physical CPU cores on a
+      time-slice basis with other VMs.
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: n1.medium
+spec:
+  cpu:
+    guest: 1
+  memory:
+    guest: 4Gi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: General Purpose
+    instancetype.kubevirt.io/description: |-
+      The N Series is quite neutral and provides resources for
+      general purpose applications.
+
+      *N* is the abbreviation for "Neutral", hinting at the neutral
+      attitude towards workloads.
+
+      VMs of instance types will share physical CPU cores on a
+      time-slice basis with other VMs.
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: n1.xlarge
+spec:
+  cpu:
+    guest: 4
+  memory:
+    guest: 16Gi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  labels:
+    instancetype.kubevirt.io/deprecated: "true"
+    instancetype.kubevirt.io/vendor: kubevirt.io
+    kubevirt.io/size: large
+  name: server.large
+spec:
+  cpu:
+    guest: 2
+  memory:
+    guest: 8Gi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  labels:
+    instancetype.kubevirt.io/deprecated: "true"
+    instancetype.kubevirt.io/vendor: kubevirt.io
+    kubevirt.io/size: medium
+  name: server.medium
+spec:
+  cpu:
+    guest: 1
+  memory:
+    guest: 4Gi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  labels:
+    instancetype.kubevirt.io/deprecated: "true"
+    instancetype.kubevirt.io/vendor: kubevirt.io
+    kubevirt.io/size: micro
+  name: server.micro
+spec:
+  cpu:
+    guest: 1
+  memory:
+    guest: 256Mi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  labels:
+    instancetype.kubevirt.io/deprecated: "true"
+    instancetype.kubevirt.io/vendor: kubevirt.io
+    kubevirt.io/size: small
+  name: server.small
+spec:
+  cpu:
+    guest: 1
+  memory:
+    guest: 2Gi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
@@ -690,7 +1381,7 @@ spec:
   memory:
     guest: 1.5Gi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
@@ -709,7 +1400,7 @@ spec:
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
@@ -728,7 +1419,7 @@ spec:
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
@@ -750,7 +1441,7 @@ spec:
     preferredInputType: tablet
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
@@ -769,7 +1460,7 @@ spec:
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
@@ -791,7 +1482,7 @@ spec:
     preferredInputType: tablet
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
@@ -817,7 +1508,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
@@ -846,7 +1537,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
@@ -865,7 +1556,7 @@ spec:
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
@@ -891,7 +1582,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
@@ -910,7 +1601,7 @@ spec:
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
@@ -932,7 +1623,7 @@ spec:
     preferredInputType: tablet
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
@@ -951,7 +1642,7 @@ spec:
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
@@ -973,7 +1664,7 @@ spec:
     preferredInputType: tablet
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
@@ -999,7 +1690,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
@@ -1028,7 +1719,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
@@ -1048,7 +1739,7 @@ spec:
     preferredInterfaceModel: virtio
     preferredRng: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
@@ -1099,7 +1790,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
@@ -1152,7 +1843,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
@@ -1208,7 +1899,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
@@ -1266,7 +1957,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
@@ -1317,7 +2008,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
@@ -1370,7 +2061,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
@@ -1421,7 +2112,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
@@ -1474,7 +2165,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
@@ -1525,7 +2216,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
@@ -1578,7 +2269,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
@@ -1634,7 +2325,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
 metadata:
   annotations:
@@ -1692,698 +2383,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineInstancetype
-metadata:
-  annotations:
-    instancetype.kubevirt.io/class: Compute Exclusive
-    instancetype.kubevirt.io/description: |-
-      The CX Series provides exclusive compute resources for compute
-      intensive applications.
-
-      *CX* is the abbreviation of "Compute Exclusive".
-
-      The exclusive resources are given to the compute threads of the
-      VM. In order to ensure this, some additional cores (depending
-      on the number of disks and NICs) will be requested to offload
-      the IO threading from cores dedicated to the workload.
-      In addition, in this series, the NUMA topology of the used
-      cores is provided to the VM.
-    instancetype.kubevirt.io/version: "1"
-  labels:
-    instancetype.kubevirt.io/vendor: kubevirt.io
-  name: cx1.2xlarge
-spec:
-  cpu:
-    dedicatedCPUPlacement: true
-    guest: 8
-    isolateEmulatorThread: true
-    numa:
-      guestMappingPassthrough: {}
-  ioThreadsPolicy: auto
-  memory:
-    guest: 16Gi
-    hugepages:
-      pageSize: 2Mi
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineInstancetype
-metadata:
-  annotations:
-    instancetype.kubevirt.io/class: Compute Exclusive
-    instancetype.kubevirt.io/description: |-
-      The CX Series provides exclusive compute resources for compute
-      intensive applications.
-
-      *CX* is the abbreviation of "Compute Exclusive".
-
-      The exclusive resources are given to the compute threads of the
-      VM. In order to ensure this, some additional cores (depending
-      on the number of disks and NICs) will be requested to offload
-      the IO threading from cores dedicated to the workload.
-      In addition, in this series, the NUMA topology of the used
-      cores is provided to the VM.
-    instancetype.kubevirt.io/version: "1"
-  labels:
-    instancetype.kubevirt.io/vendor: kubevirt.io
-  name: cx1.4xlarge
-spec:
-  cpu:
-    dedicatedCPUPlacement: true
-    guest: 16
-    isolateEmulatorThread: true
-    numa:
-      guestMappingPassthrough: {}
-  ioThreadsPolicy: auto
-  memory:
-    guest: 32Gi
-    hugepages:
-      pageSize: 2Mi
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineInstancetype
-metadata:
-  annotations:
-    instancetype.kubevirt.io/class: Compute Exclusive
-    instancetype.kubevirt.io/description: |-
-      The CX Series provides exclusive compute resources for compute
-      intensive applications.
-
-      *CX* is the abbreviation of "Compute Exclusive".
-
-      The exclusive resources are given to the compute threads of the
-      VM. In order to ensure this, some additional cores (depending
-      on the number of disks and NICs) will be requested to offload
-      the IO threading from cores dedicated to the workload.
-      In addition, in this series, the NUMA topology of the used
-      cores is provided to the VM.
-    instancetype.kubevirt.io/version: "1"
-  labels:
-    instancetype.kubevirt.io/vendor: kubevirt.io
-  name: cx1.8xlarge
-spec:
-  cpu:
-    dedicatedCPUPlacement: true
-    guest: 32
-    isolateEmulatorThread: true
-    numa:
-      guestMappingPassthrough: {}
-  ioThreadsPolicy: auto
-  memory:
-    guest: 64Gi
-    hugepages:
-      pageSize: 2Mi
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineInstancetype
-metadata:
-  annotations:
-    instancetype.kubevirt.io/class: Compute Exclusive
-    instancetype.kubevirt.io/description: |-
-      The CX Series provides exclusive compute resources for compute
-      intensive applications.
-
-      *CX* is the abbreviation of "Compute Exclusive".
-
-      The exclusive resources are given to the compute threads of the
-      VM. In order to ensure this, some additional cores (depending
-      on the number of disks and NICs) will be requested to offload
-      the IO threading from cores dedicated to the workload.
-      In addition, in this series, the NUMA topology of the used
-      cores is provided to the VM.
-    instancetype.kubevirt.io/version: "1"
-  labels:
-    instancetype.kubevirt.io/vendor: kubevirt.io
-  name: cx1.large
-spec:
-  cpu:
-    dedicatedCPUPlacement: true
-    guest: 2
-    isolateEmulatorThread: true
-    numa:
-      guestMappingPassthrough: {}
-  ioThreadsPolicy: auto
-  memory:
-    guest: 4Gi
-    hugepages:
-      pageSize: 2Mi
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineInstancetype
-metadata:
-  annotations:
-    instancetype.kubevirt.io/class: Compute Exclusive
-    instancetype.kubevirt.io/description: |-
-      The CX Series provides exclusive compute resources for compute
-      intensive applications.
-
-      *CX* is the abbreviation of "Compute Exclusive".
-
-      The exclusive resources are given to the compute threads of the
-      VM. In order to ensure this, some additional cores (depending
-      on the number of disks and NICs) will be requested to offload
-      the IO threading from cores dedicated to the workload.
-      In addition, in this series, the NUMA topology of the used
-      cores is provided to the VM.
-    instancetype.kubevirt.io/version: "1"
-  labels:
-    instancetype.kubevirt.io/vendor: kubevirt.io
-  name: cx1.medium
-spec:
-  cpu:
-    dedicatedCPUPlacement: true
-    guest: 1
-    isolateEmulatorThread: true
-    numa:
-      guestMappingPassthrough: {}
-  ioThreadsPolicy: auto
-  memory:
-    guest: 2Gi
-    hugepages:
-      pageSize: 2Mi
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineInstancetype
-metadata:
-  annotations:
-    instancetype.kubevirt.io/class: Compute Exclusive
-    instancetype.kubevirt.io/description: |-
-      The CX Series provides exclusive compute resources for compute
-      intensive applications.
-
-      *CX* is the abbreviation of "Compute Exclusive".
-
-      The exclusive resources are given to the compute threads of the
-      VM. In order to ensure this, some additional cores (depending
-      on the number of disks and NICs) will be requested to offload
-      the IO threading from cores dedicated to the workload.
-      In addition, in this series, the NUMA topology of the used
-      cores is provided to the VM.
-    instancetype.kubevirt.io/version: "1"
-  labels:
-    instancetype.kubevirt.io/vendor: kubevirt.io
-  name: cx1.xlarge
-spec:
-  cpu:
-    dedicatedCPUPlacement: true
-    guest: 4
-    isolateEmulatorThread: true
-    numa:
-      guestMappingPassthrough: {}
-  ioThreadsPolicy: auto
-  memory:
-    guest: 8Gi
-    hugepages:
-      pageSize: 2Mi
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineInstancetype
-metadata:
-  annotations:
-    instancetype.kubevirt.io/class: GPU NVIDIA
-    instancetype.kubevirt.io/description: |-
-      The GN Series provides instances types intended for VMs with
-      NVIDIA GPU resources attached.
-
-      *GN* is the abbreviation of "GPU NVIDIA".
-
-      This series is intended to be used with VMs consuming GPUs
-      provided by the
-      [NVIDIA GPU Operator](https://github.com/NVIDIA/gpu-operator)
-      which is made available on OpenShift via OperatorHub.
-    instancetype.kubevirt.io/version: "1"
-  labels:
-    instancetype.kubevirt.io/vendor: kubevirt.io
-  name: gn1.2xlarge
-spec:
-  cpu:
-    guest: 8
-  gpus:
-  - deviceName: nvidia.com/A400
-    name: gpu1
-  memory:
-    guest: 32Gi
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineInstancetype
-metadata:
-  annotations:
-    instancetype.kubevirt.io/class: GPU NVIDIA
-    instancetype.kubevirt.io/description: |-
-      The GN Series provides instances types intended for VMs with
-      NVIDIA GPU resources attached.
-
-      *GN* is the abbreviation of "GPU NVIDIA".
-
-      This series is intended to be used with VMs consuming GPUs
-      provided by the
-      [NVIDIA GPU Operator](https://github.com/NVIDIA/gpu-operator)
-      which is made available on OpenShift via OperatorHub.
-    instancetype.kubevirt.io/version: "1"
-  labels:
-    instancetype.kubevirt.io/vendor: kubevirt.io
-  name: gn1.4xlarge
-spec:
-  cpu:
-    guest: 16
-  gpus:
-  - deviceName: nvidia.com/A400
-    name: gpu1
-  memory:
-    guest: 64Gi
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineInstancetype
-metadata:
-  annotations:
-    instancetype.kubevirt.io/class: GPU NVIDIA
-    instancetype.kubevirt.io/description: |-
-      The GN Series provides instances types intended for VMs with
-      NVIDIA GPU resources attached.
-
-      *GN* is the abbreviation of "GPU NVIDIA".
-
-      This series is intended to be used with VMs consuming GPUs
-      provided by the
-      [NVIDIA GPU Operator](https://github.com/NVIDIA/gpu-operator)
-      which is made available on OpenShift via OperatorHub.
-    instancetype.kubevirt.io/version: "1"
-  labels:
-    instancetype.kubevirt.io/vendor: kubevirt.io
-  name: gn1.8xlarge
-spec:
-  cpu:
-    guest: 32
-  gpus:
-  - deviceName: nvidia.com/A400
-    name: gpu1
-  memory:
-    guest: 128Gi
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineInstancetype
-metadata:
-  annotations:
-    instancetype.kubevirt.io/class: GPU NVIDIA
-    instancetype.kubevirt.io/description: |-
-      The GN Series provides instances types intended for VMs with
-      NVIDIA GPU resources attached.
-
-      *GN* is the abbreviation of "GPU NVIDIA".
-
-      This series is intended to be used with VMs consuming GPUs
-      provided by the
-      [NVIDIA GPU Operator](https://github.com/NVIDIA/gpu-operator)
-      which is made available on OpenShift via OperatorHub.
-    instancetype.kubevirt.io/version: "1"
-  labels:
-    instancetype.kubevirt.io/vendor: kubevirt.io
-  name: gn1.xlarge
-spec:
-  cpu:
-    guest: 4
-  gpus:
-  - deviceName: nvidia.com/A400
-    name: gpu1
-  memory:
-    guest: 16Gi
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineInstancetype
-metadata:
-  labels:
-    instancetype.kubevirt.io/deprecated: "true"
-    instancetype.kubevirt.io/vendor: kubevirt.io
-    kubevirt.io/size: large
-  name: highperformance.large
-spec:
-  cpu:
-    dedicatedCPUPlacement: true
-    guest: 2
-    isolateEmulatorThread: true
-  ioThreadsPolicy: shared
-  memory:
-    guest: 8Gi
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineInstancetype
-metadata:
-  labels:
-    instancetype.kubevirt.io/deprecated: "true"
-    instancetype.kubevirt.io/vendor: kubevirt.io
-    kubevirt.io/size: medium
-  name: highperformance.medium
-spec:
-  cpu:
-    dedicatedCPUPlacement: true
-    guest: 1
-    isolateEmulatorThread: true
-  ioThreadsPolicy: shared
-  memory:
-    guest: 4Gi
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineInstancetype
-metadata:
-  labels:
-    instancetype.kubevirt.io/deprecated: "true"
-    instancetype.kubevirt.io/vendor: kubevirt.io
-    kubevirt.io/size: small
-  name: highperformance.small
-spec:
-  cpu:
-    dedicatedCPUPlacement: true
-    guest: 1
-    isolateEmulatorThread: true
-  ioThreadsPolicy: shared
-  memory:
-    guest: 2Gi
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineInstancetype
-metadata:
-  annotations:
-    instancetype.kubevirt.io/class: Memory Intensive
-    instancetype.kubevirt.io/description: |-
-      The M Series provides resources for memory intensive
-      applications.
-
-      *M* is the abbreviation of "Memory".
-    instancetype.kubevirt.io/version: "1"
-  labels:
-    instancetype.kubevirt.io/vendor: kubevirt.io
-  name: m1.2xlarge
-spec:
-  cpu:
-    guest: 8
-  memory:
-    guest: 64Gi
-    hugepages:
-      pageSize: 2Mi
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineInstancetype
-metadata:
-  annotations:
-    instancetype.kubevirt.io/class: Memory Intensive
-    instancetype.kubevirt.io/description: |-
-      The M Series provides resources for memory intensive
-      applications.
-
-      *M* is the abbreviation of "Memory".
-    instancetype.kubevirt.io/version: "1"
-  labels:
-    instancetype.kubevirt.io/vendor: kubevirt.io
-  name: m1.4xlarge
-spec:
-  cpu:
-    guest: 16
-  memory:
-    guest: 128Gi
-    hugepages:
-      pageSize: 2Mi
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineInstancetype
-metadata:
-  annotations:
-    instancetype.kubevirt.io/class: Memory Intensive
-    instancetype.kubevirt.io/description: |-
-      The M Series provides resources for memory intensive
-      applications.
-
-      *M* is the abbreviation of "Memory".
-    instancetype.kubevirt.io/version: "1"
-  labels:
-    instancetype.kubevirt.io/vendor: kubevirt.io
-  name: m1.8xlarge
-spec:
-  cpu:
-    guest: 32
-  memory:
-    guest: 256Gi
-    hugepages:
-      pageSize: 2Mi
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineInstancetype
-metadata:
-  annotations:
-    instancetype.kubevirt.io/class: Memory Intensive
-    instancetype.kubevirt.io/description: |-
-      The M Series provides resources for memory intensive
-      applications.
-
-      *M* is the abbreviation of "Memory".
-    instancetype.kubevirt.io/version: "1"
-  labels:
-    instancetype.kubevirt.io/vendor: kubevirt.io
-  name: m1.large
-spec:
-  cpu:
-    guest: 2
-  memory:
-    guest: 16Gi
-    hugepages:
-      pageSize: 2Mi
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineInstancetype
-metadata:
-  annotations:
-    instancetype.kubevirt.io/class: Memory Intensive
-    instancetype.kubevirt.io/description: |-
-      The M Series provides resources for memory intensive
-      applications.
-
-      *M* is the abbreviation of "Memory".
-    instancetype.kubevirt.io/version: "1"
-  labels:
-    instancetype.kubevirt.io/vendor: kubevirt.io
-  name: m1.xlarge
-spec:
-  cpu:
-    guest: 4
-  memory:
-    guest: 32Gi
-    hugepages:
-      pageSize: 2Mi
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineInstancetype
-metadata:
-  annotations:
-    instancetype.kubevirt.io/class: General Purpose
-    instancetype.kubevirt.io/description: |-
-      The N Series is quite neutral and provides resources for
-      general purpose applications.
-
-      *N* is the abbreviation for "Neutral", hinting at the neutral
-      attitude towards workloads.
-
-      VMs of instance types will share physical CPU cores on a
-      time-slice basis with other VMs.
-    instancetype.kubevirt.io/version: "1"
-  labels:
-    instancetype.kubevirt.io/vendor: kubevirt.io
-  name: n1.2xlarge
-spec:
-  cpu:
-    guest: 8
-  memory:
-    guest: 32Gi
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineInstancetype
-metadata:
-  annotations:
-    instancetype.kubevirt.io/class: General Purpose
-    instancetype.kubevirt.io/description: |-
-      The N Series is quite neutral and provides resources for
-      general purpose applications.
-
-      *N* is the abbreviation for "Neutral", hinting at the neutral
-      attitude towards workloads.
-
-      VMs of instance types will share physical CPU cores on a
-      time-slice basis with other VMs.
-    instancetype.kubevirt.io/version: "1"
-  labels:
-    instancetype.kubevirt.io/vendor: kubevirt.io
-  name: n1.4xlarge
-spec:
-  cpu:
-    guest: 16
-  memory:
-    guest: 64Gi
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineInstancetype
-metadata:
-  annotations:
-    instancetype.kubevirt.io/class: General Purpose
-    instancetype.kubevirt.io/description: |-
-      The N Series is quite neutral and provides resources for
-      general purpose applications.
-
-      *N* is the abbreviation for "Neutral", hinting at the neutral
-      attitude towards workloads.
-
-      VMs of instance types will share physical CPU cores on a
-      time-slice basis with other VMs.
-    instancetype.kubevirt.io/version: "1"
-  labels:
-    instancetype.kubevirt.io/vendor: kubevirt.io
-  name: n1.8xlarge
-spec:
-  cpu:
-    guest: 32
-  memory:
-    guest: 128Gi
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineInstancetype
-metadata:
-  annotations:
-    instancetype.kubevirt.io/class: General Purpose
-    instancetype.kubevirt.io/description: |-
-      The N Series is quite neutral and provides resources for
-      general purpose applications.
-
-      *N* is the abbreviation for "Neutral", hinting at the neutral
-      attitude towards workloads.
-
-      VMs of instance types will share physical CPU cores on a
-      time-slice basis with other VMs.
-    instancetype.kubevirt.io/version: "1"
-  labels:
-    instancetype.kubevirt.io/vendor: kubevirt.io
-  name: n1.large
-spec:
-  cpu:
-    guest: 2
-  memory:
-    guest: 8Gi
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineInstancetype
-metadata:
-  annotations:
-    instancetype.kubevirt.io/class: General Purpose
-    instancetype.kubevirt.io/description: |-
-      The N Series is quite neutral and provides resources for
-      general purpose applications.
-
-      *N* is the abbreviation for "Neutral", hinting at the neutral
-      attitude towards workloads.
-
-      VMs of instance types will share physical CPU cores on a
-      time-slice basis with other VMs.
-    instancetype.kubevirt.io/version: "1"
-  labels:
-    instancetype.kubevirt.io/vendor: kubevirt.io
-  name: n1.medium
-spec:
-  cpu:
-    guest: 1
-  memory:
-    guest: 4Gi
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineInstancetype
-metadata:
-  annotations:
-    instancetype.kubevirt.io/class: General Purpose
-    instancetype.kubevirt.io/description: |-
-      The N Series is quite neutral and provides resources for
-      general purpose applications.
-
-      *N* is the abbreviation for "Neutral", hinting at the neutral
-      attitude towards workloads.
-
-      VMs of instance types will share physical CPU cores on a
-      time-slice basis with other VMs.
-    instancetype.kubevirt.io/version: "1"
-  labels:
-    instancetype.kubevirt.io/vendor: kubevirt.io
-  name: n1.xlarge
-spec:
-  cpu:
-    guest: 4
-  memory:
-    guest: 16Gi
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineInstancetype
-metadata:
-  labels:
-    instancetype.kubevirt.io/deprecated: "true"
-    instancetype.kubevirt.io/vendor: kubevirt.io
-    kubevirt.io/size: large
-  name: server.large
-spec:
-  cpu:
-    guest: 2
-  memory:
-    guest: 8Gi
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineInstancetype
-metadata:
-  labels:
-    instancetype.kubevirt.io/deprecated: "true"
-    instancetype.kubevirt.io/vendor: kubevirt.io
-    kubevirt.io/size: medium
-  name: server.medium
-spec:
-  cpu:
-    guest: 1
-  memory:
-    guest: 4Gi
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineInstancetype
-metadata:
-  labels:
-    instancetype.kubevirt.io/deprecated: "true"
-    instancetype.kubevirt.io/vendor: kubevirt.io
-    kubevirt.io/size: micro
-  name: server.micro
-spec:
-  cpu:
-    guest: 1
-  memory:
-    guest: 256Mi
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineInstancetype
-metadata:
-  labels:
-    instancetype.kubevirt.io/deprecated: "true"
-    instancetype.kubevirt.io/vendor: kubevirt.io
-    kubevirt.io/size: small
-  name: server.small
-spec:
-  cpu:
-    guest: 1
-  memory:
-    guest: 2Gi
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
-kind: VirtualMachineInstancetype
-metadata:
-  labels:
-    instancetype.kubevirt.io/deprecated: "true"
-    instancetype.kubevirt.io/vendor: kubevirt.io
-    kubevirt.io/size: tiny
-  name: server.tiny
-spec:
-  cpu:
-    guest: 1
-  memory:
-    guest: 1.5Gi
----
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -2402,7 +2402,7 @@ spec:
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -2421,7 +2421,7 @@ spec:
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -2443,7 +2443,7 @@ spec:
     preferredInputType: tablet
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -2462,7 +2462,7 @@ spec:
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -2484,7 +2484,7 @@ spec:
     preferredInputType: tablet
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -2510,7 +2510,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -2539,7 +2539,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -2558,7 +2558,7 @@ spec:
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -2584,7 +2584,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -2603,7 +2603,7 @@ spec:
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -2625,7 +2625,7 @@ spec:
     preferredInputType: tablet
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -2644,7 +2644,7 @@ spec:
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -2666,7 +2666,7 @@ spec:
     preferredInputType: tablet
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -2692,7 +2692,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -2721,7 +2721,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -2741,7 +2741,7 @@ spec:
     preferredInterfaceModel: virtio
     preferredRng: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -2792,7 +2792,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -2845,7 +2845,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -2901,7 +2901,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -2959,7 +2959,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -3010,7 +3010,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -3063,7 +3063,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -3114,7 +3114,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -3167,7 +3167,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -3218,7 +3218,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -3271,7 +3271,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -3327,7 +3327,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:

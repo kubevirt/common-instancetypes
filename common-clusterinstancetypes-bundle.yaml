@@ -1,5 +1,5 @@
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
@@ -33,7 +33,7 @@ spec:
     hugepages:
       pageSize: 2Mi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
@@ -67,7 +67,7 @@ spec:
     hugepages:
       pageSize: 2Mi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
@@ -101,7 +101,7 @@ spec:
     hugepages:
       pageSize: 2Mi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
@@ -135,7 +135,7 @@ spec:
     hugepages:
       pageSize: 2Mi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
@@ -169,7 +169,7 @@ spec:
     hugepages:
       pageSize: 2Mi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
@@ -203,7 +203,7 @@ spec:
     hugepages:
       pageSize: 2Mi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
@@ -231,7 +231,7 @@ spec:
   memory:
     guest: 32Gi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
@@ -259,7 +259,7 @@ spec:
   memory:
     guest: 64Gi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
@@ -287,7 +287,7 @@ spec:
   memory:
     guest: 128Gi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
@@ -315,7 +315,7 @@ spec:
   memory:
     guest: 16Gi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
@@ -332,7 +332,7 @@ spec:
   memory:
     guest: 8Gi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
@@ -349,7 +349,7 @@ spec:
   memory:
     guest: 4Gi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
@@ -366,7 +366,7 @@ spec:
   memory:
     guest: 2Gi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
@@ -388,7 +388,7 @@ spec:
     hugepages:
       pageSize: 2Mi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
@@ -410,7 +410,7 @@ spec:
     hugepages:
       pageSize: 2Mi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
@@ -432,7 +432,7 @@ spec:
     hugepages:
       pageSize: 2Mi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
@@ -454,7 +454,7 @@ spec:
     hugepages:
       pageSize: 2Mi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
@@ -476,7 +476,7 @@ spec:
     hugepages:
       pageSize: 2Mi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
@@ -500,7 +500,7 @@ spec:
   memory:
     guest: 32Gi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
@@ -524,7 +524,7 @@ spec:
   memory:
     guest: 64Gi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
@@ -548,7 +548,7 @@ spec:
   memory:
     guest: 128Gi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
@@ -572,7 +572,7 @@ spec:
   memory:
     guest: 8Gi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
@@ -596,7 +596,7 @@ spec:
   memory:
     guest: 4Gi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
@@ -620,7 +620,7 @@ spec:
   memory:
     guest: 16Gi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
@@ -634,7 +634,7 @@ spec:
   memory:
     guest: 8Gi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
@@ -648,7 +648,7 @@ spec:
   memory:
     guest: 4Gi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
@@ -662,7 +662,7 @@ spec:
   memory:
     guest: 256Mi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
@@ -676,7 +676,7 @@ spec:
   memory:
     guest: 2Gi
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   labels:
