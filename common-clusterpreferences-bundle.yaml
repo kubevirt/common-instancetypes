@@ -407,6 +407,7 @@ spec:
       tlbflush: {}
       vapic: {}
       vpindex: {}
+  preferredTerminationGracePeriodSeconds: 180
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
@@ -460,6 +461,7 @@ spec:
       tlbflush: {}
       vapic: {}
       vpindex: {}
+  preferredTerminationGracePeriodSeconds: 180
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
@@ -516,6 +518,7 @@ spec:
   firmware:
     preferredUseEfi: true
     preferredUseSecureBoot: true
+  preferredTerminationGracePeriodSeconds: 180
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
@@ -574,6 +577,7 @@ spec:
   firmware:
     preferredUseEfi: true
     preferredUseSecureBoot: true
+  preferredTerminationGracePeriodSeconds: 180
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
@@ -625,6 +629,7 @@ spec:
       tlbflush: {}
       vapic: {}
       vpindex: {}
+  preferredTerminationGracePeriodSeconds: 180
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
@@ -678,6 +683,7 @@ spec:
       tlbflush: {}
       vapic: {}
       vpindex: {}
+  preferredTerminationGracePeriodSeconds: 180
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
@@ -729,6 +735,7 @@ spec:
       tlbflush: {}
       vapic: {}
       vpindex: {}
+  preferredTerminationGracePeriodSeconds: 180
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
@@ -782,6 +789,7 @@ spec:
       tlbflush: {}
       vapic: {}
       vpindex: {}
+  preferredTerminationGracePeriodSeconds: 180
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
@@ -833,6 +841,7 @@ spec:
       tlbflush: {}
       vapic: {}
       vpindex: {}
+  preferredTerminationGracePeriodSeconds: 180
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
@@ -886,6 +895,7 @@ spec:
       tlbflush: {}
       vapic: {}
       vpindex: {}
+  preferredTerminationGracePeriodSeconds: 180
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
@@ -942,6 +952,7 @@ spec:
   firmware:
     preferredUseEfi: true
     preferredUseSecureBoot: true
+  preferredTerminationGracePeriodSeconds: 180
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
@@ -1000,3 +1011,4 @@ spec:
   firmware:
     preferredUseEfi: true
     preferredUseSecureBoot: true
+  preferredTerminationGracePeriodSeconds: 180
