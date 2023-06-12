@@ -1,5 +1,5 @@
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -18,7 +18,7 @@ spec:
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -37,7 +37,7 @@ spec:
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -59,7 +59,7 @@ spec:
     preferredInputType: tablet
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -78,7 +78,7 @@ spec:
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -100,7 +100,7 @@ spec:
     preferredInputType: tablet
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -126,7 +126,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -155,7 +155,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -174,7 +174,7 @@ spec:
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -200,7 +200,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -219,7 +219,7 @@ spec:
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -241,7 +241,7 @@ spec:
     preferredInputType: tablet
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -260,7 +260,7 @@ spec:
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -282,7 +282,7 @@ spec:
     preferredInputType: tablet
     preferredInterfaceModel: virtio
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -308,7 +308,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -337,7 +337,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -357,7 +357,7 @@ spec:
     preferredInterfaceModel: virtio
     preferredRng: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -408,7 +408,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -461,7 +461,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -517,7 +517,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -575,7 +575,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -626,7 +626,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -679,7 +679,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -730,7 +730,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -783,7 +783,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -834,7 +834,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -887,7 +887,7 @@ spec:
       vapic: {}
       vpindex: {}
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:
@@ -943,7 +943,7 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
 ---
-apiVersion: instancetype.kubevirt.io/v1alpha2
+apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   annotations:

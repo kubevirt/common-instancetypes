@@ -9,7 +9,7 @@ patches:
   - target:
       kind: VirtualMachineClusterPreference
     patch: |-
-      apiVersion: instancetype.kubevirt.io/v1alpha2
+      apiVersion: instancetype.kubevirt.io/v1beta1
       metadata:
         name: VirtualMachineClusterPreference
       kind: VirtualMachineClusterPreference
