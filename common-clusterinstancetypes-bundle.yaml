@@ -698,6 +698,72 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
+  annotations:
+    instancetype.kubevirt.io/class: Network
+    instancetype.kubevirt.io/description: |-
+      The NW Series provides resources for network intensive
+      applications, like VNFs.
+
+      *NW* is the abbreviation of "Network".
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: nw1.2xlarge
+spec:
+  cpu:
+    guest: 8
+  memory:
+    guest: 32Gi
+    hugepages:
+      pageSize: 2Mi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: Network
+    instancetype.kubevirt.io/description: |-
+      The NW Series provides resources for network intensive
+      applications, like VNFs.
+
+      *NW* is the abbreviation of "Network".
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: nw1.large
+spec:
+  cpu:
+    guest: 2
+  memory:
+    guest: 8Gi
+    hugepages:
+      pageSize: 2Mi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: Network
+    instancetype.kubevirt.io/description: |-
+      The NW Series provides resources for network intensive
+      applications, like VNFs.
+
+      *NW* is the abbreviation of "Network".
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: nw1.xlarge
+spec:
+  cpu:
+    guest: 4
+  memory:
+    guest: 16Gi
+    hugepages:
+      pageSize: 2Mi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
   labels:
     instancetype.kubevirt.io/deprecated: "true"
     instancetype.kubevirt.io/vendor: kubevirt.io

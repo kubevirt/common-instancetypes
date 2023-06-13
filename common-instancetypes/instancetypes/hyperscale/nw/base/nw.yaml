@@ -1,0 +1,16 @@
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  name: "nw"
+  annotations:
+    instancetype.kubevirt.io/description: |-
+      The NW Series provides resources for network intensive
+      applications, like VNFs.
+
+      *NW* is the abbreviation of "Network".
+    instancetype.kubevirt.io/class: "Network"
+spec:
+  memory:
+    hugepages:
+      pageSize: "2Mi"
