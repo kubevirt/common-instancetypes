@@ -698,6 +698,132 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
+  annotations:
+    instancetype.kubevirt.io/class: Overcommitted
+    instancetype.kubevirt.io/description: |-
+      The O Series is based on the N Series, with the only difference
+      being that memory is overcommitted.
+
+      *O* is the abbreviation for "Overcommitted".
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: o1.2xlarge
+spec:
+  cpu:
+    guest: 8
+  memory:
+    guest: 32Gi
+    overcommitPercent: 50
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: Overcommitted
+    instancetype.kubevirt.io/description: |-
+      The O Series is based on the N Series, with the only difference
+      being that memory is overcommitted.
+
+      *O* is the abbreviation for "Overcommitted".
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: o1.4xlarge
+spec:
+  cpu:
+    guest: 16
+  memory:
+    guest: 64Gi
+    overcommitPercent: 50
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: Overcommitted
+    instancetype.kubevirt.io/description: |-
+      The O Series is based on the N Series, with the only difference
+      being that memory is overcommitted.
+
+      *O* is the abbreviation for "Overcommitted".
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: o1.8xlarge
+spec:
+  cpu:
+    guest: 32
+  memory:
+    guest: 128Gi
+    overcommitPercent: 50
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: Overcommitted
+    instancetype.kubevirt.io/description: |-
+      The O Series is based on the N Series, with the only difference
+      being that memory is overcommitted.
+
+      *O* is the abbreviation for "Overcommitted".
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: o1.large
+spec:
+  cpu:
+    guest: 2
+  memory:
+    guest: 8Gi
+    overcommitPercent: 50
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: Overcommitted
+    instancetype.kubevirt.io/description: |-
+      The O Series is based on the N Series, with the only difference
+      being that memory is overcommitted.
+
+      *O* is the abbreviation for "Overcommitted".
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: o1.medium
+spec:
+  cpu:
+    guest: 1
+  memory:
+    guest: 4Gi
+    overcommitPercent: 50
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: Overcommitted
+    instancetype.kubevirt.io/description: |-
+      The O Series is based on the N Series, with the only difference
+      being that memory is overcommitted.
+
+      *O* is the abbreviation for "Overcommitted".
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: o1.xlarge
+spec:
+  cpu:
+    guest: 4
+  memory:
+    guest: 16Gi
+    overcommitPercent: 50
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
   labels:
     instancetype.kubevirt.io/deprecated: "true"
     instancetype.kubevirt.io/vendor: kubevirt.io
@@ -2594,6 +2720,132 @@ spec:
     guest: 4
   memory:
     guest: 16Gi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: Overcommitted
+    instancetype.kubevirt.io/description: |-
+      The O Series is based on the N Series, with the only difference
+      being that memory is overcommitted.
+
+      *O* is the abbreviation for "Overcommitted".
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: o1.2xlarge
+spec:
+  cpu:
+    guest: 8
+  memory:
+    guest: 32Gi
+    overcommitPercent: 50
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: Overcommitted
+    instancetype.kubevirt.io/description: |-
+      The O Series is based on the N Series, with the only difference
+      being that memory is overcommitted.
+
+      *O* is the abbreviation for "Overcommitted".
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: o1.4xlarge
+spec:
+  cpu:
+    guest: 16
+  memory:
+    guest: 64Gi
+    overcommitPercent: 50
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: Overcommitted
+    instancetype.kubevirt.io/description: |-
+      The O Series is based on the N Series, with the only difference
+      being that memory is overcommitted.
+
+      *O* is the abbreviation for "Overcommitted".
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: o1.8xlarge
+spec:
+  cpu:
+    guest: 32
+  memory:
+    guest: 128Gi
+    overcommitPercent: 50
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: Overcommitted
+    instancetype.kubevirt.io/description: |-
+      The O Series is based on the N Series, with the only difference
+      being that memory is overcommitted.
+
+      *O* is the abbreviation for "Overcommitted".
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: o1.large
+spec:
+  cpu:
+    guest: 2
+  memory:
+    guest: 8Gi
+    overcommitPercent: 50
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: Overcommitted
+    instancetype.kubevirt.io/description: |-
+      The O Series is based on the N Series, with the only difference
+      being that memory is overcommitted.
+
+      *O* is the abbreviation for "Overcommitted".
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: o1.medium
+spec:
+  cpu:
+    guest: 1
+  memory:
+    guest: 4Gi
+    overcommitPercent: 50
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: Overcommitted
+    instancetype.kubevirt.io/description: |-
+      The O Series is based on the N Series, with the only difference
+      being that memory is overcommitted.
+
+      *O* is the abbreviation for "Overcommitted".
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: o1.xlarge
+spec:
+  cpu:
+    guest: 4
+  memory:
+    guest: 16Gi
+    overcommitPercent: 50
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineInstancetype
