@@ -4,4 +4,4 @@ kind: VirtualMachinePreference
 metadata:
   name: preferredTerminationGracePeriodSeconds
 spec:
-  preferredTerminationGracePeriodSeconds: 180
+  preferredTerminationGracePeriodSeconds: 3600
