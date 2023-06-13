@@ -3,6 +3,9 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineInstancetype
 metadata:
   name: "cx1"
+  labels:
+    instancetype.kubevirt.io/cpu: "32"
+    instancetype.kubevirt.io/memory: "64Gi"
 spec:
   cpu:
     guest: 32

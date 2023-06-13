@@ -10,6 +10,8 @@ metadata:
 
       *M* is the abbreviation of "Memory".
     instancetype.kubevirt.io/class: "Memory Intensive"
+  labels:
+    instancetype.kubevirt.io/hugepages: "true"
 spec:
   cpu:
     guest: 1
