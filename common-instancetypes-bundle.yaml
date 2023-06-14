@@ -18,6 +18,12 @@ metadata:
       cores is provided to the VM.
     instancetype.kubevirt.io/version: "1"
   labels:
+    instancetype.kubevirt.io/cpu: "8"
+    instancetype.kubevirt.io/dedicatedCPUPlacement: "true"
+    instancetype.kubevirt.io/hugepages: "true"
+    instancetype.kubevirt.io/isolateEmulatorThread: "true"
+    instancetype.kubevirt.io/memory: 16Gi
+    instancetype.kubevirt.io/numa: "true"
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: cx1.2xlarge
 spec:
@@ -52,6 +58,12 @@ metadata:
       cores is provided to the VM.
     instancetype.kubevirt.io/version: "1"
   labels:
+    instancetype.kubevirt.io/cpu: "16"
+    instancetype.kubevirt.io/dedicatedCPUPlacement: "true"
+    instancetype.kubevirt.io/hugepages: "true"
+    instancetype.kubevirt.io/isolateEmulatorThread: "true"
+    instancetype.kubevirt.io/memory: 32Gi
+    instancetype.kubevirt.io/numa: "true"
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: cx1.4xlarge
 spec:
@@ -86,6 +98,12 @@ metadata:
       cores is provided to the VM.
     instancetype.kubevirt.io/version: "1"
   labels:
+    instancetype.kubevirt.io/cpu: "32"
+    instancetype.kubevirt.io/dedicatedCPUPlacement: "true"
+    instancetype.kubevirt.io/hugepages: "true"
+    instancetype.kubevirt.io/isolateEmulatorThread: "true"
+    instancetype.kubevirt.io/memory: 64Gi
+    instancetype.kubevirt.io/numa: "true"
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: cx1.8xlarge
 spec:
@@ -120,6 +138,12 @@ metadata:
       cores is provided to the VM.
     instancetype.kubevirt.io/version: "1"
   labels:
+    instancetype.kubevirt.io/cpu: "2"
+    instancetype.kubevirt.io/dedicatedCPUPlacement: "true"
+    instancetype.kubevirt.io/hugepages: "true"
+    instancetype.kubevirt.io/isolateEmulatorThread: "true"
+    instancetype.kubevirt.io/memory: 4Gi
+    instancetype.kubevirt.io/numa: "true"
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: cx1.large
 spec:
@@ -154,6 +178,12 @@ metadata:
       cores is provided to the VM.
     instancetype.kubevirt.io/version: "1"
   labels:
+    instancetype.kubevirt.io/cpu: "1"
+    instancetype.kubevirt.io/dedicatedCPUPlacement: "true"
+    instancetype.kubevirt.io/hugepages: "true"
+    instancetype.kubevirt.io/isolateEmulatorThread: "true"
+    instancetype.kubevirt.io/memory: 2Gi
+    instancetype.kubevirt.io/numa: "true"
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: cx1.medium
 spec:
@@ -188,6 +218,12 @@ metadata:
       cores is provided to the VM.
     instancetype.kubevirt.io/version: "1"
   labels:
+    instancetype.kubevirt.io/cpu: "4"
+    instancetype.kubevirt.io/dedicatedCPUPlacement: "true"
+    instancetype.kubevirt.io/hugepages: "true"
+    instancetype.kubevirt.io/isolateEmulatorThread: "true"
+    instancetype.kubevirt.io/memory: 8Gi
+    instancetype.kubevirt.io/numa: "true"
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: cx1.xlarge
 spec:
@@ -220,6 +256,9 @@ metadata:
       which is made available on OpenShift via OperatorHub.
     instancetype.kubevirt.io/version: "1"
   labels:
+    instancetype.kubevirt.io/cpu: "8"
+    instancetype.kubevirt.io/gpus: "true"
+    instancetype.kubevirt.io/memory: 32Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: gn1.2xlarge
 spec:
@@ -248,6 +287,9 @@ metadata:
       which is made available on OpenShift via OperatorHub.
     instancetype.kubevirt.io/version: "1"
   labels:
+    instancetype.kubevirt.io/cpu: "16"
+    instancetype.kubevirt.io/gpus: "true"
+    instancetype.kubevirt.io/memory: 64Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: gn1.4xlarge
 spec:
@@ -276,6 +318,9 @@ metadata:
       which is made available on OpenShift via OperatorHub.
     instancetype.kubevirt.io/version: "1"
   labels:
+    instancetype.kubevirt.io/cpu: "32"
+    instancetype.kubevirt.io/gpus: "true"
+    instancetype.kubevirt.io/memory: 128Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: gn1.8xlarge
 spec:
@@ -304,6 +349,9 @@ metadata:
       which is made available on OpenShift via OperatorHub.
     instancetype.kubevirt.io/version: "1"
   labels:
+    instancetype.kubevirt.io/cpu: "4"
+    instancetype.kubevirt.io/gpus: "true"
+    instancetype.kubevirt.io/memory: 16Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: gn1.xlarge
 spec:
@@ -378,6 +426,9 @@ metadata:
       *M* is the abbreviation of "Memory".
     instancetype.kubevirt.io/version: "1"
   labels:
+    instancetype.kubevirt.io/cpu: "8"
+    instancetype.kubevirt.io/hugepages: "true"
+    instancetype.kubevirt.io/memory: 64Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: m1.2xlarge
 spec:
@@ -400,6 +451,9 @@ metadata:
       *M* is the abbreviation of "Memory".
     instancetype.kubevirt.io/version: "1"
   labels:
+    instancetype.kubevirt.io/cpu: "16"
+    instancetype.kubevirt.io/hugepages: "true"
+    instancetype.kubevirt.io/memory: 128Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: m1.4xlarge
 spec:
@@ -422,6 +476,9 @@ metadata:
       *M* is the abbreviation of "Memory".
     instancetype.kubevirt.io/version: "1"
   labels:
+    instancetype.kubevirt.io/cpu: "32"
+    instancetype.kubevirt.io/hugepages: "true"
+    instancetype.kubevirt.io/memory: 256Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: m1.8xlarge
 spec:
@@ -444,6 +501,9 @@ metadata:
       *M* is the abbreviation of "Memory".
     instancetype.kubevirt.io/version: "1"
   labels:
+    instancetype.kubevirt.io/cpu: "2"
+    instancetype.kubevirt.io/hugepages: "true"
+    instancetype.kubevirt.io/memory: 16Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: m1.large
 spec:
@@ -466,6 +526,9 @@ metadata:
       *M* is the abbreviation of "Memory".
     instancetype.kubevirt.io/version: "1"
   labels:
+    instancetype.kubevirt.io/cpu: "4"
+    instancetype.kubevirt.io/hugepages: "true"
+    instancetype.kubevirt.io/memory: 32Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: m1.xlarge
 spec:
@@ -492,6 +555,8 @@ metadata:
       time-slice basis with other VMs.
     instancetype.kubevirt.io/version: "1"
   labels:
+    instancetype.kubevirt.io/cpu: "8"
+    instancetype.kubevirt.io/memory: 32Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: n1.2xlarge
 spec:
@@ -516,6 +581,8 @@ metadata:
       time-slice basis with other VMs.
     instancetype.kubevirt.io/version: "1"
   labels:
+    instancetype.kubevirt.io/cpu: "16"
+    instancetype.kubevirt.io/memory: 64Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: n1.4xlarge
 spec:
@@ -540,6 +607,8 @@ metadata:
       time-slice basis with other VMs.
     instancetype.kubevirt.io/version: "1"
   labels:
+    instancetype.kubevirt.io/cpu: "32"
+    instancetype.kubevirt.io/memory: 128Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: n1.8xlarge
 spec:
@@ -564,6 +633,8 @@ metadata:
       time-slice basis with other VMs.
     instancetype.kubevirt.io/version: "1"
   labels:
+    instancetype.kubevirt.io/cpu: "2"
+    instancetype.kubevirt.io/memory: 8Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: n1.large
 spec:
@@ -588,6 +659,8 @@ metadata:
       time-slice basis with other VMs.
     instancetype.kubevirt.io/version: "1"
   labels:
+    instancetype.kubevirt.io/cpu: "1"
+    instancetype.kubevirt.io/memory: 4Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: n1.medium
 spec:
@@ -612,6 +685,8 @@ metadata:
       time-slice basis with other VMs.
     instancetype.kubevirt.io/version: "1"
   labels:
+    instancetype.kubevirt.io/cpu: "4"
+    instancetype.kubevirt.io/memory: 16Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: n1.xlarge
 spec:
