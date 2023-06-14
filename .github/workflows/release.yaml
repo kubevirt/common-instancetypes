@@ -12,9 +12,14 @@ jobs:
         uses: actions/checkout@v2
       - name: Build
         run: |
+          export VERSION="${{ github.ref_name }}"
           for f in $(ls *bundle.yaml); do
-            cp ${f} ${f/\.yaml/-${{ github.ref_name }}\.yaml}
+            cp ${f} ${f/\.yaml/-${VERSION}\.yaml}
           done
+          
+          # Install yq and use it to update each resource with an instancetype.kubevirt.io/common-instancetypes-version annotation
+          wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O ./yq && chmod +X ./yq
+          yq -i '.metadata.annotations.["instancetype.kubevirt.io/common-instancetypes-version"]=env(VERSION)' *bundle-${VERSION}.yaml
       - name: Release
         id: release
         uses: softprops/action-gh-release@v1
