@@ -24,6 +24,7 @@ _cluster_up_dir="${_base_dir}/_cluster-up"
 _kubectl="${_cluster_up_dir}/cluster-up/kubectl.sh"
 _kubessh="${_cluster_up_dir}/cluster-up/ssh.sh"
 _kubevirtcicli="${_cluster_up_dir}/cluster-up/cli.sh"
+_virtctl="${_cluster_up_dir}/cluster-up/virtctl.sh"
 _action=$1
 shift
 
@@ -71,7 +72,7 @@ function kubevirtci::kubeconfig() {
 }
 
 function kubevirtci::functest() {
-  KUBECTL=${_kubectl} "${_base_dir}/scripts/functest.sh"
+  KUBECTL=${_kubectl} VIRTCTL=${_virtctl} "${_base_dir}/scripts/functest.sh"
 }
 
 kubevirtci::fetch_kubevirtci

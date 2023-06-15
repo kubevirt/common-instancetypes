@@ -20,6 +20,7 @@ _base_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 _kubectl="${_base_dir}/_kubevirt/cluster-up/kubectl.sh"
 _kubessh="${_base_dir}/_kubevirt/cluster-up/ssh.sh"
 _kubevirtcicli="${_base_dir}/_kubevirt/cluster-up/cli.sh"
+_virtctl="${_base_dir}/_kubevirt/cluster-up/virtctl.sh"
 _action=$1
 shift
 
@@ -50,7 +51,7 @@ function kubevirt::registry() {
 }
 
 function kubevirtci::functest() {
-  KUBECTL=${_kubectl} "${_base_dir}/scripts/functest.sh"
+  KUBECTL=${_kubectl} VIRTCTL=${_virtctl} "${_base_dir}/scripts/functest.sh"
 }
 
 kubevirt::install

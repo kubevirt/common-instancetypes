@@ -14,68 +14,40 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-if [ -z "${KUBECTL}" ]; then
-    echo "${BASH_SOURCE[0]} expects the following env variables to be provided: KUBECTL."
+if [ -z "${KUBECTL}" ] || [ -z "${VIRTCTL}" ]; then
+    echo "${BASH_SOURCE[0]} expects the following env variables to be provided: KUBECTL, VIRTCTL."
     exit 1
 fi
 
+# Create a custom tiny instance type for negative tests around preference resource requirements
+${VIRTCTL} create instancetype --cpu 1 --memory 64Mi --name tiny | ${KUBECTL} apply -f -
+
 # This func test simply loops over the installed instance types and preferences, assigning each to a VirtualMachine to ensure they are accepted by the webhooks
 for preference in $(${KUBECTL} get virtualmachineclusterpreferences --no-headers -o custom-columns=':metadata.name'); do
-    # TODO(lyarwood): Replace with virtctl create vm once 0.59.0 is released
-    # ${VIRTCTL} create vm --preference ${preference}
-    ${KUBECTL} apply -f - << EOF
----    
-apiVersion: kubevirt.io/v1
-kind: VirtualMachine
-metadata:
-  name: vm-${preference}
-spec:
-  preference:
-    name: ${preference}
-  running: false
-  template:
-    spec:
-      domain:
-        devices: {}
-      volumes:
-      - containerDisk:
-          image: quay.io/containerdisks/fedora:37
-        name: containerdisk
-EOF
-    # We can't inline the above creation call below so stash the return code and check it to keep shellcheck happy
-    ret=$?
-    if [ $ret -ne 0 ]; then
-        echo "functest failed on preference ${preference}"
+      
+    # Ensure a VirtualMachine using a preference with resource requirements is rejected if it does not provide enough resources.
+    if ${KUBECTL} get virtualmachineclusterpreferences/"${preference}" -o json | jq -er .spec.requirements > /dev/null 2>&1; then
+        # TODO(lyarwood): virtctl should be extended with a --cpu switch to allow the non instancetype use case to be tested here
+        if ${VIRTCTL} create vm --instancetype tiny --preference "${preference}" --volume-containerdisk name:disk,src:quay.io/containerdisks/fedora:latest --name "vm-${preference}-requirements" | ${KUBECTL} apply -f - ; then
+            echo "functest failed - Preference ${preference} should not be able to use virtualmachineclusterinstancetype tiny"
+            ${KUBECTL} delete "vm/vm-${preference}-requirements"
+            exit 1
+        fi
+    fi
+
+    # Ensure a VirtualMachine can be created when enough resources are provided using the n1.medium instance type
+    if ! ${VIRTCTL} create vm --instancetype n1.medium --preference "${preference}" --volume-containerdisk name:disk,src:quay.io/containerdisks/fedora:latest --name "vm-${preference}" | ${KUBECTL} apply -f - ; then
+        echo "functest failed on preference ${preference} using instancetype n1.medium"
         exit 1
     fi
     ${KUBECTL} delete "vm/vm-${preference}"
 done
 
+# Cleanup the custom instancetype
+${KUBECTL} delete virtualmachineclusterinstancetypes/tiny
+
 for instancetype in $(${KUBECTL} get virtualmachineclusterinstancetypes --no-headers -o custom-columns=':metadata.name'); do
-    # TODO(lyarwood): Replace with virtctl create vm once 0.59.0 is released
-    # ${VIRTCTL} create vm --instance-type ${instancetype}
-    ${KUBECTL} apply -f - << EOF
----    
-apiVersion: kubevirt.io/v1
-kind: VirtualMachine
-metadata:
-  name: vm-${instancetype}
-spec:
-  instancetype:
-    name: ${instancetype}
-  running: false
-  template:
-    spec:
-      domain:
-        devices: {}
-      volumes:
-      - containerDisk:
-          image: quay.io/containerdisks/fedora:37
-        name: containerdisk
-EOF
-    # We can't inline the above creation call below so stash the return code and check it to keep shellcheck happy
-    ret=$?
-    if [ $ret -ne 0 ]; then
+    if ! ${VIRTCTL} create vm --instancetype "${instancetype}" --volume-containerdisk name:disk,src:quay.io/containerdisks/fedora:latest --name "vm-${instancetype}" | ${KUBECTL} apply -f - ; then
         echo "functest failed on instance type ${instancetype}"
         exit 1
     fi
