@@ -41,6 +41,11 @@ spec:
   devices:
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
+  requirements:
+    cpu:
+      guest: 1
+    memory:
+      guest: 1Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
@@ -63,6 +68,11 @@ spec:
     preferredInputBus: virtio
     preferredInputType: tablet
     preferredInterfaceModel: virtio
+  requirements:
+    cpu:
+      guest: 1
+    memory:
+      guest: 1Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
@@ -82,6 +92,11 @@ spec:
   devices:
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
+  requirements:
+    cpu:
+      guest: 1
+    memory:
+      guest: 1.5Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
@@ -104,6 +119,11 @@ spec:
     preferredInputBus: virtio
     preferredInputType: tablet
     preferredInterfaceModel: virtio
+  requirements:
+    cpu:
+      guest: 1
+    memory:
+      guest: 1.5Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
@@ -130,6 +150,11 @@ spec:
   firmware:
     preferredUseEfi: true
     preferredUseSecureBoot: true
+  requirements:
+    cpu:
+      guest: 1
+    memory:
+      guest: 1.5Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
@@ -159,6 +184,11 @@ spec:
   firmware:
     preferredUseEfi: true
     preferredUseSecureBoot: true
+  requirements:
+    cpu:
+      guest: 1
+    memory:
+      guest: 1.5Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
@@ -223,6 +253,11 @@ spec:
   devices:
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
+  requirements:
+    cpu:
+      guest: 1
+    memory:
+      guest: 1Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
@@ -245,6 +280,11 @@ spec:
     preferredInputBus: virtio
     preferredInputType: tablet
     preferredInterfaceModel: virtio
+  requirements:
+    cpu:
+      guest: 1
+    memory:
+      guest: 1Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
@@ -264,6 +304,11 @@ spec:
   devices:
     preferredDiskBus: virtio
     preferredInterfaceModel: virtio
+  requirements:
+    cpu:
+      guest: 1
+    memory:
+      guest: 1.5Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
@@ -286,6 +331,11 @@ spec:
     preferredInputBus: virtio
     preferredInputType: tablet
     preferredInterfaceModel: virtio
+  requirements:
+    cpu:
+      guest: 1
+    memory:
+      guest: 1.5Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
@@ -312,6 +362,11 @@ spec:
   firmware:
     preferredUseEfi: true
     preferredUseSecureBoot: true
+  requirements:
+    cpu:
+      guest: 1
+    memory:
+      guest: 1.5Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
@@ -341,6 +396,11 @@ spec:
   firmware:
     preferredUseEfi: true
     preferredUseSecureBoot: true
+  requirements:
+    cpu:
+      guest: 1
+    memory:
+      guest: 1.5Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
