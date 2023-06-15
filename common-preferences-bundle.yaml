@@ -488,6 +488,11 @@ spec:
       vapic: {}
       vpindex: {}
   preferredTerminationGracePeriodSeconds: 3600
+  requirements:
+    cpu:
+      guest: 1
+    memory:
+      guest: 2Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
@@ -542,6 +547,11 @@ spec:
       vapic: {}
       vpindex: {}
   preferredTerminationGracePeriodSeconds: 3600
+  requirements:
+    cpu:
+      guest: 1
+    memory:
+      guest: 2Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
@@ -710,6 +720,11 @@ spec:
       vapic: {}
       vpindex: {}
   preferredTerminationGracePeriodSeconds: 3600
+  requirements:
+    cpu:
+      guest: 1
+    memory:
+      guest: 512Mi
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
@@ -764,6 +779,11 @@ spec:
       vapic: {}
       vpindex: {}
   preferredTerminationGracePeriodSeconds: 3600
+  requirements:
+    cpu:
+      guest: 1
+    memory:
+      guest: 512Mi
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
@@ -922,6 +942,11 @@ spec:
       vapic: {}
       vpindex: {}
   preferredTerminationGracePeriodSeconds: 3600
+  requirements:
+    cpu:
+      guest: 1
+    memory:
+      guest: 2Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
@@ -976,6 +1001,11 @@ spec:
       vapic: {}
       vpindex: {}
   preferredTerminationGracePeriodSeconds: 3600
+  requirements:
+    cpu:
+      guest: 1
+    memory:
+      guest: 2Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
@@ -1033,6 +1063,11 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
   preferredTerminationGracePeriodSeconds: 3600
+  requirements:
+    cpu:
+      guest: 1
+    memory:
+      guest: 2Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
@@ -1092,3 +1127,8 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
   preferredTerminationGracePeriodSeconds: 3600
+  requirements:
+    cpu:
+      guest: 1
+    memory:
+      guest: 2Gi

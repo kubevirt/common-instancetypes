@@ -7,5 +7,6 @@ resources:
 
 components:
   - ./metadata
+  - ./requirements
 
 nameSuffix: ".10"
