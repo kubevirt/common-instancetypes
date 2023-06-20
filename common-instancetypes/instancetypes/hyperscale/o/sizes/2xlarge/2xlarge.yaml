@@ -1,0 +1,10 @@
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineInstancetype
+metadata:
+  name: "n"
+spec:
+  cpu:
+    guest: 8
+  memory:
+    guest: "32Gi"
