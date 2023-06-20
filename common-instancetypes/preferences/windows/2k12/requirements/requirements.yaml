@@ -1,0 +1,12 @@
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachinePreference
+metadata:
+  name: requirements
+spec:
+  # https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2012-r2-and-2012/dn303418(v=ws.11)
+  requirements:
+    cpu:
+      guest: 1
+    memory:
+      guest: 512Mi
