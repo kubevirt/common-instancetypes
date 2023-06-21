@@ -9,18 +9,18 @@ patches:
   - patch: |-
       - op: replace
         path: /metadata/name
-        value: "n"
+        value: "u"
     target:
       kind: VirtualMachineInstancetype
   - patch: |-
       - op: replace
         path: /metadata/name
-        value: "n"
+        value: "u"
     target:
       kind: VirtualMachineClusterInstancetype
-  - path: n.yaml
+  - path: u.yaml
     target:
       kind: VirtualMachineInstancetype
-  - path: n.yaml
+  - path: u.yaml
     target:
       kind: VirtualMachineClusterInstancetype

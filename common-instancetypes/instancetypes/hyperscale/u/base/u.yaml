@@ -2,13 +2,13 @@
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
-  name: "n"
+  name: "u"
   annotations:
     instancetype.kubevirt.io/description: |-
-      The N Series is quite neutral and provides resources for
+      The U Series is quite neutral and provides resources for
       general purpose applications.
 
-      *N* is the abbreviation for "Neutral", hinting at the neutral
+      *U* is the abbreviation for "Universal", hinting at the universal
       attitude towards workloads.
 
       VMs of instance types will share physical CPU cores on a
