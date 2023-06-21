@@ -24,7 +24,7 @@ ${VIRTCTL} create instancetype --cpu 1 --memory 64Mi --name tiny | ${KUBECTL} ap
 
 # This func test simply loops over the installed instance types and preferences, assigning each to a VirtualMachine to ensure they are accepted by the webhooks
 for preference in $(${KUBECTL} get virtualmachineclusterpreferences --no-headers -o custom-columns=':metadata.name'); do
-      
+
     # Ensure a VirtualMachine using a preference with resource requirements is rejected if it does not provide enough resources.
     if ${KUBECTL} get virtualmachineclusterpreferences/"${preference}" -o json | jq -er .spec.requirements > /dev/null 2>&1; then
         # TODO(lyarwood): virtctl should be extended with a --cpu switch to allow the non instancetype use case to be tested here
@@ -35,9 +35,9 @@ for preference in $(${KUBECTL} get virtualmachineclusterpreferences --no-headers
         fi
     fi
 
-    # Ensure a VirtualMachine can be created when enough resources are provided using the n1.medium instance type
-    if ! ${VIRTCTL} create vm --instancetype n1.medium --preference "${preference}" --volume-containerdisk name:disk,src:quay.io/containerdisks/fedora:latest --name "vm-${preference}" | ${KUBECTL} apply -f - ; then
-        echo "functest failed on preference ${preference} using instancetype n1.medium"
+    # Ensure a VirtualMachine can be created when enough resources are provided using the u1.medium instance type
+    if ! ${VIRTCTL} create vm --instancetype u1.medium --preference "${preference}" --volume-containerdisk name:disk,src:quay.io/containerdisks/fedora:latest --name "vm-${preference}" | ${KUBECTL} apply -f - ; then
+        echo "functest failed on preference ${preference} using instancetype u1.medium"
         exit 1
     fi
     ${KUBECTL} delete "vm/vm-${preference}"
