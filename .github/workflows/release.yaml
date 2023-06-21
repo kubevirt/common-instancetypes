@@ -49,7 +49,7 @@ jobs:
 
           # Install yq and use it to update each resource with an instancetype.kubevirt.io/common-instancetypes-version annotation
           wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O ./yq && chmod +X ./yq
-          for bundle in $(ls data/common-instancetypes-bundle/bundle*.yaml); do
+          for bundle in $(ls data/common-instancetypes-bundle/*.yaml); do
             yq -i '.metadata.labels.["instancetype.kubevirt.io/common-instancetypes-version"]=env(VERSION)' ${bundle}
           done
 
