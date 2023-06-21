@@ -16,10 +16,12 @@ jobs:
           for f in $(ls *bundle.yaml); do
             cp ${f} ${f/\.yaml/-${VERSION}\.yaml}
           done
-          
+
           # Install yq and use it to update each resource with an instancetype.kubevirt.io/common-instancetypes-version annotation
           wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O ./yq && chmod +X ./yq
-          yq -i '.metadata.annotations.["instancetype.kubevirt.io/common-instancetypes-version"]=env(VERSION)' *bundle-${VERSION}.yaml
+          for bundle in $(ls *bundle-${VERSION}.yaml); do
+            yq -i '.metadata.labels.["instancetype.kubevirt.io/common-instancetypes-version"]=env(VERSION)' ${bundle}
+          done
       - name: Release
         id: release
         uses: softprops/action-gh-release@v1
@@ -31,7 +33,7 @@ jobs:
         run: |
           # Define vars
           export VERSION="${{ github.ref_name }}"
-          export RELEASE_FORK_USER=lyarwood
+          RELEASE_FORK_USER=lyarwood
 
           # Set git configs to sign the commit
           git config --global user.email "${RELEASE_FORK_USER}@redhat.com"
@@ -44,6 +46,13 @@ jobs:
           # Update the new common-instancetypes file
           cp ../common-clusterinstancetypes-bundle.yaml data/common-instancetypes-bundle/
           cp ../common-clusterpreferences-bundle.yaml data/common-instancetypes-bundle/
+
+          # Install yq and use it to update each resource with an instancetype.kubevirt.io/common-instancetypes-version annotation
+          wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O ./yq && chmod +X ./yq
+          for bundle in $(ls data/common-instancetypes-bundle/bundle*.yaml); do
+            yq -i '.metadata.labels.["instancetype.kubevirt.io/common-instancetypes-version"]=env(VERSION)' ${bundle}
+          done
+
           git add data && git commit -sm "common-instancetypes: Update bundle to version ${VERSION}"
 
           git remote add release https://${RELEASE_FORK_USER}:${{ secrets.RELEASE_FORK_TOKEN }}@github.com/${RELEASE_FORK_USER}/ssp-operator
