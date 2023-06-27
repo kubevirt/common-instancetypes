@@ -545,7 +545,7 @@ metadata:
   annotations:
     instancetype.kubevirt.io/class: Overcommitted
     instancetype.kubevirt.io/description: |-
-      The O Series is based on the N Series, with the only difference
+      The O Series is based on the U Series, with the only difference
       being that memory is overcommitted.
 
       *O* is the abbreviation for "Overcommitted".
@@ -566,7 +566,7 @@ metadata:
   annotations:
     instancetype.kubevirt.io/class: Overcommitted
     instancetype.kubevirt.io/description: |-
-      The O Series is based on the N Series, with the only difference
+      The O Series is based on the U Series, with the only difference
       being that memory is overcommitted.
 
       *O* is the abbreviation for "Overcommitted".
@@ -587,7 +587,7 @@ metadata:
   annotations:
     instancetype.kubevirt.io/class: Overcommitted
     instancetype.kubevirt.io/description: |-
-      The O Series is based on the N Series, with the only difference
+      The O Series is based on the U Series, with the only difference
       being that memory is overcommitted.
 
       *O* is the abbreviation for "Overcommitted".
@@ -608,7 +608,7 @@ metadata:
   annotations:
     instancetype.kubevirt.io/class: Overcommitted
     instancetype.kubevirt.io/description: |-
-      The O Series is based on the N Series, with the only difference
+      The O Series is based on the U Series, with the only difference
       being that memory is overcommitted.
 
       *O* is the abbreviation for "Overcommitted".
@@ -629,7 +629,7 @@ metadata:
   annotations:
     instancetype.kubevirt.io/class: Overcommitted
     instancetype.kubevirt.io/description: |-
-      The O Series is based on the N Series, with the only difference
+      The O Series is based on the U Series, with the only difference
       being that memory is overcommitted.
 
       *O* is the abbreviation for "Overcommitted".
@@ -650,7 +650,7 @@ metadata:
   annotations:
     instancetype.kubevirt.io/class: Overcommitted
     instancetype.kubevirt.io/description: |-
-      The O Series is based on the N Series, with the only difference
+      The O Series is based on the U Series, with the only difference
       being that memory is overcommitted.
 
       *O* is the abbreviation for "Overcommitted".
