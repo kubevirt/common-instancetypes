@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-export KUBEVIRT_TAG="${KUBEVIRT_TAG:-main}"
+export KUBEVIRT_TAG="${KUBEVIRT_TAG:-v1.0.0-rc.0}"
 
 _base_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 _kubectl="${_base_dir}/_kubevirt/cluster-up/kubectl.sh"
@@ -86,4 +86,3 @@ case ${_action} in
     exit 1
     ;;
 esac
-
