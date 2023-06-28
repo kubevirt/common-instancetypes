@@ -11,18 +11,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Build
-        run: |
-          # ubuntu-latest provides Podman
-          # https://github.com/actions/runner-images/blob/main/images/linux/Ubuntu2204-Readme.md#tools
-          export COMMON_INSTANCETYPES_CRI=podman
-          export COMMON_INSTANCETYPES_VERSION="${{ github.ref_name }}"
-
-          # Build the bundles
-          make && make generate
-
-          for f in $(ls *bundle.yaml); do
-            cp ${f} ${f/\.yaml/-${COMMON_INSTANCETYPES_VERSION}\.yaml}
-          done
+        run: ./github/scripts/build.sh
+        with:
+          COMMON_INSTANCETYPES_CRI: podman
+          COMMON_INSTANCETYPES_VERSION: ${{ github.ref_name }}
       - name: Release
         id: release
         uses: softprops/action-gh-release@v1
@@ -31,42 +23,9 @@ jobs:
             *bundle-${{ github.ref_name }}.yaml
             LICENSE
       - name: Update SSP Operator
-        run: |
-          # Define vars
-          COMMON_INSTANCETYPES_VERSION="${{ github.ref_name }}"
-          RELEASE_FORK_USER=lyarwood
-
-          # Set git configs to sign the commit
-          git config --global user.email "${RELEASE_FORK_USER}@redhat.com"
-          git config --global user.name "common-instancetypes Release Automation"
-
-          # Clone repo and use a token to allow pushing before creating a PR
-          git clone https://github.com/kubevirt/ssp-operator && cd ssp-operator
-          git checkout origin/master -b update-common-instancetypes-${COMMON_INSTANCETYPES_VERSION}
-
-          # Update the new common-instancetypes file
-          cp ../common-clusterinstancetypes-bundle-${COMMON_INSTANCETYPES_VERSION}.yaml data/common-instancetypes-bundle/
-          cp ../common-clusterpreferences-bundle-${COMMON_INSTANCETYPES_VERSION}.yaml data/common-instancetypes-bundle/
-
-          git add data && git commit -sm "common-instancetypes: Update bundle to COMMON_INSTANCETYPES_VERSION ${COMMON_INSTANCETYPES_VERSION}"
-
-          git remote add release https://${RELEASE_FORK_USER}:${{ secrets.RELEASE_FORK_TOKEN }}@github.com/${RELEASE_FORK_USER}/ssp-operator
-          git push -f -u release update-common-instancetypes-${COMMON_INSTANCETYPES_VERSION}
-
-          # Create a new PR in the operator repo
-          GH_TOKEN=${{ secrets.RELEASE_FORK_TOKEN }} gh pr create --repo kubevirt/ssp-operator \
-            --base master \
-            --head ${RELEASE_FORK_USER}:update-common-instancetypes-${COMMON_INSTANCETYPES_VERSION} \
-            --title "Update common-instancetypes to ${COMMON_INSTANCETYPES_VERSION}" \
-            --body "$(cat << EOF
-          common-instancetypes: Update bundle to ${COMMON_INSTANCETYPES_VERSION}
-
-          ${{ steps.release.outputs.url }}
-
-          **Release note**:
-          \`\`\`release-note
-          Update common-instancetypes bundle to ${COMMON_INSTANCETYPES_VERSION}
-          \`\`\`
-          EOF
-          )
-          "
+        run: ./github/scripts/update-ssp.sh
+        with:
+          RELEASE_FORK_USER: lyarwood
+          GH_TOKEN: ${{ secrets.RELEASE_FORK_TOKEN }}
+          COMMON_INSTANCETYPES_VERSION: ${{ github.ref_name }}
+          COMMON_INSTANCETYPES_RELEASE_URL: ${{ steps.release.outputs.url }}

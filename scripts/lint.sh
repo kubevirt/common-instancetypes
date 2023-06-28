@@ -12,4 +12,4 @@ fi
 
 yamllint -d relaxed ./common-instancetypes ./common-*.yaml
 
-shellcheck ./scripts/*
+shellcheck ./scripts/* .github/scripts/*
