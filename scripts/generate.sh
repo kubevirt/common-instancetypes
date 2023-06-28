@@ -20,3 +20,11 @@ kustomize build VirtualMachinePreferences >> common-preferences-bundle.yaml
 
 echo "---" > common-clusterpreferences-bundle.yaml
 kustomize build VirtualMachineClusterPreferences >> common-clusterpreferences-bundle.yaml
+
+# Add a version to each of the generated resources and calculate the checksum
+COMMON_INSTANCETYPES_VERSION=${COMMON_INSTANCETYPES_VERSION-$(git describe --tags)}
+export COMMON_INSTANCETYPES_VERSION
+for bundle in common-*-bundle.yaml; do
+    yq -i '.metadata.labels.["instancetype.kubevirt.io/common-instancetypes-version"]=env(COMMON_INSTANCETYPES_VERSION)' "${bundle}"
+    sha256sum "${bundle}" >> CHECKSUMS.sha256
+done

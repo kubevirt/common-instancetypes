@@ -15,20 +15,13 @@ jobs:
           # ubuntu-latest provides Podman
           # https://github.com/actions/runner-images/blob/main/images/linux/Ubuntu2204-Readme.md#tools
           export COMMON_INSTANCETYPES_CRI=podman
-          export VERSION="${{ github.ref_name }}"
+          export COMMON_INSTANCETYPES_VERSION="${{ github.ref_name }}"
 
           # Build the bundles
           make && make generate
 
           for f in $(ls *bundle.yaml); do
-            cp ${f} ${f/\.yaml/-${VERSION}\.yaml}
-          done
-
-          # Install yq and use it to update each resource with an instancetype.kubevirt.io/common-instancetypes-version annotation
-          wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O ./yq && chmod +X ./yq
-          for bundle in $(ls *bundle-${VERSION}.yaml); do
-            yq -i '.metadata.labels.["instancetype.kubevirt.io/common-instancetypes-version"]=env(VERSION)' ${bundle}
-            sha256sum ${bundle} >> CHECKSUMS.sha256
+            cp ${f} ${f/\.yaml/-${COMMON_INSTANCETYPES_VERSION}\.yaml}
           done
       - name: Release
         id: release
@@ -41,7 +34,7 @@ jobs:
       - name: Update SSP Operator
         run: |
           # Define vars
-          export VERSION="${{ github.ref_name }}"
+          COMMON_INSTANCETYPES_VERSION="${{ github.ref_name }}"
           RELEASE_FORK_USER=lyarwood
 
           # Set git configs to sign the commit
@@ -50,36 +43,30 @@ jobs:
 
           # Clone repo and use a token to allow pushing before creating a PR
           git clone https://github.com/kubevirt/ssp-operator && cd ssp-operator
-          git checkout origin/main -b update-common-instancetypes-${VERSION}
+          git checkout origin/main -b update-common-instancetypes-${COMMON_INSTANCETYPES_VERSION}
 
           # Update the new common-instancetypes file
-          cp ../common-clusterinstancetypes-bundle.yaml data/common-instancetypes-bundle/
-          cp ../common-clusterpreferences-bundle.yaml data/common-instancetypes-bundle/
+          cp ../common-clusterinstancetypes-bundle-${COMMON_INSTANCETYPES_VERSION}.yaml data/common-instancetypes-bundle/
+          cp ../common-clusterpreferences-bundle-${COMMON_INSTANCETYPES_VERSION}.yaml data/common-instancetypes-bundle/
 
-          # Install yq and use it to update each resource with an instancetype.kubevirt.io/common-instancetypes-version annotation
-          wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O ./yq && chmod +X ./yq
-          for bundle in $(ls data/common-instancetypes-bundle/*.yaml); do
-            yq -i '.metadata.labels.["instancetype.kubevirt.io/common-instancetypes-version"]=env(VERSION)' ${bundle}
-          done
-
-          git add data && git commit -sm "common-instancetypes: Update bundle to version ${VERSION}"
+          git add data && git commit -sm "common-instancetypes: Update bundle to COMMON_INSTANCETYPES_VERSION ${COMMON_INSTANCETYPES_VERSION}"
 
           git remote add release https://${RELEASE_FORK_USER}:${{ secrets.RELEASE_FORK_TOKEN }}@github.com/${RELEASE_FORK_USER}/ssp-operator
-          git push -f -u release update-common-instancetypes-${VERSION}
+          git push -f -u release update-common-instancetypes-${COMMON_INSTANCETYPES_VERSION}
 
           # Create a new PR in the operator repo
           GH_TOKEN=${{ secrets.RELEASE_FORK_TOKEN }} gh pr create --repo kubevirt/ssp-operator \
             --base main \
-            --head ${RELEASE_FORK_USER}:update-common-instancetypes-${VERSION} \
-            --title "Update common-instancetypes to ${VERSION}" \
+            --head ${RELEASE_FORK_USER}:update-common-instancetypes-${COMMON_INSTANCETYPES_VERSION} \
+            --title "Update common-instancetypes to ${COMMON_INSTANCETYPES_VERSION}" \
             --body "$(cat << EOF
-          common-instancetypes: Update bundle to ${VERSION}
+          common-instancetypes: Update bundle to ${COMMON_INSTANCETYPES_VERSION}
 
           ${{ steps.release.outputs.url }}
 
           **Release note**:
           \`\`\`release-note
-          Update common-instancetypes bundle to ${VERSION}
+          Update common-instancetypes bundle to ${COMMON_INSTANCETYPES_VERSION}
           \`\`\`
           EOF
           )
