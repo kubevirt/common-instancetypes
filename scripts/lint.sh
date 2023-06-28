@@ -14,6 +14,6 @@ if ! yamllint -d relaxed ./instancetypes ./preferences ./common-*-bundle.yaml; t
     exit 1
 fi
 
-if ! shellcheck ./scripts/* ; then
+if ! shellcheck ./scripts/* .github/scripts/* ; then
     exit 1
 fi
