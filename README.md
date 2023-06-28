@@ -4,14 +4,7 @@ A set of [instance types and preferences](https://kubevirt.io/user-guide/virtual
 
 ## Installation
 
-Bundles of pre-generated instance type and preference resources are available within this repository and can be applied
-directly to an existing [`Kubernetes`](https://kubernetes.io/) cluster with [`KubeVirt`](https://kubevirt.io) installed using [`kubectl`](https://kubernetes.io/docs/reference/kubectl/):
-
-```
-$ kubectl apply -f ./common-instancetypes-all-bundle.yaml
-```
-
-Additionally [kustomize](https://kustomize.io/) can be used to generate these resources before applying them to the cluster with [`kubectl`](https://kubernetes.io/docs/reference/kubectl/)
+[kustomize](https://kustomize.io/) is used to generate these resources before applying them to the cluster with [`kubectl`](https://kubernetes.io/docs/reference/kubectl/):
 
 ```
 $ kustomize build ./ | kubectl apply -f -

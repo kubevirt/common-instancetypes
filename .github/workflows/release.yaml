@@ -12,7 +12,14 @@ jobs:
         uses: actions/checkout@v2
       - name: Build
         run: |
+          # ubuntu-latest provides Podman
+          # https://github.com/actions/runner-images/blob/main/images/linux/Ubuntu2204-Readme.md#tools
+          export COMMON_INSTANCETYPES_CRI=podman
           export VERSION="${{ github.ref_name }}"
+
+          # Build the bundles
+          make && make generate
+
           for f in $(ls *bundle.yaml); do
             cp ${f} ${f/\.yaml/-${VERSION}\.yaml}
           done
