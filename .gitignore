@@ -4,3 +4,4 @@
 _cluster-up/
 _kubevirt/
 _schemas/main/*
+common-*-bundle.yaml
