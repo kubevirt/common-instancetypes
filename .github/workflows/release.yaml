@@ -44,14 +44,8 @@ jobs:
           git checkout origin/master -b update-common-instancetypes-${VERSION}
 
           # Update the new common-instancetypes file
-          cp ../common-clusterinstancetypes-bundle.yaml data/common-instancetypes-bundle/
-          cp ../common-clusterpreferences-bundle.yaml data/common-instancetypes-bundle/
-
-          # Install yq and use it to update each resource with an instancetype.kubevirt.io/common-instancetypes-version annotation
-          wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O ./yq && chmod +X ./yq
-          for bundle in $(ls data/common-instancetypes-bundle/*.yaml); do
-            yq -i '.metadata.labels.["instancetype.kubevirt.io/common-instancetypes-version"]=env(VERSION)' ${bundle}
-          done
+          cp ../common-clusterinstancetypes-bundle-${VERSION}.yaml data/common-instancetypes-bundle/
+          cp ../common-clusterpreferences-bundle-${VERSION}.yaml data/common-instancetypes-bundle/
 
           git add data && git commit -sm "common-instancetypes: Update bundle to version ${VERSION}"
 
