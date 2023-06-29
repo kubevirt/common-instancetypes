@@ -1,0 +1,23 @@
+# https://aws.amazon.com/ec2/instance-types/#General_Purpose
+apiVersion: instancetype.kubevirt.io/v1alpha2
+kind: VirtualMachineInstancetype
+metadata:
+  name: "uo1"
+  annotations:
+    series.name: "uo"
+    series.name_expanded: "Universal and Oversubscribed"
+    series.nv: "uo1"
+    series.description: |-
+      The UO Series is based on the U Series, with the difference
+      of being memory oversubscribed.
+
+      *UO* is the abbreviation for "Universal and Oversubscribed"
+      hinting at the neutral attitude towards workloads and the fact
+      that instances of this type are memory oversubscribed.
+
+      VMs of instance types will share physical CPU cores on a
+      time-slice basis with other VMs.
+    series.class: "Oversubscribed"
+spec:
+  memory:
+    overcommitPercent: 50

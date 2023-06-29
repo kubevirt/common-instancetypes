@@ -1,0 +1,20 @@
+# https://aws.amazon.com/ec2/instance-types/#Memory_Optimized
+apiVersion: instancetype.kubevirt.io/v1alpha2
+kind: VirtualMachineInstancetype
+metadata:
+  name: "m1"
+  annotations:
+    series.name: "m"
+    series.name_expanded: "Memory"
+    series.nv: "m1"
+    series.description: |-
+      The M Series provides resources for memory intensive
+      applications.
+
+      *M* is the abbreviation of "Memory".
+    series.class: "Memory intensive"
+    series.icon.fas: fa-memory
+spec:
+  memory:
+    hugepages:
+      pageSize: "2Mi"
