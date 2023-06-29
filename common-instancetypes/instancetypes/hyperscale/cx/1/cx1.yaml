@@ -16,7 +16,9 @@ metadata:
       In addition, in this series, the NUMA topology of the used
       cores is provided to the VM.
     instancetype.kubevirt.io/class: "Compute Exclusive"
+    instancetype.kubevirt.io/version: "1"
   labels:
+    instancetype.kubevirt.io/vendor: kubevirt.io
     instancetype.kubevirt.io/dedicatedCPUPlacement: "true"
     instancetype.kubevirt.io/isolateEmulatorThread: "true"
     instancetype.kubevirt.io/numa: "true"
