@@ -76,4 +76,4 @@ kubevirt-functest:
 clean: 
 	rm -f common*.yaml
 
-.PHONY: all build_image lint generate schema validate readme
+.PHONY: all build_image lint generate generate-namespaced generate-clustered schema validate readme
