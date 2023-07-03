@@ -1,7 +1,0 @@
----
-apiVersion: instancetype.kubevirt.io/v1beta1
-kind: VirtualMachinePreference
-metadata:
-  name: preferredTerminationGracePeriodSeconds
-spec:
-  preferredTerminationGracePeriodSeconds: 3600

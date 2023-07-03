@@ -1,8 +1,0 @@
----
-apiVersion: instancetype.kubevirt.io/v1beta1
-kind: VirtualMachinePreference
-metadata:
-  name: dedicatediothread
-spec:
-  devices:
-    preferredDiskDedicatedIoThread: true

@@ -1,8 +1,0 @@
----
-apiVersion: instancetype.kubevirt.io/v1beta1
-kind: VirtualMachinePreference
-metadata:
-  name: interface-multiqueue
-spec:
-  devices:
-    preferredNetworkInterfaceMultiQueue: true

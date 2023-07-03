@@ -1,0 +1,8 @@
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterPreference
+metadata:
+  name: metadata
+  annotations:
+    tags: "hidden,kubevirt,linux,rhel"
+    iconClass: "icon-rhel"

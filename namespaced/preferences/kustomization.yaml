@@ -1,11 +1,13 @@
----
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-resources:
-  - ./windows
-  - ./rhel
-  - ./centos
-  - ./ubuntu
-  - ./fedora
-  - ./cirros
-  - ./alpine
+
+bases:
+  - ../../clustered/preferences
+
+patches:
+  - patch: |-
+      - op: replace
+        path: /kind
+        value: VirtualMachinePreference
+    target:
+      kind: VirtualMachineClusterPreference

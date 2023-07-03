@@ -1,0 +1,33 @@
+# https://aws.amazon.com/ec2/instance-types/#Compute_Optimized
+apiVersion: instancetype.kubevirt.io/v1alpha2
+kind: VirtualMachineClusterInstancetype
+metadata:
+  name: "cx1"
+  annotations:
+    series.name: "cx"
+    series.name_expanded: "Compute Exclusive"
+    series.nv: "cx1"
+    series.description: |-
+      The CX Series provides exclusive compute resources for compute
+      intensive applications.
+
+      *CX* is the abbreviation of "Compute Exclusive".
+
+      The exclusive resources are given to the compute threads of the
+      VM. In order to ensure this, some additional cores (depending
+      on the number of disks and NICs) will be requestedto offload
+      the IO threading from cores dedicated to the workload.
+      In addition, in this series, the NUMA topology of the used
+      cores is provided to the VM.
+    series.class: "Compute intensive"
+    series.icon.pf-icon: pf-icon-registry
+spec:
+  cpu:
+    dedicatedCPUPlacement: true
+    isolateEmulatorThread: true
+    numa:
+      guestMappingPassthrough: {}
+  ioThreadsPolicy: "auto"
+  #networkInterfaceMultiQueue: true
+  #blockMultiQueue: true
+  #dedicatedIOThread: true

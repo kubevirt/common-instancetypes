@@ -19,11 +19,18 @@ push_image:
 lint: 
 	./scripts/cri.sh  "./scripts/lint.sh"
 
-generate: 
-	./scripts/cri.sh  "./scripts/generate.sh"
+generate: generate-namespaced generate-clustered
+generate-namespaced: namespaced-instanceTypes.yaml namespaced-preferences.yaml
+generate-clustered: clustered-instanceTypes.yaml clustered-preferences.yaml
 
-validate:
-	./scripts/cri.sh  "./scripts/validate.sh"
+namespaced-%.yaml: namespaced/$*
+	kustomize build $< > $@
+
+clustered-%.yaml: clustered/$*
+	kustomize build $< > $@
+
+validate: generate
+	./scripts/cri.sh  "./scripts/validate.sh *.yaml"
 
 schema:
 	./scripts/cri.sh  "./scripts/schema.sh"

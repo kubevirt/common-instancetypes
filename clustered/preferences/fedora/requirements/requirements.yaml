@@ -1,0 +1,12 @@
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterPreference
+metadata:
+  name: requirements
+spec:
+  # https://docs.fedoraproject.org/en-US/fedora/latest/release-notes/welcome/Hardware_Overview/
+  requirements:
+    cpu:
+      guest: 1
+    memory:
+      guest: 2Gi

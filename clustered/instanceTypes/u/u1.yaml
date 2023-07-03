@@ -1,0 +1,21 @@
+# https://aws.amazon.com/ec2/instance-types/#General_Purpose
+apiVersion: instancetype.kubevirt.io/v1alpha2
+kind: VirtualMachineClusterInstancetype
+metadata:
+  name: "u1"
+  annotations:
+    series.name: "u"
+    series.name_expanded: "Universal"
+    series.nv: "u1"
+    series.description: |-
+      The U Series is quite neutral and provides resources for
+      general purpose applications.
+
+      *U* is the abbreviation for "Universal", hinting at the fact that
+      this family is providing general compute resources to
+      workloads.
+
+      VMs of instance types will share physical CPU cores on a
+      time-slice basis with other VMs.
+    series.class: "General purpose"
+spec: {}

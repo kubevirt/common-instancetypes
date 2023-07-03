@@ -1,0 +1,28 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../base
+
+components:
+  - ./metadata
+  - ./requirements
+  - ../components/diskbus-virtio-blk
+  - ../components/interfacemodel-virtio-net
+  - ../components/rng
+  - ../components/secureboot
+  - ../components/interface-multiqueue
+
+patches:
+  - target:
+      kind: VirtualMachineClusterPreference
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: fedora
+  - target:
+      kind: VirtualMachineClusterPreference
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: fedora

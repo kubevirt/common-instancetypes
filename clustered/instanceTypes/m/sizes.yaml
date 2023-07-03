@@ -1,0 +1,50 @@
+apiVersion: instancetype.kubevirt.io/v1alpha2
+kind: VirtualMachineClusterInstancetype
+metadata:
+  name: "large"
+spec:
+  cpu:
+    guest: 2
+  memory:
+    guest: "16Gi"
+---
+apiVersion: instancetype.kubevirt.io/v1alpha2
+kind: VirtualMachineClusterInstancetype
+metadata:
+  name: "xlarge"
+spec:
+  cpu:
+    guest: 4
+  memory:
+    guest: "32Gi"
+---
+apiVersion: instancetype.kubevirt.io/v1alpha2
+kind: VirtualMachineClusterInstancetype
+metadata:
+  name: "2xlarge"
+spec:
+  cpu:
+    guest: 8
+  memory:
+    guest: "64Gi"
+---
+apiVersion: instancetype.kubevirt.io/v1alpha2
+kind: VirtualMachineClusterInstancetype
+metadata:
+  name: "4xlarge"
+spec:
+  cpu:
+    guest: 16
+  memory:
+    guest: "128Gi"
+---
+apiVersion: instancetype.kubevirt.io/v1alpha2
+kind: VirtualMachineClusterInstancetype
+metadata:
+  name: "8xlarge"
+spec:
+  cpu:
+    guest: 32
+  memory:
+    guest: "256Gi"
+---
