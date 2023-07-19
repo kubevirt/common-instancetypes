@@ -551,6 +551,8 @@ metadata:
       *O* is the abbreviation for "Overcommitted".
     instancetype.kubevirt.io/version: "1"
   labels:
+    instancetype.kubevirt.io/cpu: "8"
+    instancetype.kubevirt.io/memory: 32Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: o1.2xlarge
 spec:
@@ -572,6 +574,8 @@ metadata:
       *O* is the abbreviation for "Overcommitted".
     instancetype.kubevirt.io/version: "1"
   labels:
+    instancetype.kubevirt.io/cpu: "16"
+    instancetype.kubevirt.io/memory: 64Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: o1.4xlarge
 spec:
@@ -593,6 +597,8 @@ metadata:
       *O* is the abbreviation for "Overcommitted".
     instancetype.kubevirt.io/version: "1"
   labels:
+    instancetype.kubevirt.io/cpu: "32"
+    instancetype.kubevirt.io/memory: 128Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: o1.8xlarge
 spec:
@@ -614,6 +620,8 @@ metadata:
       *O* is the abbreviation for "Overcommitted".
     instancetype.kubevirt.io/version: "1"
   labels:
+    instancetype.kubevirt.io/cpu: "2"
+    instancetype.kubevirt.io/memory: 8Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: o1.large
 spec:
@@ -635,6 +643,8 @@ metadata:
       *O* is the abbreviation for "Overcommitted".
     instancetype.kubevirt.io/version: "1"
   labels:
+    instancetype.kubevirt.io/cpu: "1"
+    instancetype.kubevirt.io/memory: 4Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: o1.medium
 spec:
@@ -656,6 +666,8 @@ metadata:
       *O* is the abbreviation for "Overcommitted".
     instancetype.kubevirt.io/version: "1"
   labels:
+    instancetype.kubevirt.io/cpu: "4"
+    instancetype.kubevirt.io/memory: 16Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: o1.xlarge
 spec:
