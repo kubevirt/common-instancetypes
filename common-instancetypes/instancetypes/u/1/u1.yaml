@@ -1,5 +1,4 @@
 ---
-apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   name: "u"
@@ -14,8 +13,6 @@ metadata:
       VMs of instance types will share physical CPU cores on a
       time-slice basis with other VMs.
     instancetype.kubevirt.io/class: "General Purpose"
-spec:
-  cpu:
-    guest: 1
-  memory:
-    guest: 1Gi
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: "kubevirt.io"
