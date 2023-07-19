@@ -2,7 +2,10 @@
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineInstancetype
 metadata:
-  name: "n"
+  name: "o"
+  labels:
+    instancetype.kubevirt.io/cpu: "16"
+    instancetype.kubevirt.io/memory: "64Gi"
 spec:
   cpu:
     guest: 16
