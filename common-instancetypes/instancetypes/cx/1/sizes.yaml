@@ -1,0 +1,78 @@
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  name: "cx1.2xlarge"
+  labels:
+    instancetype.kubevirt.io/cpu: "8"
+    instancetype.kubevirt.io/memory: "16Gi"
+spec:
+  cpu:
+    guest: 8
+  memory:
+    guest: "16Gi"
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  name: "cx1.4xlarge"
+  labels:
+    instancetype.kubevirt.io/cpu: "16"
+    instancetype.kubevirt.io/memory: "32Gi"
+spec:
+  cpu:
+    guest: 16
+  memory:
+    guest: "32Gi"
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  name: "cx1.8xlarge"
+  labels:
+    instancetype.kubevirt.io/cpu: "32"
+    instancetype.kubevirt.io/memory: "64Gi"
+spec:
+  cpu:
+    guest: 32
+  memory:
+    guest: "64Gi"
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  name: "cx1.large"
+  labels:
+    instancetype.kubevirt.io/cpu: "2"
+    instancetype.kubevirt.io/memory: "4Gi"
+spec:
+  cpu:
+    guest: 2
+  memory:
+    guest: "4Gi"
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  name: "cx1.medium"
+  labels:
+    instancetype.kubevirt.io/cpu: "1"
+    instancetype.kubevirt.io/memory: "2Gi"
+spec:
+  cpu:
+    guest: 1
+  memory:
+    guest: "2Gi"
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
+  name: "cx1.xlarge"
+  labels:
+    instancetype.kubevirt.io/cpu: "4"
+    instancetype.kubevirt.io/memory: "8Gi"
+spec:
+  cpu:
+    guest: 4
+  memory:
+    guest: "8Gi"
