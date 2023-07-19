@@ -1,5 +1,4 @@
 ---
-apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   name: "m1"
@@ -10,12 +9,11 @@ metadata:
 
       *M* is the abbreviation of "Memory".
     instancetype.kubevirt.io/class: "Memory Intensive"
+    instancetype.kubevirt.io/version: "1"
   labels:
+    instancetype.kubevirt.io/vendor: "kubevirt.io"
     instancetype.kubevirt.io/hugepages: "true"
 spec:
-  cpu:
-    guest: 1
   memory:
-    guest: 1Gi
     hugepages:
       pageSize: "2Mi"
