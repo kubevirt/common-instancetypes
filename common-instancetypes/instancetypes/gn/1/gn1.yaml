@@ -1,5 +1,4 @@
 ---
-apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   name: "gn"
@@ -15,7 +14,9 @@ metadata:
       [NVIDIA GPU Operator](https://github.com/NVIDIA/gpu-operator)
       which is made available on OpenShift via OperatorHub.
     instancetype.kubevirt.io/class: "GPU NVIDIA"
+    instancetype.kubevirt.io/version: "1"
   labels:
+    instancetype.kubevirt.io/vendor: "kubevirt.io"
     instancetype.kubevirt.io/gpus: "true"
 spec:
   gpus:
