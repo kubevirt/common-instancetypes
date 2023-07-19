@@ -1,5 +1,4 @@
 ---
-apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   name: "o"
@@ -10,8 +9,9 @@ metadata:
 
       *O* is the abbreviation for "Overcommitted".
     instancetype.kubevirt.io/class: "Overcommitted"
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: "kubevirt.io"
 spec:
-  cpu:
-    guest: 1
   memory:
     overcommitPercent: 50
