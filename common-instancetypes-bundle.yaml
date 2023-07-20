@@ -772,6 +772,84 @@ metadata:
       time-slice basis with other VMs.
     instancetype.kubevirt.io/version: "1"
   labels:
+    instancetype.kubevirt.io/cpu: "1"
+    instancetype.kubevirt.io/memory: 1Gi
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: u1.micro
+spec:
+  cpu:
+    guest: 1
+  memory:
+    guest: 1Gi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: General Purpose
+    instancetype.kubevirt.io/description: |-
+      The U Series is quite neutral and provides resources for
+      general purpose applications.
+
+      *U* is the abbreviation for "Universal", hinting at the universal
+      attitude towards workloads.
+
+      VMs of instance types will share physical CPU cores on a
+      time-slice basis with other VMs.
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/cpu: "1"
+    instancetype.kubevirt.io/memory: 512Mi
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: u1.nano
+spec:
+  cpu:
+    guest: 1
+  memory:
+    guest: 512Mi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: General Purpose
+    instancetype.kubevirt.io/description: |-
+      The U Series is quite neutral and provides resources for
+      general purpose applications.
+
+      *U* is the abbreviation for "Universal", hinting at the universal
+      attitude towards workloads.
+
+      VMs of instance types will share physical CPU cores on a
+      time-slice basis with other VMs.
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/cpu: "1"
+    instancetype.kubevirt.io/memory: 2Gi
+    instancetype.kubevirt.io/vendor: kubevirt.io
+  name: u1.small
+spec:
+  cpu:
+    guest: 1
+  memory:
+    guest: 2Gi
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineInstancetype
+metadata:
+  annotations:
+    instancetype.kubevirt.io/class: General Purpose
+    instancetype.kubevirt.io/description: |-
+      The U Series is quite neutral and provides resources for
+      general purpose applications.
+
+      *U* is the abbreviation for "Universal", hinting at the universal
+      attitude towards workloads.
+
+      VMs of instance types will share physical CPU cores on a
+      time-slice basis with other VMs.
+    instancetype.kubevirt.io/version: "1"
+  labels:
     instancetype.kubevirt.io/cpu: "4"
     instancetype.kubevirt.io/memory: 16Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
