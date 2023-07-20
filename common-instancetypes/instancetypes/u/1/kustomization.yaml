@@ -6,3 +6,6 @@ resources:
   - ./xlarge
   - ./large
   - ./medium
+  - ./small
+  - ./micro
+  - ./nano
