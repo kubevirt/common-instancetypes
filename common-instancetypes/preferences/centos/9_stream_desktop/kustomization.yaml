@@ -5,7 +5,7 @@ kind: Kustomization
 resources:
   - ../9_stream
 
-nameSuffix: ".desktop"
-
 components:
   - ../../components/tablet-virtio
+
+nameSuffix: ".desktop"
