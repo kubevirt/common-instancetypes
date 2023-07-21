@@ -2,10 +2,12 @@
 
 # Basic instancetype.kubevirt.io version check
 INSTANCETYPE_API_VERSION="v1beta1"
-if grep -riP "instancetype.kubevirt.io/v\d+" common-instancetypes | grep -v ${INSTANCETYPE_API_VERSION}; then
-    echo "Unexpected instancetype.kubevirt.io version detected in tree! Expected instancetype.kubevirt.io/${INSTANCETYPE_API_VERSION}, please fix or update scripts/check.sh"
-    exit 1
-fi
+for dir in  instancetypes preferences; do
+    if grep -riP "instancetype.kubevirt.io/v\d+" "${dir}" | grep -v ${INSTANCETYPE_API_VERSION}; then
+        echo "Unexpected instancetype.kubevirt.io version detected in tree! Expected instancetype.kubevirt.io/${INSTANCETYPE_API_VERSION}, please fix or update scripts/check.sh"
+        exit 1
+    fi
+done
 
 # We need to add the current directory as a safe git directory before running any commands
 if ! git config --global --get-all safe.directory | grep "$(pwd)" > /dev/null; then
