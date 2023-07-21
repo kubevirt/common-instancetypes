@@ -8,9 +8,10 @@ metadata:
       being that memory is overcommitted.
 
       *O* is the abbreviation for "Overcommitted".
-    instancetype.kubevirt.io/class: "Overcommitted"
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: "Overcommitted"
   labels:
+    instancetype.kubevirt.io/class: "overcommitted"
+    instancetype.kubevirt.io/version: "1"
     instancetype.kubevirt.io/vendor: "kubevirt.io"
 spec:
   memory:

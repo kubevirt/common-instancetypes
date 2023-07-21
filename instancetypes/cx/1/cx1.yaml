@@ -15,9 +15,10 @@ metadata:
       the IO threading from cores dedicated to the workload.
       In addition, in this series, the NUMA topology of the used
       cores is provided to the VM.
-    instancetype.kubevirt.io/class: "Compute Exclusive"
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: "Compute Exclusive"
   labels:
+    instancetype.kubevirt.io/class: "compute.exclusive"
+    instancetype.kubevirt.io/version: "1"
     instancetype.kubevirt.io/vendor: "kubevirt.io"
     instancetype.kubevirt.io/dedicatedCPUPlacement: "true"
     instancetype.kubevirt.io/isolateEmulatorThread: "true"

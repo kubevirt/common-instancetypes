@@ -8,9 +8,10 @@ metadata:
       applications.
 
       *M* is the abbreviation of "Memory".
-    instancetype.kubevirt.io/class: "Memory Intensive"
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: "Memory Intensive"
   labels:
+    instancetype.kubevirt.io/class: "memory.intensive"
+    instancetype.kubevirt.io/version: "1"
     instancetype.kubevirt.io/vendor: "kubevirt.io"
     instancetype.kubevirt.io/hugepages: "true"
 spec:

@@ -13,9 +13,10 @@ metadata:
       provided by the
       [NVIDIA GPU Operator](https://github.com/NVIDIA/gpu-operator)
       which is made available on OpenShift via OperatorHub.
-    instancetype.kubevirt.io/class: "GPU NVIDIA"
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: "GPU NVIDIA"
   labels:
+    instancetype.kubevirt.io/class: "gpu.nvidia"
+    instancetype.kubevirt.io/version: "1"
     instancetype.kubevirt.io/vendor: "kubevirt.io"
     instancetype.kubevirt.io/gpus: "true"
 spec:

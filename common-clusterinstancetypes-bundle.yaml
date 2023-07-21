@@ -3,7 +3,6 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
-    instancetype.kubevirt.io/class: Compute Exclusive
     instancetype.kubevirt.io/description: |-
       The CX Series provides exclusive compute resources for compute
       intensive applications.
@@ -16,8 +15,9 @@ metadata:
       the IO threading from cores dedicated to the workload.
       In addition, in this series, the NUMA topology of the used
       cores is provided to the VM.
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: Compute Exclusive
   labels:
+    instancetype.kubevirt.io/class: compute.exclusive
     instancetype.kubevirt.io/cpu: "8"
     instancetype.kubevirt.io/dedicatedCPUPlacement: "true"
     instancetype.kubevirt.io/hugepages: "true"
@@ -25,6 +25,7 @@ metadata:
     instancetype.kubevirt.io/memory: 16Gi
     instancetype.kubevirt.io/numa: "true"
     instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
   name: cx1.2xlarge
 spec:
   cpu:
@@ -43,7 +44,6 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
-    instancetype.kubevirt.io/class: Compute Exclusive
     instancetype.kubevirt.io/description: |-
       The CX Series provides exclusive compute resources for compute
       intensive applications.
@@ -56,8 +56,9 @@ metadata:
       the IO threading from cores dedicated to the workload.
       In addition, in this series, the NUMA topology of the used
       cores is provided to the VM.
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: Compute Exclusive
   labels:
+    instancetype.kubevirt.io/class: compute.exclusive
     instancetype.kubevirt.io/cpu: "16"
     instancetype.kubevirt.io/dedicatedCPUPlacement: "true"
     instancetype.kubevirt.io/hugepages: "true"
@@ -65,6 +66,7 @@ metadata:
     instancetype.kubevirt.io/memory: 32Gi
     instancetype.kubevirt.io/numa: "true"
     instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
   name: cx1.4xlarge
 spec:
   cpu:
@@ -83,7 +85,6 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
-    instancetype.kubevirt.io/class: Compute Exclusive
     instancetype.kubevirt.io/description: |-
       The CX Series provides exclusive compute resources for compute
       intensive applications.
@@ -96,8 +97,9 @@ metadata:
       the IO threading from cores dedicated to the workload.
       In addition, in this series, the NUMA topology of the used
       cores is provided to the VM.
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: Compute Exclusive
   labels:
+    instancetype.kubevirt.io/class: compute.exclusive
     instancetype.kubevirt.io/cpu: "32"
     instancetype.kubevirt.io/dedicatedCPUPlacement: "true"
     instancetype.kubevirt.io/hugepages: "true"
@@ -105,6 +107,7 @@ metadata:
     instancetype.kubevirt.io/memory: 64Gi
     instancetype.kubevirt.io/numa: "true"
     instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
   name: cx1.8xlarge
 spec:
   cpu:
@@ -123,7 +126,6 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
-    instancetype.kubevirt.io/class: Compute Exclusive
     instancetype.kubevirt.io/description: |-
       The CX Series provides exclusive compute resources for compute
       intensive applications.
@@ -136,8 +138,9 @@ metadata:
       the IO threading from cores dedicated to the workload.
       In addition, in this series, the NUMA topology of the used
       cores is provided to the VM.
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: Compute Exclusive
   labels:
+    instancetype.kubevirt.io/class: compute.exclusive
     instancetype.kubevirt.io/cpu: "2"
     instancetype.kubevirt.io/dedicatedCPUPlacement: "true"
     instancetype.kubevirt.io/hugepages: "true"
@@ -145,6 +148,7 @@ metadata:
     instancetype.kubevirt.io/memory: 4Gi
     instancetype.kubevirt.io/numa: "true"
     instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
   name: cx1.large
 spec:
   cpu:
@@ -163,7 +167,6 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
-    instancetype.kubevirt.io/class: Compute Exclusive
     instancetype.kubevirt.io/description: |-
       The CX Series provides exclusive compute resources for compute
       intensive applications.
@@ -176,8 +179,9 @@ metadata:
       the IO threading from cores dedicated to the workload.
       In addition, in this series, the NUMA topology of the used
       cores is provided to the VM.
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: Compute Exclusive
   labels:
+    instancetype.kubevirt.io/class: compute.exclusive
     instancetype.kubevirt.io/cpu: "1"
     instancetype.kubevirt.io/dedicatedCPUPlacement: "true"
     instancetype.kubevirt.io/hugepages: "true"
@@ -185,6 +189,7 @@ metadata:
     instancetype.kubevirt.io/memory: 2Gi
     instancetype.kubevirt.io/numa: "true"
     instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
   name: cx1.medium
 spec:
   cpu:
@@ -203,7 +208,6 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
-    instancetype.kubevirt.io/class: Compute Exclusive
     instancetype.kubevirt.io/description: |-
       The CX Series provides exclusive compute resources for compute
       intensive applications.
@@ -216,8 +220,9 @@ metadata:
       the IO threading from cores dedicated to the workload.
       In addition, in this series, the NUMA topology of the used
       cores is provided to the VM.
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: Compute Exclusive
   labels:
+    instancetype.kubevirt.io/class: compute.exclusive
     instancetype.kubevirt.io/cpu: "4"
     instancetype.kubevirt.io/dedicatedCPUPlacement: "true"
     instancetype.kubevirt.io/hugepages: "true"
@@ -225,6 +230,7 @@ metadata:
     instancetype.kubevirt.io/memory: 8Gi
     instancetype.kubevirt.io/numa: "true"
     instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
   name: cx1.xlarge
 spec:
   cpu:
@@ -243,7 +249,6 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
-    instancetype.kubevirt.io/class: GPU NVIDIA
     instancetype.kubevirt.io/description: |-
       The GN Series provides instances types intended for VMs with
       NVIDIA GPU resources attached.
@@ -254,12 +259,14 @@ metadata:
       provided by the
       [NVIDIA GPU Operator](https://github.com/NVIDIA/gpu-operator)
       which is made available on OpenShift via OperatorHub.
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: GPU NVIDIA
   labels:
+    instancetype.kubevirt.io/class: gpu.nvidia
     instancetype.kubevirt.io/cpu: "8"
     instancetype.kubevirt.io/gpus: "true"
     instancetype.kubevirt.io/memory: 32Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
   name: gn1.2xlarge
 spec:
   cpu:
@@ -274,7 +281,6 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
-    instancetype.kubevirt.io/class: GPU NVIDIA
     instancetype.kubevirt.io/description: |-
       The GN Series provides instances types intended for VMs with
       NVIDIA GPU resources attached.
@@ -285,12 +291,14 @@ metadata:
       provided by the
       [NVIDIA GPU Operator](https://github.com/NVIDIA/gpu-operator)
       which is made available on OpenShift via OperatorHub.
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: GPU NVIDIA
   labels:
+    instancetype.kubevirt.io/class: gpu.nvidia
     instancetype.kubevirt.io/cpu: "16"
     instancetype.kubevirt.io/gpus: "true"
     instancetype.kubevirt.io/memory: 64Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
   name: gn1.4xlarge
 spec:
   cpu:
@@ -305,7 +313,6 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
-    instancetype.kubevirt.io/class: GPU NVIDIA
     instancetype.kubevirt.io/description: |-
       The GN Series provides instances types intended for VMs with
       NVIDIA GPU resources attached.
@@ -316,12 +323,14 @@ metadata:
       provided by the
       [NVIDIA GPU Operator](https://github.com/NVIDIA/gpu-operator)
       which is made available on OpenShift via OperatorHub.
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: GPU NVIDIA
   labels:
+    instancetype.kubevirt.io/class: gpu.nvidia
     instancetype.kubevirt.io/cpu: "32"
     instancetype.kubevirt.io/gpus: "true"
     instancetype.kubevirt.io/memory: 128Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
   name: gn1.8xlarge
 spec:
   cpu:
@@ -336,7 +345,6 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
-    instancetype.kubevirt.io/class: GPU NVIDIA
     instancetype.kubevirt.io/description: |-
       The GN Series provides instances types intended for VMs with
       NVIDIA GPU resources attached.
@@ -347,12 +355,14 @@ metadata:
       provided by the
       [NVIDIA GPU Operator](https://github.com/NVIDIA/gpu-operator)
       which is made available on OpenShift via OperatorHub.
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: GPU NVIDIA
   labels:
+    instancetype.kubevirt.io/class: gpu.nvidia
     instancetype.kubevirt.io/cpu: "4"
     instancetype.kubevirt.io/gpus: "true"
     instancetype.kubevirt.io/memory: 16Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
   name: gn1.xlarge
 spec:
   cpu:
@@ -367,18 +377,19 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
-    instancetype.kubevirt.io/class: Memory Intensive
     instancetype.kubevirt.io/description: |-
       The M Series provides resources for memory intensive
       applications.
 
       *M* is the abbreviation of "Memory".
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: Memory Intensive
   labels:
+    instancetype.kubevirt.io/class: memory.intensive
     instancetype.kubevirt.io/cpu: "8"
     instancetype.kubevirt.io/hugepages: "true"
     instancetype.kubevirt.io/memory: 64Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
   name: m1.2xlarge
 spec:
   cpu:
@@ -392,18 +403,19 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
-    instancetype.kubevirt.io/class: Memory Intensive
     instancetype.kubevirt.io/description: |-
       The M Series provides resources for memory intensive
       applications.
 
       *M* is the abbreviation of "Memory".
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: Memory Intensive
   labels:
+    instancetype.kubevirt.io/class: memory.intensive
     instancetype.kubevirt.io/cpu: "16"
     instancetype.kubevirt.io/hugepages: "true"
     instancetype.kubevirt.io/memory: 128Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
   name: m1.4xlarge
 spec:
   cpu:
@@ -417,18 +429,19 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
-    instancetype.kubevirt.io/class: Memory Intensive
     instancetype.kubevirt.io/description: |-
       The M Series provides resources for memory intensive
       applications.
 
       *M* is the abbreviation of "Memory".
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: Memory Intensive
   labels:
+    instancetype.kubevirt.io/class: memory.intensive
     instancetype.kubevirt.io/cpu: "32"
     instancetype.kubevirt.io/hugepages: "true"
     instancetype.kubevirt.io/memory: 256Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
   name: m1.8xlarge
 spec:
   cpu:
@@ -442,18 +455,19 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
-    instancetype.kubevirt.io/class: Memory Intensive
     instancetype.kubevirt.io/description: |-
       The M Series provides resources for memory intensive
       applications.
 
       *M* is the abbreviation of "Memory".
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: Memory Intensive
   labels:
+    instancetype.kubevirt.io/class: memory.intensive
     instancetype.kubevirt.io/cpu: "2"
     instancetype.kubevirt.io/hugepages: "true"
     instancetype.kubevirt.io/memory: 16Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
   name: m1.large
 spec:
   cpu:
@@ -467,18 +481,19 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
-    instancetype.kubevirt.io/class: Memory Intensive
     instancetype.kubevirt.io/description: |-
       The M Series provides resources for memory intensive
       applications.
 
       *M* is the abbreviation of "Memory".
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: Memory Intensive
   labels:
+    instancetype.kubevirt.io/class: memory.intensive
     instancetype.kubevirt.io/cpu: "4"
     instancetype.kubevirt.io/hugepages: "true"
     instancetype.kubevirt.io/memory: 32Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
   name: m1.xlarge
 spec:
   cpu:
@@ -492,17 +507,18 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
-    instancetype.kubevirt.io/class: Overcommitted
     instancetype.kubevirt.io/description: |-
       The O Series is based on the U Series, with the only difference
       being that memory is overcommitted.
 
       *O* is the abbreviation for "Overcommitted".
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: Overcommitted
   labels:
+    instancetype.kubevirt.io/class: overcommitted
     instancetype.kubevirt.io/cpu: "8"
     instancetype.kubevirt.io/memory: 32Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
   name: o1.2xlarge
 spec:
   cpu:
@@ -515,17 +531,18 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
-    instancetype.kubevirt.io/class: Overcommitted
     instancetype.kubevirt.io/description: |-
       The O Series is based on the U Series, with the only difference
       being that memory is overcommitted.
 
       *O* is the abbreviation for "Overcommitted".
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: Overcommitted
   labels:
+    instancetype.kubevirt.io/class: overcommitted
     instancetype.kubevirt.io/cpu: "16"
     instancetype.kubevirt.io/memory: 64Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
   name: o1.4xlarge
 spec:
   cpu:
@@ -538,17 +555,18 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
-    instancetype.kubevirt.io/class: Overcommitted
     instancetype.kubevirt.io/description: |-
       The O Series is based on the U Series, with the only difference
       being that memory is overcommitted.
 
       *O* is the abbreviation for "Overcommitted".
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: Overcommitted
   labels:
+    instancetype.kubevirt.io/class: overcommitted
     instancetype.kubevirt.io/cpu: "32"
     instancetype.kubevirt.io/memory: 128Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
   name: o1.8xlarge
 spec:
   cpu:
@@ -561,17 +579,18 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
-    instancetype.kubevirt.io/class: Overcommitted
     instancetype.kubevirt.io/description: |-
       The O Series is based on the U Series, with the only difference
       being that memory is overcommitted.
 
       *O* is the abbreviation for "Overcommitted".
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: Overcommitted
   labels:
+    instancetype.kubevirt.io/class: overcommitted
     instancetype.kubevirt.io/cpu: "2"
     instancetype.kubevirt.io/memory: 8Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
   name: o1.large
 spec:
   cpu:
@@ -584,17 +603,18 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
-    instancetype.kubevirt.io/class: Overcommitted
     instancetype.kubevirt.io/description: |-
       The O Series is based on the U Series, with the only difference
       being that memory is overcommitted.
 
       *O* is the abbreviation for "Overcommitted".
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: Overcommitted
   labels:
+    instancetype.kubevirt.io/class: overcommitted
     instancetype.kubevirt.io/cpu: "1"
     instancetype.kubevirt.io/memory: 4Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
   name: o1.medium
 spec:
   cpu:
@@ -607,17 +627,18 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
-    instancetype.kubevirt.io/class: Overcommitted
     instancetype.kubevirt.io/description: |-
       The O Series is based on the U Series, with the only difference
       being that memory is overcommitted.
 
       *O* is the abbreviation for "Overcommitted".
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: Overcommitted
   labels:
+    instancetype.kubevirt.io/class: overcommitted
     instancetype.kubevirt.io/cpu: "4"
     instancetype.kubevirt.io/memory: 16Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
   name: o1.xlarge
 spec:
   cpu:
@@ -630,7 +651,6 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
-    instancetype.kubevirt.io/class: General Purpose
     instancetype.kubevirt.io/description: |-
       The U Series is quite neutral and provides resources for
       general purpose applications.
@@ -640,11 +660,13 @@ metadata:
 
       VMs of instance types will share physical CPU cores on a
       time-slice basis with other VMs.
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: General Purpose
   labels:
+    instancetype.kubevirt.io/class: general.purpose
     instancetype.kubevirt.io/cpu: "8"
     instancetype.kubevirt.io/memory: 32Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
   name: u1.2xlarge
 spec:
   cpu:
@@ -656,7 +678,6 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
-    instancetype.kubevirt.io/class: General Purpose
     instancetype.kubevirt.io/description: |-
       The U Series is quite neutral and provides resources for
       general purpose applications.
@@ -666,11 +687,13 @@ metadata:
 
       VMs of instance types will share physical CPU cores on a
       time-slice basis with other VMs.
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: General Purpose
   labels:
+    instancetype.kubevirt.io/class: general.purpose
     instancetype.kubevirt.io/cpu: "16"
     instancetype.kubevirt.io/memory: 64Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
   name: u1.4xlarge
 spec:
   cpu:
@@ -682,7 +705,6 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
-    instancetype.kubevirt.io/class: General Purpose
     instancetype.kubevirt.io/description: |-
       The U Series is quite neutral and provides resources for
       general purpose applications.
@@ -692,11 +714,13 @@ metadata:
 
       VMs of instance types will share physical CPU cores on a
       time-slice basis with other VMs.
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: General Purpose
   labels:
+    instancetype.kubevirt.io/class: general.purpose
     instancetype.kubevirt.io/cpu: "32"
     instancetype.kubevirt.io/memory: 128Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
   name: u1.8xlarge
 spec:
   cpu:
@@ -708,7 +732,6 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
-    instancetype.kubevirt.io/class: General Purpose
     instancetype.kubevirt.io/description: |-
       The U Series is quite neutral and provides resources for
       general purpose applications.
@@ -718,11 +741,13 @@ metadata:
 
       VMs of instance types will share physical CPU cores on a
       time-slice basis with other VMs.
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: General Purpose
   labels:
+    instancetype.kubevirt.io/class: general.purpose
     instancetype.kubevirt.io/cpu: "2"
     instancetype.kubevirt.io/memory: 8Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
   name: u1.large
 spec:
   cpu:
@@ -734,7 +759,6 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
-    instancetype.kubevirt.io/class: General Purpose
     instancetype.kubevirt.io/description: |-
       The U Series is quite neutral and provides resources for
       general purpose applications.
@@ -744,11 +768,13 @@ metadata:
 
       VMs of instance types will share physical CPU cores on a
       time-slice basis with other VMs.
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: General Purpose
   labels:
+    instancetype.kubevirt.io/class: general.purpose
     instancetype.kubevirt.io/cpu: "1"
     instancetype.kubevirt.io/memory: 4Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
   name: u1.medium
 spec:
   cpu:
@@ -760,7 +786,6 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
-    instancetype.kubevirt.io/class: General Purpose
     instancetype.kubevirt.io/description: |-
       The U Series is quite neutral and provides resources for
       general purpose applications.
@@ -770,11 +795,13 @@ metadata:
 
       VMs of instance types will share physical CPU cores on a
       time-slice basis with other VMs.
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: General Purpose
   labels:
+    instancetype.kubevirt.io/class: general.purpose
     instancetype.kubevirt.io/cpu: "1"
     instancetype.kubevirt.io/memory: 1Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
   name: u1.micro
 spec:
   cpu:
@@ -786,7 +813,6 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
-    instancetype.kubevirt.io/class: General Purpose
     instancetype.kubevirt.io/description: |-
       The U Series is quite neutral and provides resources for
       general purpose applications.
@@ -796,11 +822,13 @@ metadata:
 
       VMs of instance types will share physical CPU cores on a
       time-slice basis with other VMs.
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: General Purpose
   labels:
+    instancetype.kubevirt.io/class: general.purpose
     instancetype.kubevirt.io/cpu: "1"
     instancetype.kubevirt.io/memory: 512Mi
     instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
   name: u1.nano
 spec:
   cpu:
@@ -812,7 +840,6 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
-    instancetype.kubevirt.io/class: General Purpose
     instancetype.kubevirt.io/description: |-
       The U Series is quite neutral and provides resources for
       general purpose applications.
@@ -822,11 +849,13 @@ metadata:
 
       VMs of instance types will share physical CPU cores on a
       time-slice basis with other VMs.
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: General Purpose
   labels:
+    instancetype.kubevirt.io/class: general.purpose
     instancetype.kubevirt.io/cpu: "1"
     instancetype.kubevirt.io/memory: 2Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
   name: u1.small
 spec:
   cpu:
@@ -838,7 +867,6 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
   annotations:
-    instancetype.kubevirt.io/class: General Purpose
     instancetype.kubevirt.io/description: |-
       The U Series is quite neutral and provides resources for
       general purpose applications.
@@ -848,11 +876,13 @@ metadata:
 
       VMs of instance types will share physical CPU cores on a
       time-slice basis with other VMs.
-    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/displayName: General Purpose
   labels:
+    instancetype.kubevirt.io/class: general.purpose
     instancetype.kubevirt.io/cpu: "4"
     instancetype.kubevirt.io/memory: 16Gi
     instancetype.kubevirt.io/vendor: kubevirt.io
+    instancetype.kubevirt.io/version: "1"
   name: u1.xlarge
 spec:
   cpu:
