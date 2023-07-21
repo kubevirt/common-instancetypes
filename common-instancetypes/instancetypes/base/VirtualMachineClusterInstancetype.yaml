@@ -1,7 +1,0 @@
----
-apiVersion: instancetype.kubevirt.io/v1beta1
-kind: VirtualMachineClusterInstancetype
-metadata:
-  name: VirtualMachineClusterInstancetype
-  labels:
-    instancetype.kubevirt.io/vendor: "kubevirt.io"

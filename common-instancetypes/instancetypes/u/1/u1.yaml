@@ -1,0 +1,18 @@
+---
+kind: VirtualMachineClusterInstancetype
+metadata:
+  name: "u"
+  annotations:
+    instancetype.kubevirt.io/description: |-
+      The U Series is quite neutral and provides resources for
+      general purpose applications.
+
+      *U* is the abbreviation for "Universal", hinting at the universal
+      attitude towards workloads.
+
+      VMs of instance types will share physical CPU cores on a
+      time-slice basis with other VMs.
+    instancetype.kubevirt.io/class: "General Purpose"
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: "kubevirt.io"

@@ -1,0 +1,17 @@
+---
+kind: VirtualMachineClusterInstancetype
+metadata:
+  name: "o"
+  annotations:
+    instancetype.kubevirt.io/description: |-
+      The O Series is based on the U Series, with the only difference
+      being that memory is overcommitted.
+
+      *O* is the abbreviation for "Overcommitted".
+    instancetype.kubevirt.io/class: "Overcommitted"
+    instancetype.kubevirt.io/version: "1"
+  labels:
+    instancetype.kubevirt.io/vendor: "kubevirt.io"
+spec:
+  memory:
+    overcommitPercent: 50
