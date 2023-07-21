@@ -10,7 +10,7 @@ if ! command -v shellcheck &> /dev/null; then
     exit 1
 fi
 
-if ! yamllint -d relaxed ./common-instancetypes ./common-*.yaml ; then
+if ! yamllint -d relaxed ./instancetypes ./preferences ./common-*.yaml; then
     exit 1
 fi
 
