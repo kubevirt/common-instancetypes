@@ -41,7 +41,7 @@ jobs:
 
           # Clone repo and use a token to allow pushing before creating a PR
           git clone https://github.com/kubevirt/ssp-operator && cd ssp-operator
-          git checkout origin/master -b update-common-instancetypes-${VERSION}
+          git checkout origin/main -b update-common-instancetypes-${VERSION}
 
           # Update the new common-instancetypes file
           cp ../common-clusterinstancetypes-bundle.yaml data/common-instancetypes-bundle/
@@ -60,7 +60,7 @@ jobs:
 
           # Create a new PR in the operator repo
           GH_TOKEN=${{ secrets.RELEASE_FORK_TOKEN }} gh pr create --repo kubevirt/ssp-operator \
-            --base master \
+            --base main \
             --head ${RELEASE_FORK_USER}:update-common-instancetypes-${VERSION} \
             --title "Update common-instancetypes to ${VERSION}" \
             --body "$(cat << EOF
