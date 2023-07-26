@@ -1,0 +1,13 @@
+---
+apiVersion: kustomize.config.k8s.io/v1alpha1
+kind: Component
+
+nameSuffix: .small
+
+patches:
+  - path: small.yaml
+    target:
+      kind: VirtualMachineInstancetype
+  - path: small.yaml
+    target:
+      kind: VirtualMachineClusterInstancetype
