@@ -40,6 +40,13 @@ for preference in $(${KUBECTL} get virtualmachineclusterpreferences --no-headers
         echo "functest failed on preference ${preference} using instancetype u1.medium"
         exit 1
     fi
+
+    if ! ${KUBECTL} wait --for=condition=Ready vms/"vm-${preference}" ; then
+        echo "functest failed to wait for VirtualMachine to become Ready"
+        ${KUBECTL} get vms/"vm-${preference}" -o yaml
+        exit 1
+    fi
+
     ${KUBECTL} delete "vm/vm-${preference}"
 done
 
