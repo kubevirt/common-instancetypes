@@ -680,6 +680,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,windows
   labels:
+    instancetype.kubevirt.io/deprecated: "true"
     instancetype.kubevirt.io/os-type: windows
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k12
@@ -737,6 +738,7 @@ metadata:
     openshift.io/support-url: https://github.com/kubevirt/common-instancetypes/issues
     tags: hidden,kubevirt,windows
   labels:
+    instancetype.kubevirt.io/deprecated: "true"
     instancetype.kubevirt.io/os-type: windows
     instancetype.kubevirt.io/vendor: kubevirt.io
   name: windows.2k12.virtio
