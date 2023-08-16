@@ -6,6 +6,7 @@ resources:
   - ../2k12
 
 components:
+  - ../../components/deprecated
   - ./metadata
   - ../../components/diskbus-virtio-blk
   - ../../components/interfacemodel-virtio-net
