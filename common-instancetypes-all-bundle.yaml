@@ -1050,7 +1050,7 @@ metadata:
   labels:
     instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
-  name: centos.8.stream
+  name: centos.stream8
 spec:
   devices:
     preferredDiskBus: virtio
@@ -1074,7 +1074,7 @@ metadata:
   labels:
     instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
-  name: centos.8.stream.desktop
+  name: centos.stream8.desktop
 spec:
   devices:
     preferredAutoattachInputDevice: true
@@ -1101,7 +1101,7 @@ metadata:
   labels:
     instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
-  name: centos.9.stream
+  name: centos.stream9
 spec:
   devices:
     preferredDiskBus: virtio
@@ -1132,7 +1132,7 @@ metadata:
   labels:
     instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
-  name: centos.9.stream.desktop
+  name: centos.stream9.desktop
 spec:
   devices:
     preferredAutoattachInputDevice: true
@@ -3149,7 +3149,7 @@ metadata:
   labels:
     instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
-  name: centos.8.stream
+  name: centos.stream8
 spec:
   devices:
     preferredDiskBus: virtio
@@ -3173,7 +3173,7 @@ metadata:
   labels:
     instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
-  name: centos.8.stream.desktop
+  name: centos.stream8.desktop
 spec:
   devices:
     preferredAutoattachInputDevice: true
@@ -3200,7 +3200,7 @@ metadata:
   labels:
     instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
-  name: centos.9.stream
+  name: centos.stream9
 spec:
   devices:
     preferredDiskBus: virtio
@@ -3231,7 +3231,7 @@ metadata:
   labels:
     instancetype.kubevirt.io/os-type: linux
     instancetype.kubevirt.io/vendor: kubevirt.io
-  name: centos.9.stream.desktop
+  name: centos.stream9.desktop
 spec:
   devices:
     preferredAutoattachInputDevice: true
