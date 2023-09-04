@@ -9,4 +9,4 @@ components:
   - ./metadata
   - ./requirements
 
-nameSuffix: ".8.stream"
+nameSuffix: ".stream8"

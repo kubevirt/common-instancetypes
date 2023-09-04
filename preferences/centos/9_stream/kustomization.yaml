@@ -12,4 +12,4 @@ components:
   - ../../components/secureboot
   - ../../components/disk-dedicatediothread
 
-nameSuffix: ".9.stream"
+nameSuffix: ".stream9"
