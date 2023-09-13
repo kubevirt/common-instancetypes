@@ -9,7 +9,6 @@ components:
   - ./metadata
   - ./requirements
   - ../../components/rng
-  - ../../components/secureboot
   - ../../components/disk-dedicatediothread
 
 nameSuffix: ".stream9"
