@@ -1108,11 +1108,6 @@ spec:
     preferredDiskDedicatedIoThread: true
     preferredInterfaceModel: virtio
     preferredRng: {}
-  features:
-    preferredSmm: {}
-  firmware:
-    preferredUseEfi: true
-    preferredUseSecureBoot: true
   requirements:
     cpu:
       guest: 1
@@ -1142,11 +1137,6 @@ spec:
     preferredInputType: tablet
     preferredInterfaceModel: virtio
     preferredRng: {}
-  features:
-    preferredSmm: {}
-  firmware:
-    preferredUseEfi: true
-    preferredUseSecureBoot: true
   requirements:
     cpu:
       guest: 1
@@ -3207,11 +3197,6 @@ spec:
     preferredDiskDedicatedIoThread: true
     preferredInterfaceModel: virtio
     preferredRng: {}
-  features:
-    preferredSmm: {}
-  firmware:
-    preferredUseEfi: true
-    preferredUseSecureBoot: true
   requirements:
     cpu:
       guest: 1
@@ -3241,11 +3226,6 @@ spec:
     preferredInputType: tablet
     preferredInterfaceModel: virtio
     preferredRng: {}
-  features:
-    preferredSmm: {}
-  firmware:
-    preferredUseEfi: true
-    preferredUseSecureBoot: true
   requirements:
     cpu:
       guest: 1
