@@ -4,4 +4,4 @@ kind: VirtualMachinePreference
 metadata:
   name: metadata
   annotations:
-    openshift.io/display-name: "Microsoft Windows 11"
+    openshift.io/display-name: "Microsoft Windows 11 (virtio)"
