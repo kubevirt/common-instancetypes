@@ -21,6 +21,7 @@ jobs:
           wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O ./yq && chmod +X ./yq
           for bundle in $(ls *bundle-${VERSION}.yaml); do
             yq -i '.metadata.labels.["instancetype.kubevirt.io/common-instancetypes-version"]=env(VERSION)' ${bundle}
+            sha256sum ${bundle} >> CHECKSUMS.sha256
           done
       - name: Release
         id: release
@@ -29,6 +30,7 @@ jobs:
           files: |
             *bundle-${{ github.ref_name }}.yaml
             LICENSE
+            CHECKSUMS.sha256
       - name: Update SSP Operator
         run: |
           # Define vars
