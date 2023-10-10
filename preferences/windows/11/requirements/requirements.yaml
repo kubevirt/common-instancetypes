@@ -7,6 +7,6 @@ spec:
   # https://www.microsoft.com/en-gb/windows/windows-11-specifications?r=1
   requirements:
     cpu:
-      guest: 1
+      guest: 2
     memory:
       guest: 4Gi
