@@ -21,6 +21,7 @@ export KUBEVIRT_DEPLOY_CDI="true"
 
 _base_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 _cluster_up_dir="${_base_dir}/_cluster-up"
+_virtctl_dir="${_cluster_up_dir}/_out/cmd/virtctl"
 _kubectl="${_cluster_up_dir}/cluster-up/kubectl.sh"
 _kubessh="${_cluster_up_dir}/cluster-up/ssh.sh"
 _kubevirtcicli="${_cluster_up_dir}/cluster-up/cli.sh"
@@ -46,6 +47,12 @@ function kubevirtci::up() {
   LATEST=$(curl -L https://storage.googleapis.com/kubevirt-prow/devel/release/kubevirt/kubevirt/stable.txt)
   ${_kubectl} apply -f "https://github.com/kubevirt/kubevirt/releases/download/${LATEST}/kubevirt-operator.yaml"
   ${_kubectl} apply -f "https://github.com/kubevirt/kubevirt/releases/download/${LATEST}/kubevirt-cr.yaml"
+
+  # This is needed because kubevirtci does not provide its own virtctl binary
+  echo "installing virtctl..."
+  mkdir -p "${_virtctl_dir}"
+  curl -L "https://github.com/kubevirt/kubevirt/releases/download/${LATEST}/virtctl-${LATEST}-linux-amd64" -o "${_virtctl_dir}/virtctl"
+  chmod +x "${_virtctl_dir}/virtctl"
 
   echo "waiting for kubevirt to become ready, this can take a few minutes..."
   ${_kubectl} -n kubevirt wait kv kubevirt --for condition=Available --timeout=15m
