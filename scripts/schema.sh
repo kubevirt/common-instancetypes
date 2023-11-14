@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 if ! command -v openapi2jsonschema &> /dev/null; then
     echo "openapi2jsonschema is not installed, see https://github.com/instrumenta/openapi2jsonschema#installation for more details."
     exit 1

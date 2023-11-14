@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # Basic instancetype.kubevirt.io version check
 INSTANCETYPE_API_VERSION="v1beta1"
 for dir in instancetypes preferences; do

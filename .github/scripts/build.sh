@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -ex
+
 if [ -z "${COMMON_INSTANCETYPES_VERSION}" ] ; then
     echo "${BASH_SOURCE[0]} expects the following env variables to be provided: COMMON_INSTANCETYPES_VERSION."
     exit 1

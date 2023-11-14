@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 if [ "${COMMON_INSTANCETYPES_CRI}" == "" ]; then
     /bin/bash -c "$@"
     exit $?

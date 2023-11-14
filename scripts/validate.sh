@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 if ! command -v kubeconform &> /dev/null; then
     echo "kubeconform is not installed, see https://github.com/yannh/kubeconform#installation for more details."
     exit 1

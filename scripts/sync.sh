@@ -14,6 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+set -ex
+
 if [ -z "${KUBECTL}" ]; then
     echo "${BASH_SOURCE[0]} expects the following env variables to be provided: KUBECTL."
     exit 1

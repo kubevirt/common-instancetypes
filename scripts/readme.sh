@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 if ! command -v yq &> /dev/null; then
     echo "yq is not installed, see https://github.com/mikefarah/yq#install for more details."
     exit 1
