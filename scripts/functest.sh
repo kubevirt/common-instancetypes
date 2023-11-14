@@ -19,6 +19,16 @@ if [ -z "${KUBECTL}" ] || [ -z "${VIRTCTL}" ]; then
     exit 1
 fi
 
+# Fail if no instancetypes or preferences were found
+if [ "$(${KUBECTL} get virtualmachineclusterinstancetype -o json | jq '.items | length')" -le 0 ]; then
+  echo "functest failed - No VirtualMachineClusterInstancetypes found"
+  exit 1
+fi
+if [ "$(${KUBECTL} get virtualmachineclusterpreference -o json | jq '.items | length')" -le 0 ]; then
+  echo "functest failed - No VirtualMachineClusterPreferences found"
+  exit 1
+fi
+
 # Create a custom tiny instance type for negative tests around preference resource requirements
 ${VIRTCTL} create instancetype --cpu 1 --memory 64Mi --name tiny | ${KUBECTL} apply -f -
 
