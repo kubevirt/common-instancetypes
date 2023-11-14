@@ -19,5 +19,5 @@ if [ -z "${KUBECTL}" ]; then
     exit 1
 fi
 ${KUBECTL} delete all -l instancetype.kubevirt.io/vendor=kubevirt.io
-${KUBECTL} kustomize ./VirtualMachineClusterInstancetypes | ${KUBECTL} apply -f -
-${KUBECTL} kustomize ./VirtualMachineClusterPreferences | ${KUBECTL} apply -f -
+${KUBECTL} kustomize VirtualMachineClusterInstancetypes | ${KUBECTL} apply -f -
+${KUBECTL} kustomize VirtualMachineClusterPreferences | ${KUBECTL} apply -f -

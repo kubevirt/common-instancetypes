@@ -5,3 +5,4 @@ _cluster-up/
 _kubevirt/
 _schemas/main/*
 common-*-bundle.yaml
+CHECKSUMS.sha256

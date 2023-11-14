@@ -6,7 +6,7 @@ if [ -z "${COMMON_INSTANCETYPES_VERSION}" ] ; then
 fi
 
 # Build the bundles
-make && COMMON_INSTANCETYPES_VERSION=${COMMON_INSTANCETYPES_VERSION} make generate
+COMMON_INSTANCETYPES_VERSION=${COMMON_INSTANCETYPES_VERSION} make
 
 for f in *bundle.yaml; do
     cp "${f}" "${f/\.yaml/-${COMMON_INSTANCETYPES_VERSION}\.yaml}"

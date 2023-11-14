@@ -8,65 +8,73 @@ export KUBEVIRT_VERSION = main
 # Supported runtimes are docker and podman. By default targets run directly on the host.
 export COMMON_INSTANCETYPES_IMAGE = quay.io/kubevirtci/common-instancetypes-builder
 
-all: lint schema validate readme check
+.PHONY: all
+all: lint validate readme check
 
+.PHONY: build_image
 build_image:
-	./scripts/build_image.sh
+	scripts/build_image.sh
 
+.PHONY: push_image
 push_image:
-	./scripts/push_image.sh
+	scripts/push_image.sh
 
+.PHONY: lint
 lint: generate
-	./scripts/cri.sh  "./scripts/lint.sh"
+	scripts/cri.sh  "scripts/lint.sh"
 
+.PHONY: generate
 generate:
-	./scripts/cri.sh  "./scripts/generate.sh"
+	scripts/cri.sh  "scripts/generate.sh"
 
-validate: generate
-	./scripts/cri.sh  "./scripts/validate.sh"
+.PHONY: validate
+validate: generate schema
+	scripts/cri.sh  "scripts/validate.sh"
 
+.PHONY: schema
 schema:
-	./scripts/cri.sh  "./scripts/schema.sh"
+	scripts/cri.sh  "scripts/schema.sh"
 
+.PHONY: readme
 readme: generate
-	./scripts/cri.sh  "./scripts/readme.sh"
+	scripts/cri.sh  "scripts/readme.sh"
 
+.PHONY: check
 check:
-	./scripts/cri.sh  "./scripts/check.sh"
+	scripts/cri.sh  "scripts/check.sh"
 
 .PHONY: cluster-up
 cluster-up:
-	./scripts/kubevirtci.sh up
+	scripts/kubevirtci.sh up
 
 .PHONY: cluster-down
 cluster-down:
-	./scripts/kubevirtci.sh down
+	scripts/kubevirtci.sh down
 
 .PHONY: cluster-sync
 cluster-sync:
-	./scripts/kubevirtci.sh sync
+	scripts/kubevirtci.sh sync
 
 .PHONY: cluster-functest
 cluster-functest:
-	./scripts/kubevirtci.sh functest
+	scripts/kubevirtci.sh functest
 
 .PHONY: kubevirt-up
 kubevirt-up:
-	./scripts/kubevirt.sh up
+	scripts/kubevirt.sh up
 
 .PHONY: kubevirt-down
 kubevirt-down:
-	./scripts/kubevirt.sh down
+	scripts/kubevirt.sh down
 
 .PHONY: kubevirt-sync
 kubevirt-sync:
-	./scripts/kubevirt.sh sync
+	scripts/kubevirt.sh sync
 
 .PHONY: kubevirt-functest
 kubevirt-functest:
-	./scripts/kubevirt.sh functest
+	scripts/kubevirt.sh functest
 
+.PHONY: clean
 clean:
-	rm -f common-*-bundle.yaml
-
-.PHONY: all build_image lint generate schema validate readme
+	rm -f common-*-bundle.yaml CHECKSUMS.sha256

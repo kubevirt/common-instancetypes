@@ -10,10 +10,10 @@ if ! command -v shellcheck &> /dev/null; then
     exit 1
 fi
 
-if ! yamllint -d relaxed ./instancetypes ./preferences ./common-*-bundle.yaml; then
+if ! yamllint -d relaxed instancetypes preferences common-*-bundle.yaml; then
     exit 1
 fi
 
-if ! shellcheck ./scripts/* .github/scripts/* ; then
+if ! shellcheck scripts/* .github/scripts/* ; then
     exit 1
 fi
