@@ -8,6 +8,7 @@ fi
 # Build the bundles
 COMMON_INSTANCETYPES_VERSION=${COMMON_INSTANCETYPES_VERSION} make
 
-for f in *bundle.yaml; do
+cd _build || exit 1
+for f in common-*-bundle.yaml; do
     cp "${f}" "${f/\.yaml/-${COMMON_INSTANCETYPES_VERSION}\.yaml}"
 done

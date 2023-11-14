@@ -1,8 +1,9 @@
 .vscode/*
 .history
 .idea
+_build/
 _cluster-up/
 _kubevirt/
-_schemas/main/*
+_schemas/
 common-*-bundle.yaml
 CHECKSUMS.sha256

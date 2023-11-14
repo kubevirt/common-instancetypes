@@ -18,7 +18,7 @@ for f in ./ VirtualMachineClusterInstancetypes VirtualMachineClusterPreferences 
 done
 
 # Validate the generated bundles
-for f in common-*-bundle.yaml; do
+for f in _build/common-*-bundle.yaml; do
     if ! kubeconform -exit-on-error -strict -schema-location "_schemas/${KUBEVIRT_VERSION}/{{ .ResourceKind }}.json"  "${f}" ; then
         exit 1
     fi

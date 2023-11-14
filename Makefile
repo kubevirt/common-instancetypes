@@ -77,4 +77,4 @@ kubevirt-functest:
 
 .PHONY: clean
 clean:
-	rm -f common-*-bundle.yaml CHECKSUMS.sha256
+	rm -rf _build _cluster-up _kubevirt _schemas

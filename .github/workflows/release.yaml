@@ -22,6 +22,6 @@ jobs:
           generate_release_notes: true
           fail_on_unmatched_files: true
           files: |
-            *bundle-${{ github.ref_name }}.yaml
+            _build/common-*-bundle-${{ github.ref_name }}.yaml
+            _build/CHECKSUMS.sha256
             LICENSE
-            CHECKSUMS.sha256
