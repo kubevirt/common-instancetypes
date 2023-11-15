@@ -14,19 +14,23 @@
 #* `make schema` (optional)
 #  * [openapi2jsonschema](https://github.com/instrumenta/openapi2jsonschema)
 
-FROM quay.io/fedora/fedora-minimal:36
+FROM quay.io/fedora/fedora-minimal:39
 
 RUN microdnf install -y make git golang python3-pip tar ShellCheck && microdnf clean all -y
 
 # yamllint bashate openapi2jsonschema
-RUN pip install yamllint bashate openapi2jsonschema && pip cache purge
+RUN pip install yamllint bashate && \
+  # Manually provide deps of openapi2jsonschema to force it to use a later pyyaml version
+  pip install --no-dependencies openapi2jsonschema jsonref click && \
+  pip cache purge
 
-# kustomize
-RUN curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/kustomize%2Fv4.5.7/hack/install_kustomize.sh"  | bash && mv /kustomize /bin/kustomize
-
-# kubeconform
-RUN go install github.com/yannh/kubeconform/cmd/kubeconform@v0.5.0 && mv /root/go/bin/kubeconform /bin/kubeconform
+# kustomize and kubeconform
+RUN go install sigs.k8s.io/kustomize/kustomize/v5@v5.2.1 && \
+  go install github.com/yannh/kubeconform/cmd/kubeconform@v0.6.3 && \
+  mv /root/go/bin/kustomize /usr/local/bin/kustomize && \
+  mv /root/go/bin/kubeconform /usr/local/bin/kubeconform && \
+  rm -rf /root/go
 
 # Download latest yq binary
-RUN curl -L https://github.com/mikefarah/yq/releases/download/v4.29.2/yq_linux_amd64 -o /usr/local/bin/yq && \
-    chmod +x /usr/local/bin/yq
+RUN curl -L https://github.com/mikefarah/yq/releases/download/v4.35.2/yq_linux_amd64 -o /usr/local/bin/yq && \
+  chmod +x /usr/local/bin/yq
