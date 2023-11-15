@@ -23,7 +23,7 @@ The following tools are required by each `Makefile` target:
     * [kustomize](https://kustomize.io/)
     * [kubeconform](https://github.com/yannh/kubeconform)
 
-By default `make` runs the `lint`, `validate`, `readme` and `check` targets and their dependencies.
+By default `make` runs the `lint`, `validate`, `readme` and `test` targets and their dependencies.
 
 ## Provided Makefile targets
 
@@ -33,7 +33,7 @@ The following targets are provided by the `Makefile`
 * `make generate`: Generate the common-instancetypes bundles. Output can be found in `./_build`.
 * `make validate`: Validate generated files against the OpenAPI schema of KubeVirt.
 * `make schema`: Grab and convert the KubeVirt OpenAPI schema to a JSON schema to be used by `validate`.
-* `make check`: Run basic checks against source files.
+* `make test`: Run unit tests against source files.
 * `make cluster-functest`: Run functests against latest stable KubeVirt.
 * `make kubevirt-functest`: Run functests against latest `main` KubeVirt.
 * `make readme`: Regenerate the list of provided resources at the end of `README.md`.

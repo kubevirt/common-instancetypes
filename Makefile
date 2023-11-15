@@ -16,7 +16,7 @@ KUBECONFORM_PACKAGE ?= github.com/yannh/kubeconform/cmd/kubeconform
 YQ_PACKAGE ?= github.com/mikefarah/yq/v4
 
 .PHONY: all
-all: lint validate readme
+all: lint validate readme test
 
 .PHONY: build_image
 build_image:
@@ -77,6 +77,10 @@ kubevirt-sync:
 .PHONY: kubevirt-functest
 kubevirt-functest:
 	cd tests && KUBECONFIG=$$(../scripts/kubevirt.sh kubeconfig) go test -v -timeout 0 ./functests/...
+
+.PHONY: test
+test: generate
+	cd tests && go test -v -timeout 0 ./unittests/...
 
 .PHONY: clean
 clean:
