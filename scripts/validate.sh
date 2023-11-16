@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 if ! command -v kubeconform &> /dev/null; then
     echo "kubeconform is not installed, see https://github.com/yannh/kubeconform#installation for more details."
     exit 1
@@ -18,7 +20,7 @@ for f in ./ VirtualMachineClusterInstancetypes VirtualMachineClusterPreferences 
 done
 
 # Validate the generated bundles
-for f in common*.yaml; do
+for f in _build/common-*-bundle.yaml; do
     if ! kubeconform -exit-on-error -strict -schema-location "_schemas/${KUBEVIRT_VERSION}/{{ .ResourceKind }}.json"  "${f}" ; then
         exit 1
     fi

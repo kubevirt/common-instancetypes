@@ -1,79 +1,27 @@
 ---
-name: Main
+name: Release
 on:
   push:
     tags:
       - "v*.*.*"
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Build
-        run: |
-          export VERSION="${{ github.ref_name }}"
-          for f in $(ls *bundle.yaml); do
-            cp ${f} ${f/\.yaml/-${VERSION}\.yaml}
-          done
-
-          # Install yq and use it to update each resource with an instancetype.kubevirt.io/common-instancetypes-version annotation
-          wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O ./yq && chmod +X ./yq
-          for bundle in $(ls *bundle-${VERSION}.yaml); do
-            yq -i '.metadata.labels.["instancetype.kubevirt.io/common-instancetypes-version"]=env(VERSION)' ${bundle}
-            sha256sum ${bundle} >> CHECKSUMS.sha256
-          done
+        run: .github/scripts/build.sh
+        env:
+          COMMON_INSTANCETYPES_CRI: podman
+          COMMON_INSTANCETYPES_VERSION: ${{ github.ref_name }}
       - name: Release
         id: release
         uses: softprops/action-gh-release@v1
         with:
+          generate_release_notes: true
+          fail_on_unmatched_files: true
           files: |
-            *bundle-${{ github.ref_name }}.yaml
+            _build/common-*-bundle-${{ github.ref_name }}.yaml
+            _build/CHECKSUMS.sha256
             LICENSE
-            CHECKSUMS.sha256
-      - name: Update SSP Operator
-        run: |
-          # Define vars
-          export VERSION="${{ github.ref_name }}"
-          RELEASE_FORK_USER=lyarwood
-
-          # Set git configs to sign the commit
-          git config --global user.email "${RELEASE_FORK_USER}@redhat.com"
-          git config --global user.name "common-instancetypes Release Automation"
-
-          # Clone repo and use a token to allow pushing before creating a PR
-          git clone https://github.com/kubevirt/ssp-operator && cd ssp-operator
-          git checkout origin/main -b update-common-instancetypes-${VERSION}
-
-          # Update the new common-instancetypes file
-          cp ../common-clusterinstancetypes-bundle.yaml data/common-instancetypes-bundle/
-          cp ../common-clusterpreferences-bundle.yaml data/common-instancetypes-bundle/
-
-          # Install yq and use it to update each resource with an instancetype.kubevirt.io/common-instancetypes-version annotation
-          wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O ./yq && chmod +X ./yq
-          for bundle in $(ls data/common-instancetypes-bundle/*.yaml); do
-            yq -i '.metadata.labels.["instancetype.kubevirt.io/common-instancetypes-version"]=env(VERSION)' ${bundle}
-          done
-
-          git add data && git commit -sm "common-instancetypes: Update bundle to version ${VERSION}"
-
-          git remote add release https://${RELEASE_FORK_USER}:${{ secrets.RELEASE_FORK_TOKEN }}@github.com/${RELEASE_FORK_USER}/ssp-operator
-          git push -f -u release update-common-instancetypes-${VERSION}
-
-          # Create a new PR in the operator repo
-          GH_TOKEN=${{ secrets.RELEASE_FORK_TOKEN }} gh pr create --repo kubevirt/ssp-operator \
-            --base main \
-            --head ${RELEASE_FORK_USER}:update-common-instancetypes-${VERSION} \
-            --title "Update common-instancetypes to ${VERSION}" \
-            --body "$(cat << EOF
-          common-instancetypes: Update bundle to ${VERSION}
-
-          ${{ steps.release.outputs.url }}
-
-          **Release note**:
-          \`\`\`release-note
-          Update common-instancetypes bundle to ${VERSION}
-          \`\`\`
-          EOF
-          )
-          "

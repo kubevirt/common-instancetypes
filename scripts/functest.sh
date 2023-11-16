@@ -14,9 +14,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+set -ex
+
 if [ -z "${KUBECTL}" ] || [ -z "${VIRTCTL}" ]; then
     echo "${BASH_SOURCE[0]} expects the following env variables to be provided: KUBECTL, VIRTCTL."
     exit 1
+fi
+
+# Fail if no instancetypes or preferences were found
+if [ "$(${KUBECTL} get virtualmachineclusterinstancetype -o json | jq '.items | length')" -le 0 ]; then
+  echo "functest failed - No VirtualMachineClusterInstancetypes found"
+  exit 1
+fi
+if [ "$(${KUBECTL} get virtualmachineclusterpreference -o json | jq '.items | length')" -le 0 ]; then
+  echo "functest failed - No VirtualMachineClusterPreferences found"
+  exit 1
 fi
 
 # Create a custom tiny instance type for negative tests around preference resource requirements

@@ -4,26 +4,19 @@ A set of [instance types and preferences](https://kubevirt.io/user-guide/virtual
 
 ## Installation
 
-Bundles of pre-generated instance type and preference resources are available within this repository and can be applied
-directly to an existing [`Kubernetes`](https://kubernetes.io/) cluster with [`KubeVirt`](https://kubevirt.io) installed using [`kubectl`](https://kubernetes.io/docs/reference/kubectl/):
+[kustomize](https://kustomize.io/) is used to generate these resources before applying them to the cluster with [`kubectl`](https://kubernetes.io/docs/reference/kubectl/):
 
 ```
-$ kubectl apply -f ./common-instancetypes-all-bundle.yaml
-```
-
-Additionally [kustomize](https://kustomize.io/) can be used to generate these resources before applying them to the cluster with [`kubectl`](https://kubernetes.io/docs/reference/kubectl/)
-
-```
-$ kustomize build ./ | kubectl apply -f -
+$ kustomize build | kubectl apply -f -
 ```
 
 A number of resource specific [kustomize](https://kustomize.io/) build configs are also provided and allow limited generation, for example the following command will generate and install only the [`VirtualMachineInstancetype`](http://kubevirt.io/api-reference/main/definitions.html#_v1alpha2_virtualmachineinstancetype) resources:
 
 ```
-$ kustomize build ./VirtualMachineInstancetypes | kubectl apply -f -
+$ kustomize build VirtualMachineInstancetypes | kubectl apply -f -
 ```
 
-Additional targets are avilable for [`./VirtualMachineClusterInstancetypes`](http://kubevirt.io/api-reference/main/definitions.html#_v1alpha2_virtualmachineclusterinstancetype), [`./VirtualMachineClusterPreferences`](http://kubevirt.io/api-reference/main/definitions.html#_v1alpha2_virtualmachineclusterpreference) and [`./VirtualMachinePreferences`](http://kubevirt.io/api-reference/main/definitions.html#_v1alpha2_virtualmachinepreference).
+Additional targets are avilable for [`VirtualMachineClusterInstancetypes`](http://kubevirt.io/api-reference/main/definitions.html#_v1alpha2_virtualmachineclusterinstancetype), [`VirtualMachineClusterPreferences`](http://kubevirt.io/api-reference/main/definitions.html#_v1alpha2_virtualmachineclusterpreference) and [`VirtualMachinePreferences`](http://kubevirt.io/api-reference/main/definitions.html#_v1alpha2_virtualmachinepreference).
 
 ## Requirements
 
