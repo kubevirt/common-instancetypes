@@ -1581,6 +1581,11 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
   preferredTerminationGracePeriodSeconds: 3600
+  requirements:
+    cpu:
+      guest: 2
+    memory:
+      guest: 4Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
@@ -1640,6 +1645,11 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
   preferredTerminationGracePeriodSeconds: 3600
+  requirements:
+    cpu:
+      guest: 2
+    memory:
+      guest: 4Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
@@ -1808,6 +1818,11 @@ spec:
       vapic: {}
       vpindex: {}
   preferredTerminationGracePeriodSeconds: 3600
+  requirements:
+    cpu:
+      guest: 1
+    memory:
+      guest: 2Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
@@ -1862,6 +1877,11 @@ spec:
       vapic: {}
       vpindex: {}
   preferredTerminationGracePeriodSeconds: 3600
+  requirements:
+    cpu:
+      guest: 1
+    memory:
+      guest: 2Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterPreference
@@ -3687,6 +3707,11 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
   preferredTerminationGracePeriodSeconds: 3600
+  requirements:
+    cpu:
+      guest: 2
+    memory:
+      guest: 4Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
@@ -3746,6 +3771,11 @@ spec:
     preferredUseEfi: true
     preferredUseSecureBoot: true
   preferredTerminationGracePeriodSeconds: 3600
+  requirements:
+    cpu:
+      guest: 2
+    memory:
+      guest: 4Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
@@ -3914,6 +3944,11 @@ spec:
       vapic: {}
       vpindex: {}
   preferredTerminationGracePeriodSeconds: 3600
+  requirements:
+    cpu:
+      guest: 1
+    memory:
+      guest: 2Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
@@ -3968,6 +4003,11 @@ spec:
       vapic: {}
       vpindex: {}
   preferredTerminationGracePeriodSeconds: 3600
+  requirements:
+    cpu:
+      guest: 1
+    memory:
+      guest: 2Gi
 ---
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference

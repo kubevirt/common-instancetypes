@@ -35,9 +35,9 @@ for preference in $(${KUBECTL} get virtualmachineclusterpreferences --no-headers
         fi
     fi
 
-    # Ensure a VirtualMachine can be created when enough resources are provided using the u1.medium instance type
-    if ! ${VIRTCTL} create vm --instancetype u1.medium --preference "${preference}" --volume-containerdisk name:disk,src:quay.io/containerdisks/fedora:latest --name "vm-${preference}" | ${KUBECTL} apply -f - ; then
-        echo "functest failed on preference ${preference} using instancetype u1.medium"
+    # Ensure a VirtualMachine can be created when enough resources are provided using the u1.large instance type
+    if ! ${VIRTCTL} create vm --instancetype u1.large --preference "${preference}" --volume-containerdisk name:disk,src:quay.io/containerdisks/fedora:latest --name "vm-${preference}" | ${KUBECTL} apply -f - ; then
+        echo "functest failed on preference ${preference} using instancetype u1.large"
         exit 1
     fi
     ${KUBECTL} delete "vm/vm-${preference}"
