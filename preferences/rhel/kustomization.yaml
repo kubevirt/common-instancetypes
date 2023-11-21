@@ -4,8 +4,10 @@ kind: Kustomization
 
 resources:
   - ./9_desktop
+  - ./9_dpdk
   - ./9
   - ./8_desktop
+  - ./8_dpdk
   - ./8
   - ./7_desktop
   - ./7
