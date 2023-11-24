@@ -9,6 +9,12 @@ export KUBEVIRT_VERSION = main
 export COMMON_INSTANCETYPES_IMAGE = quay.io/kubevirtci/common-instancetypes-builder
 export COMMON_INSTANCETYPES_IMAGE_TAG = v20231115-ab8759b
 
+# Packages of golang tools vendored in ./tools
+# Version to install is defined in ./tools/go.mod
+KUSTOMIZE_PACKAGE ?= sigs.k8s.io/kustomize/kustomize/v5
+KUBECONFORM_PACKAGE ?= github.com/yannh/kubeconform/cmd/kubeconform
+YQ_PACKAGE ?= github.com/mikefarah/yq/v4
+
 .PHONY: all
 all: lint validate readme check
 
@@ -22,27 +28,27 @@ push_image:
 
 .PHONY: lint
 lint: generate
-	scripts/cri.sh  "scripts/lint.sh"
+	scripts/cri.sh "scripts/lint.sh"
 
 .PHONY: generate
-generate:
-	scripts/cri.sh  "scripts/generate.sh"
+generate: kustomize yq
+	scripts/generate.sh
 
 .PHONY: validate
-validate: generate schema
-	scripts/cri.sh  "scripts/validate.sh"
+validate: generate schema kubeconform
+	scripts/validate.sh
 
 .PHONY: schema
 schema:
-	scripts/cri.sh  "scripts/schema.sh"
+	scripts/cri.sh "scripts/schema.sh"
 
 .PHONY: readme
 readme: generate
-	scripts/cri.sh  "scripts/readme.sh"
+	scripts/readme.sh
 
 .PHONY: check
 check:
-	scripts/cri.sh  "scripts/check.sh"
+	scripts/check.sh
 
 .PHONY: cluster-up
 cluster-up:
@@ -78,4 +84,25 @@ kubevirt-functest:
 
 .PHONY: clean
 clean:
-	rm -rf _build _cluster-up _kubevirt _schemas
+	rm -rf _bin _build _cluster-up _kubevirt _schemas
+
+# Location to install local binaries to
+LOCALBIN ?= $(PWD)/_bin
+$(LOCALBIN):
+	mkdir -p $(LOCALBIN)
+export PATH := $(LOCALBIN):$(PATH)
+
+KUSTOMIZE ?= $(LOCALBIN)/kustomize
+kustomize: $(KUSTOMIZE)
+$(KUSTOMIZE): $(LOCALBIN)
+	cd tools && GOBIN=$(LOCALBIN) go install $(KUSTOMIZE_PACKAGE)
+
+KUBECONFORM ?= $(LOCALBIN)/kubeconform
+kubeconform: $(KUBECONFORM)
+$(KUBECONFORM): $(LOCALBIN)
+	cd tools && GOBIN=$(LOCALBIN) go install $(KUBECONFORM_PACKAGE)
+
+YQ ?= $(LOCALBIN)/yq
+yq: $(YQ)
+$(YQ): $(LOCALBIN)
+	cd tools && GOBIN=$(LOCALBIN) go install $(YQ_PACKAGE)
