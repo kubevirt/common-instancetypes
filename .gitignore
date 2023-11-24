@@ -1,6 +1,7 @@
 .vscode/*
 .history
 .idea
+_bin/
 _build/
 _cluster-up/
 _kubevirt/
