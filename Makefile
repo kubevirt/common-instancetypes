@@ -7,7 +7,7 @@ export KUBEVIRT_VERSION = main
 # Use the COMMON_INSTANCETYPES_CRI env variable to control if the following targets are executed within a container.
 # Supported runtimes are docker and podman. By default targets run directly on the host.
 export COMMON_INSTANCETYPES_IMAGE = quay.io/kubevirtci/common-instancetypes-builder
-export COMMON_INSTANCETYPES_IMAGE_TAG = v20231115-ab8759b
+export COMMON_INSTANCETYPES_IMAGE_TAG = v20231124-0bd5b70
 
 # Packages of golang tools vendored in ./tools
 # Version to install is defined in ./tools/go.mod
