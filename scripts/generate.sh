@@ -33,3 +33,6 @@ for bundle in common-*-bundle.yaml; do
     yq -i '.metadata.labels.["instancetype.kubevirt.io/common-instancetypes-version"]=env(COMMON_INSTANCETYPES_VERSION)' "${bundle}"
     sha256sum "${bundle}" >> CHECKSUMS.sha256
 done
+
+# Test, do not merge
+cp -r common-*-bundle.yaml /logs/artifacts
