@@ -8,15 +8,28 @@ if ! command -v yq &> /dev/null; then
 fi
 
 sed -i '/\#\# Resources/Q' README.md
-resources=$(yq '.kind, .metadata.name' _build/common-instancetypes-all-bundle.yaml)
+instancetypes=$(\
+  yq ea '[.]'  _build/common-instancetypes-bundle.yaml | \
+  yq '.[] | [.metadata.name, .spec.cpu.guest, .spec.memory.guest] | join("  |  ")'
+)
+preferences=$(\
+  yq ea '[.]'  _build/common-preferences-bundle.yaml | \
+  yq '.[] | [.metadata.name, .metadata.annotations."openshift.io/display-name"] | join(" | ")'
+)
 cat <<EOF >> README.md
 ## Resources
 
-The following instance type and preference resources are provided by this project:
+The following instancetype resources (cluster-wide and namespaced) are
+provided by this project:
 
-\`\`\`
+Name | vCPUs | Memory
+-----|-------|-------
+$instancetypes
 
-$resources
+The following preference resources (cluster-wide and namespaced) are
+provided by this project:
 
-\`\`\`
+Name | Guest OS
+-----|---------
+$preferences
 EOF
