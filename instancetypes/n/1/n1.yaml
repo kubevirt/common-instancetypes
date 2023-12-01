@@ -19,7 +19,6 @@ metadata:
     instancetype.kubevirt.io/vendor: "kubevirt.io"
     instancetype.kubevirt.io/dedicatedCPUPlacement: "true"
     instancetype.kubevirt.io/isolateEmulatorThread: "true"
-    instancetype.kubevirt.io/numa: "true"
     instancetype.kubevirt.io/hugepages: "true"
 spec:
   annotations:
