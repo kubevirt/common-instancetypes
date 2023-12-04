@@ -1,4 +1,4 @@
-module tools
+module github.com/kubevirt/common-instancetypes/tools
 
 go 1.20
 
