@@ -59,7 +59,7 @@ cluster-down:
 	scripts/kubevirtci.sh down
 
 .PHONY: cluster-sync
-cluster-sync:
+cluster-sync: kustomize
 	scripts/kubevirtci.sh sync
 
 .PHONY: cluster-functest
@@ -75,7 +75,7 @@ kubevirt-down:
 	scripts/kubevirt.sh down
 
 .PHONY: kubevirt-sync
-kubevirt-sync:
+kubevirt-sync: kustomize
 	scripts/kubevirt.sh sync
 
 .PHONY: kubevirt-functest
