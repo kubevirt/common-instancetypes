@@ -16,7 +16,7 @@ KUBECONFORM_PACKAGE ?= github.com/yannh/kubeconform/cmd/kubeconform
 YQ_PACKAGE ?= github.com/mikefarah/yq/v4
 
 .PHONY: all
-all: lint validate readme check
+all: lint validate readme test
 
 .PHONY: build_image
 build_image:
@@ -46,10 +46,6 @@ schema:
 readme: generate
 	scripts/readme.sh
 
-.PHONY: check
-check:
-	scripts/check.sh
-
 .PHONY: cluster-up
 cluster-up:
 	scripts/kubevirtci.sh up
@@ -64,7 +60,7 @@ cluster-sync: kustomize
 
 .PHONY: cluster-functest
 cluster-functest:
-	scripts/kubevirtci.sh functest
+	cd tests && KUBECONFIG=$$(../scripts/kubevirtci.sh kubeconfig) go test -v -timeout 0 ./functests/...
 
 .PHONY: kubevirt-up
 kubevirt-up:
@@ -80,7 +76,11 @@ kubevirt-sync: kustomize
 
 .PHONY: kubevirt-functest
 kubevirt-functest:
-	scripts/kubevirt.sh functest
+	cd tests && KUBECONFIG=$$(../scripts/kubevirt.sh kubeconfig) go test -v -timeout 0 ./functests/...
+
+.PHONY: test
+test: generate
+	cd tests && go test -v -timeout 0 ./unittests/...
 
 .PHONY: clean
 clean:
