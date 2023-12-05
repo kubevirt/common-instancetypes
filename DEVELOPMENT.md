@@ -39,6 +39,7 @@ The following targets are provided by the `Makefile`
 * `make test-fmt`: Run go fmt against test source files.
 * `make test-vet`: Run go vet against test source files.
 * `make test-lint`: Run golangci-lint against test source files.
+* `make check-tree-clean`: Check for uncommitted changes in generated files.
 * `make cluster-functest`: Run functests against latest stable KubeVirt.
 * `make kubevirt-functest`: Run functests against latest `main` KubeVirt.
 * `make readme`: Regenerate the list of provided resources at the end of `README.md`.

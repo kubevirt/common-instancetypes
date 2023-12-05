@@ -49,6 +49,10 @@ schema:
 readme: generate
 	scripts/readme.sh
 
+.PHONY: check-tree-clean
+check-tree-clean: readme test-fmt
+	scripts/check-tree-clean.sh
+
 .PHONY: cluster-up
 cluster-up:
 	scripts/kubevirtci.sh up
