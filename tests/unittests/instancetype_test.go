@@ -51,8 +51,8 @@ var _ = Describe("Common instance types unit tests", func() {
 
 	BeforeEach(func() {
 		// Restore resources to make sure we have unchanged data
-		copy(testsClusterPreferences, virtualMachineClusterPreferences)
-		copy(testsClusterInstanceType, virtualMachineClusterInstanceTypes)
+		copy(testsClusterPreferences, loadedVirtualMachineClusterPreferences)
+		copy(testsClusterInstanceType, loadedVirtualMachineClusterInstanceTypes)
 	})
 
 	Context("VirtualMachineClusterPreference", func() {
@@ -103,7 +103,7 @@ func checkCPU(labelValue, labelName string, instanceType instancetypev1beta1.Vir
 		return err
 	}
 
-	if instanceType.Spec.CPU.Guest != uint32(expectedCPU) {
+	if uint64(instanceType.Spec.CPU.Guest) != expectedCPU {
 		return fmt.Errorf(instanceTypeErrorMessage, labelName, instanceType.Name)
 	}
 
@@ -168,7 +168,8 @@ func checkDedicatedCPUPlacement(labelValue, labelName string, instanceType insta
 		return err
 	}
 
-	if (instanceType.Spec.CPU.DedicatedCPUPlacement == nil && boolValue) || (instanceType.Spec.CPU.DedicatedCPUPlacement != nil && !boolValue) {
+	if (instanceType.Spec.CPU.DedicatedCPUPlacement == nil && boolValue) ||
+		(instanceType.Spec.CPU.DedicatedCPUPlacement != nil && !boolValue) {
 		return fmt.Errorf(instanceTypeErrorMessage, labelName, instanceType.Name)
 	}
 
@@ -181,7 +182,8 @@ func checkIsolateEmulatorThread(labelValue, labelName string, instanceType insta
 		return err
 	}
 
-	if (instanceType.Spec.CPU.IsolateEmulatorThread == nil && boolValue) || (instanceType.Spec.CPU.IsolateEmulatorThread != nil && !boolValue) {
+	if (instanceType.Spec.CPU.IsolateEmulatorThread == nil && boolValue) ||
+		(instanceType.Spec.CPU.IsolateEmulatorThread != nil && !boolValue) {
 		return fmt.Errorf(instanceTypeErrorMessage, labelName, instanceType.Name)
 	}
 

@@ -11,7 +11,7 @@ import (
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/rand"
-	"k8s.io/utils/pointer"
+	"k8s.io/utils/ptr"
 	v1 "kubevirt.io/api/core/v1"
 	instancetypev1beta1 "kubevirt.io/api/instancetype/v1beta1"
 )
@@ -66,10 +66,10 @@ var _ = Describe("Common instance types func tests", func() {
 					Name: preference.Name,
 				}
 
-				vm, err := virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm)
+				vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm)
 				Expect(err).ToNot(HaveOccurred())
 				Eventually(func(g Gomega) {
-					vm, err := virtClient.VirtualMachine(testNamespace).Get(context.Background(), vm.Name, &metav1.GetOptions{})
+					vm, err = virtClient.VirtualMachine(testNamespace).Get(context.Background(), vm.Name, &metav1.GetOptions{})
 					g.Expect(err).ToNot(HaveOccurred())
 					g.Expect(vm.Status.Ready).To(BeTrue())
 				}, vmReadyTimeout, time.Second).Should(Succeed())
@@ -81,7 +81,7 @@ var _ = Describe("Common instance types func tests", func() {
 	})
 })
 
-func randomVMWithInstancetype(InstancetypeMatcher *v1.InstancetypeMatcher) *v1.VirtualMachine {
+func randomVMWithInstancetype(instancetypeMatcher *v1.InstancetypeMatcher) *v1.VirtualMachine {
 	name := "test-vm-" + rand.String(5)
 
 	return &v1.VirtualMachine{
@@ -90,8 +90,8 @@ func randomVMWithInstancetype(InstancetypeMatcher *v1.InstancetypeMatcher) *v1.V
 			Namespace: testNamespace,
 		},
 		Spec: v1.VirtualMachineSpec{
-			Running:      pointer.Bool(true),
-			Instancetype: InstancetypeMatcher,
+			Running:      ptr.To(true),
+			Instancetype: instancetypeMatcher,
 			Template: &v1.VirtualMachineInstanceTemplateSpec{
 				ObjectMeta: metav1.ObjectMeta{
 					Labels:    map[string]string{"name": name},
