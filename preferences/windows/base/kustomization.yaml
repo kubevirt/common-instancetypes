@@ -12,6 +12,8 @@ components:
   - ../../components/diskbus-sata
   - ../../components/interfacemodel-e1000e
   - ../../components/tablet-usb
+  # Setting termination grace period of 1 hour (3600 secs), because Windows
+  # can take longer to shut down or reboot when updates or other changes are applied.
   - ../../components/termination-grace-period
 
 patches:
