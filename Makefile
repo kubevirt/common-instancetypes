@@ -15,8 +15,11 @@ KUSTOMIZE_PACKAGE ?= sigs.k8s.io/kustomize/kustomize/v5
 KUBECONFORM_PACKAGE ?= github.com/yannh/kubeconform/cmd/kubeconform
 YQ_PACKAGE ?= github.com/mikefarah/yq/v4
 
+# Version of golangci-lint to install
+GOLANGCI_LINT_VERSION ?= v1.55.2
+
 .PHONY: all
-all: lint validate readme test
+all: lint validate readme test-lint test
 
 .PHONY: build_image
 build_image:
@@ -82,6 +85,18 @@ kubevirt-functest:
 test: generate
 	cd tests && go test -v -timeout 0 ./unittests/...
 
+.PHONY: test-fmt
+test-fmt:
+	cd tests && go fmt ./...
+
+.PHONY: test-vet
+test-vet:
+	cd tests && go vet ./...
+
+.PHONY: test-lint
+test-lint: golangci-lint test-vet
+	cd tests && golangci-lint run --timeout 5m
+
 .PHONY: clean
 clean:
 	rm -rf _bin _build _cluster-up _kubevirt _schemas
@@ -106,3 +121,8 @@ YQ ?= $(LOCALBIN)/yq
 yq: $(YQ)
 $(YQ): $(LOCALBIN)
 	cd tools && GOBIN=$(LOCALBIN) go install $(YQ_PACKAGE)
+
+GOLANGCI_LINT ?= $(LOCALBIN)/golangci-lint
+golangci-lint: $(GOLANGCI_LINT)
+$(GOLANGCI_LINT): $(LOCALBIN)
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(LOCALBIN) $(GOLANGCI_LINT_VERSION)
