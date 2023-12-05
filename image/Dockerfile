@@ -11,7 +11,7 @@
 
 FROM quay.io/fedora/fedora-minimal:39
 
-RUN microdnf install -y make golang python3-pip ShellCheck && microdnf clean all -y
+RUN microdnf install -y make tar golang python3-pip ShellCheck && microdnf clean all -y
 
 # yamllint openapi2jsonschema
 RUN pip install yamllint && \
