@@ -19,14 +19,12 @@ const (
 )
 
 var (
-	virtualMachineClusterInstanceTypes []instancetypev1beta1.VirtualMachineClusterInstancetype
-	virtualMachineClusterPreferences   []instancetypev1beta1.VirtualMachineClusterPreference
+	loadedVirtualMachineClusterInstanceTypes []instancetypev1beta1.VirtualMachineClusterInstancetype
+	loadedVirtualMachineClusterPreferences   []instancetypev1beta1.VirtualMachineClusterPreference
 )
 
 // The following functions are taken from SSP operator
-// https://github.com/kubevirt/ssp-operator/blob/c3de0957e0446f4b5ab23947d124b9ac9107d0a3/internal/operands/common-instancetypes/reconcile.go#L83
-// https://github.com/kubevirt/ssp-operator/blob/c3de0957e0446f4b5ab23947d124b9ac9107d0a3/internal/operands/common-instancetypes/reconcile.go#L99
-// https://github.com/kubevirt/ssp-operator/blob/c3de0957e0446f4b5ab23947d124b9ac9107d0a3/internal/operands/common-instancetypes/reconcile.go#L107
+// https://github.com/kubevirt/ssp-operator/blob/main/internal/operands/common-instancetypes/reconcile.go
 type clusterType interface {
 	instancetypev1beta1.VirtualMachineClusterInstancetype | instancetypev1beta1.VirtualMachineClusterPreference
 }
@@ -55,12 +53,15 @@ func FetchBundleResource[C clusterType](path string) ([]C, error) {
 	return decodeResources[C](file)
 }
 
-func fetchResourcesFromBundle() ([]instancetypev1beta1.VirtualMachineClusterInstancetype, []instancetypev1beta1.VirtualMachineClusterPreference, error) {
-	virtualMachineClusterInstancetypes, err := FetchBundleResource[instancetypev1beta1.VirtualMachineClusterInstancetype](clusterInstanceTypesBundlePath)
+func fetchResourcesFromBundle() ([]instancetypev1beta1.VirtualMachineClusterInstancetype,
+	[]instancetypev1beta1.VirtualMachineClusterPreference, error) {
+	virtualMachineClusterInstancetypes, err :=
+		FetchBundleResource[instancetypev1beta1.VirtualMachineClusterInstancetype](clusterInstanceTypesBundlePath)
 	if err != nil {
 		return nil, nil, err
 	}
-	virtualMachineClusterPreferences, err := FetchBundleResource[instancetypev1beta1.VirtualMachineClusterPreference](clusterPreferencesBundlePath)
+	virtualMachineClusterPreferences, err :=
+		FetchBundleResource[instancetypev1beta1.VirtualMachineClusterPreference](clusterPreferencesBundlePath)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -71,7 +72,7 @@ func fetchResourcesFromBundle() ([]instancetypev1beta1.VirtualMachineClusterInst
 
 func loadBundles() {
 	var err error
-	virtualMachineClusterInstanceTypes, virtualMachineClusterPreferences, err = fetchResourcesFromBundle()
+	loadedVirtualMachineClusterInstanceTypes, loadedVirtualMachineClusterPreferences, err = fetchResourcesFromBundle()
 	// It is expected that make export is run first
 	Expect(err).ToNot(HaveOccurred())
 }
@@ -79,8 +80,8 @@ func loadBundles() {
 var _ = BeforeSuite(func() {
 	loadBundles()
 
-	Expect(len(virtualMachineClusterInstanceTypes)).ToNot(BeZero())
-	Expect(len(virtualMachineClusterPreferences)).ToNot(BeZero())
+	Expect(len(loadedVirtualMachineClusterInstanceTypes)).ToNot(BeZero())
+	Expect(len(loadedVirtualMachineClusterPreferences)).ToNot(BeZero())
 })
 
 func TestFunctional(t *testing.T) {

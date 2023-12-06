@@ -22,8 +22,10 @@ The following tools are required by each `Makefile` target:
   * `make validate`
     * [kustomize](https://kustomize.io/)
     * [kubeconform](https://github.com/yannh/kubeconform)
+  * `make test-lint`
+    * [golangci-lint](https://golangci-lint.run/)
 
-By default `make` runs the `lint`, `validate`, `readme` and `test` targets and their dependencies.
+By default `make` runs the `lint`, `validate`, `readme`, `test-lint` and `test` targets and their dependencies.
 
 ## Provided Makefile targets
 
@@ -34,6 +36,10 @@ The following targets are provided by the `Makefile`
 * `make validate`: Validate generated files against the OpenAPI schema of KubeVirt.
 * `make schema`: Grab and convert the KubeVirt OpenAPI schema to a JSON schema to be used by `validate`.
 * `make test`: Run unit tests against source files.
+* `make test-fmt`: Run go fmt against test source files.
+* `make test-vet`: Run go vet against test source files.
+* `make test-lint`: Run golangci-lint against test source files.
+* `make check-tree-clean`: Check for uncommitted changes in generated files.
 * `make cluster-functest`: Run functests against latest stable KubeVirt.
 * `make kubevirt-functest`: Run functests against latest `main` KubeVirt.
 * `make readme`: Regenerate the list of provided resources at the end of `README.md`.
@@ -43,6 +49,7 @@ The following targets are provided by the `Makefile`
 * `make kustomize`: Install vendored `kustomize` from `./tools` into `./_bin`.
 * `make kubeconform`: Install vendored `kubeconform` from `./tools` into `./_bin`.
 * `make yq`: Install vendored `yq` from `./tools` into `./_bin`.
+* `make golangci-lint`: Install `golangci-lint` version specified in `Makefile` into `./_bin`.
 
 ## Running Makefile targets within a container
 
