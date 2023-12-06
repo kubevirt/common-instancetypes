@@ -23,18 +23,17 @@ var _ = Describe("Common instance types func tests", func() {
 	Context("VirtualMachine using a preference with resource requirements", func() {
 		It("is rejected if it does not provide enough resources", func() {
 			createInstancetype(2, "tiny-instancetype", "64M")
-			intanceTypeMatcher := v1.InstancetypeMatcher{
+			instanceTypeMatcher := v1.InstancetypeMatcher{
 				Name: "tiny-instancetype",
 				Kind: "VirtualMachineInstancetype",
 			}
-			vm := randomVMWithInstancetype(&intanceTypeMatcher)
 
 			clusterPreferences, err := virtClient.VirtualMachineClusterPreference().List(context.Background(), metav1.ListOptions{})
 			Expect(err).ToNot(HaveOccurred())
 			Expect(clusterPreferences.Items).ToNot(BeEmpty())
 
 			for _, preference := range clusterPreferences.Items {
-				vm.Name = fmt.Sprintf("test-vm-%s", preference.Name)
+				vm := randomVMWithInstancetype(&instanceTypeMatcher)
 				vm.Spec.Preference = &v1.PreferenceMatcher{
 					Name: preference.Name,
 				}
@@ -51,17 +50,16 @@ var _ = Describe("Common instance types func tests", func() {
 		})
 
 		It("can be created when enough resources are provided", func() {
-			intanceTypeMatcher := v1.InstancetypeMatcher{
+			instanceTypeMatcher := v1.InstancetypeMatcher{
 				Name: "u1.large",
 			}
-			vm := randomVMWithInstancetype(&intanceTypeMatcher)
 
 			clusterPreferences, err := virtClient.VirtualMachineClusterPreference().List(context.Background(), metav1.ListOptions{})
 			Expect(err).ToNot(HaveOccurred())
 			Expect(clusterPreferences.Items).ToNot(BeEmpty())
 
 			for _, preference := range clusterPreferences.Items {
-				vm.Name = fmt.Sprintf("test-vm-%s", preference.Name)
+				vm := randomVMWithInstancetype(&instanceTypeMatcher)
 				vm.Spec.Preference = &v1.PreferenceMatcher{
 					Name: preference.Name,
 				}
@@ -83,7 +81,6 @@ var _ = Describe("Common instance types func tests", func() {
 
 func randomVMWithInstancetype(instancetypeMatcher *v1.InstancetypeMatcher) *v1.VirtualMachine {
 	name := "test-vm-" + rand.String(5)
-
 	return &v1.VirtualMachine{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      name,
