@@ -84,7 +84,7 @@ var _ = BeforeSuite(func() {
 	Expect(len(loadedVirtualMachineClusterPreferences)).ToNot(BeZero())
 })
 
-func TestFunctional(t *testing.T) {
+func TestUnit(t *testing.T) {
 	RegisterFailHandler(Fail)
 	RunSpecs(t, "Unit test suite")
 }
