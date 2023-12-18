@@ -6,7 +6,9 @@ import (
 	"testing"
 
 	. "github.com/onsi/ginkgo/v2"
+	ginkgo_reporters "github.com/onsi/ginkgo/v2/reporters"
 	. "github.com/onsi/gomega"
+	qe_reporters "kubevirt.io/qe-tools/pkg/ginkgo-reporters"
 
 	core "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
@@ -20,7 +22,8 @@ const (
 )
 
 var (
-	virtClient kubecli.KubevirtClient
+	virtClient          kubecli.KubevirtClient
+	afterSuiteReporters []Reporter
 )
 
 func checkDeployedResources() {
@@ -60,7 +63,20 @@ var _ = AfterSuite(func() {
 	}
 })
 
+var _ = ReportAfterSuite("TestFunctional", func(report Report) {
+	for _, reporter := range afterSuiteReporters {
+		ginkgo_reporters.ReportViaDeprecatedReporter(reporter, report) //nolint:staticcheck
+	}
+})
+
 func TestFunctional(t *testing.T) {
+	if qe_reporters.JunitOutput != "" {
+		afterSuiteReporters = append(afterSuiteReporters, ginkgo_reporters.NewJUnitReporter(qe_reporters.JunitOutput))
+	}
+	if qe_reporters.Polarion.Run {
+		afterSuiteReporters = append(afterSuiteReporters, &qe_reporters.Polarion)
+	}
+
 	RegisterFailHandler(Fail)
 	RunSpecs(t, "Functional test suite")
 }
