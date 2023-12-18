@@ -12,6 +12,7 @@ require (
 	k8s.io/utils v0.0.0-20231127182322-b307cd553661
 	kubevirt.io/api v1.1.0
 	kubevirt.io/client-go v1.1.0
+	kubevirt.io/qe-tools v0.1.8
 )
 
 require (
