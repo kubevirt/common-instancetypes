@@ -67,7 +67,7 @@ cluster-sync: kustomize
 
 .PHONY: cluster-functest
 cluster-functest:
-	cd tests && KUBECONFIG=$$(../scripts/kubevirtci.sh kubeconfig) go test -v -timeout 0 ./functests/... $(FUNCTEST_EXTRA_ARGS)
+	cd tests && KUBECONFIG=$$(../scripts/kubevirtci.sh kubeconfig) go test -v -timeout 0 ./functests/... -ginkgo.v -ginkgo.randomize-all $(FUNCTEST_EXTRA_ARGS)
 
 .PHONY: kubevirt-up
 kubevirt-up:
@@ -83,7 +83,7 @@ kubevirt-sync: kustomize
 
 .PHONY: kubevirt-functest
 kubevirt-functest:
-	cd tests && KUBECONFIG=$$(../scripts/kubevirt.sh kubeconfig) go test -v -timeout 0 ./functests/... $(FUNCTEST_EXTRA_ARGS)
+	cd tests && KUBECONFIG=$$(../scripts/kubevirt.sh kubeconfig) go test -v -timeout 0 ./functests/... -ginkgo.v -ginkgo.randomize-all $(FUNCTEST_EXTRA_ARGS)
 
 .PHONY: test
 test: generate
