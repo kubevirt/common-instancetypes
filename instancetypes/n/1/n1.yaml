@@ -15,6 +15,7 @@ metadata:
     instancetype.kubevirt.io/displayName: "Network"
   labels:
     instancetype.kubevirt.io/class: "network"
+    instancetype.kubevirt.io/icon-pf: "pficon-network"
     instancetype.kubevirt.io/version: "1"
     instancetype.kubevirt.io/vendor: "kubevirt.io"
     instancetype.kubevirt.io/dedicatedCPUPlacement: "true"

@@ -11,6 +11,7 @@ metadata:
     instancetype.kubevirt.io/displayName: "Memory Intensive"
   labels:
     instancetype.kubevirt.io/class: "memory.intensive"
+    instancetype.kubevirt.io/icon-pf: "fa-memory"
     instancetype.kubevirt.io/version: "1"
     instancetype.kubevirt.io/vendor: "kubevirt.io"
     instancetype.kubevirt.io/hugepages: "true"

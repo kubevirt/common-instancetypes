@@ -17,6 +17,7 @@ metadata:
     instancetype.kubevirt.io/displayName: "GPU NVIDIA"
   labels:
     instancetype.kubevirt.io/class: "gpu.nvidia"
+    instancetype.kubevirt.io/icon-pf: "fa-microchip"
     instancetype.kubevirt.io/version: "1"
     instancetype.kubevirt.io/vendor: "kubevirt.io"
     instancetype.kubevirt.io/gpus: "true"
