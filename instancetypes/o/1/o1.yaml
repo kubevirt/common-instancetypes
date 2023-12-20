@@ -11,6 +11,7 @@ metadata:
     instancetype.kubevirt.io/displayName: "Overcommitted"
   labels:
     instancetype.kubevirt.io/class: "overcommitted"
+    instancetype.kubevirt.io/icon-pf: "pficon-virtual-machine"
     instancetype.kubevirt.io/version: "1"
     instancetype.kubevirt.io/vendor: "kubevirt.io"
 spec:

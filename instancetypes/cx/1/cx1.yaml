@@ -18,6 +18,7 @@ metadata:
     instancetype.kubevirt.io/displayName: "Compute Exclusive"
   labels:
     instancetype.kubevirt.io/class: "compute.exclusive"
+    instancetype.kubevirt.io/icon-pf: "pficon-registry"
     instancetype.kubevirt.io/version: "1"
     instancetype.kubevirt.io/vendor: "kubevirt.io"
     instancetype.kubevirt.io/dedicatedCPUPlacement: "true"

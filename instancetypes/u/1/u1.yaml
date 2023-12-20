@@ -15,5 +15,6 @@ metadata:
     instancetype.kubevirt.io/displayName: "General Purpose"
   labels:
     instancetype.kubevirt.io/class: "general.purpose"
+    instancetype.kubevirt.io/icon-pf: "pficon-server-group"
     instancetype.kubevirt.io/version: "1"
     instancetype.kubevirt.io/vendor: "kubevirt.io"
