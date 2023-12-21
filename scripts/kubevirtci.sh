@@ -66,17 +66,23 @@ function kubevirtci::down() {
   make cluster-down -C "${_cluster_up_dir}"
 }
 
-function kubevirtci::registry() {
-  port=$(${_kubevirtcicli} ports registry 2>/dev/null)
-  echo "localhost:${port}"
-}
-
 function kubevirtci::sync() {
   KUBECTL=${_kubectl} "${_base_dir}/scripts/sync.sh"
 }
 
+function kubevirtci::sync-containerdisks() {
+  podman push --tls-verify=false \
+    "${VALIDATION_OS_IMAGE}:${VALIDATION_OS_IMAGE_TAG}" \
+    "$(kubevirtci::registry)/validation-os-container-disk:latest"
+}
+
 function kubevirtci::kubeconfig() {
   "${_cluster_up_dir}/cluster-up/kubeconfig.sh"
+}
+
+function kubevirtci::registry() {
+  port=$(${_kubevirtcicli} ports registry 2>/dev/null)
+  echo "localhost:${port}"
 }
 
 function kubevirtci::functest() {
@@ -95,8 +101,8 @@ case ${_action} in
   "sync")
     kubevirtci::sync
     ;;
-  "ssh")
-    ${_kubessh} "$@"
+  "sync-containerdisks")
+    kubevirtci::sync-containerdisks
     ;;
   "kubeconfig")
     kubevirtci::kubeconfig
@@ -104,11 +110,14 @@ case ${_action} in
   "registry")
     kubevirtci::registry
     ;;
-  "kubectl")
-    ${_kubectl} "$@"
-    ;;
   "functest")
     kubevirtci::functest
+    ;;
+  "ssh")
+    ${_kubessh} "$@"
+    ;;
+  "kubectl")
+    ${_kubectl} "$@"
     ;;
   *)
     echo "No command provided, known commands are 'up', 'down', 'sync', 'ssh', 'kubeconfig', 'registry', 'kubectl', 'functest'"
