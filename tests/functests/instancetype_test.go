@@ -23,15 +23,6 @@ import (
 const (
 	vmReadyTimeout = 300 * time.Second
 	sshPort        = 22
-
-	fedoraContainerDisk        = "quay.io/containerdisks/fedora:latest"
-	centos7ContainerDisk       = "quay.io/containerdisks/centos:7-2009"
-	centosStream8ContainerDisk = "quay.io/containerdisks/centos-stream:8"
-	centosStream9ContainerDisk = "quay.io/containerdisks/centos-stream:9"
-	ubuntu1804ContainerDisk    = "quay.io/containerdisks/ubuntu:18.04"
-	ubuntu2004ContainerDisk    = "quay.io/containerdisks/ubuntu:20.04"
-	ubuntu2204ContainerDisk    = "quay.io/containerdisks/ubuntu:22.04"
-	validationOsContainerDisk  = "registry:5000/validation-os-container-disk:latest"
 )
 
 var _ = Describe("Common instance types func tests", func() {
