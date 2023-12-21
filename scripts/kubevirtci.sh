@@ -71,6 +71,7 @@ function kubevirtci::sync() {
 }
 
 function kubevirtci::sync-containerdisks() {
+  podman pull "${VALIDATION_OS_IMAGE}:${VALIDATION_OS_IMAGE_TAG}"
   podman push --tls-verify=false \
     "${VALIDATION_OS_IMAGE}:${VALIDATION_OS_IMAGE_TAG}" \
     "$(kubevirtci::registry)/validation-os-container-disk:latest"
