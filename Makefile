@@ -9,6 +9,10 @@ export KUBEVIRT_VERSION = main
 export COMMON_INSTANCETYPES_IMAGE = quay.io/kubevirtci/common-instancetypes-builder
 export COMMON_INSTANCETYPES_IMAGE_TAG = v20231205-3b7ed7e
 
+# Containerdisk image and tag to use for Validation OS functional tests
+export VALIDATION_OS_IMAGE = quay.io/kubevirtci/validation-os-container-disk
+export VALIDATION_OS_IMAGE_TAG = 22621.1702.230501-1115
+
 # Packages of golang tools vendored in ./tools
 # Version to install is defined in ./tools/go.mod
 KUSTOMIZE_PACKAGE ?= sigs.k8s.io/kustomize/kustomize/v5
@@ -65,6 +69,10 @@ cluster-down:
 cluster-sync: kustomize
 	scripts/kubevirtci.sh sync
 
+.PHONY: cluster-sync-containerdisks
+cluster-sync-containerdisks:
+	scripts/kubevirtci.sh sync-containerdisks
+
 .PHONY: cluster-functest
 cluster-functest:
 	cd tests && KUBECONFIG=$$(../scripts/kubevirtci.sh kubeconfig) go test -v -timeout 0 ./functests/... -ginkgo.v -ginkgo.randomize-all $(FUNCTEST_EXTRA_ARGS)
@@ -80,6 +88,10 @@ kubevirt-down:
 .PHONY: kubevirt-sync
 kubevirt-sync: kustomize
 	scripts/kubevirt.sh sync
+
+.PHONY: kubevirt-sync-containerdisks
+kubevirt-sync-containerdisks:
+	scripts/kubevirt.sh sync-containerdisks
 
 .PHONY: kubevirt-functest
 kubevirt-functest:

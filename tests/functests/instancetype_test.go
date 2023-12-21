@@ -23,14 +23,6 @@ import (
 const (
 	vmReadyTimeout = 300 * time.Second
 	sshPort        = 22
-
-	fedoraContainerDisk        = "quay.io/containerdisks/fedora:latest"
-	centos7ContainerDisk       = "quay.io/containerdisks/centos:7-2009"
-	centosStream8ContainerDisk = "quay.io/containerdisks/centos-stream:8"
-	centosStream9ContainerDisk = "quay.io/containerdisks/centos-stream:9"
-	ubuntu1804ContainerDisk    = "quay.io/containerdisks/ubuntu:18.04"
-	ubuntu2004ContainerDisk    = "quay.io/containerdisks/ubuntu:20.04"
-	ubuntu2204ContainerDisk    = "quay.io/containerdisks/ubuntu:22.04"
 )
 
 var _ = Describe("Common instance types func tests", func() {
@@ -104,6 +96,17 @@ var _ = Describe("Common instance types func tests", func() {
 			Entry("Ubuntu 18.04", ubuntu1804ContainerDisk, "ubuntu", "ubuntu", false),
 			Entry("Ubuntu 20.04", ubuntu2004ContainerDisk, "ubuntu", "ubuntu", false),
 			Entry("Ubuntu 22.04", ubuntu2204ContainerDisk, "ubuntu", "ubuntu", false),
+		)
+
+		DescribeTable("a Windows guest with", func(containerDisk, preference, username, password string) {
+			vm = randomVM(&v1.InstancetypeMatcher{Name: "u1.large"}, &v1.PreferenceMatcher{Name: preference}, true)
+			addContainerDisk(vm, containerDisk)
+			vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm)
+			Expect(err).ToNot(HaveOccurred())
+			expectVMToBeReady(virtClient, vm.Name)
+			expectSSHToRunCommandWithPassword(virtClient, vm.Name, username, password)
+		},
+			Entry("Validation OS", validationOsContainerDisk, "windows.11", "Administrator", "Administrator"),
 		)
 	})
 })
@@ -222,6 +225,10 @@ func expectSSHToRunCommandWithPrivKey(virtClient kubecli.KubevirtClient, vmName,
 	signer, err := ssh.NewSignerFromKey(privKey)
 	Expect(err).ToNot(HaveOccurred())
 	expectSSHToRunCommand(virtClient, vmName, username, ssh.PublicKeys(signer))
+}
+
+func expectSSHToRunCommandWithPassword(virtClient kubecli.KubevirtClient, vmName, username, password string) {
+	expectSSHToRunCommand(virtClient, vmName, username, ssh.Password(password))
 }
 
 func expectSSHToRunCommand(virtClient kubecli.KubevirtClient, vmName, username string, authMethod ssh.AuthMethod) {

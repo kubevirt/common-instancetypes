@@ -2,6 +2,7 @@ package tests
 
 import (
 	"context"
+	"flag"
 	"os"
 	"testing"
 
@@ -20,16 +21,51 @@ import (
 
 const (
 	testNamespace = "common-instancetype-functest"
+
+	defaultFedoraContainerDisk        = "quay.io/containerdisks/fedora:latest"
+	defaultCentos7ContainerDisk       = "quay.io/containerdisks/centos:7-2009"
+	defaultCentosStream8ContainerDisk = "quay.io/containerdisks/centos-stream:8"
+	defaultCentosStream9ContainerDisk = "quay.io/containerdisks/centos-stream:9"
+	defaultUbuntu1804ContainerDisk    = "quay.io/containerdisks/ubuntu:18.04"
+	defaultUbuntu2004ContainerDisk    = "quay.io/containerdisks/ubuntu:20.04"
+	defaultUbuntu2204ContainerDisk    = "quay.io/containerdisks/ubuntu:22.04"
+	defaultValidationOsContainerDisk  = "registry:5000/validation-os-container-disk:latest"
 )
 
 var (
-	virtClient          kubecli.KubevirtClient
 	afterSuiteReporters []Reporter
+	virtClient          kubecli.KubevirtClient
+
+	fedoraContainerDisk        string
+	centos7ContainerDisk       string
+	centosStream8ContainerDisk string
+	centosStream9ContainerDisk string
+	ubuntu1804ContainerDisk    string
+	ubuntu2004ContainerDisk    string
+	ubuntu2204ContainerDisk    string
+	validationOsContainerDisk  string
 )
 
 //nolint:gochecknoinits
 func init() {
 	kubecli.Init()
+
+	flag.StringVar(&fedoraContainerDisk, "fedora-container-disk",
+		defaultFedoraContainerDisk, "Fedora container disk used by functional tests")
+	flag.StringVar(&centos7ContainerDisk, "centos-7-container-disk",
+		defaultCentos7ContainerDisk, "CentOS 7 container disk used by functional tests")
+	flag.StringVar(&centosStream8ContainerDisk, "centos-stream-8-container-disk",
+		defaultCentosStream8ContainerDisk, "CentOS Stream 8 container disk used by functional tests")
+	flag.StringVar(&centosStream9ContainerDisk, "centos-stream-9-container-disk",
+		defaultCentosStream9ContainerDisk, "CentOS Stream 9 container disk used by functional tests")
+	flag.StringVar(&ubuntu1804ContainerDisk, "ubuntu-1804-container-disk",
+		defaultUbuntu1804ContainerDisk, "Ubuntu 18.04 container disk used by functional tests")
+	flag.StringVar(&ubuntu2004ContainerDisk, "ubuntu-2004-container-disk",
+		defaultUbuntu2004ContainerDisk, "Ubuntu 20.04 container disk used by functional tests")
+	flag.StringVar(&ubuntu2204ContainerDisk, "ubuntu-2204-container-disk",
+		defaultUbuntu2204ContainerDisk, "Ubuntu 22.04 container disk used by functional tests")
+	flag.StringVar(&validationOsContainerDisk, "validation-os-container-disk",
+		defaultValidationOsContainerDisk, "Validation OS container disk used by functional tests")
 }
 
 func checkDeployedResources() {
