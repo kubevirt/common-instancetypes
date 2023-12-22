@@ -19,6 +19,7 @@ set -ex
 export KUBEVIRT_MEMORY_SIZE="${KUBEVIRT_MEMORY_SIZE:-16G}"
 export KUBEVIRTCI_TAG=${KUBEVIRTCI_TAG:-$(curl -sfL https://storage.googleapis.com/kubevirt-prow/release/kubevirt/kubevirtci/latest)}
 export KUBEVIRT_DEPLOY_CDI="true"
+export KUBEVIRT_VERSION=${KUBEVIRT_VERSION:-main)}
 
 _base_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 _cluster_up_dir="${_base_dir}/_cluster-up"
@@ -44,15 +45,19 @@ function kubevirtci::up() {
   echo "adding kubevirtci registry to cdi-insecure-registries"
   ${_kubectl} patch cdis/cdi --type merge -p '{"spec": {"config": {"insecureRegistries": ["registry:5000"]}}}'
 
+  # Treat main as stable version
+  if [ "$KUBEVIRT_VERSION" = "main" ]; then
+    KUBEVIRT_VERSION=$(curl -L https://storage.googleapis.com/kubevirt-prow/devel/release/kubevirt/kubevirt/stable.txt)
+  fi
+
   echo "installing kubevirt..."
-  LATEST=$(curl -L https://storage.googleapis.com/kubevirt-prow/devel/release/kubevirt/kubevirt/stable.txt)
-  ${_kubectl} apply -f "https://github.com/kubevirt/kubevirt/releases/download/${LATEST}/kubevirt-operator.yaml"
-  ${_kubectl} apply -f "https://github.com/kubevirt/kubevirt/releases/download/${LATEST}/kubevirt-cr.yaml"
+  ${_kubectl} apply -f "https://github.com/kubevirt/kubevirt/releases/download/${KUBEVIRT_VERSION}/kubevirt-operator.yaml"
+  ${_kubectl} apply -f "https://github.com/kubevirt/kubevirt/releases/download/${KUBEVIRT_VERSION}/kubevirt-cr.yaml"
 
   # This is needed because kubevirtci does not provide its own virtctl binary
   echo "installing virtctl..."
   mkdir -p "${_virtctl_dir}"
-  curl -L "https://github.com/kubevirt/kubevirt/releases/download/${LATEST}/virtctl-${LATEST}-linux-amd64" -o "${_virtctl_dir}/virtctl"
+  curl -L "https://github.com/kubevirt/kubevirt/releases/download/${KUBEVIRT_VERSION}/virtctl-${KUBEVIRT_VERSION}-linux-amd64" -o "${_virtctl_dir}/virtctl"
   chmod +x "${_virtctl_dir}/virtctl"
 
   echo "waiting for kubevirt to become ready, this can take a few minutes..."
