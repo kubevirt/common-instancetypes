@@ -39,7 +39,7 @@ var _ = Describe("Common instance types func tests", func() {
 		}
 	})
 
-	It("VirtualMachine using an instancetype can be created", func() {
+	It("[test_id:10735] VirtualMachine using an instancetype can be created", func() {
 		for _, instancetype := range getClusterInstancetypes(virtClient) {
 			vm = randomVM(&v1.InstancetypeMatcher{Name: instancetype.Name}, nil, false)
 			vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm)
@@ -48,7 +48,7 @@ var _ = Describe("Common instance types func tests", func() {
 	})
 
 	Context("VirtualMachine using a preference with resource requirements", func() {
-		It("is rejected if it does not provide enough resources", func() {
+		It("[test_id:10736] is rejected if it does not provide enough resources", func() {
 			createInstancetype(2, "tiny-instancetype", "64M")
 			instanceTypeMatcher := v1.InstancetypeMatcher{
 				Name: "tiny-instancetype",
@@ -67,7 +67,7 @@ var _ = Describe("Common instance types func tests", func() {
 			}
 		})
 
-		It("can be created when enough resources are provided", func() {
+		It("[test_id:10737] can be created when enough resources are provided", func() {
 			for _, preference := range getClusterPreferences(virtClient) {
 				vm = randomVM(&v1.InstancetypeMatcher{Name: "u1.large"}, &v1.PreferenceMatcher{Name: preference.Name}, false)
 				vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm)
@@ -89,13 +89,13 @@ var _ = Describe("Common instance types func tests", func() {
 			}
 			expectSSHToRunCommandWithPrivKey(virtClient, vm.Name, username, privKey)
 		},
-			Entry("Fedora", fedoraContainerDisk, "fedora", "fedora", true),
-			Entry("CentOS 7", centos7ContainerDisk, "centos.7", "centos", true),
-			Entry("CentOS Stream 8", centosStream8ContainerDisk, "centos.stream8", "centos", true),
-			Entry("CentOS Stream 9", centosStream9ContainerDisk, "centos.stream9", "cloud-user", true),
-			Entry("Ubuntu 18.04", ubuntu1804ContainerDisk, "ubuntu", "ubuntu", false),
-			Entry("Ubuntu 20.04", ubuntu2004ContainerDisk, "ubuntu", "ubuntu", false),
-			Entry("Ubuntu 22.04", ubuntu2204ContainerDisk, "ubuntu", "ubuntu", false),
+			Entry("[test_id:10738] Fedora", fedoraContainerDisk, "fedora", "fedora", true),
+			Entry("[test_id:10740] CentOS 7", centos7ContainerDisk, "centos.7", "centos", true),
+			Entry("[test_id:10744] CentOS Stream 8", centosStream8ContainerDisk, "centos.stream8", "centos", true),
+			Entry("[test_id:10745] CentOS Stream 9", centosStream9ContainerDisk, "centos.stream9", "cloud-user", true),
+			Entry("[test_id:10741] Ubuntu 18.04", ubuntu1804ContainerDisk, "ubuntu", "ubuntu", false),
+			Entry("[test_id:10742] Ubuntu 20.04", ubuntu2004ContainerDisk, "ubuntu", "ubuntu", false),
+			Entry("[test_id:10743] Ubuntu 22.04", ubuntu2204ContainerDisk, "ubuntu", "ubuntu", false),
 		)
 
 		DescribeTable("a Windows guest with", func(containerDisk, preference, username, password string) {
@@ -106,7 +106,7 @@ var _ = Describe("Common instance types func tests", func() {
 			expectVMToBeReady(virtClient, vm.Name)
 			expectSSHToRunCommandWithPassword(virtClient, vm.Name, username, password)
 		},
-			Entry("Validation OS", validationOsContainerDisk, "windows.11", "Administrator", "Administrator"),
+			Entry("[test_id:10739] Validation OS", validationOsContainerDisk, "windows.11", "Administrator", "Administrator"),
 		)
 	})
 })
