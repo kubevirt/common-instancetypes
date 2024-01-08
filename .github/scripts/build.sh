@@ -11,6 +11,8 @@ fi
 COMMON_INSTANCETYPES_VERSION=${COMMON_INSTANCETYPES_VERSION} make
 
 cd _build || exit 1
-for f in common-*-bundle.yaml; do
-    cp "${f}" "${f/\.yaml/-${COMMON_INSTANCETYPES_VERSION}\.yaml}"
+for file in common-*-bundle.yaml; do
+    file_versioned=${file/\.yaml/-${COMMON_INSTANCETYPES_VERSION}\.yaml}
+    mv "${file}" "${file_versioned}"
+    sed -i "s/${file}/${file_versioned}/g" CHECKSUMS.sha256
 done
