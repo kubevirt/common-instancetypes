@@ -26,8 +26,6 @@ spec:
     cpu-load-balancing.crio.io: "disable"
     cpu-quota.crio.io: "disable"
     irq-load-balancing.crio.io: "disable"
-  nodeSelector:
-    node-role.kubernetes.io/worker-dpdk: ""
   cpu:
     dedicatedCPUPlacement: true
     isolateEmulatorThread: true
