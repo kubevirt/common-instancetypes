@@ -8,5 +8,7 @@ resources:
 components:
   - ./metadata
   - ./requirements
+  - ../../components/tpm
+  - ../../components/secureboot
 
 nameSuffix: ".10"
