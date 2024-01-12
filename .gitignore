@@ -8,3 +8,4 @@ _kubevirt/
 _schemas/
 common-*-bundle.yaml
 CHECKSUMS.sha256
+*.qcow2
