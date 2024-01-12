@@ -25,6 +25,8 @@ const (
 	sshPort        = 22
 )
 
+type testFn func(kubecli.KubevirtClient, string)
+
 var _ = Describe("Common instance types func tests", func() {
 	var (
 		vm  *v1.VirtualMachine
@@ -77,36 +79,71 @@ var _ = Describe("Common instance types func tests", func() {
 	})
 
 	Context("VirtualMachine using a preference is able to boot", func() {
-		DescribeTable("a Linux guest with", func(containerDisk, preference, username string, guestAgent bool) {
+		var privKey ed25519.PrivateKey
+
+		expectSSHToRunCommandOnLinux := func(username string) testFn {
+			return func(virtClient kubecli.KubevirtClient, vmName string) {
+				var signer ssh.Signer
+				signer, err = ssh.NewSignerFromKey(privKey)
+				Expect(err).ToNot(HaveOccurred())
+				expectSSHToRunCommand(virtClient, vmName, username, ssh.PublicKeys(signer))
+			}
+		}
+
+		BeforeEach(func() {
+			_, privKey, err = ed25519.GenerateKey(nil)
+			Expect(err).ToNot(HaveOccurred())
+		})
+
+		DescribeTable("a Linux guest with", func(containerDisk, preference string, testFns []testFn) {
 			vm = randomVM(&v1.InstancetypeMatcher{Name: "u1.small"}, &v1.PreferenceMatcher{Name: preference}, true)
 			addContainerDisk(vm, containerDisk)
-			privKey := addCloudInitWithAuthorizedKey(vm)
+			addCloudInitWithAuthorizedKey(vm, privKey)
 			vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm)
 			Expect(err).ToNot(HaveOccurred())
 			expectVMToBeReady(virtClient, vm.Name)
-			if guestAgent {
-				expectGuestAgentToBeConnected(virtClient, vm.Name)
+			for _, testFn := range testFns {
+				testFn(virtClient, vm.Name)
 			}
-			expectSSHToRunCommandWithPrivKey(virtClient, vm.Name, username, privKey)
 		},
-			Entry("[test_id:10738] Fedora", fedoraContainerDisk, "fedora", "fedora", true),
-			Entry("[test_id:10740] CentOS 7", centos7ContainerDisk, "centos.7", "centos", true),
-			Entry("[test_id:10744] CentOS Stream 8", centosStream8ContainerDisk, "centos.stream8", "centos", true),
-			Entry("[test_id:10745] CentOS Stream 9", centosStream9ContainerDisk, "centos.stream9", "cloud-user", true),
-			Entry("[test_id:10741] Ubuntu 18.04", ubuntu1804ContainerDisk, "ubuntu", "ubuntu", false),
-			Entry("[test_id:10742] Ubuntu 20.04", ubuntu2004ContainerDisk, "ubuntu", "ubuntu", false),
-			Entry("[test_id:10743] Ubuntu 22.04", ubuntu2204ContainerDisk, "ubuntu", "ubuntu", false),
+			Entry("[test_id:10738] Fedora", fedoraContainerDisk, "fedora",
+				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("fedora")}),
+			Entry("[test_id:10740] CentOS 7", centos7ContainerDisk, "centos.7",
+				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("centos")}),
+			Entry("[test_id:10744] CentOS Stream 8", centosStream8ContainerDisk, "centos.stream8",
+				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("centos")}),
+			Entry("[test_id:10745] CentOS Stream 9", centosStream9ContainerDisk, "centos.stream9",
+				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("cloud-user")}),
+			Entry("[test_id:10741] Ubuntu 18.04", ubuntu1804ContainerDisk, "ubuntu",
+				[]testFn{expectSSHToRunCommandOnLinux("ubuntu")}),
+			Entry("[test_id:10742] Ubuntu 20.04", ubuntu2004ContainerDisk, "ubuntu",
+				[]testFn{expectSSHToRunCommandOnLinux("ubuntu")}),
+			Entry("[test_id:10743] Ubuntu 22.04", ubuntu2204ContainerDisk, "ubuntu",
+				[]testFn{expectSSHToRunCommandOnLinux("ubuntu")}),
 		)
 
-		DescribeTable("a Windows guest with", func(containerDisk, preference, username, password string) {
+		DescribeTable("a Windows guest with", func(containerDisk, preference string, testFns []testFn) {
 			vm = randomVM(&v1.InstancetypeMatcher{Name: "u1.large"}, &v1.PreferenceMatcher{Name: preference}, true)
 			addContainerDisk(vm, containerDisk)
 			vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm)
 			Expect(err).ToNot(HaveOccurred())
 			expectVMToBeReady(virtClient, vm.Name)
-			expectSSHToRunCommandWithPassword(virtClient, vm.Name, username, password)
+			for _, testFn := range testFns {
+				testFn(virtClient, vm.Name)
+			}
 		},
-			Entry("[test_id:10739] Validation OS", validationOsContainerDisk, "windows.11", "Administrator", "Administrator"),
+			Entry("[test_id:10739] Validation OS", validationOsContainerDisk, "windows.11",
+				[]testFn{expectSSHToRunCommandOnWindows}),
+			Entry("[test_id:????] Windows 10", windows10ContainerDisk, "windows.10",
+				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnWindows}),
+			Entry("[test_id:????] Windows 11", windows11ContainerDisk, "windows.11",
+				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnWindows}),
+			Entry("[test_id:????] Windows Server 2016", windows2k16ContainerDisk, "windows.2k16",
+				[]testFn{expectGuestAgentToBeConnected}),
+			Entry("[test_id:????] Windows Server 2019", windows2k19ContainerDisk, "windows.2k19",
+				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnWindows}),
+			Entry("[test_id:????] Windows Server 2022", windows2k22ContainerDisk, "windows.2k22",
+				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnWindows}),
 		)
 	})
 })
@@ -182,10 +219,7 @@ func addContainerDisk(vm *v1.VirtualMachine, image string) {
 	vm.Spec.Template.Spec.Volumes = append(vm.Spec.Template.Spec.Volumes, vol)
 }
 
-func addCloudInitWithAuthorizedKey(vm *v1.VirtualMachine) *ed25519.PrivateKey {
-	_, privKey, err := ed25519.GenerateKey(nil)
-	Expect(err).ToNot(HaveOccurred())
-
+func addCloudInitWithAuthorizedKey(vm *v1.VirtualMachine, privKey ed25519.PrivateKey) {
 	pubKey, err := ssh.NewPublicKey(privKey.Public())
 	Expect(err).ToNot(HaveOccurred())
 
@@ -202,33 +236,25 @@ func addCloudInitWithAuthorizedKey(vm *v1.VirtualMachine) *ed25519.PrivateKey {
 		},
 	}
 	vm.Spec.Template.Spec.Volumes = append(vm.Spec.Template.Spec.Volumes, vol)
-
-	return &privKey
 }
 
-func expectVMToBeReady(virtClient kubecli.KubevirtClient, name string) {
+func expectVMToBeReady(virtClient kubecli.KubevirtClient, vmName string) {
 	Eventually(func(g Gomega) {
-		vm, err := virtClient.VirtualMachine(testNamespace).Get(context.Background(), name, &metav1.GetOptions{})
+		vm, err := virtClient.VirtualMachine(testNamespace).Get(context.Background(), vmName, &metav1.GetOptions{})
 		g.Expect(err).ToNot(HaveOccurred())
 		g.Expect(vm.Status.Ready).To(BeTrue())
 	}, vmReadyTimeout, 10*time.Second).Should(Succeed())
 }
 
-func expectGuestAgentToBeConnected(virtClient kubecli.KubevirtClient, name string) {
+func expectGuestAgentToBeConnected(virtClient kubecli.KubevirtClient, vmName string) {
 	Eventually(func(g Gomega) {
-		_, err := virtClient.VirtualMachineInstance(testNamespace).GuestOsInfo(context.Background(), name)
+		_, err := virtClient.VirtualMachineInstance(testNamespace).GuestOsInfo(context.Background(), vmName)
 		g.Expect(err).ToNot(HaveOccurred())
 	}, vmReadyTimeout, 10*time.Second).Should(Succeed())
 }
 
-func expectSSHToRunCommandWithPrivKey(virtClient kubecli.KubevirtClient, vmName, username string, privKey *ed25519.PrivateKey) {
-	signer, err := ssh.NewSignerFromKey(privKey)
-	Expect(err).ToNot(HaveOccurred())
-	expectSSHToRunCommand(virtClient, vmName, username, ssh.PublicKeys(signer))
-}
-
-func expectSSHToRunCommandWithPassword(virtClient kubecli.KubevirtClient, vmName, username, password string) {
-	expectSSHToRunCommand(virtClient, vmName, username, ssh.Password(password))
+func expectSSHToRunCommandOnWindows(virtClient kubecli.KubevirtClient, vmName string) {
+	expectSSHToRunCommand(virtClient, vmName, "Administrator", ssh.Password("Administrator"))
 }
 
 func expectSSHToRunCommand(virtClient kubecli.KubevirtClient, vmName, username string, authMethod ssh.AuthMethod) {
