@@ -76,8 +76,8 @@ chcon -t virt_content_t "${VIRTIO_WIN_ISO}"
 
 # Start installation process and wait for first reboot of VM, then restart it
 virt-install --noautoconsole --wait --name="${WINDOWS_VERSION}" \
-  --vcpus=2 --memory=8192 --disk size=15 --video virtio --os-variant="${OS_VARIANT}" \
-  --cdrom="${WINDOWS_ISO_MODIFIED}" --disk device=cdrom,path="${VIRTIO_WIN_ISO}" \
+  --vcpus=2 --memory=8192 --disk size=15,bus=virtio --video virtio --network user,model=virtio \
+  --os-variant="${OS_VARIANT}" --cdrom="${WINDOWS_ISO_MODIFIED}" --disk device=cdrom,path="${VIRTIO_WIN_ISO}" \
   "${VIRT_INSTALL_EXTRA_ARGS[@]}"
 
 # Second loop to wait for VM to shut down after finished install
