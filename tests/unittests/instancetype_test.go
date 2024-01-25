@@ -62,7 +62,7 @@ var _ = Describe("Common instance types unit tests", func() {
 			}
 		})
 
-		It("check if labels match resources", func() {
+		It("[test_id:10799]check if labels match resources", func() {
 			for _, preference := range testsClusterPreferences {
 				for key, value := range preference.Labels {
 					if skipLabels[key] {
@@ -83,7 +83,7 @@ var _ = Describe("Common instance types unit tests", func() {
 			}
 		})
 
-		It("check if labels match resources", func() {
+		It("[test_id:10801]check if labels match resources", func() {
 			for _, instanceType := range testsClusterInstanceType {
 				for key, value := range instanceType.Labels {
 					if skipLabels[key] {
