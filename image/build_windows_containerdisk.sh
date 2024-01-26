@@ -22,33 +22,40 @@ VIRTIO_WIN_ISO_LATEST_URL=https://fedorapeople.org/groups/virt/virtio-win/direct
 VIRTIO_WIN_ISO=/tmp/virtio-win.iso
 # EFI boot by default
 WINDOWS_BOOT_IMAGE=(-e efi/microsoft/boot/efisys_noprompt.bin)
+DEFAULT_INSTANCETYPE=u1.small
 
 case "$WINDOWS_VERSION" in
   windows10)
     OS_VARIANT=win10
     WINDOWS_ISO_OVERLAYS=(overlays/generic overlays/windows10)
     VIRT_INSTALL_EXTRA_ARGS=(--boot uefi)
+    DEFAULT_PREFERENCE=windows.10.virtio
     ;;
   windows11)
     OS_VARIANT=win11
     WINDOWS_ISO_OVERLAYS=(overlays/generic overlays/windows11)
+    DEFAULT_INSTANCETYPE=u1.large
+    DEFAULT_PREFERENCE=windows.11.virtio
     ;;
   windows2k16)
     OS_VARIANT=win2k16
     WINDOWS_ISO_OVERLAYS=(overlays/windows2k16)
     # Create BIOS bootable ISO
     WINDOWS_BOOT_IMAGE=(-b boot/etfsboot.com)
+    DEFAULT_PREFERENCE=windows.2k16.virtio
     ;;
   windows2k19)
     OS_VARIANT=win2k19
     WINDOWS_ISO_OVERLAYS=(overlays/generic overlays/windows2k19)
     # Create BIOS bootable ISO
     WINDOWS_BOOT_IMAGE=(-b boot/etfsboot.com)
+    DEFAULT_PREFERENCE=windows.2k19.virtio
     ;;
   windows2k22)
     OS_VARIANT=win2k22
     WINDOWS_ISO_OVERLAYS=(overlays/generic overlays/windows2k22)
     VIRT_INSTALL_EXTRA_ARGS=(--boot uefi)
+    DEFAULT_PREFERENCE=windows.2k22.virtio
     ;;
   *)
     echo "Need a valid Windows image version to build: windows10, windows11, windows2k16, windows2k19, windows2k22"
@@ -95,6 +102,15 @@ virsh undefine --nvram --remove-all-storage "${WINDOWS_VERSION}"
 podman build -t "${WINDOWS_VERSION}-container-disk:latest" -f - . << EOF
 FROM scratch
 ADD --chown=107:107 ${WINDOWS_VERSION}.qcow2 /disk/
+
+LABEL instancetype.kubevirt.io/default-instancetype ${DEFAULT_INSTANCETYPE}
+LABEL instancetype.kubevirt.io/default-preference ${DEFAULT_PREFERENCE}
+LABEL instancetype.kubevirt.io/display-needed true
+
+# Set ENVs for compatibility with crun-vm
+ENV INSTANCETYPE_KUBEVIRT_IO_DEFAULT_INSTANCETYPE ${DEFAULT_INSTANCETYPE}
+ENV INSTANCETYPE_KUBEVIRT_IO_DEFAULT_PREFERENCE ${DEFAULT_PREFERENCE}
+ENV INSTANCETYPE_KUBEVIRT_IO_DISPLAY_NEEDED true
 EOF
 
 # Remove VM disk
