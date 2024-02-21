@@ -241,6 +241,7 @@ n1.2xlarge  |  16  |  32Gi
 n1.4xlarge  |  32  |  64Gi
 n1.8xlarge  |  64  |  128Gi
 n1.large  |  4  |  8Gi
+n1.medium  |  4  |  4Gi
 n1.xlarge  |  8  |  16Gi
 o1.2xlarge  |  8  |  32Gi
 o1.4xlarge  |  16  |  64Gi

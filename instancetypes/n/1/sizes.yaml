@@ -54,6 +54,19 @@ spec:
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachineClusterInstancetype
 metadata:
+  name: "n1.medium"
+  labels:
+    instancetype.kubevirt.io/cpu: "4"
+    instancetype.kubevirt.io/memory: "4Gi"
+spec:
+  cpu:
+    guest: 4
+  memory:
+    guest: "4Gi"
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachineClusterInstancetype
+metadata:
   name: "n1.xlarge"
   labels:
     instancetype.kubevirt.io/cpu: "8"
