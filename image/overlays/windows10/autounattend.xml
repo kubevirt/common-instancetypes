@@ -21,38 +21,22 @@
       <DiskConfiguration>
         <WillShowUI>Never</WillShowUI>
         <Disk wcm:action="add">
-          <!-- https://foxpa.ws/win-10-11-unattended -->
-          <!-- https://learn.microsoft.com/en-us/windows-hardware/manufacture/desktop/configure-uefigpt-based-hard-drive-partitions?view=windows-11 -->
           <CreatePartitions>
-              <CreatePartition wcm:action="add">
-                  <Order>1</Order>
-                  <Type>EFI</Type>
-                  <Size>100</Size>
-              </CreatePartition>
-              <CreatePartition wcm:action="add">
-                  <Order>2</Order>
-                  <Type>MSR</Type>
-                  <Size>16</Size>
-              </CreatePartition>
-              <CreatePartition wcm:action="add">
-                  <Order>3</Order>
-                  <Type>Primary</Type>
-                  <Extend>true</Extend>
-              </CreatePartition>
+            <!-- Windows partition -->
+            <CreatePartition wcm:action="add">
+                <Order>1</Order>
+                <Type>Primary</Type>
+                <Extend>true</Extend>
+            </CreatePartition>
           </CreatePartitions>
           <ModifyPartitions>
+            <!-- Windows partition -->
             <ModifyPartition wcm:action="add">
                 <Order>1</Order>
                 <PartitionID>1</PartitionID>
-                <Label>EFI</Label>
-                <Format>FAT32</Format>
-            </ModifyPartition>
-            <ModifyPartition wcm:action="add">
-                <Order>2</Order>
-                <PartitionID>3</PartitionID>
                 <Label>Windows</Label>
-                <Letter>C</Letter>
                 <Format>NTFS</Format>
+                <Letter>C</Letter>
             </ModifyPartition>
           </ModifyPartitions>
           <DiskID>0</DiskID>
@@ -69,7 +53,7 @@
           </InstallFrom>
           <InstallTo>
             <DiskID>0</DiskID>
-            <PartitionID>3</PartitionID>
+            <PartitionID>1</PartitionID>
           </InstallTo>
         </OSImage>
       </ImageInstall>

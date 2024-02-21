@@ -28,7 +28,8 @@ case "$WINDOWS_VERSION" in
   windows10)
     OS_VARIANT=win10
     WINDOWS_ISO_OVERLAYS=(overlays/generic overlays/windows10)
-    VIRT_INSTALL_EXTRA_ARGS=(--boot uefi)
+    # Create BIOS bootable ISO
+    WINDOWS_BOOT_IMAGE=(-b boot/etfsboot.com)
     DEFAULT_PREFERENCE=windows.10.virtio
     ;;
   windows11)
