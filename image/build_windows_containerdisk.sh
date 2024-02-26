@@ -40,15 +40,13 @@ case "$WINDOWS_VERSION" in
   windows2k16)
     OS_VARIANT=win2k16
     WINDOWS_ISO_OVERLAYS=(overlays/windows2k16)
-    # Create BIOS bootable ISO
-    WINDOWS_BOOT_IMAGE=(-b boot/etfsboot.com)
+    VIRT_INSTALL_EXTRA_ARGS=(--boot uefi)
     DEFAULT_PREFERENCE=windows.2k16.virtio
     ;;
   windows2k19)
     OS_VARIANT=win2k19
     WINDOWS_ISO_OVERLAYS=(overlays/generic overlays/windows2k19)
-    # Create BIOS bootable ISO
-    WINDOWS_BOOT_IMAGE=(-b boot/etfsboot.com)
+    VIRT_INSTALL_EXTRA_ARGS=(--boot uefi)
     DEFAULT_PREFERENCE=windows.2k19.virtio
     ;;
   windows2k22)

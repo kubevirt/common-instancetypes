@@ -8,5 +8,6 @@ resources:
 components:
   - ./metadata
   - ./requirements
+  - ../../components/secureboot
 
 nameSuffix: .2k16
