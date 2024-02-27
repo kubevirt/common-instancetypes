@@ -30,7 +30,6 @@ COPY <<EOF startnet.valos.cmd
 @ECHO OFF
 net user Administrator Administrator
 net start sshd
-)
 EOF
 
 # Registry patch enabling the startup script
