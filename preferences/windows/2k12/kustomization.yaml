@@ -6,8 +6,9 @@ resources:
   - ../base
 
 components:
-  - ../../components/deprecated
   - ./metadata
   - ./requirements
+  - ../../components/deprecated
+  - ../../components/secureboot
 
 nameSuffix: .2k12
