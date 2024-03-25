@@ -101,11 +101,6 @@ podman build -t "${WINDOWS_VERSION}-container-disk:latest" -f - . << EOF
 FROM scratch
 ADD --chown=107:107 ${WINDOWS_VERSION}.qcow2 /disk/
 
-LABEL instancetype.kubevirt.io/default-instancetype ${DEFAULT_INSTANCETYPE}
-LABEL instancetype.kubevirt.io/default-preference ${DEFAULT_PREFERENCE}
-LABEL instancetype.kubevirt.io/display-needed true
-
-# Set ENVs for compatibility with crun-vm
 ENV INSTANCETYPE_KUBEVIRT_IO_DEFAULT_INSTANCETYPE ${DEFAULT_INSTANCETYPE}
 ENV INSTANCETYPE_KUBEVIRT_IO_DEFAULT_PREFERENCE ${DEFAULT_PREFERENCE}
 ENV INSTANCETYPE_KUBEVIRT_IO_DISPLAY_NEEDED true
