@@ -63,8 +63,8 @@ function kubevirtci::up() {
   echo "waiting for kubevirt to become ready, this can take a few minutes..."
   ${_kubectl} -n kubevirt wait kv kubevirt --for condition=Available --timeout=15m
 
-  echo "enabling the GPU and NUMA feature gates to validate instance types"
-  ${_kubectl} patch kv/kubevirt -n kubevirt --type merge -p '{"spec":{"configuration":{"developerConfiguration":{"featureGates": ["GPU", "NUMA"]}}}}'
+  echo "enabling feature gates to validate instance types and preferences"
+  ${_kubectl} patch kv/kubevirt -n kubevirt --type merge -p '{"spec":{"configuration":{"developerConfiguration":{"featureGates": ["GPU", "NUMA", "VMPersistentState"]}}}}'
 }
 
 function kubevirtci::down() {

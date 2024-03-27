@@ -36,8 +36,8 @@ function kubevirt::install() {
 function kubevirt::up() {
   make cluster-up -C "${_base_dir}/_kubevirt" && make cluster-sync -C "${_base_dir}/_kubevirt"
 
-  echo "enabling the GPU and NUMA feature gates to validate instance types"
-  ${_kubectl} patch kv/kubevirt -n kubevirt --type merge -p '{"spec":{"configuration":{"developerConfiguration":{"featureGates": ["GPU", "NUMA"]}}}}'
+  echo "enabling feature gates to validate instance types and preferences"
+  ${_kubectl} patch kv/kubevirt -n kubevirt --type merge -p '{"spec":{"configuration":{"developerConfiguration":{"featureGates": ["GPU", "NUMA", "VMPersistentState"]}}}}'
 }
 
 function kubevirt::down() {
@@ -103,4 +103,3 @@ case ${_action} in
     exit 1
     ;;
 esac
-
