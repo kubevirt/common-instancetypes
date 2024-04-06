@@ -277,7 +277,8 @@ centos.stream9 | CentOS Stream 9
 centos.stream9.desktop | CentOS Stream 9
 centos.stream9.dpdk | CentOS Stream 9
 cirros | Cirros
-fedora | Fedora
+fedora | Fedora (amd64)
+fedora.arm64 | Fedora (arm64)
 opensuse.leap | OpenSUSE Leap
 opensuse.tumbleweed | OpenSUSE Tumbleweed
 rhel.7 | Red Hat Enterprise Linux 7

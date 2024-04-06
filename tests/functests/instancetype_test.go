@@ -114,7 +114,7 @@ var _ = Describe("Common instance types func tests", func() {
 				testFn(virtClient, vm.Name)
 			}
 		},
-			Entry("[test_id:10738] Fedora", fedoraContainerDisk, map[string]string{"amd64": "fedora"},
+			Entry("[test_id:10738] Fedora", fedoraContainerDisk, map[string]string{"amd64": "fedora", "arm64": "fedora.arm64"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("fedora")}),
 			Entry("[test_id:10740] CentOS 7", centos7ContainerDisk, map[string]string{"amd64": "centos.7"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("centos")}),
