@@ -7,3 +7,5 @@ metadata:
     tags: "hidden,kubevirt,fedora"
     iconClass: "icon-fedora"
     openshift.io/display-name: "Fedora"
+  labels:
+    instancetype.kubevirt.io/arch: "x86_64"
