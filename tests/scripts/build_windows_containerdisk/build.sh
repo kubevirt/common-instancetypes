@@ -1,4 +1,5 @@
 #!/bin/bash
+# NOTE(lyarwood): This script is provided to help build Windows containerdisks for functional tests, no support is provided by the wider project for the resulting images.
 
 set -e
 
