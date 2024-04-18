@@ -5,5 +5,4 @@ metadata:
   name: tpm
 spec:
   devices:
-    preferredTPM:
-      persistent: true
+    preferredTPM: {}
