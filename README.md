@@ -252,6 +252,15 @@ o1.micro  |  1  |  1Gi
 o1.nano  |  1  |  512Mi
 o1.small  |  1  |  2Gi
 o1.xlarge  |  4  |  16Gi
+rt1.2xlarge  |  8  |  32Gi
+rt1.4xlarge  |  16  |  64Gi
+rt1.8xlarge  |  32  |  128Gi
+rt1.large  |  2  |  8Gi
+rt1.medium  |  1  |  4Gi
+rt1.micro  |  1  |  1Gi
+rt1.nano  |  1  |  512Mi
+rt1.small  |  1  |  2Gi
+rt1.xlarge  |  4  |  16Gi
 u1.2xlarge  |  8  |  32Gi
 u1.4xlarge  |  16  |  64Gi
 u1.8xlarge  |  32  |  128Gi
