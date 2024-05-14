@@ -1,0 +1,12 @@
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachinePreference
+metadata:
+  name: realtime
+spec:
+  features:
+    preferredSmm: {}
+  devices:
+    preferredAutoattachGraphicsDevice: false
+    preferredAutoattachMemBalloon: false
+    preferredAutoattachSerialConsole: true
