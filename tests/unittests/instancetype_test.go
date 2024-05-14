@@ -38,6 +38,7 @@ var _ = Describe("Common instance types unit tests", func() {
 		"instancetype.kubevirt.io/numa":                  checkNuma,
 		"instancetype.kubevirt.io/dedicatedCPUPlacement": checkDedicatedCPUPlacement,
 		"instancetype.kubevirt.io/isolateEmulatorThread": checkIsolateEmulatorThread,
+		"instancetype.kubevirt.io/realtime":              checkRealtime,
 		"instancetype.kubevirt.io/vendor":                instancetypeCheckVendor,
 	}
 
@@ -175,6 +176,20 @@ func checkIsolateEmulatorThread(labelValue, labelName string, instanceType insta
 
 	if (instanceType.Spec.CPU.IsolateEmulatorThread == nil && boolValue) ||
 		(instanceType.Spec.CPU.IsolateEmulatorThread != nil && !boolValue) {
+		return fmt.Errorf(instanceTypeErrorMessage, labelName, instanceType.Name)
+	}
+
+	return nil
+}
+
+func checkRealtime(labelValue, labelName string, instanceType instancetypev1beta1.VirtualMachineClusterInstancetype) error {
+	boolValue, err := strconv.ParseBool(labelValue)
+	if err != nil {
+		return err
+	}
+
+	if (instanceType.Spec.CPU.Realtime == nil && boolValue) ||
+		(instanceType.Spec.CPU.Realtime != nil && !boolValue) {
 		return fmt.Errorf(instanceTypeErrorMessage, labelName, instanceType.Name)
 	}
 
