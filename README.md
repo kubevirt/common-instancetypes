@@ -295,6 +295,7 @@ rhel.8.dpdk | Red Hat Enterprise Linux 8
 rhel.9 | Red Hat Enterprise Linux 9
 rhel.9.desktop | Red Hat Enterprise Linux 9
 rhel.9.dpdk | Red Hat Enterprise Linux 9
+rhel.9.realtime | Red Hat Enterprise Linux 9
 ubuntu | Ubuntu
 windows.10 | Microsoft Windows 10
 windows.10.virtio | Microsoft Windows 10 (virtio)
