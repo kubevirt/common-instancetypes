@@ -12,7 +12,6 @@ components:
   - ../components/interfacemodel-virtio-net
   - ../components/rng
   - ../components/secureboot
-  - ../components/interface-multiqueue
 
 patches:
   - target:
