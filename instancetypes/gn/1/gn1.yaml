@@ -5,11 +5,11 @@ metadata:
   annotations:
     instancetype.kubevirt.io/description: |-
       The GN Series provides instances types intended for VMs with
-      NVIDIA GPU resources attached.
+      NVIDIA vGPU resources attached.
 
       *GN* is the abbreviation of "GPU NVIDIA".
 
-      This series is intended to be used with VMs consuming GPUs
+      This series is intended to be used with VMs consuming vGPUs
       provided by the
       [NVIDIA GPU Operator](https://github.com/NVIDIA/gpu-operator)
       which can be installed on Kubernetes and also is made available
@@ -24,4 +24,4 @@ metadata:
 spec:
   gpus:
     - name: "gpu1"
-      deviceName: "nvidia.com/A400"
+      deviceName: "nvidia.com/gpu"
