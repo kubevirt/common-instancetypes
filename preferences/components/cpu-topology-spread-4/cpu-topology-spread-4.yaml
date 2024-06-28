@@ -5,7 +5,7 @@ metadata:
   name: cpu-topology-spread-4
 spec:
   cpu:
-    preferredCPUTopology: preferSpread
+    preferredCPUTopology: spread
     spreadOptions:
       across: SocketsCoresThreads
       ratio: 4
