@@ -2,6 +2,9 @@
 
 set -e
 
+# Default to podman if COMMON_INSTANCETYPES_CRI isn't provided
+COMMON_INSTANCETYPES_CRI=${COMMON_INSTANCETYPES_CRI:-podman}
+
 if [ "${COMMON_INSTANCETYPES_CRI}" == "" ]; then
     /bin/bash -c "$@"
     exit $?
