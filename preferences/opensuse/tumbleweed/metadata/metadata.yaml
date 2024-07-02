@@ -1,0 +1,9 @@
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachinePreference
+metadata:
+  name: metadata
+  annotations:
+    tags: "hidden,kubevirt,opensuse.tumbleweed"
+    iconClass: "icon-opensuse-tumbleweed"
+    openshift.io/display-name: "OpenSUSE Tumbleweed"

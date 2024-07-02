@@ -10,3 +10,4 @@ resources:
   - ./fedora
   - ./cirros
   - ./alpine
+  - ./opensuse
