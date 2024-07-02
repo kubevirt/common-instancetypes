@@ -8,5 +8,6 @@ resources:
 components:
   - ./metadata
   - ./requirements
+  - ../../components/deprecated
 
 nameSuffix: ".7"
