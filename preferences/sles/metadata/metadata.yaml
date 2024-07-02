@@ -1,0 +1,9 @@
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachinePreference
+metadata:
+  name: metadata
+  annotations:
+    tags: "hidden,kubevirt,sles"
+    iconClass: "icon-sles"
+    openshift.io/display-name: "SUSE Linux Enterprise Server"

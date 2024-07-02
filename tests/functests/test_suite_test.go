@@ -31,6 +31,7 @@ const (
 	defaultUbuntu2204ContainerDisk         = "quay.io/containerdisks/ubuntu:22.04"
 	defaultOpenSUSETumbleweedContainerDisk = "quay.io/containerdisks/opensuse-tumbleweed:1.0.0"
 	defaultOpenSUSELeapContainerDisk       = "quay.io/containerdisks/opensuse-leap:15.6"
+	defaultSLES15ContainerDisk             = "registry:5000/sles15-container-disk:latest"
 	defaultValidationOsContainerDisk       = "registry:5000/validation-os-container-disk:latest"
 	defaultWindows10ContainerDisk          = "registry:5000/windows10-container-disk:latest"
 	defaultWindows11ContainerDisk          = "registry:5000/windows11-container-disk:latest"
@@ -58,6 +59,7 @@ var (
 	windows2k22ContainerDisk        string
 	openSUSETumbleweedContainerDisk string
 	openSUSELeapContainerDisk       string
+	sles15ContainerDisk             string
 )
 
 //nolint:gochecknoinits
@@ -82,6 +84,8 @@ func init() {
 		defaultOpenSUSETumbleweedContainerDisk, "OpenSUSE Tumbleweed container disk used by functional tests")
 	flag.StringVar(&openSUSELeapContainerDisk, "opensuse-leap-container-disk",
 		defaultOpenSUSELeapContainerDisk, "OpenSUSE Leap container disk used by functional tests")
+	flag.StringVar(&sles15ContainerDisk, "sles15-container-disk",
+		defaultSLES15ContainerDisk, "SLES 15 container disk used by functional tests")
 	flag.StringVar(&validationOsContainerDisk, "validation-os-container-disk",
 		defaultValidationOsContainerDisk, "Validation OS container disk used by functional tests")
 	flag.StringVar(&windows10ContainerDisk, "windows-10-container-disk",

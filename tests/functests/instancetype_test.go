@@ -124,6 +124,8 @@ var _ = Describe("Common instance types func tests", func() {
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("opensuse")}),
 			Entry("[test_id:TODO] OpenSUSE Leap 15.6", openSUSELeapContainerDisk, "opensuse.leap",
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("opensuse")}),
+			Entry("[test_id:TODO] SLES 15", sles15ContainerDisk, "sles",
+				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("sles")}),
 		)
 
 		DescribeTable("a Windows guest with", func(containerDisk, preference string, testFns []testFn) {
