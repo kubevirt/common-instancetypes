@@ -50,6 +50,8 @@ The following targets are provided by the `Makefile`
 * `make kubeconform`: Install vendored `kubeconform` from `./tools` into `./_bin`.
 * `make yq`: Install vendored `yq` from `./tools` into `./_bin`.
 * `make golangci-lint`: Install `golangci-lint` version specified in `Makefile` into `./_bin`.
+* `make deploy`: Deploy `common-instancetypes` to an external cluster.
+* `make functest`: Run functest against an external cluster.
 
 ## Running Makefile targets within a container
 
