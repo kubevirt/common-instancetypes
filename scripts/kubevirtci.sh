@@ -128,6 +128,9 @@ case ${_action} in
   "kubectl")
     ${_kubectl} "$@"
     ;;
+  "virtctl")
+    ${_virtctl} "$@"
+    ;;
   *)
     echo "No command provided, known commands are 'up', 'down', 'sync', 'ssh', 'kubeconfig', 'registry', 'kubectl', 'functest'"
     exit 1
