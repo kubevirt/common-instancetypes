@@ -75,7 +75,7 @@ function kubevirtci::down() {
 }
 
 function kubevirtci::sync() {
-  KUBECTL=${_kubectl} "${_base_dir}/scripts/sync.sh"
+  KUBECTL=${_kubectl} BASEDIR=${_base_dir} "${_base_dir}/scripts/sync.sh"
 }
 
 function kubevirtci::sync-containerdisks() {
