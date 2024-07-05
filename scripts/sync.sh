@@ -20,7 +20,8 @@ if [ -z "${KUBECTL}" ]; then
     echo "${BASH_SOURCE[0]} expects the following env variables to be provided: KUBECTL."
     exit 1
 fi
+
 ${KUBECTL} delete VirtualMachineClusterInstancetypes -l instancetype.kubevirt.io/vendor=kubevirt.io
 ${KUBECTL} delete VirtualMachineClusterPreferences -l instancetype.kubevirt.io/vendor=kubevirt.io
-${KUBECTL} kustomize VirtualMachineClusterInstancetypes | ${KUBECTL} apply -f -
-${KUBECTL} kustomize VirtualMachineClusterPreferences | ${KUBECTL} apply -f -
+${KUBECTL} apply -k "${BASEDIR}"/VirtualMachineClusterInstancetypes
+${KUBECTL} apply -k "${BASEDIR}"/VirtualMachineClusterPreferences

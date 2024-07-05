@@ -48,7 +48,7 @@ function kubevirt::down() {
 }
 
 function kubevirt::sync() {
-  KUBECTL=${_kubectl} "${_base_dir}/scripts/sync.sh"
+  KUBECTL=${_kubectl} BASEDIR=${_base_dir} "${_base_dir}/scripts/sync.sh"
 }
 
 function kubevirt::sync-containerdisks() {
@@ -72,6 +72,8 @@ function kubevirt::functest() {
 }
 
 kubevirt::install
+
+cd "${_base_dir}"/_kubevirt
 
 case ${_action} in
   "up")
@@ -109,4 +111,6 @@ case ${_action} in
     exit 1
     ;;
 esac
+
+cd "${_base_dir}"
 
