@@ -205,6 +205,22 @@ func randomVM(instancetype *v1.InstancetypeMatcher, preference *v1.PreferenceMat
 				},
 				Spec: v1.VirtualMachineInstanceSpec{
 					TerminationGracePeriodSeconds: ptr.To[int64](0),
+					Domain: v1.DomainSpec{
+						Devices: v1.Devices{
+							Interfaces: []v1.Interface{{
+								Name: "default",
+								InterfaceBindingMethod: v1.InterfaceBindingMethod{
+									Masquerade: &v1.InterfaceMasquerade{},
+								},
+							}},
+						},
+					},
+					Networks: []v1.Network{{
+						Name: "default",
+						NetworkSource: v1.NetworkSource{
+							Pod: &v1.PodNetwork{},
+						},
+					}},
 				},
 			},
 		},
