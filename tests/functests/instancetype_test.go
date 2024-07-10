@@ -120,6 +120,8 @@ var _ = Describe("Common instance types func tests", func() {
 				[]testFn{expectSSHToRunCommandOnLinux("ubuntu")}),
 			Entry("[test_id:10743] Ubuntu 22.04", ubuntu2204ContainerDisk, "ubuntu",
 				[]testFn{expectSSHToRunCommandOnLinux("ubuntu")}),
+			Entry("[test_id:TODO] Ubuntu 24.04", ubuntu2404ContainerDisk, "ubuntu",
+				[]testFn{expectSSHToRunCommandOnLinux("ubuntu")}),
 			Entry("[test_id:TODO] OpenSUSE Tumbleweed", openSUSETumbleweedContainerDisk, "opensuse.tumbleweed",
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("opensuse")}),
 			Entry("[test_id:TODO] OpenSUSE Leap 15", openSUSELeap15ContainerDisk, "opensuse.leap",
