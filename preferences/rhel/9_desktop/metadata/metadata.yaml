@@ -4,5 +4,4 @@ kind: VirtualMachinePreference
 metadata:
   name: metadata
   annotations:
-    tags: "hidden,kubevirt,linux,rhel,dpdk"
-    openshift.io/display-name: "Red Hat Enterprise Linux 9 DPDK (amd64)"
+    openshift.io/display-name: "Red Hat Enterprise Linux 9 Desktop (amd64)"

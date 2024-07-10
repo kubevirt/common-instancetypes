@@ -122,6 +122,8 @@ var _ = Describe("Common instance types func tests", func() {
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("centos")}),
 			Entry("[test_id:10745] CentOS Stream 9", centosStream9ContainerDisk, map[string]string{"amd64": "centos.stream9"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("cloud-user")}),
+			Entry("[test_id:TODO] RHEL 9", rhel9ContainerDisk, map[string]string{"amd64": "rhel.9", "arm64": "rhel.9.arm64"},
+				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("cloud-user")}),
 			Entry("[test_id:10741] Ubuntu 18.04", ubuntu1804ContainerDisk, map[string]string{"amd64": "ubuntu"},
 				[]testFn{expectSSHToRunCommandOnLinux("ubuntu")}),
 			Entry("[test_id:10742] Ubuntu 20.04", ubuntu2004ContainerDisk, map[string]string{"amd64": "ubuntu", "arm64": "ubuntu"},

@@ -286,9 +286,10 @@ rhel.7.desktop | Red Hat Enterprise Linux 7
 rhel.8 | Red Hat Enterprise Linux 8
 rhel.8.desktop | Red Hat Enterprise Linux 8
 rhel.8.dpdk | Red Hat Enterprise Linux 8
-rhel.9 | Red Hat Enterprise Linux 9
-rhel.9.desktop | Red Hat Enterprise Linux 9
-rhel.9.dpdk | Red Hat Enterprise Linux 9
+rhel.9 | Red Hat Enterprise Linux 9 (amd64)
+rhel.9.arm64 | Red Hat Enterprise Linux 9 (arm64)
+rhel.9.desktop | Red Hat Enterprise Linux 9 Desktop (amd64)
+rhel.9.dpdk | Red Hat Enterprise Linux 9 DPDK (amd64)
 sles | SUSE Linux Enterprise Server
 ubuntu | Ubuntu
 windows.10 | Microsoft Windows 10
