@@ -21,11 +21,13 @@ const (
 var _ = Describe("Common instance types unit tests", func() {
 
 	skipLabels := map[string]bool{
+		"instancetype.kubevirt.io/arch":                         true,
 		"instancetype.kubevirt.io/os-type":                      true,
 		"instancetype.kubevirt.io/deprecated":                   true,
 		"instancetype.kubevirt.io/common-instancetypes-version": true,
 		"instancetype.kubevirt.io/version":                      true,
 		"instancetype.kubevirt.io/class":                        true,
+		"instancetype.kubevirt.io/icon-pf":                      true,
 	}
 
 	instanceTypeFunctionMap := map[string]func(string, string, instancetypev1beta1.VirtualMachineClusterInstancetype) error{
