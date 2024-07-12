@@ -20,11 +20,6 @@ const (
 
 var _ = Describe("Common instance types unit tests", func() {
 
-	var (
-		testsClusterPreferences  []instancetypev1beta1.VirtualMachineClusterPreference
-		testsClusterInstanceType []instancetypev1beta1.VirtualMachineClusterInstancetype
-	)
-
 	skipLabels := map[string]bool{
 		"instancetype.kubevirt.io/os-type":                      true,
 		"instancetype.kubevirt.io/deprecated":                   true,
@@ -49,21 +44,15 @@ var _ = Describe("Common instance types unit tests", func() {
 		"instancetype.kubevirt.io/vendor": preferenceCheckVendor,
 	}
 
-	BeforeEach(func() {
-		// Restore resources to make sure we have unchanged data
-		copy(testsClusterPreferences, loadedVirtualMachineClusterPreferences)
-		copy(testsClusterInstanceType, loadedVirtualMachineClusterInstanceTypes)
-	})
-
 	Context("VirtualMachineClusterPreference", func() {
 		It("check version", func() {
-			for _, preference := range testsClusterPreferences {
+			for _, preference := range loadedVirtualMachineClusterPreferences {
 				Expect(preference.APIVersion).To(Equal(expectedVersion))
 			}
 		})
 
 		It("check if labels match resources", func() {
-			for _, preference := range testsClusterPreferences {
+			for _, preference := range loadedVirtualMachineClusterPreferences {
 				for key, value := range preference.Labels {
 					if skipLabels[key] {
 						continue
@@ -78,13 +67,13 @@ var _ = Describe("Common instance types unit tests", func() {
 
 	Context("VirtualMachineClusterInstanceType", func() {
 		It("check version", func() {
-			for _, instanceType := range testsClusterInstanceType {
+			for _, instanceType := range loadedVirtualMachineClusterInstanceTypes {
 				Expect(instanceType.APIVersion).To(Equal(expectedVersion))
 			}
 		})
 
 		It("check if labels match resources", func() {
-			for _, instanceType := range testsClusterInstanceType {
+			for _, instanceType := range loadedVirtualMachineClusterInstanceTypes {
 				for key, value := range instanceType.Labels {
 					if skipLabels[key] {
 						continue
