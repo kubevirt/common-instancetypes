@@ -1,0 +1,11 @@
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachinePreference
+metadata:
+  name: metadata
+  annotations:
+    tags: "hidden,kubevirt,fedora"
+    iconClass: "icon-fedora"
+    openshift.io/display-name: "Fedora (amd64)"
+  labels:
+    instancetype.kubevirt.io/arch: "amd64"

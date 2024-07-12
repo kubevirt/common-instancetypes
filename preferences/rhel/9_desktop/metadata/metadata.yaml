@@ -4,6 +4,4 @@ kind: VirtualMachinePreference
 metadata:
   name: metadata
   annotations:
-    tags: "hidden,kubevirt,fedora"
-    iconClass: "icon-fedora"
-    openshift.io/display-name: "Fedora"
+    openshift.io/display-name: "Red Hat Enterprise Linux 9 Desktop (amd64)"

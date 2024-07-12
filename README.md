@@ -277,7 +277,8 @@ centos.stream9 | CentOS Stream 9
 centos.stream9.desktop | CentOS Stream 9
 centos.stream9.dpdk | CentOS Stream 9
 cirros | Cirros
-fedora | Fedora
+fedora | Fedora (amd64)
+fedora.arm64 | Fedora (arm64)
 opensuse.leap | OpenSUSE Leap
 opensuse.tumbleweed | OpenSUSE Tumbleweed
 rhel.7 | Red Hat Enterprise Linux 7
@@ -285,9 +286,10 @@ rhel.7.desktop | Red Hat Enterprise Linux 7
 rhel.8 | Red Hat Enterprise Linux 8
 rhel.8.desktop | Red Hat Enterprise Linux 8
 rhel.8.dpdk | Red Hat Enterprise Linux 8
-rhel.9 | Red Hat Enterprise Linux 9
-rhel.9.desktop | Red Hat Enterprise Linux 9
-rhel.9.dpdk | Red Hat Enterprise Linux 9
+rhel.9 | Red Hat Enterprise Linux 9 (amd64)
+rhel.9.arm64 | Red Hat Enterprise Linux 9 (arm64)
+rhel.9.desktop | Red Hat Enterprise Linux 9 Desktop (amd64)
+rhel.9.dpdk | Red Hat Enterprise Linux 9 DPDK (amd64)
 sles | SUSE Linux Enterprise Server
 ubuntu | Ubuntu
 windows.10 | Microsoft Windows 10
