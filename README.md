@@ -47,6 +47,10 @@ wrklds:::grp --> Network:::series
 Network([Network]):::series --> n1:::instancetype
 ```
 
+### Labels
+
+Various labels are used to decorate objects provided by this project to help end users find the right resources for them. See [docs/labels.md](./docs/labels.md) for more details.
+
 ### Schema
 
 <details><summary>Click in order to view the instance type names schema</summary>
