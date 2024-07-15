@@ -3,7 +3,7 @@
 set -e
 
 if ! command -v openapi2jsonschema &> /dev/null; then
-    echo "openapi2jsonschema is not installed, see https://github.com/instrumenta/openapi2jsonschema#installation for more details."
+    echo "openapi2jsonschema is not installed, please run 'pip install --no-dependencies openapi2jsonschema jsonref click'."
     exit 1
 fi
 
