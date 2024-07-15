@@ -8,3 +8,6 @@ metadata:
     iconClass: "icon-windows"
   labels:
     instancetype.kubevirt.io/os-type: "windows"
+spec:
+  annotations:
+    vm.kubevirt.io/os: "windows"
