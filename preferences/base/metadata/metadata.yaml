@@ -9,3 +9,6 @@ metadata:
     openshift.io/support-url: "https://github.com/kubevirt/common-instancetypes/issues"
   labels:
     instancetype.kubevirt.io/os-type: "linux"
+spec:
+  annotations:
+    vm.kubevirt.io/os: linux
