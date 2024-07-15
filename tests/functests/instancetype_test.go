@@ -3,6 +3,7 @@ package tests
 import (
 	"context"
 	"crypto/ed25519"
+	"encoding/json"
 	"fmt"
 	rt "runtime"
 	"time"
@@ -33,6 +34,24 @@ var _ = Describe("Common instance types func tests", func() {
 		vm  *v1.VirtualMachine
 		err error
 	)
+
+	JustAfterEach(func() {
+		// On failure dump the current state of the VirtualMachine into the test output
+		// Useful for debugging when the namespace has already been cleaned up
+		if CurrentSpecReport().Failed() && vm != nil {
+			vm, err = virtClient.VirtualMachine(testNamespace).Get(context.Background(), vm.Name, &metav1.GetOptions{})
+			if err != nil && errors.IsNotFound(err) {
+				GinkgoWriter.Printf("VM %s defined but not created", vm.Name)
+				return
+			}
+			Expect(err).ToNot(HaveOccurred())
+
+			var status []byte
+			status, err = json.MarshalIndent(vm, "", "\t")
+			Expect(err).ToNot(HaveOccurred())
+			GinkgoWriter.Print(string(status))
+		}
+	})
 
 	AfterEach(func() {
 		if vm == nil {
