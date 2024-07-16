@@ -35,7 +35,7 @@ case "$WINDOWS_VERSION" in
   windows11)
     OS_VARIANT=win11
     WINDOWS_ISO_OVERLAYS=(overlays/generic overlays/windows11)
-    DEFAULT_INSTANCETYPE=u1.large
+    DEFAULT_INSTANCETYPE=u1.2xmedium
     DEFAULT_PREFERENCE=windows.11.virtio
     ;;
   windows2k16)

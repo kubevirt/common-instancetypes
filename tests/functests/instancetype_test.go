@@ -94,7 +94,7 @@ var _ = Describe("Common instance types func tests", func() {
 
 		It("[test_id:10737] can be created when enough resources are provided", func() {
 			for _, preference := range getClusterPreferences(virtClient) {
-				vm = randomVM(&v1.InstancetypeMatcher{Name: "u1.large"}, &v1.PreferenceMatcher{Name: preference.Name}, false)
+				vm = randomVM(&v1.InstancetypeMatcher{Name: "u1.2xmedium"}, &v1.PreferenceMatcher{Name: preference.Name}, false)
 				vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm)
 				Expect(err).ToNot(HaveOccurred())
 			}
@@ -162,7 +162,7 @@ var _ = Describe("Common instance types func tests", func() {
 		)
 
 		DescribeTable("a Windows guest with", func(containerDisk, preference string, testFns []testFn) {
-			vm = randomVM(&v1.InstancetypeMatcher{Name: "u1.large"}, &v1.PreferenceMatcher{Name: preference}, true)
+			vm = randomVM(&v1.InstancetypeMatcher{Name: "u1.2xmedium"}, &v1.PreferenceMatcher{Name: preference}, true)
 			addContainerDisk(vm, containerDisk)
 			vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm)
 			Expect(err).ToNot(HaveOccurred())
