@@ -253,6 +253,7 @@ o1.nano  |  1  |  512Mi
 o1.small  |  1  |  2Gi
 o1.xlarge  |  4  |  16Gi
 u1.2xlarge  |  8  |  32Gi
+u1.2xmedium  |  2  |  4Gi
 u1.4xlarge  |  16  |  64Gi
 u1.8xlarge  |  32  |  128Gi
 u1.large  |  2  |  8Gi
