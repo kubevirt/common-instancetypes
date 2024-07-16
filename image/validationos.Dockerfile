@@ -56,11 +56,11 @@ FROM scratch
 
 COPY --from=builder --chown=107:107 /disk.img /disk/
 
-LABEL instancetype.kubevirt.io/default-instancetype u1.large
+LABEL instancetype.kubevirt.io/default-instancetype u1.2xmedium
 LABEL instancetype.kubevirt.io/default-preference windows.11
 LABEL instancetype.kubevirt.io/display-needed true
 
 # Set ENVs for compatibility with crun-vm
-ENV INSTANCETYPE_KUBEVIRT_IO_DEFAULT_INSTANCETYPE u1.large
+ENV INSTANCETYPE_KUBEVIRT_IO_DEFAULT_INSTANCETYPE u1.2xmedium
 ENV INSTANCETYPE_KUBEVIRT_IO_DEFAULT_PREFERENCE windows.11
 ENV INSTANCETYPE_KUBEVIRT_IO_DISPLAY_NEEDED true
