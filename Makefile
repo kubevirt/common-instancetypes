@@ -22,6 +22,9 @@ YQ_PACKAGE ?= github.com/mikefarah/yq/v4
 # Version of golangci-lint to install
 GOLANGCI_LINT_VERSION ?= v1.55.2
 
+# Kubeconfig default value
+KUBECONFIG ?= ~/.kube/config
+
 .PHONY: all
 all: lint validate readme test-lint test
 
@@ -40,6 +43,14 @@ lint: generate
 .PHONY: generate
 generate: kustomize yq
 	scripts/generate.sh
+
+.PHONY: deploy
+deploy: lint
+	scripts/deploy-kubevirt-and-cdi.sh && KUBECTL=kubectl scripts/sync.sh
+
+.PHONY: functest
+functest:
+	cd tests && KUBECONFIG=$(KUBECONFIG) go test -v -timeout 0 ./functests/... -ginkgo.v -ginkgo.randomize-all $(FUNCTEST_EXTRA_ARGS)
 
 .PHONY: validate
 validate: generate schema kubeconform
