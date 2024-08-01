@@ -1,0 +1,37 @@
+---
+kind: VirtualMachineClusterInstancetype
+metadata:
+  name: "rt"
+  annotations:
+    instancetype.kubevirt.io/description: |-
+      The RT Series provides resources for realtime applications, like Oslat.
+
+      *RT* is the abbreviation for "realtime".
+
+      This series of instance types requires nodes capable of running
+      realtime applications.
+    instancetype.kubevirt.io/displayName: "Realtime"
+  labels:
+    instancetype.kubevirt.io/class: "realtime"
+    instancetype.kubevirt.io/icon-pf: "pficon-server-group"
+    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/vendor: "kubevirt.io"
+    instancetype.kubevirt.io/dedicatedCPUPlacement: "true"
+    instancetype.kubevirt.io/isolateEmulatorThread: "true"
+    instancetype.kubevirt.io/numa: "true"
+    instancetype.kubevirt.io/realtime: "true"
+    instancetype.kubevirt.io/hugepages: "true"
+spec:
+  annotations:
+    cpu-load-balancing.crio.io: disable
+    cpu-quota.crio.io: disable
+    irq-load-balancing.crio.io: disable
+  cpu:
+    dedicatedCPUPlacement: true
+    isolateEmulatorThread: true
+    numa:
+      guestMappingPassthrough: {}
+    realtime: {}
+  memory:
+    hugepages:
+      pageSize: 1Gi

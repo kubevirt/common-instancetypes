@@ -45,6 +45,9 @@ Memory([Memory]):::series --> m1:::instancetype
 
 wrklds:::grp --> Network:::series
 Network([Network]):::series --> n1:::instancetype
+
+wrklds:::grp --> Realtime:::series
+Realtime([Realtime]):::series --> rt1:::instancetype
 ```
 
 ### Labels
@@ -60,7 +63,7 @@ instanceTypeName = seriesName , "." , size;
 
 seriesName = ( class | vendorClass ) , version;
 
-class = "u" | "o" | "cx" | "g" | "m" | "n";
+class = "u" | "o" | "cx" | "g" | "m" | "n" | "rt";
 vendorClass = "g" , vendorHint;
 vendorHint = "n" | "i" | "a";
 version = "1";
@@ -71,16 +74,16 @@ size = "small" | "medium" | "large" | [( "2" | "4" | "8" )] , "xlarge";
 
 # Series
 
-.                           |  U  |  O  |  CX  |  GN  |  M  |  N
-----------------------------|-----|-----|------|------|-----|-----
-*Has GPUs*                  |     |     |      |  ✓   |     |
-*Hugepages*                 |     |     |  ✓   |      |  ✓  |  ✓
-*Overcommitted Memory*      |     |  ✓  |      |      |     |
-*Dedicated CPU*             |     |     |  ✓   |      |     |  ✓
-*Burstable CPU performance* |  ✓  |  ✓  |      |  ✓   |  ✓  |
-*Isolated emulator threads* |     |     |  ✓   |      |     |  ✓
-*vNUMA*                     |     |     |  ✓   |      |     |
-*vCPU-To-Memory Ratio*      | 1:4 | 1:4 |  1:2 |  1:4 | 1:8 | 1:2
+.                           |  U  |  O  |  CX  |  GN  |  M  |  N  |  RT
+----------------------------|-----|-----|------|------|-----|-----|------
+*Has GPUs*                  |     |     |      |  ✓   |     |     |
+*Hugepages*                 |     |     |  ✓   |      |  ✓  |  ✓  |  ✓
+*Overcommitted Memory*      |     |  ✓  |      |      |     |     |
+*Dedicated CPU*             |     |     |  ✓   |      |     |  ✓  |  ✓
+*Burstable CPU performance* |  ✓  |  ✓  |      |  ✓   |  ✓  |     |
+*Isolated emulator threads* |     |     |  ✓   |      |     |  ✓  |  ✓
+*vNUMA*                     |     |     |  ✓   |      |     |     |  ✓
+*vCPU-To-Memory Ratio*      | 1:4 | 1:4 |  1:2 |  1:4 | 1:8 | 1:2 | 1:4
 
 ## U Series
 
@@ -214,6 +217,29 @@ Specific characteristics of this series are:
   workload.
 - *vCPU-To-Memory Ratio (1:2)* - A vCPU-to-Memory ratio of 1:2.
 
+## RT Series
+
+The RT Series provides resources for realtime applications, like Oslat.
+
+*RT* is the abbreviation for "realtime".
+
+This series of instance types requires nodes capable of running
+realtime applications.
+
+### RT Series Characteristics
+
+Specific characteristics of this series are:
+- *Hugepages* - Hugepages are used in order to improve memory
+  performance.
+- *Dedicated CPU* - Physical cores are exclusively assigned to every
+  vCPU in order to provide fixed and high compute guarantees to the
+  workload.
+- *Isolated emulator threads* - Hypervisor emulator threads are isolated
+  from the vCPUs in order to reduce emaulation related impact on the
+  workload.
+- *vCPU-To-Memory Ratio (1:4)* - A vCPU-to-Memory ratio of 1:4 starting from
+  the medium size.
+
 ## Development
 
 To get started with customizing or creating your own instancetypes and preferences
@@ -256,6 +282,14 @@ o1.micro  |  1  |  1Gi
 o1.nano  |  1  |  512Mi
 o1.small  |  1  |  2Gi
 o1.xlarge  |  4  |  16Gi
+rt1.2xlarge  |  8  |  32Gi
+rt1.4xlarge  |  16  |  64Gi
+rt1.8xlarge  |  32  |  128Gi
+rt1.large  |  2  |  8Gi
+rt1.medium  |  1  |  4Gi
+rt1.micro  |  1  |  1Gi
+rt1.small  |  1  |  2Gi
+rt1.xlarge  |  4  |  16Gi
 u1.2xlarge  |  8  |  32Gi
 u1.2xmedium  |  2  |  4Gi
 u1.4xlarge  |  16  |  64Gi
@@ -295,6 +329,7 @@ rhel.9 | Red Hat Enterprise Linux 9 (amd64)
 rhel.9.arm64 | Red Hat Enterprise Linux 9 (arm64)
 rhel.9.desktop | Red Hat Enterprise Linux 9 Desktop (amd64)
 rhel.9.dpdk | Red Hat Enterprise Linux 9 DPDK (amd64)
+rhel.9.realtime | Red Hat Enterprise Linux 9 (amd64)
 sles | SUSE Linux Enterprise Server
 ubuntu | Ubuntu
 windows.10 | Microsoft Windows 10
