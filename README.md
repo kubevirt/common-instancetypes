@@ -309,6 +309,8 @@ Name | Guest OS
 alpine | Alpine
 centos.7 | CentOS 7
 centos.7.desktop | CentOS 7
+centos.stream10 | CentOS Stream 10
+centos.stream10.desktop | CentOS Stream 10
 centos.stream8 | CentOS Stream 8
 centos.stream8.desktop | CentOS Stream 8
 centos.stream8.dpdk | CentOS Stream 8
