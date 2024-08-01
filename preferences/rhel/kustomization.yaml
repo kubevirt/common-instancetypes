@@ -3,6 +3,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
+  - ./10
   - ./9_realtime
   - ./9_desktop
   - ./9_dpdk
