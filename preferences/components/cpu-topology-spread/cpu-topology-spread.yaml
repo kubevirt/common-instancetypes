@@ -5,4 +5,4 @@ metadata:
   name: cpu-topology-spread
 spec:
   cpu:
-    preferredCPUTopology: preferSpread
+    preferredCPUTopology: spread
