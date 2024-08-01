@@ -22,7 +22,7 @@ export KUBEVIRT_DEPLOY_NFS_CSI="${KUBEVIRT_DEPLOY_NFS_CSI:-true}"
 export KUBEVIRT_MEMORY_SIZE="${KUBEVIRT_MEMORY_SIZE:-16G}"
 export KUBEVIRTCI_TAG=${KUBEVIRTCI_TAG:-$(curl -sfL https://storage.googleapis.com/kubevirt-prow/release/kubevirt/kubevirtci/latest)}
 export KUBEVIRT_DEPLOY_CDI="true"
-export KUBEVIRT_VERSION=${KUBEVIRT_VERSION:-main)}
+export KUBEVIRT_VERSION=${KUBEVIRT_VERSION:-v1.3.0)}
 
 _base_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 _cluster_up_dir="${_base_dir}/_cluster-up"
