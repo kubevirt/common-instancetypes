@@ -279,6 +279,7 @@ centos.stream9.desktop | CentOS Stream 9
 centos.stream9.dpdk | CentOS Stream 9
 cirros | Cirros
 fedora | Fedora
+rhel.10 | Red Hat Enterprise Linux 10 Beta (amd64)
 rhel.7 | Red Hat Enterprise Linux 7
 rhel.7.desktop | Red Hat Enterprise Linux 7
 rhel.8 | Red Hat Enterprise Linux 8
