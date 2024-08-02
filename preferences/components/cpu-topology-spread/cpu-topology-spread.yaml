@@ -6,6 +6,3 @@ metadata:
 spec:
   cpu:
     preferredCPUTopology: preferSpread
-    spreadOptions:
-      across: SocketsCoresThreads
-      ratio: 4
