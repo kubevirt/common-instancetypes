@@ -93,8 +93,21 @@ var _ = Describe("Common instance types func tests", func() {
 		})
 
 		It("[test_id:10737] can be created when enough resources are provided", func() {
+			preferenceInstancetypeMap := map[string]string{
+				"centos.stream8.dpdk": "u1.2xlarge",
+				"centos.stream9.dpdk": "u1.2xlarge",
+				"rhel.8.dpdk":         "u1.2xlarge",
+				"rhel.9.dpdk":         "u1.2xlarge",
+				"rhel.9.realtime":     "u1.xlarge",
+				"windows.11":          "u1.2xmedium",
+				"windows.11.virtio":   "u1.2xmedium",
+			}
 			for _, preference := range getClusterPreferences(virtClient) {
-				vm = randomVM(&v1.InstancetypeMatcher{Name: "u1.2xmedium"}, &v1.PreferenceMatcher{Name: preference.Name}, false)
+				instancetype := "u1.medium"
+				if pInstancetype, ok := preferenceInstancetypeMap[preference.Name]; ok {
+					instancetype = pInstancetype
+				}
+				vm = randomVM(&v1.InstancetypeMatcher{Name: instancetype}, &v1.PreferenceMatcher{Name: preference.Name}, false)
 				vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm, metav1.CreateOptions{})
 				Expect(err).ToNot(HaveOccurred())
 			}
