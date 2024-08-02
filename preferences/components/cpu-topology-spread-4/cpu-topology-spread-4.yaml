@@ -2,9 +2,10 @@
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
-  name: cpu-topology-spread
+  name: cpu-topology-spread-4
 spec:
   cpu:
     preferredCPUTopology: preferSpread
     spreadOptions:
       across: SocketsCoresThreads
+      ratio: 4
