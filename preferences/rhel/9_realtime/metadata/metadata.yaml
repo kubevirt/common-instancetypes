@@ -5,3 +5,4 @@ metadata:
   name: metadata
   annotations:
     tags: "hidden,kubevirt,linux,rhel,realtime"
+    openshift.io/display-name: "Red Hat Enterprise Linux 9 Realtime (amd64)"
