@@ -9,7 +9,7 @@
 #
 # Golang is provided to allow running other Makefile targets
 
-FROM quay.io/fedora/fedora-minimal:39
+FROM quay.io/fedora/fedora-minimal:40
 
 RUN microdnf install -y make tar golang python3-pip ShellCheck && microdnf clean all -y
 
