@@ -8,7 +8,7 @@ resources:
 components:
   - ./metadata
   - ./requirements
-  - ../../components/cpu-topology-sockets
+  - ../../components/cpu-topology-spread-4
   - ../../components/interface-multiqueue
 
 nameSuffix: ".dpdk"
