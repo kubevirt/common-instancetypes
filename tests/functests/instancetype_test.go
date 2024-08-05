@@ -73,10 +73,10 @@ var _ = Describe("Common instance types func tests", func() {
 	})
 
 	Context("VirtualMachine using a preference with resource requirements", func() {
-		It("[test_id:10736] is rejected if it does not provide enough resources", func() {
-			createInstancetype(2, "tiny-instancetype", "64M")
+		It("[test_id:10736] is rejected if it does not provide enough memory resources", func() {
+			createInstancetype(8, "tiny-instancetype-memory", "64M")
 			instanceTypeMatcher := v1.InstancetypeMatcher{
-				Name: "tiny-instancetype",
+				Name: "tiny-instancetype-memory",
 				Kind: "VirtualMachineInstancetype",
 			}
 			for _, preference := range getClusterPreferences(virtClient) {
@@ -89,6 +89,22 @@ var _ = Describe("Common instance types func tests", func() {
 							"insufficient Memory resources of 64M provided by instance type, preference requires %s",
 						preference.Spec.Requirements.Memory.Guest.String(),
 					)))
+			}
+		})
+
+		It("[test_id:TODO] is rejected if it does not provide enough cpu resources", func() {
+			createInstancetype(1, "tiny-instancetype-cpu", "64M")
+			instanceTypeMatcher := v1.InstancetypeMatcher{
+				Name: "tiny-instancetype-cpu",
+				Kind: "VirtualMachineInstancetype",
+			}
+			for _, preference := range getClusterPreferences(virtClient) {
+				if preference.Spec.Requirements.CPU == nil || preference.Spec.Requirements.CPU.Guest < 2 {
+					continue
+				}
+				vm = randomVM(&instanceTypeMatcher, &v1.PreferenceMatcher{Name: preference.Name}, false)
+				_, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm, metav1.CreateOptions{})
+				Expect(err).To(MatchError(MatchRegexp("1 vCPU(?:s)? provided by (?:the )?instance type")))
 			}
 		})
 
