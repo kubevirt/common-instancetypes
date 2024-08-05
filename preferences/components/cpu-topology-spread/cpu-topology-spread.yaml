@@ -8,4 +8,3 @@ spec:
     preferredCPUTopology: preferSpread
     spreadOptions:
       across: SocketsCoresThreads
-      ratio: 4

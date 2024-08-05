@@ -39,7 +39,7 @@ var _ = Describe("Common instance types func tests", func() {
 		// On failure dump the current state of the VirtualMachine into the test output
 		// Useful for debugging when the namespace has already been cleaned up
 		if CurrentSpecReport().Failed() && vm != nil {
-			vm, err = virtClient.VirtualMachine(testNamespace).Get(context.Background(), vm.Name, &metav1.GetOptions{})
+			vm, err = virtClient.VirtualMachine(testNamespace).Get(context.Background(), vm.Name, metav1.GetOptions{})
 			if err != nil && errors.IsNotFound(err) {
 				GinkgoWriter.Printf("VM %s defined but not created", vm.Name)
 				return
@@ -58,7 +58,7 @@ var _ = Describe("Common instance types func tests", func() {
 			return
 		}
 		err = virtClient.VirtualMachine(testNamespace).Delete(context.Background(), vm.Name,
-			&metav1.DeleteOptions{GracePeriodSeconds: ptr.To[int64](0)})
+			metav1.DeleteOptions{GracePeriodSeconds: ptr.To[int64](0)})
 		if err != nil && !errors.IsNotFound(err) {
 			Expect(err).ToNot(HaveOccurred())
 		}
@@ -67,7 +67,7 @@ var _ = Describe("Common instance types func tests", func() {
 	It("[test_id:10735] VirtualMachine using an instancetype can be created", func() {
 		for _, instancetype := range getClusterInstancetypes(virtClient) {
 			vm = randomVM(&v1.InstancetypeMatcher{Name: instancetype.Name}, nil, false)
-			vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm)
+			vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm, metav1.CreateOptions{})
 			Expect(err).ToNot(HaveOccurred())
 		}
 	})
@@ -81,7 +81,7 @@ var _ = Describe("Common instance types func tests", func() {
 			}
 			for _, preference := range getClusterPreferences(virtClient) {
 				vm = randomVM(&instanceTypeMatcher, &v1.PreferenceMatcher{Name: preference.Name}, false)
-				_, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm)
+				_, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm, metav1.CreateOptions{})
 				Expect(err).To(MatchError(
 					fmt.Sprintf(
 						"admission webhook \"virtualmachine-validator.kubevirt.io\" denied the request: "+
@@ -93,9 +93,22 @@ var _ = Describe("Common instance types func tests", func() {
 		})
 
 		It("[test_id:10737] can be created when enough resources are provided", func() {
+			preferenceInstancetypeMap := map[string]string{
+				"centos.stream8.dpdk": "u1.2xlarge",
+				"centos.stream9.dpdk": "u1.2xlarge",
+				"rhel.8.dpdk":         "u1.2xlarge",
+				"rhel.9.dpdk":         "u1.2xlarge",
+				"rhel.9.realtime":     "u1.xlarge",
+				"windows.11":          "u1.2xmedium",
+				"windows.11.virtio":   "u1.2xmedium",
+			}
 			for _, preference := range getClusterPreferences(virtClient) {
-				vm = randomVM(&v1.InstancetypeMatcher{Name: "u1.2xmedium"}, &v1.PreferenceMatcher{Name: preference.Name}, false)
-				vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm)
+				instancetype := "u1.medium"
+				if pInstancetype, ok := preferenceInstancetypeMap[preference.Name]; ok {
+					instancetype = pInstancetype
+				}
+				vm = randomVM(&v1.InstancetypeMatcher{Name: instancetype}, &v1.PreferenceMatcher{Name: preference.Name}, false)
+				vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm, metav1.CreateOptions{})
 				Expect(err).ToNot(HaveOccurred())
 			}
 		})
@@ -126,7 +139,7 @@ var _ = Describe("Common instance types func tests", func() {
 			vm = randomVM(&v1.InstancetypeMatcher{Name: "u1.small"}, &v1.PreferenceMatcher{Name: preference}, true)
 			addContainerDisk(vm, containerDisk)
 			addCloudInitWithAuthorizedKey(vm, privKey)
-			vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm)
+			vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm, metav1.CreateOptions{})
 			Expect(err).ToNot(HaveOccurred())
 			expectVMToBeReady(virtClient, vm.Name)
 			for _, testFn := range testFns {
@@ -164,7 +177,7 @@ var _ = Describe("Common instance types func tests", func() {
 		DescribeTable("a Windows guest with", func(containerDisk, preference string, testFns []testFn) {
 			vm = randomVM(&v1.InstancetypeMatcher{Name: "u1.2xmedium"}, &v1.PreferenceMatcher{Name: preference}, true)
 			addContainerDisk(vm, containerDisk)
-			vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm)
+			vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm, metav1.CreateOptions{})
 			Expect(err).ToNot(HaveOccurred())
 			expectVMToBeReady(virtClient, vm.Name)
 			for _, testFn := range testFns {
@@ -295,7 +308,7 @@ func addCloudInitWithAuthorizedKey(vm *v1.VirtualMachine, privKey ed25519.Privat
 
 func expectVMToBeReady(virtClient kubecli.KubevirtClient, vmName string) {
 	Eventually(func(g Gomega) {
-		vm, err := virtClient.VirtualMachine(testNamespace).Get(context.Background(), vmName, &metav1.GetOptions{})
+		vm, err := virtClient.VirtualMachine(testNamespace).Get(context.Background(), vmName, metav1.GetOptions{})
 		g.Expect(err).ToNot(HaveOccurred())
 		g.Expect(vm.Status.Ready).To(BeTrue())
 	}, vmReadyTimeout, 10*time.Second).Should(Succeed())
