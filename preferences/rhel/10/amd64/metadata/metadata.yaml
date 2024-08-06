@@ -1,0 +1,9 @@
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachinePreference
+metadata:
+  name: metadata
+  annotations:
+    openshift.io/display-name: "Red Hat Enterprise Linux 10 Beta (amd64)"
+  labels:
+    instancetype.kubevirt.io/arch: "amd64"
