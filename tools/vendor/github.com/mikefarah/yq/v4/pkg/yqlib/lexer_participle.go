@@ -40,6 +40,7 @@ var participleYqRules = []*participleYqRule{
 	simpleOp("map", mapOpType),
 	simpleOp("filter", filterOpType),
 	simpleOp("pick", pickOpType),
+	simpleOp("omit", omitOpType),
 
 	{"FlattenWithDepth", `flatten\([0-9]+\)`, flattenWithDepth(), 0},
 	{"Flatten", `flatten`, opTokenWithPrefs(flattenOpType, nil, flattenPreferences{depth: -1}), 0},
@@ -57,45 +58,43 @@ var participleYqRules = []*participleYqRule{
 
 	{"ArrayToMap", "array_?to_?map", expressionOpToken(`(.[] | select(. != null) ) as $i ireduce({}; .[$i | key] = $i)`), 0},
 
-	{"YamlEncodeWithIndent", `to_?yaml\([0-9]+\)`, encodeParseIndent(YamlOutputFormat), 0},
-	{"XMLEncodeWithIndent", `to_?xml\([0-9]+\)`, encodeParseIndent(XMLOutputFormat), 0},
-	{"JSONEncodeWithIndent", `to_?json\([0-9]+\)`, encodeParseIndent(JSONOutputFormat), 0},
+	{"YamlEncodeWithIndent", `to_?yaml\([0-9]+\)`, encodeParseIndent(YamlFormat), 0},
+	{"XMLEncodeWithIndent", `to_?xml\([0-9]+\)`, encodeParseIndent(XMLFormat), 0},
+	{"JSONEncodeWithIndent", `to_?json\([0-9]+\)`, encodeParseIndent(JSONFormat), 0},
 
-	{"YamlDecode", `from_?yaml|@yamld|from_?json|@jsond`, decodeOp(YamlInputFormat), 0},
-	{"YamlEncode", `to_?yaml|@yaml`, encodeWithIndent(YamlOutputFormat, 2), 0},
+	{"YamlDecode", `from_?yaml|@yamld|from_?json|@jsond`, decodeOp(YamlFormat), 0},
+	{"YamlEncode", `to_?yaml|@yaml`, encodeWithIndent(YamlFormat, 2), 0},
 
-	{"JSONEncode", `to_?json`, encodeWithIndent(JSONOutputFormat, 2), 0},
-	{"JSONEncodeNoIndent", `@json`, encodeWithIndent(JSONOutputFormat, 0), 0},
+	{"JSONEncode", `to_?json`, encodeWithIndent(JSONFormat, 2), 0},
+	{"JSONEncodeNoIndent", `@json`, encodeWithIndent(JSONFormat, 0), 0},
 
-	{"PropertiesDecode", `from_?props|@propsd`, decodeOp(PropertiesInputFormat), 0},
-	{"PropsEncode", `to_?props|@props`, encodeWithIndent(PropsOutputFormat, 2), 0},
+	{"PropertiesDecode", `from_?props|@propsd`, decodeOp(PropertiesFormat), 0},
+	{"PropsEncode", `to_?props|@props`, encodeWithIndent(PropertiesFormat, 2), 0},
 
-	{"XmlDecode", `from_?xml|@xmld`, decodeOp(XMLInputFormat), 0},
-	{"XMLEncode", `to_?xml`, encodeWithIndent(XMLOutputFormat, 2), 0},
-	{"XMLEncodeNoIndent", `@xml`, encodeWithIndent(XMLOutputFormat, 0), 0},
+	{"XmlDecode", `from_?xml|@xmld`, decodeOp(XMLFormat), 0},
+	{"XMLEncode", `to_?xml`, encodeWithIndent(XMLFormat, 2), 0},
+	{"XMLEncodeNoIndent", `@xml`, encodeWithIndent(XMLFormat, 0), 0},
 
-	{"CSVDecode", `from_?csv|@csvd`, decodeOp(CSVObjectInputFormat), 0},
-	{"CSVEncode", `to_?csv|@csv`, encodeWithIndent(CSVOutputFormat, 0), 0},
+	{"CSVDecode", `from_?csv|@csvd`, decodeOp(CSVFormat), 0},
+	{"CSVEncode", `to_?csv|@csv`, encodeWithIndent(CSVFormat, 0), 0},
 
-	{"TSVDecode", `from_?tsv|@tsvd`, decodeOp(TSVObjectInputFormat), 0},
-	{"TSVEncode", `to_?tsv|@tsv`, encodeWithIndent(TSVOutputFormat, 0), 0},
+	{"TSVDecode", `from_?tsv|@tsvd`, decodeOp(TSVFormat), 0},
+	{"TSVEncode", `to_?tsv|@tsv`, encodeWithIndent(TSVFormat, 0), 0},
 
-	{"Base64d", `@base64d`, decodeOp(Base64InputFormat), 0},
-	{"Base64", `@base64`, encodeWithIndent(Base64OutputFormat, 0), 0},
+	{"Base64d", `@base64d`, decodeOp(Base64Format), 0},
+	{"Base64", `@base64`, encodeWithIndent(Base64Format, 0), 0},
 
-	{"Urid", `@urid`, decodeOp(UriInputFormat), 0},
-	{"Uri", `@uri`, encodeWithIndent(UriOutputFormat, 0), 0},
-	{"SH", `@sh`, encodeWithIndent(ShOutputFormat, 0), 0},
+	{"Urid", `@urid`, decodeOp(UriFormat), 0},
+	{"Uri", `@uri`, encodeWithIndent(UriFormat, 0), 0},
+	{"SH", `@sh`, encodeWithIndent(ShFormat, 0), 0},
 
-	{"LoadXML", `load_?xml|xml_?load`, loadOp(NewXMLDecoder(ConfiguredXMLPreferences), false), 0},
+	{"LoadXML", `load_?xml|xml_?load`, loadOp(NewXMLDecoder(ConfiguredXMLPreferences)), 0},
 
-	{"LoadBase64", `load_?base64`, loadOp(NewBase64Decoder(), false), 0},
+	{"LoadBase64", `load_?base64`, loadOp(NewBase64Decoder()), 0},
 
-	{"LoadProperties", `load_?props`, loadOp(NewPropertiesDecoder(), false), 0},
-
-	{"LoadString", `load_?str|str_?load`, loadOp(nil, true), 0},
-
-	{"LoadYaml", `load`, loadOp(NewYamlDecoder(LoadYamlPreferences), false), 0},
+	{"LoadProperties", `load_?props`, loadOp(NewPropertiesDecoder()), 0},
+	simpleOp("load_?str|str_?load", loadStringOpType),
+	{"LoadYaml", `load`, loadOp(NewYamlDecoder(LoadYamlPreferences)), 0},
 
 	{"SplitDocument", `splitDoc|split_?doc`, opToken(splitDocumentOpType), 0},
 
@@ -130,7 +129,9 @@ var participleYqRules = []*participleYqRule{
 
 	simpleOp("contains", containsOpType),
 	simpleOp("split", splitStringOpType),
-	simpleOp("parent", getParentOpType),
+
+	{"ParentWithLevel", `parent\([0-9]+\)`, parentWithLevel(), 0},
+	{"ParentWithDefaultLevel", `parent`, parentWithDefaultLevel(), 0},
 
 	simpleOp("keys", keysOpType),
 	simpleOp("key", getKeyOpType),
@@ -168,6 +169,7 @@ var participleYqRules = []*participleYqRule{
 	{"Uppercase", `upcase|ascii_?upcase`, opTokenWithPrefs(changeCaseOpType, nil, changeCasePrefs{ToUpperCase: true}), 0},
 	{"Downcase", `downcase|ascii_?downcase`, opTokenWithPrefs(changeCaseOpType, nil, changeCasePrefs{ToUpperCase: false}), 0},
 	simpleOp("trim", trimOpType),
+	simpleOp("to_?string", toStringOpType),
 
 	{"HexValue", `0[xX][0-9A-Fa-f]+`, hexValue(), 0},
 	{"FloatValueScientific", `-?[1-9](\.\d+)?[Ee][-+]?\d+`, floatValue(), 0},
@@ -197,6 +199,9 @@ var participleYqRules = []*participleYqRule{
 	{"GreaterThan", `\s*>\s*`, opTokenWithPrefs(compareOpType, nil, compareTypePref{OrEqual: false, Greater: true}), 0},
 	{"LessThan", `\s*<\s*`, opTokenWithPrefs(compareOpType, nil, compareTypePref{OrEqual: false, Greater: false}), 0},
 
+	simpleOp("min", minOpType),
+	simpleOp("max", maxOpType),
+
 	{"AssignRelative", `\|=[c]*`, assignOpToken(true), 0},
 	{"Assign", `=[c]*`, assignOpToken(false), 0},
 
@@ -221,6 +226,9 @@ var participleYqRules = []*participleYqRule{
 
 	{"SubtractAssign", `\-=`, opToken(subtractAssignOpType), 0},
 	{"Subtract", `\-`, opToken(subtractOpType), 0},
+	{"Comment", `#.*`, nil, 0},
+
+	simpleOp("pivot", pivotOpType),
 }
 
 type yqAction func(lexer.Token) (*token, error)
@@ -298,7 +306,7 @@ func opTokenWithPrefs(opType *operationType, assignOpType *operationType, prefer
 		if assignOpType != nil {
 			assign = &Operation{OperationType: assignOpType, Value: assignOpType.Type, StringValue: value, Preferences: preferences}
 		}
-		return &token{TokenType: operationToken, Operation: op, AssignOperation: assign}, nil
+		return &token{TokenType: operationToken, Operation: op, AssignOperation: assign, CheckForPostTraverse: op.OperationType.CheckForPostTraverse}, nil
 	}
 }
 
@@ -320,7 +328,7 @@ func flattenWithDepth() yqAction {
 
 		prefs := flattenPreferences{depth: depth}
 		op := &Operation{OperationType: flattenOpType, Value: flattenOpType.Type, StringValue: value, Preferences: prefs}
-		return &token{TokenType: operationToken, Operation: op}, nil
+		return &token{TokenType: operationToken, Operation: op, CheckForPostTraverse: flattenOpType.CheckForPostTraverse}, nil
 	}
 }
 
@@ -372,7 +380,11 @@ func stringValue() yqAction {
 		value = strings.ReplaceAll(value, "\\\"", "\"")
 		value = strings.ReplaceAll(value, "\\n", "\n")
 		log.Debug("replaced: %v", value)
-		return &token{TokenType: operationToken, Operation: createValueOperation(value, value)}, nil
+		return &token{TokenType: operationToken, Operation: &Operation{
+			OperationType: stringInterpolationOpType,
+			StringValue:   value,
+			Value:         value,
+		}}, nil
 	}
 }
 
@@ -394,7 +406,7 @@ func envOp(strenv bool) yqAction {
 		envOperation.OperationType = envOpType
 		envOperation.Preferences = preferences
 
-		return &token{TokenType: operationToken, Operation: envOperation}, nil
+		return &token{TokenType: operationToken, Operation: envOperation, CheckForPostTraverse: envOpType.CheckForPostTraverse}, nil
 	}
 }
 
@@ -495,7 +507,29 @@ func numberValue() yqAction {
 	}
 }
 
-func encodeParseIndent(outputFormat PrinterOutputFormat) yqAction {
+func parentWithLevel() yqAction {
+	return func(rawToken lexer.Token) (*token, error) {
+		value := rawToken.Value
+		var level, errParsingInt = extractNumberParameter(value)
+		if errParsingInt != nil {
+			return nil, errParsingInt
+		}
+
+		prefs := parentOpPreferences{Level: level}
+		op := &Operation{OperationType: getParentOpType, Value: getParentOpType.Type, StringValue: value, Preferences: prefs}
+		return &token{TokenType: operationToken, Operation: op}, nil
+	}
+}
+
+func parentWithDefaultLevel() yqAction {
+	return func(rawToken lexer.Token) (*token, error) {
+		prefs := parentOpPreferences{Level: 1}
+		op := &Operation{OperationType: getParentOpType, Value: getParentOpType.Type, StringValue: getParentOpType.Type, Preferences: prefs}
+		return &token{TokenType: operationToken, Operation: op}, nil
+	}
+}
+
+func encodeParseIndent(outputFormat *Format) yqAction {
 	return func(rawToken lexer.Token) (*token, error) {
 		value := rawToken.Value
 		var indent, errParsingInt = extractNumberParameter(value)
@@ -509,18 +543,18 @@ func encodeParseIndent(outputFormat PrinterOutputFormat) yqAction {
 	}
 }
 
-func encodeWithIndent(outputFormat PrinterOutputFormat, indent int) yqAction {
+func encodeWithIndent(outputFormat *Format, indent int) yqAction {
 	prefs := encoderPreferences{format: outputFormat, indent: indent}
 	return opTokenWithPrefs(encodeOpType, nil, prefs)
 }
 
-func decodeOp(inputFormat InputFormat) yqAction {
-	prefs := decoderPreferences{format: inputFormat}
+func decodeOp(format *Format) yqAction {
+	prefs := decoderPreferences{format: format}
 	return opTokenWithPrefs(decodeOpType, nil, prefs)
 }
 
-func loadOp(decoder Decoder, loadAsString bool) yqAction {
-	prefs := loadPrefs{decoder: decoder, loadAsString: loadAsString}
+func loadOp(decoder Decoder) yqAction {
+	prefs := loadPrefs{decoder}
 	return opTokenWithPrefs(loadOpType, nil, prefs)
 }
 
