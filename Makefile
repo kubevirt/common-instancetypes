@@ -7,7 +7,7 @@ export KUBEVIRT_VERSION = v1.3.0
 # Use the COMMON_INSTANCETYPES_CRI env variable to control if the following targets are executed within a container.
 # Supported runtimes are docker and podman. By default targets run directly on the host.
 export COMMON_INSTANCETYPES_IMAGE = quay.io/kubevirtci/common-instancetypes-builder
-export COMMON_INSTANCETYPES_IMAGE_TAG = v20231205-3b7ed7e
+export COMMON_INSTANCETYPES_IMAGE_TAG = v20240802-59e70de
 
 # Containerdisk image and tag to use for Validation OS functional tests
 export VALIDATION_OS_IMAGE = quay.io/kubevirtci/validation-os-container-disk
