@@ -7,7 +7,7 @@ import (
 	"github.com/elliotchance/orderedmap"
 )
 
-func unique(d *dataTreeNavigator, context Context, expressionNode *ExpressionNode) (Context, error) {
+func unique(d *dataTreeNavigator, context Context, _ *ExpressionNode) (Context, error) {
 	selfExpression := &ExpressionNode{Operation: &Operation{OperationType: selfReferenceOpType}}
 	uniqueByExpression := &ExpressionNode{Operation: &Operation{OperationType: uniqueByOpType}, RHS: selfExpression}
 	return uniqueBy(d, context, uniqueByExpression)
@@ -16,14 +16,14 @@ func unique(d *dataTreeNavigator, context Context, expressionNode *ExpressionNod
 
 func uniqueBy(d *dataTreeNavigator, context Context, expressionNode *ExpressionNode) (Context, error) {
 
-	log.Debugf("-- uniqueBy Operator")
+	log.Debugf("uniqueBy Operator")
 	var results = list.New()
 
 	for el := context.MatchingNodes.Front(); el != nil; el = el.Next() {
 		candidate := el.Value.(*CandidateNode)
 
 		if candidate.Kind != SequenceNode {
-			return Context{}, fmt.Errorf("Only arrays are supported for unique")
+			return Context{}, fmt.Errorf("only arrays are supported for unique")
 		}
 
 		var newMatches = orderedmap.NewOrderedMap()
@@ -34,12 +34,9 @@ func uniqueBy(d *dataTreeNavigator, context Context, expressionNode *ExpressionN
 				return Context{}, err
 			}
 
-			keyValue := "null"
-
-			if rhs.MatchingNodes.Len() > 0 {
-				first := rhs.MatchingNodes.Front()
-				keyCandidate := first.Value.(*CandidateNode)
-				keyValue = keyCandidate.Value
+			keyValue, err := getUniqueKeyValue(rhs)
+			if err != nil {
+				return Context{}, err
 			}
 
 			_, exists := newMatches.Get(keyValue)
@@ -58,4 +55,19 @@ func uniqueBy(d *dataTreeNavigator, context Context, expressionNode *ExpressionN
 
 	return context.ChildContext(results), nil
 
+}
+
+func getUniqueKeyValue(rhs Context) (string, error) {
+	keyValue := "null"
+	var err error
+
+	if rhs.MatchingNodes.Len() > 0 {
+		first := rhs.MatchingNodes.Front()
+		keyCandidate := first.Value.(*CandidateNode)
+		keyValue = keyCandidate.Value
+		if keyCandidate.Kind != ScalarNode {
+			keyValue, err = encodeToString(keyCandidate, encoderPreferences{YamlFormat, 0})
+		}
+	}
+	return keyValue, err
 }

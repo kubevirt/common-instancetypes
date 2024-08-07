@@ -1,4 +1,75 @@
-4.40.3:
+4.44.3:
+  - Fixed upper-case file extension detection, Thanks @ryenus (#2121)
+  - Log printing follow no-colors flag #2082
+  - Skip and warn when interpolating strings and theres a unclosed bracket #2083
+  - Fixed CSV content starting with # issue #2076
+  - Bumped dependencies 
+
+4.44.2:
+  - Handle numbers with underscores #2039
+  - Unique now works on maps and arrays #2068
+  - Added support for short hand splat with env[] expression #2071,
+    as well as many other operators (split,select,eval,pick..)
+  - Bumped dependencies
+  
+4.44.1:
+  - Added min/max operators (#1992) Thanks @mbenson
+  - Added pivot oeprator (#1993) Thanks @mbenson
+  - Fix: shell-completion (#2006) Thanks @codekow
+  - Handle escaped backslashes (#1997) Thanks @mbenson
+  - Fix npe when given filename ending with "." (#1994)
+  - Fix: linux (w/ selinux) build (#2004) Thanks @codekow
+  - Bumped dependencies 
+
+4.43.1:
+  - Added omit operator #1989 thanks @mbenson!
+  - Added tostring #72
+  - Added string interpolation #1149
+  - Can specify parent(n) levels #1970
+  - Can now multiply strings by numbers #1988  thanks @mbenson!
+  - Fixed CSV line break issue #1974
+  - Adding a EvaluateAll function to StringEvaluator #1966
+  - yqlib, default to colors off when using yaml library #1964
+  - Removed JSON output warning
+  - Bumped dependencies
+
+
+4.42.1:
+  - Can execute yq expression files directly with shebang #1851
+  - Added --csv-separator flag #1950
+  - Added --properties-separator option - thanks  @learnitall #1864
+  - Added --properties-array-brackets flag for properties encoder #1933
+  - Shell completion improvements - thanks @scop #1911
+  - Bumped dependencies
+
+
+4.41.1:
+  - Can now comment in yq expressions! #1919
+  - Fixed Toml decoding when table array defined before parent #1922
+  - Added new CSV option to turn off auto-parsing #1947
+  - Fixing with_entries context #1925
+  - Can now retrieve the alias names of merge anchors #1942
+
+
+4.40.7:
+  - Bumped dependencies
+
+4.40.6:
+  - Fix: empty TOML table #1924 - Thanks @elibroftw 
+  - Fixed "all" error message #1845
+  - Fixed to_entries[]
+  - Bumped dependencies
+
+4.40.5:
+  - Fixing seg fault on bad XML #1888
+  - Fixed handling of --- #1890, #1896
+  - Bumped dependencies
+
+4.40.4:
+  - Fixed bug with creating maps with values based off keys #1886, #1889
+  - Bumped dependencies
+
+4.40.3: 
   - Fixed JSON output issue with empty arrays #1880
 
 4.40.2:
