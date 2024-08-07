@@ -309,6 +309,8 @@ Name | Guest OS
 alpine | Alpine
 centos.7 | CentOS 7
 centos.7.desktop | CentOS 7
+centos.stream10 | CentOS Stream 10
+centos.stream10.desktop | CentOS Stream 10
 centos.stream8 | CentOS Stream 8
 centos.stream8.desktop | CentOS Stream 8
 centos.stream8.dpdk | CentOS Stream 8
@@ -320,6 +322,8 @@ fedora | Fedora (amd64)
 fedora.arm64 | Fedora (arm64)
 opensuse.leap | OpenSUSE Leap
 opensuse.tumbleweed | OpenSUSE Tumbleweed
+rhel.10 | Red Hat Enterprise Linux 10 Beta (amd64)
+rhel.10.arm64 | Red Hat Enterprise Linux 10 Beta (arm64)
 rhel.7 | Red Hat Enterprise Linux 7
 rhel.7.desktop | Red Hat Enterprise Linux 7
 rhel.8 | Red Hat Enterprise Linux 8
