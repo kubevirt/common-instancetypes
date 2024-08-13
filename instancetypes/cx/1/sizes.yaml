@@ -6,6 +6,7 @@ metadata:
   labels:
     instancetype.kubevirt.io/cpu: "8"
     instancetype.kubevirt.io/memory: "16Gi"
+    instancetype.kubevirt.io/size: "2xlarge"
 spec:
   cpu:
     guest: 8
@@ -19,6 +20,7 @@ metadata:
   labels:
     instancetype.kubevirt.io/cpu: "16"
     instancetype.kubevirt.io/memory: "32Gi"
+    instancetype.kubevirt.io/size: "4xlarge"
 spec:
   cpu:
     guest: 16
@@ -32,6 +34,7 @@ metadata:
   labels:
     instancetype.kubevirt.io/cpu: "32"
     instancetype.kubevirt.io/memory: "64Gi"
+    instancetype.kubevirt.io/size: "8xlarge"
 spec:
   cpu:
     guest: 32
@@ -45,6 +48,7 @@ metadata:
   labels:
     instancetype.kubevirt.io/cpu: "2"
     instancetype.kubevirt.io/memory: "4Gi"
+    instancetype.kubevirt.io/size: "large"
 spec:
   cpu:
     guest: 2
@@ -58,6 +62,7 @@ metadata:
   labels:
     instancetype.kubevirt.io/cpu: "1"
     instancetype.kubevirt.io/memory: "2Gi"
+    instancetype.kubevirt.io/size: "medium"
 spec:
   cpu:
     guest: 1
@@ -71,6 +76,7 @@ metadata:
   labels:
     instancetype.kubevirt.io/cpu: "4"
     instancetype.kubevirt.io/memory: "8Gi"
+    instancetype.kubevirt.io/size: "xlarge"
 spec:
   cpu:
     guest: 4

@@ -3,6 +3,7 @@ package tests
 import (
 	"fmt"
 	"strconv"
+	"strings"
 
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
@@ -33,6 +34,7 @@ var _ = Describe("Common instance types unit tests", func() {
 	instanceTypeFunctionMap := map[string]func(string, string, instancetypev1beta1.VirtualMachineClusterInstancetype) error{
 		"instancetype.kubevirt.io/cpu":                   checkCPU,
 		"instancetype.kubevirt.io/memory":                checkMemory,
+		"instancetype.kubevirt.io/size":                  checkSize,
 		"instancetype.kubevirt.io/hugepages":             checkHugepages,
 		"instancetype.kubevirt.io/gpus":                  checkGPUs,
 		"instancetype.kubevirt.io/numa":                  checkNuma,
@@ -112,6 +114,13 @@ func checkMemory(labelValue, labelName string, instanceType instancetypev1beta1.
 		return fmt.Errorf(instanceTypeErrorMessage, labelName, instanceType.Name)
 	}
 
+	return nil
+}
+
+func checkSize(labelValue, labelName string, instanceType instancetypev1beta1.VirtualMachineClusterInstancetype) error {
+	if strings.Split(instanceType.Name, ".")[1] != labelValue {
+		return fmt.Errorf(instanceTypeErrorMessage, labelName, instanceType.Name)
+	}
 	return nil
 }
 
