@@ -7,5 +7,5 @@ spec:
   features:
     preferredSmm: {}
   firmware:
-    preferredUseEfi: true
-    preferredUseSecureBoot: true
+    preferredEfi:
+      secureBoot: true
