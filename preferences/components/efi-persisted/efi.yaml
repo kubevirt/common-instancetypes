@@ -6,4 +6,5 @@ metadata:
 spec:
   firmware:
     preferredEfi:
+      persistent: true
       secureBoot: false
