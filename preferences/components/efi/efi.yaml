@@ -5,5 +5,5 @@ metadata:
   name: efi
 spec:
   firmware:
-    preferredUseEfi: true
-    preferredUseSecureBoot: false
+    preferredEfi:
+      secureBoot: false
