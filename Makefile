@@ -1,8 +1,7 @@
 SHELL=/bin/bash
 
-# Run `make schema` when updating this version and commit the created files.
-# TODO(lyarwood) - Host the expanded JSON schema elsewhere under the kubevirt namespace
 export KUBEVIRT_VERSION = v1.3.0
+export KUBEVIRT_TAG = release-1.3
 
 # Use the COMMON_INSTANCETYPES_CRI env variable to control if the following targets are executed within a container.
 # Supported runtimes are docker and podman. By default targets run directly on the host.
