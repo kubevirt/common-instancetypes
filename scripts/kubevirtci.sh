@@ -26,11 +26,9 @@ export KUBEVIRT_VERSION=${KUBEVIRT_VERSION:-main)}
 
 _base_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 _cluster_up_dir="${_base_dir}/_cluster-up"
-_virtctl_dir="${_cluster_up_dir}/_out/cmd/virtctl"
 _kubectl="${_cluster_up_dir}/cluster-up/kubectl.sh"
 _kubessh="${_cluster_up_dir}/cluster-up/ssh.sh"
 _kubevirtcicli="${_cluster_up_dir}/cluster-up/cli.sh"
-_virtctl="${_cluster_up_dir}/cluster-up/virtctl.sh"
 _action=$1
 shift
 
@@ -56,12 +54,6 @@ function kubevirtci::up() {
   echo "installing kubevirt..."
   ${_kubectl} apply -f "https://github.com/kubevirt/kubevirt/releases/download/${KUBEVIRT_VERSION}/kubevirt-operator.yaml"
   ${_kubectl} apply -f "https://github.com/kubevirt/kubevirt/releases/download/${KUBEVIRT_VERSION}/kubevirt-cr.yaml"
-
-  # This is needed because kubevirtci does not provide its own virtctl binary
-  echo "installing virtctl..."
-  mkdir -p "${_virtctl_dir}"
-  curl -L "https://github.com/kubevirt/kubevirt/releases/download/${KUBEVIRT_VERSION}/virtctl-${KUBEVIRT_VERSION}-linux-amd64" -o "${_virtctl_dir}/virtctl"
-  chmod +x "${_virtctl_dir}/virtctl"
 
   echo "waiting for kubevirt to become ready, this can take a few minutes..."
   ${_kubectl} -n kubevirt wait kv kubevirt --for condition=Available --timeout=15m
@@ -94,10 +86,6 @@ function kubevirtci::registry() {
   echo "localhost:${port}"
 }
 
-function kubevirtci::functest() {
-  KUBECTL=${_kubectl} VIRTCTL=${_virtctl} "${_base_dir}/scripts/functest.sh"
-}
-
 kubevirtci::fetch_kubevirtci
 
 case ${_action} in
@@ -119,20 +107,14 @@ case ${_action} in
   "registry")
     kubevirtci::registry
     ;;
-  "functest")
-    kubevirtci::functest
-    ;;
   "ssh")
     ${_kubessh} "$@"
     ;;
   "kubectl")
     ${_kubectl} "$@"
     ;;
-  "virtctl")
-    ${_virtctl} "$@"
-    ;;
   *)
-    echo "No command provided, known commands are 'up', 'down', 'sync', 'ssh', 'kubeconfig', 'registry', 'kubectl', 'functest'"
+    echo "No command provided, known commands are 'up', 'down', 'sync', 'ssh', 'kubeconfig', 'registry', 'kubectl'"
     exit 1
     ;;
 esac
