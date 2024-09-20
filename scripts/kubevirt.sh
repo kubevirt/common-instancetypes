@@ -26,7 +26,6 @@ _base_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 _kubectl="${_base_dir}/_kubevirt/cluster-up/kubectl.sh"
 _kubessh="${_base_dir}/_kubevirt/cluster-up/ssh.sh"
 _kubevirtcicli="${_base_dir}/_kubevirt/cluster-up/cli.sh"
-_virtctl="${_base_dir}/_kubevirt/cluster-up/virtctl.sh"
 _action=$1
 shift
 
@@ -67,10 +66,6 @@ function kubevirt::registry() {
   echo "localhost:${port}"
 }
 
-function kubevirt::functest() {
-  KUBECTL=${_kubectl} VIRTCTL=${_virtctl} "${_base_dir}/scripts/functest.sh"
-}
-
 kubevirt::install
 
 cd "${_base_dir}"/_kubevirt
@@ -94,20 +89,14 @@ case ${_action} in
   "registry")
     kubevirt::registry
     ;;
-  "functest")
-    kubevirt::functest
-    ;;
   "ssh")
     ${_kubessh} "$@"
     ;;
   "kubectl")
     ${_kubectl} "$@"
     ;;
-  "virtctl")
-    ${_virtctl} "$@"
-    ;;
   *)
-    echo "No command provided, known commands are 'up', 'down', 'sync', 'ssh', 'kubeconfig', 'registry', 'kubectl', 'functest'"
+    echo "No command provided, known commands are 'up', 'down', 'sync', 'ssh', 'kubeconfig', 'registry', 'kubectl'"
     exit 1
     ;;
 esac
