@@ -11,5 +11,6 @@ components:
   - ../../../components/disk-dedicatediothread
   - ../../../components/efi
   - ../../../components/rng
+  - ../../../components/secureboot
 
 nameSuffix: ".10"
