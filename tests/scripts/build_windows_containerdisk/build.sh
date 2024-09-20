@@ -56,8 +56,15 @@ case "$WINDOWS_VERSION" in
     VIRT_INSTALL_EXTRA_ARGS=(--boot uefi)
     DEFAULT_PREFERENCE=windows.2k22.virtio
     ;;
+  windows2k25)
+    # There is no win2k25 as yet so use win2k22 for now.
+    OS_VARIANT=win2k22
+    WINDOWS_ISO_OVERLAYS=(overlays/generic overlays/windows2k25)
+    VIRT_INSTALL_EXTRA_ARGS=(--boot uefi)
+    DEFAULT_PREFERENCE=windows.2k25.virtio
+    ;;
   *)
-    echo "Need a valid Windows image version to build: windows10, windows11, windows2k16, windows2k19, windows2k22"
+    echo "Need a valid Windows image version to build: windows10, windows11, windows2k16, windows2k19, windows2k22, windows2k25"
     exit 1
     ;;
 esac
@@ -92,7 +99,7 @@ while LANG=C virsh domstate "${WINDOWS_VERSION}" | grep running > /dev/null; do
 done
 
 # Compress VM disk
-qemu-img convert -p -O qcow2 -c "$HOME/.local/share/libvirt/images/${WINDOWS_VERSION}.qcow2" "${WINDOWS_VERSION}.qcow2"
+qemu-img convert -p -O qcow2 -c $(virsh domblklist ${WINDOWS_VERSION} --details | awk '/disk/{print $4}') "${WINDOWS_VERSION}.qcow2"
 
 # Remove VM and all images
 virsh undefine --nvram --remove-all-storage "${WINDOWS_VERSION}"

@@ -1,0 +1,7 @@
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachinePreference
+metadata:
+  name: metadata
+  annotations:
+    openshift.io/display-name: "Microsoft Windows Server 2025 (virtio)"
