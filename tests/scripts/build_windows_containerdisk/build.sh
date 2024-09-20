@@ -99,7 +99,7 @@ while LANG=C virsh domstate "${WINDOWS_VERSION}" | grep running > /dev/null; do
 done
 
 # Compress VM disk
-qemu-img convert -p -O qcow2 -c "$HOME/.local/share/libvirt/images/${WINDOWS_VERSION}.qcow2" "${WINDOWS_VERSION}.qcow2"
+qemu-img convert -p -O qcow2 -c $(virsh domblklist ${WINDOWS_VERSION} --details | awk '/disk/{print $4}') "${WINDOWS_VERSION}.qcow2"
 
 # Remove VM and all images
 virsh undefine --nvram --remove-all-storage "${WINDOWS_VERSION}"
