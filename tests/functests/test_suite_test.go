@@ -5,6 +5,7 @@ import (
 	"flag"
 	"os"
 	"testing"
+	"time"
 
 	. "github.com/onsi/ginkgo/v2"
 	ginkgo_reporters "github.com/onsi/ginkgo/v2/reporters"
@@ -35,6 +36,8 @@ const (
 	defaultWindows2k16ContainerDisk   = "registry:5000/windows2k16-container-disk:latest"
 	defaultWindows2k19ContainerDisk   = "registry:5000/windows2k19-container-disk:latest"
 	defaultWindows2k22ContainerDisk   = "registry:5000/windows2k22-container-disk:latest"
+
+	defaultVMReadyTimeout = 300 * time.Second
 )
 
 var (
@@ -54,6 +57,8 @@ var (
 	windows2k16ContainerDisk   string
 	windows2k19ContainerDisk   string
 	windows2k22ContainerDisk   string
+
+	windowsReadyTimeout time.Duration
 )
 
 //nolint:gochecknoinits
@@ -86,6 +91,8 @@ func init() {
 		defaultWindows2k19ContainerDisk, "Windows Server 2019 container disk used by functional tests")
 	flag.StringVar(&windows2k22ContainerDisk, "windows-2k22-container-disk",
 		defaultWindows2k22ContainerDisk, "Windows Server 2022 container disk used by functional tests")
+	flag.DurationVar(&windowsReadyTimeout, "windows-ready-timeout",
+		defaultVMReadyTimeout, "Duration after Windows VM will timeout")
 }
 
 func checkDeployedResources() {
