@@ -1,7 +1,6 @@
 module github.com/kubevirt/common-instancetypes/tools
 
 go 1.22.4
-
 require (
 	github.com/mikefarah/yq/v4 v4.44.3
 	github.com/yannh/kubeconform v0.6.7
@@ -43,7 +42,6 @@ require (
 	github.com/spf13/pflag v1.0.5 // indirect
 	github.com/xlab/treeprint v1.2.0 // indirect
 	github.com/yuin/gopher-lua v1.1.1 // indirect
-	go.starlark.net v0.0.0-20200306205701-8dd3e2ee1dd5 // indirect
 	golang.org/x/net v0.29.0 // indirect
 	golang.org/x/sys v0.25.0 // indirect
 	golang.org/x/text v0.18.0 // indirect
@@ -56,6 +54,6 @@ require (
 	k8s.io/kube-openapi v0.0.0-20231010175941-2dd684a91f00 // indirect
 	sigs.k8s.io/kustomize/api v0.17.3 // indirect
 	sigs.k8s.io/kustomize/cmd/config v0.14.2 // indirect
-	sigs.k8s.io/kustomize/kyaml v0.17.2 // indirect
+	sigs.k8s.io/kustomize/kyaml v0.18.0 // indirect
 	sigs.k8s.io/yaml v1.4.0 // indirect
 )
