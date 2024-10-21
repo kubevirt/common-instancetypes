@@ -45,7 +45,7 @@ generate: kustomize yq
 
 .PHONY: deploy
 deploy: lint
-	scripts/deploy-kubevirt-and-cdi.sh && KUBECTL=kubectl scripts/sync.sh
+	scripts/deploy-kubevirt-and-cdi.sh && KUBECTL=kubectl BASEDIR=$(CURDIR) scripts/sync.sh
 
 .PHONY: functest
 functest:
