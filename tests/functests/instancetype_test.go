@@ -208,7 +208,7 @@ var _ = Describe("Common instance types func tests", func() {
 			Entry("[test_id:????] Windows 11", windows11ContainerDisk, "windows.11.virtio",
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnWindows}),
 			Entry("[test_id:????] Windows Server 2016", windows2k16ContainerDisk, "windows.2k16.virtio",
-				[]testFn{expectGuestAgentToBeConnected}),
+				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnWindows}),
 			Entry("[test_id:????] Windows Server 2019", windows2k19ContainerDisk, "windows.2k19.virtio",
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnWindows}),
 			Entry("[test_id:????] Windows Server 2022", windows2k22ContainerDisk, "windows.2k22.virtio",
