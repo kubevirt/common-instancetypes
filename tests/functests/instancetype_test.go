@@ -109,10 +109,10 @@ var _ = Describe("Common instance types func tests", func() {
 
 		It("[test_id:10737] can be created when enough resources are provided", func() {
 			preferenceInstancetypeMap := map[string]string{
-				"centos.stream8.dpdk": "u1.2xlarge",
-				"centos.stream9.dpdk": "u1.2xlarge",
-				"rhel.8.dpdk":         "u1.2xlarge",
-				"rhel.9.dpdk":         "u1.2xlarge",
+				"centos.stream8.dpdk": "u1.xlarge",
+				"centos.stream9.dpdk": "u1.xlarge",
+				"rhel.8.dpdk":         "u1.xlarge",
+				"rhel.9.dpdk":         "u1.xlarge",
 				"rhel.9.realtime":     "u1.xlarge",
 				"windows.11":          "u1.2xmedium",
 				"windows.11.virtio":   "u1.2xmedium",

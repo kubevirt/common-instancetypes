@@ -7,6 +7,6 @@ spec:
   # https://access.redhat.com/articles/rhel-limits#minimum-required-memory-3
   requirements:
     cpu:
-      guest: 2
+      guest: 4
     memory:
       guest: 1.5Gi
