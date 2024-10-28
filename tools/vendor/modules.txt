@@ -16,7 +16,7 @@ github.com/dimchansky/utfbom
 # github.com/elliotchance/orderedmap v1.6.0
 ## explicit; go 1.12
 github.com/elliotchance/orderedmap
-# github.com/fatih/color v1.17.0
+# github.com/fatih/color v1.18.0
 ## explicit; go 1.17
 github.com/fatih/color
 # github.com/go-errors/errors v1.5.1
