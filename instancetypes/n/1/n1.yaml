@@ -13,6 +13,7 @@ metadata:
       of running DPDK workloads and being marked with the respective
       node-role.kubevirt.io/worker-dpdk label as such.
     instancetype.kubevirt.io/displayName: "Network"
+    instancetype.kubevirt.io/useCaseExamples: "VNFs"
   labels:
     instancetype.kubevirt.io/class: "network"
     instancetype.kubevirt.io/icon-pf: "pficon-network"
