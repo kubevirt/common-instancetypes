@@ -43,7 +43,7 @@ github.com/goccy/go-json/internal/encoder/vm_color_indent
 github.com/goccy/go-json/internal/encoder/vm_indent
 github.com/goccy/go-json/internal/errors
 github.com/goccy/go-json/internal/runtime
-# github.com/goccy/go-yaml v1.12.0
+# github.com/goccy/go-yaml v1.13.4
 ## explicit; go 1.19
 github.com/goccy/go-yaml
 github.com/goccy/go-yaml/ast
@@ -176,10 +176,6 @@ golang.org/x/text/language
 golang.org/x/text/runes
 golang.org/x/text/transform
 golang.org/x/text/unicode/norm
-# golang.org/x/xerrors v0.0.0-20220907171357-04be3eba64a2
-## explicit; go 1.17
-golang.org/x/xerrors
-golang.org/x/xerrors/internal
 # google.golang.org/protobuf v1.35.1
 ## explicit; go 1.21
 google.golang.org/protobuf/encoding/prototext
