@@ -23,9 +23,9 @@ export KUBEVIRT_MEMORY_SIZE="${KUBEVIRT_MEMORY_SIZE:-16G}"
 export KUBEVIRT_TAG="${KUBEVIRT_TAG:-main}"
 
 _base_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
-_kubectl="${_base_dir}/_kubevirt/cluster-up/kubectl.sh"
-_kubessh="${_base_dir}/_kubevirt/cluster-up/ssh.sh"
-_kubevirtcicli="${_base_dir}/_kubevirt/cluster-up/cli.sh"
+_kubectl="${_base_dir}/_kubevirt/kubevirtci/cluster-up/kubectl.sh"
+_kubessh="${_base_dir}/_kubevirt/kubevirtci/cluster-up/ssh.sh"
+_kubevirtcicli="${_base_dir}/_kubevirt/kubevirtci/cluster-up/cli.sh"
 _action=$1
 shift
 
@@ -58,7 +58,7 @@ function kubevirt::sync-containerdisks() {
 }
 
 function kubevirt::kubeconfig() {
-  "${_base_dir}/_kubevirt/cluster-up/kubeconfig.sh"
+  "${_base_dir}/_kubevirt/kubevirtci/cluster-up/kubeconfig.sh"
 }
 
 function kubevirt::registry() {
