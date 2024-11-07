@@ -251,7 +251,11 @@ func createInstancetype(cpu int, name, memory string) {
 	Expect(err).ToNot(HaveOccurred())
 }
 
-func randomVM(instancetype *v1.InstancetypeMatcher, preference *v1.PreferenceMatcher, runStrategy v1.VirtualMachineRunStrategy) *v1.VirtualMachine {
+func randomVM(
+	instancetype *v1.InstancetypeMatcher,
+	preference *v1.PreferenceMatcher,
+	runStrategy v1.VirtualMachineRunStrategy,
+) *v1.VirtualMachine {
 	name := "test-vm-" + k8srand.String(5)
 	return &v1.VirtualMachine{
 		ObjectMeta: metav1.ObjectMeta{
@@ -259,7 +263,7 @@ func randomVM(instancetype *v1.InstancetypeMatcher, preference *v1.PreferenceMat
 			Namespace: testNamespace,
 		},
 		Spec: v1.VirtualMachineSpec{
-			RunStrategy:  ptr.To(runStrategy),
+			RunStrategy:  &runStrategy,
 			Instancetype: instancetype,
 			Preference:   preference,
 			Template: &v1.VirtualMachineInstanceTemplateSpec{
