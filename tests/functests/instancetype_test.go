@@ -65,7 +65,7 @@ var _ = Describe("Common instance types func tests", func() {
 
 	It("[test_id:10735] VirtualMachine using an instancetype can be created", func() {
 		for _, instancetype := range getClusterInstancetypes(virtClient) {
-			vm = randomVM(&v1.InstancetypeMatcher{Name: instancetype.Name}, nil, false)
+			vm = randomVM(&v1.InstancetypeMatcher{Name: instancetype.Name}, nil, v1.RunStrategyHalted)
 			vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm, metav1.CreateOptions{})
 			Expect(err).ToNot(HaveOccurred())
 		}
@@ -79,7 +79,7 @@ var _ = Describe("Common instance types func tests", func() {
 				Kind: "VirtualMachineInstancetype",
 			}
 			for _, preference := range getClusterPreferences(virtClient) {
-				vm = randomVM(&instanceTypeMatcher, &v1.PreferenceMatcher{Name: preference.Name}, false)
+				vm = randomVM(&instanceTypeMatcher, &v1.PreferenceMatcher{Name: preference.Name}, v1.RunStrategyHalted)
 				_, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm, metav1.CreateOptions{})
 				Expect(err).To(MatchError(
 					fmt.Sprintf(
@@ -101,7 +101,7 @@ var _ = Describe("Common instance types func tests", func() {
 				if preference.Spec.Requirements.CPU == nil || preference.Spec.Requirements.CPU.Guest < 2 {
 					continue
 				}
-				vm = randomVM(&instanceTypeMatcher, &v1.PreferenceMatcher{Name: preference.Name}, false)
+				vm = randomVM(&instanceTypeMatcher, &v1.PreferenceMatcher{Name: preference.Name}, v1.RunStrategyHalted)
 				_, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm, metav1.CreateOptions{})
 				Expect(err).To(MatchError(MatchRegexp("1 vCPU(?:s)? provided by (?:the )?instance type")))
 			}
@@ -122,7 +122,7 @@ var _ = Describe("Common instance types func tests", func() {
 				if pInstancetype, ok := preferenceInstancetypeMap[preference.Name]; ok {
 					instancetype = pInstancetype
 				}
-				vm = randomVM(&v1.InstancetypeMatcher{Name: instancetype}, &v1.PreferenceMatcher{Name: preference.Name}, false)
+				vm = randomVM(&v1.InstancetypeMatcher{Name: instancetype}, &v1.PreferenceMatcher{Name: preference.Name}, v1.RunStrategyHalted)
 				vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm, metav1.CreateOptions{})
 				Expect(err).ToNot(HaveOccurred())
 			}
@@ -151,7 +151,7 @@ var _ = Describe("Common instance types func tests", func() {
 			if !hasArch {
 				Skip(fmt.Sprintf("skipping as no preference provided for arch %s", rt.GOARCH))
 			}
-			vm = randomVM(&v1.InstancetypeMatcher{Name: "u1.small"}, &v1.PreferenceMatcher{Name: preference}, true)
+			vm = randomVM(&v1.InstancetypeMatcher{Name: "u1.small"}, &v1.PreferenceMatcher{Name: preference}, v1.RunStrategyAlways)
 			addContainerDisk(vm, containerDisk)
 			addCloudInitWithAuthorizedKey(vm, privKey)
 			vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm, metav1.CreateOptions{})
@@ -192,7 +192,7 @@ var _ = Describe("Common instance types func tests", func() {
 		)
 
 		DescribeTable("a Windows guest with", func(containerDisk, preference string, testFns []testFn) {
-			vm = randomVM(&v1.InstancetypeMatcher{Name: "u1.2xmedium"}, &v1.PreferenceMatcher{Name: preference}, true)
+			vm = randomVM(&v1.InstancetypeMatcher{Name: "u1.2xmedium"}, &v1.PreferenceMatcher{Name: preference}, v1.RunStrategyAlways)
 			addContainerDisk(vm, containerDisk)
 			vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm, metav1.CreateOptions{})
 			Expect(err).ToNot(HaveOccurred())
@@ -251,7 +251,7 @@ func createInstancetype(cpu int, name, memory string) {
 	Expect(err).ToNot(HaveOccurred())
 }
 
-func randomVM(instancetype *v1.InstancetypeMatcher, preference *v1.PreferenceMatcher, running bool) *v1.VirtualMachine {
+func randomVM(instancetype *v1.InstancetypeMatcher, preference *v1.PreferenceMatcher, runStrategy v1.VirtualMachineRunStrategy) *v1.VirtualMachine {
 	name := "test-vm-" + k8srand.String(5)
 	return &v1.VirtualMachine{
 		ObjectMeta: metav1.ObjectMeta{
@@ -259,7 +259,7 @@ func randomVM(instancetype *v1.InstancetypeMatcher, preference *v1.PreferenceMat
 			Namespace: testNamespace,
 		},
 		Spec: v1.VirtualMachineSpec{
-			Running:      ptr.To(running),
+			RunStrategy:  ptr.To(runStrategy),
 			Instancetype: instancetype,
 			Preference:   preference,
 			Template: &v1.VirtualMachineInstanceTemplateSpec{
