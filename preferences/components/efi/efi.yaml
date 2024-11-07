@@ -2,8 +2,8 @@
 apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
-  name: tpm
+  name: efi
 spec:
-  devices:
-    preferredTPM:
-      persistent: true
+  firmware:
+    preferredEfi:
+      secureBoot: false
