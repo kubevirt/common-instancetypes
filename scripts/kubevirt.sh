@@ -39,7 +39,7 @@ function kubevirt::up() {
   make cluster-up -C "${_base_dir}/_kubevirt" && make cluster-sync -C "${_base_dir}/_kubevirt"
 
   echo "enabling feature gates to validate instance types and preferences"
-  ${_kubectl} patch kv/kubevirt -n kubevirt --type merge -p '{"spec":{"configuration":{"commonInstancetypesDeployment": {"enable": false},"developerConfiguration":{"featureGates": ["GPU", "NUMA", "VMPersistentState"]},"vmStateStorageClass":"nfs-csi"}}}'
+  ${_kubectl} patch kv/kubevirt -n kubevirt --type merge -p '{"spec":{"configuration":{"commonInstancetypesDeployment": {"enabled": false},"developerConfiguration":{"featureGates": ["GPU", "NUMA", "VMPersistentState"]},"vmStateStorageClass":"nfs-csi"}}}'
 
   echo "waiting for kubevirt to become ready, this can take a few minutes..."
   ${_kubectl} -n kubevirt wait kv kubevirt --for condition=Available --timeout=15m
