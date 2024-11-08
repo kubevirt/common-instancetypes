@@ -4,7 +4,6 @@ kind: Kustomization
 
 resources:
   - ./cx
-  - ./gn
   - ./m
   - ./n
   - ./u

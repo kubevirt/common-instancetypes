@@ -8,7 +8,6 @@ For example, to list all cluster instance types deployed in the current env that
 $ kubectl get virtualmachineclusterinstancetype -linstancetype.kubevirt.io/cpu=4
 NAME         AGE
 cx1.xlarge   39s
-gn1.xlarge   39s
 m1.xlarge    39s
 n1.large     39s
 n1.medium    39s
@@ -67,10 +66,6 @@ If [isolateEmulatorThread](https://kubevirt.io/user-guide/compute/dedicated_cpu_
 ### `instancetype.kubevirt.io/hugepages` (optional)
 
 If [hugepages](https://kubevirt.io/user-guide/compute/hugepages/) are requested by the instance type.
-
-### `instancetype.kubevirt.io/gpus` (optional)
-
-If [GPUs](https://kubevirt.io/user-guide/compute/mediated_devices_configuration/) are requested by the instance type.
 
 ## Preferences
 

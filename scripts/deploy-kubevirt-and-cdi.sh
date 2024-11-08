@@ -16,16 +16,6 @@ KUBEVIRT_NAMESPACE=${1:-kubevirt}
 kubectl apply -n "${KUBEVIRT_NAMESPACE}" -f "https://github.com/kubevirt/kubevirt/releases/download/${KUBEVIRT_VERSION}/kubevirt-operator.yaml"
 kubectl apply -n "${KUBEVIRT_NAMESPACE}" -f "https://github.com/kubevirt/kubevirt/releases/download/${KUBEVIRT_VERSION}/kubevirt-cr.yaml"
 
-kubectl patch -n "${KUBEVIRT_NAMESPACE}" kubevirt kubevirt --type='json' -p '[{
-  "op": "add",
-  "path": "/spec/configuration/developerConfiguration/featureGates/-",
-  "value": "NUMA",
-},{
-  "op": "add",
-  "path": "/spec/configuration/developerConfiguration/featureGates/-",
-  "value": "GPU",
-}]'
-
 echo "Waiting for Kubevirt to be ready..."
 kubectl wait --for=condition=Available --timeout=600s -n "${KUBEVIRT_NAMESPACE}" kv/kubevirt
 
