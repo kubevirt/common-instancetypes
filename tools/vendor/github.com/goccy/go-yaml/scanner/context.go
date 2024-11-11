@@ -104,9 +104,12 @@ func (c *Context) updateDocumentIndentColumn() {
 }
 
 func (c *Context) docFirstLineIndentColumnByDocOpt() int {
-	trimmed := strings.TrimPrefix(c.docOpt, "-")
-	trimmed = strings.TrimPrefix(trimmed, "+")
-	i, _ := strconv.ParseInt(trimmed, 10, 64)
+	opt := c.docOpt
+	opt = strings.TrimPrefix(opt, "-")
+	opt = strings.TrimPrefix(opt, "+")
+	opt = strings.TrimSuffix(opt, "-")
+	opt = strings.TrimSuffix(opt, "+")
+	i, _ := strconv.ParseInt(opt, 10, 64)
 	return int(i)
 }
 
@@ -142,13 +145,8 @@ func (c *Context) addDocumentIndent(column int) {
 
 	// If the first line of the document has already been evaluated, the number is treated as the threshold, since the `docFirstLineIndentColumn` is a positive number.
 	if c.docFirstLineIndentColumn <= column {
-		// In the folded state, new-line-char is normally treated as space,
-		// but if the number of indents is different from the number of indents in the first line,
-		// new-line-char is used as is instead of space.
-		// Therefore, it is necessary to replace the space already added to buf.
 		// `c.docFoldedNewLine` is a variable that is set to true for every newline.
-		if c.isFolded && c.docFoldedNewLine {
-			c.buf[len(c.buf)-1] = '\n'
+		if (c.isFolded || c.isRawFolded) && c.docFoldedNewLine {
 			c.docFoldedNewLine = false
 		}
 		// Since addBuf ignore space character, add to the buffer directly.
@@ -156,19 +154,23 @@ func (c *Context) addDocumentIndent(column int) {
 	}
 }
 
-func (c *Context) addDocumentNewLineInFolded(column int) {
-	if !c.isFolded {
+// updateDocumentNewLineInFolded if Folded or RawFolded context and the content on the current line starts at the same column as the previous line,
+// treat the new-line-char as a space.
+func (c *Context) updateDocumentNewLineInFolded(column int) {
+	if c.isLiteral {
 		return
 	}
+
+	// Folded or RawFolded.
+
 	if !c.docFoldedNewLine {
 		return
 	}
-	if c.docFirstLineIndentColumn == c.docLineIndentColumn &&
-		c.docLineIndentColumn == c.docPrevLineIndentColumn {
-		// use space as a new line delimiter.
-		return
+	if c.docLineIndentColumn == c.docPrevLineIndentColumn {
+		if c.buf[len(c.buf)-1] == '\n' {
+			c.buf[len(c.buf)-1] = ' '
+		}
 	}
-	c.buf[len(c.buf)-1] = '\n'
 	c.docFoldedNewLine = false
 }
 
@@ -270,25 +272,43 @@ func (c *Context) existsBuffer() bool {
 
 func (c *Context) bufferedSrc() []rune {
 	src := c.buf[:c.notSpaceCharPos]
-	if c.isDocument() && strings.HasPrefix(c.docOpt, "-") {
-		// remove end '\n' character and trailing empty lines
+	if c.isDocument() {
+		// remove end '\n' character and trailing empty lines.
 		// https://yaml.org/spec/1.2.2/#8112-block-chomping-indicator
-		for {
-			if len(src) > 0 && src[len(src)-1] == '\n' {
-				src = src[:len(src)-1]
-				continue
+		if c.hasTrimAllEndNewlineOpt() {
+			// If the '-' flag is specified, all trailing newline characters will be removed.
+			src = []rune(strings.TrimRight(string(src), "\n"))
+		} else {
+			// Normally, all but one of the trailing newline characters are removed.
+			var newLineCharCount int
+			for i := len(src) - 1; i >= 0; i-- {
+				if src[i] == '\n' {
+					newLineCharCount++
+					continue
+				}
+				break
 			}
-			break
+			removedNewLineCharCount := newLineCharCount - 1
+			for removedNewLineCharCount > 0 {
+				src = []rune(strings.TrimSuffix(string(src), "\n"))
+				removedNewLineCharCount--
+			}
 		}
-		for {
-			if len(src) > 0 && src[len(src)-1] == ' ' {
-				src = src[:len(src)-1]
-				continue
-			}
-			break
+
+		// If the text ends with a space character, remove all of them.
+		src = []rune(strings.TrimRight(string(src), " "))
+		if string(src) == "\n" {
+			// If the content consists only of a newline,
+			// it can be considered as the document ending without any specified value,
+			// so it is treated as an empty string.
+			src = []rune{}
 		}
 	}
 	return src
+}
+
+func (c *Context) hasTrimAllEndNewlineOpt() bool {
+	return strings.HasPrefix(c.docOpt, "-") || strings.HasSuffix(c.docOpt, "-") || c.isRawFolded
 }
 
 func (c *Context) bufferedToken(pos *token.Position) *token.Token {
