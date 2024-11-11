@@ -2,6 +2,7 @@ package token
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -508,99 +509,95 @@ var (
 	}
 )
 
-type numType int
+type NumberType string
 
 const (
-	numTypeNone numType = iota
-	numTypeBinary
-	numTypeOctet
-	numTypeHex
-	numTypeFloat
+	NumberTypeDecimal NumberType = "decimal"
+	NumberTypeBinary  NumberType = "binary"
+	NumberTypeOctet   NumberType = "octet"
+	NumberTypeHex     NumberType = "hex"
+	NumberTypeFloat   NumberType = "float"
 )
 
-type numStat struct {
-	isNum bool
-	typ   numType
+type NumberValue struct {
+	Type  NumberType
+	Value any
+	Text  string
 }
 
-func getNumberStat(str string) *numStat {
-	stat := &numStat{}
-	if str == "" {
-		return stat
+func ToNumber(value string) *NumberValue {
+	if len(value) == 0 {
+		return nil
 	}
-	if str == "-" || str == "." || str == "+" || str == "_" {
-		return stat
+	if strings.HasPrefix(value, "_") {
+		return nil
 	}
-	if str[0] == '_' {
-		return stat
+	dotCount := strings.Count(value, ".")
+	if dotCount > 1 {
+		return nil
 	}
-	dotFound := false
-	isNegative := false
-	isExponent := false
-	if str[0] == '-' {
-		isNegative = true
-	}
-	for idx, c := range str {
-		switch c {
-		case 'x':
-			if (isNegative && idx == 2) || (!isNegative && idx == 1) {
-				continue
-			}
-		case 'o':
-			if (isNegative && idx == 2) || (!isNegative && idx == 1) {
-				continue
-			}
-		case '0', '1', '2', '3', '4', '5', '6', '7', '8', '9':
-			continue
-		case 'a', 'b', 'c', 'd', 'e', 'f', 'A', 'B', 'C', 'D', 'E', 'F':
-			if (len(str) > 2 && str[0] == '0' && str[1] == 'x') ||
-				(len(str) > 3 && isNegative && str[1] == '0' && str[2] == 'x') {
-				// hex number
-				continue
-			}
-			if c == 'b' && ((isNegative && idx == 2) || (!isNegative && idx == 1)) {
-				// binary number
-				continue
-			}
-			if (c == 'e' || c == 'E') && dotFound {
-				// exponent
-				isExponent = true
-				continue
-			}
-		case '.':
-			if dotFound {
-				// multiple dot
-				return stat
-			}
-			dotFound = true
-			continue
-		case '-':
-			if idx == 0 || isExponent {
-				continue
-			}
-		case '+':
-			if idx == 0 || isExponent {
-				continue
-			}
-		case '_':
-			continue
-		}
-		return stat
-	}
-	stat.isNum = true
+
+	isNegative := strings.HasPrefix(value, "-")
+	normalized := strings.ReplaceAll(strings.TrimPrefix(strings.TrimPrefix(value, "+"), "-"), "_", "")
+
+	var (
+		typ  NumberType
+		base int
+	)
 	switch {
-	case dotFound:
-		stat.typ = numTypeFloat
-	case strings.HasPrefix(str, "0b") || strings.HasPrefix(str, "-0b"):
-		stat.typ = numTypeBinary
-	case strings.HasPrefix(str, "0x") || strings.HasPrefix(str, "-0x"):
-		stat.typ = numTypeHex
-	case strings.HasPrefix(str, "0o") || strings.HasPrefix(str, "-0o"):
-		stat.typ = numTypeOctet
-	case (len(str) > 1 && str[0] == '0') || (len(str) > 1 && str[0] == '-' && str[1] == '0'):
-		stat.typ = numTypeOctet
+	case strings.HasPrefix(normalized, "0x"):
+		normalized = strings.TrimPrefix(normalized, "0x")
+		base = 16
+		typ = NumberTypeHex
+	case strings.HasPrefix(normalized, "0o"):
+		normalized = strings.TrimPrefix(normalized, "0o")
+		base = 8
+		typ = NumberTypeOctet
+	case strings.HasPrefix(normalized, "0b"):
+		normalized = strings.TrimPrefix(normalized, "0b")
+		base = 2
+		typ = NumberTypeBinary
+	case strings.HasPrefix(normalized, "0") && len(normalized) > 1 && dotCount == 0:
+		base = 8
+		typ = NumberTypeOctet
+	case dotCount == 1:
+		typ = NumberTypeFloat
+	default:
+		typ = NumberTypeDecimal
+		base = 10
 	}
-	return stat
+
+	text := normalized
+	if isNegative {
+		text = "-" + text
+	}
+
+	var v any
+	if typ == NumberTypeFloat {
+		f, err := strconv.ParseFloat(text, 64)
+		if err != nil {
+			return nil
+		}
+		v = f
+	} else if isNegative {
+		i, err := strconv.ParseInt(text, base, 64)
+		if err != nil {
+			return nil
+		}
+		v = i
+	} else {
+		u, err := strconv.ParseUint(text, base, 64)
+		if err != nil {
+			return nil
+		}
+		v = u
+	}
+
+	return &NumberValue{
+		Type:  typ,
+		Value: v,
+		Text:  text,
+	}
 }
 
 func looksLikeTimeValue(value string) bool {
@@ -627,7 +624,7 @@ func IsNeedQuoted(value string) bool {
 	if _, exists := reservedEncKeywordMap[value]; exists {
 		return true
 	}
-	if stat := getNumberStat(value); stat.isNum {
+	if num := ToNumber(value); num != nil {
 		return true
 	}
 	first := value[0]
@@ -672,13 +669,13 @@ func LiteralBlockHeader(value string) string {
 	}
 }
 
-// New create reserved keyword token or number token and other string token
+// New create reserved keyword token or number token and other string token.
 func New(value string, org string, pos *Position) *Token {
 	fn := reservedKeywordMap[value]
 	if fn != nil {
 		return fn(value, org, pos)
 	}
-	if stat := getNumberStat(value); stat.isNum {
+	if num := ToNumber(value); num != nil {
 		tk := &Token{
 			Type:          IntegerType,
 			CharacterType: CharacterTypeMiscellaneous,
@@ -687,14 +684,14 @@ func New(value string, org string, pos *Position) *Token {
 			Origin:        org,
 			Position:      pos,
 		}
-		switch stat.typ {
-		case numTypeFloat:
+		switch num.Type {
+		case NumberTypeFloat:
 			tk.Type = FloatType
-		case numTypeBinary:
+		case NumberTypeBinary:
 			tk.Type = BinaryIntegerType
-		case numTypeOctet:
+		case NumberTypeOctet:
 			tk.Type = OctetIntegerType
-		case numTypeHex:
+		case NumberTypeHex:
 			tk.Type = HexIntegerType
 		}
 		return tk
