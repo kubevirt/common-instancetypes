@@ -36,7 +36,6 @@ var _ = Describe("Common instance types unit tests", func() {
 		"instancetype.kubevirt.io/memory":                checkMemory,
 		"instancetype.kubevirt.io/size":                  checkSize,
 		"instancetype.kubevirt.io/hugepages":             checkHugepages,
-		"instancetype.kubevirt.io/gpus":                  checkGPUs,
 		"instancetype.kubevirt.io/numa":                  checkNuma,
 		"instancetype.kubevirt.io/dedicatedCPUPlacement": checkDedicatedCPUPlacement,
 		"instancetype.kubevirt.io/isolateEmulatorThread": checkIsolateEmulatorThread,
@@ -131,19 +130,6 @@ func checkHugepages(labelValue, labelName string, instanceType instancetypev1bet
 	}
 
 	if (instanceType.Spec.Memory.Hugepages == nil && boolValue) || (instanceType.Spec.Memory.Hugepages != nil && !boolValue) {
-		return fmt.Errorf(instanceTypeErrorMessage, labelName, instanceType.Name)
-	}
-
-	return nil
-}
-
-func checkGPUs(labelValue, labelName string, instanceType instancetypev1beta1.VirtualMachineClusterInstancetype) error {
-	boolValue, err := strconv.ParseBool(labelValue)
-	if err != nil {
-		return err
-	}
-
-	if (instanceType.Spec.GPUs == nil && boolValue) || (instanceType.Spec.GPUs != nil && !boolValue) {
 		return fmt.Errorf(instanceTypeErrorMessage, labelName, instanceType.Name)
 	}
 

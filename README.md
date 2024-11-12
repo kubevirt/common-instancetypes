@@ -37,9 +37,6 @@ Overcommitted([Overcommitted]):::series --> o1:::instancetype
 wrklds:::grp --> Computeexclusive:::series
 Computeexclusive([Compute Exclusive]):::series --> cx1:::instancetype
 
-wrklds:::grp --> GPUNVIDIA:::series
-GPUNVIDIA([GPU NVIDIA]):::series --> gn1:::instancetype
-
 wrklds:::grp --> Memory:::series
 Memory([Memory]):::series --> m1:::instancetype
 
@@ -74,16 +71,15 @@ size = "small" | "medium" | "large" | [( "2" | "4" | "8" )] , "xlarge";
 
 # Series
 
-.                           |  U  |  O  |  CX  |  GN  |  M  |  N  |  RT
-----------------------------|-----|-----|------|------|-----|-----|------
-*Has GPUs*                  |     |     |      |  ✓   |     |     |
-*Hugepages*                 |     |     |  ✓   |      |  ✓  |  ✓  |  ✓
-*Overcommitted Memory*      |     |  ✓  |      |      |     |     |
-*Dedicated CPU*             |     |     |  ✓   |      |     |  ✓  |  ✓
-*Burstable CPU performance* |  ✓  |  ✓  |      |  ✓   |  ✓  |     |
-*Isolated emulator threads* |     |     |  ✓   |      |     |  ✓  |  ✓
-*vNUMA*                     |     |     |  ✓   |      |     |     |  ✓
-*vCPU-To-Memory Ratio*      | 1:4 | 1:4 |  1:2 |  1:4 | 1:8 | 1:2 | 1:4
+.                           |  U  |  O  |  CX  |  M  |  N  |  RT
+----------------------------|-----|-----|------|-----|-----|------
+*Hugepages*                 |     |     |  ✓   |  ✓  |  ✓  |  ✓
+*Overcommitted Memory*      |     |  ✓  |      |     |     |
+*Dedicated CPU*             |     |     |  ✓   |     |  ✓  |  ✓
+*Burstable CPU performance* |  ✓  |  ✓  |      |  ✓  |     |
+*Isolated emulator threads* |     |     |  ✓   |     |  ✓  |  ✓
+*vNUMA*                     |     |     |  ✓   |     |     |  ✓
+*vCPU-To-Memory Ratio*      | 1:4 | 1:4 |  1:2 | 1:8 | 1:2 | 1:4
 
 ## U Series
 
@@ -151,29 +147,6 @@ Specific characteristics of this series are:
 - *vNUMA* - Physical NUMA topology is reflected in the guest in order to
   optimize guest sided cache utilization.
 - *vCPU-To-Memory Ratio (1:2)* - A vCPU-to-Memory ratio of 1:2.
-
-## GN Series
-
-The GN Series provides instances types intended for VMs with
-NVIDIA GPU resources attached.
-
-*GN* is the abbreviation of "GPU NVIDIA".
-
-This series is intended to be used with VMs consuming GPUs
-provided by the
-[NVIDIA GPU Operator](https://github.com/NVIDIA/gpu-operator)
-which can be installed on Kubernetes and also is made available
-on OpenShift via OperatorHub.
-
-### GN Series Characteristics
-
-Specific characteristics of this series are:
-- *Has GPUs* - Has GPUs predefined.
-- *Burstable CPU performance* - The workload has a baseline compute
-  performance but is permitted to burst beyond this baseline, if
-  excess compute resources are available.
-- *vCPU-To-Memory Ratio (1:4)* - A vCPU-to-Memory ratio of 1:4, for less
-  noise per node.
 
 ## M Series
 
@@ -258,10 +231,6 @@ cx1.8xlarge  |  32  |  64Gi
 cx1.large  |  2  |  4Gi
 cx1.medium  |  1  |  2Gi
 cx1.xlarge  |  4  |  8Gi
-gn1.2xlarge  |  8  |  32Gi
-gn1.4xlarge  |  16  |  64Gi
-gn1.8xlarge  |  32  |  128Gi
-gn1.xlarge  |  4  |  16Gi
 m1.2xlarge  |  8  |  64Gi
 m1.4xlarge  |  16  |  128Gi
 m1.8xlarge  |  32  |  256Gi
