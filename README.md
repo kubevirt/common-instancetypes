@@ -284,6 +284,7 @@ centos.stream9.dpdk | CentOS Stream 9
 cirros | Cirros
 fedora | Fedora (amd64)
 fedora.arm64 | Fedora (arm64)
+fedora.s390x | Fedora (s390x)
 opensuse.leap | OpenSUSE Leap
 opensuse.tumbleweed | OpenSUSE Tumbleweed
 rhel.10 | Red Hat Enterprise Linux 10 Beta (amd64)
