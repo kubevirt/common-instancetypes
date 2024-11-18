@@ -22,8 +22,7 @@ import (
 )
 
 const (
-	vmReadyTimeout = 300 * time.Second
-	sshPort        = 22
+	sshPort = 22
 )
 
 type testFn func(kubecli.KubevirtClient, string)
@@ -120,7 +119,7 @@ var _ = Describe("Common instance types func tests", func() {
 			addCloudInitWithAuthorizedKey(vm, privKey)
 			vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm)
 			Expect(err).ToNot(HaveOccurred())
-			expectVMToBeReady(virtClient, vm.Name)
+			expectVMToBeReady(virtClient, vm.Name, defaultVMReadyTimeout)
 			for _, testFn := range testFns {
 				testFn(virtClient, vm.Name)
 			}
@@ -146,7 +145,7 @@ var _ = Describe("Common instance types func tests", func() {
 			addContainerDisk(vm, containerDisk)
 			vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm)
 			Expect(err).ToNot(HaveOccurred())
-			expectVMToBeReady(virtClient, vm.Name)
+			expectVMToBeReady(virtClient, vm.Name, windowsReadyTimeout)
 			for _, testFn := range testFns {
 				testFn(virtClient, vm.Name)
 			}
@@ -257,7 +256,7 @@ func addCloudInitWithAuthorizedKey(vm *v1.VirtualMachine, privKey ed25519.Privat
 	vm.Spec.Template.Spec.Volumes = append(vm.Spec.Template.Spec.Volumes, vol)
 }
 
-func expectVMToBeReady(virtClient kubecli.KubevirtClient, vmName string) {
+func expectVMToBeReady(virtClient kubecli.KubevirtClient, vmName string, vmReadyTimeout time.Duration) {
 	Eventually(func(g Gomega) {
 		vm, err := virtClient.VirtualMachine(testNamespace).Get(context.Background(), vmName, &metav1.GetOptions{})
 		g.Expect(err).ToNot(HaveOccurred())
@@ -269,7 +268,7 @@ func expectGuestAgentToBeConnected(virtClient kubecli.KubevirtClient, vmName str
 	Eventually(func(g Gomega) {
 		_, err := virtClient.VirtualMachineInstance(testNamespace).GuestOsInfo(context.Background(), vmName)
 		g.Expect(err).ToNot(HaveOccurred())
-	}, vmReadyTimeout, 10*time.Second).Should(Succeed())
+	}, defaultVMReadyTimeout, 10*time.Second).Should(Succeed())
 }
 
 func expectSSHToRunCommandOnWindows(virtClient kubecli.KubevirtClient, vmName string) {
@@ -298,5 +297,5 @@ func expectSSHToRunCommand(virtClient kubecli.KubevirtClient, vmName, username s
 
 		err = session.Run("echo hello")
 		g.Expect(err).ToNot(HaveOccurred())
-	}, vmReadyTimeout, 10*time.Second).Should(Succeed())
+	}, defaultVMReadyTimeout, 10*time.Second).Should(Succeed())
 }
