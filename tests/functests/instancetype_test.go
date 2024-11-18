@@ -163,7 +163,7 @@ var _ = Describe("Common instance types func tests", func() {
 			Entry("[test_id:10738] Fedora", fedoraContainerDisk, map[string]string{"amd64": "fedora", "arm64": "fedora.arm64"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("fedora")}),
 			Entry("[test_id:10745] CentOS Stream 9", centosStream9ContainerDisk,
-				map[string]string{"amd64": "centos.stream9", "arm64": "centos.stream9"},
+				map[string]string{"amd64": "centos.stream9", "arm64": "centos.stream9", "s390x": "centos.stream9"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("cloud-user")}),
 			Entry("[test_id:TODO] RHEL 9", rhel9ContainerDisk, map[string]string{"amd64": "rhel.9", "arm64": "rhel.9.arm64"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("cloud-user")}),
