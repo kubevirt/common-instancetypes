@@ -160,7 +160,8 @@ var _ = Describe("Common instance types func tests", func() {
 				testFn(virtClient, vm.Name)
 			}
 		},
-			Entry("[test_id:10738] Fedora", fedoraContainerDisk, map[string]string{"amd64": "fedora", "arm64": "fedora.arm64"},
+			Entry("[test_id:10738] Fedora", fedoraContainerDisk,
+				map[string]string{"amd64": "fedora", "arm64": "fedora.arm64", "s390x": "fedora.s390x"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("fedora")}),
 			Entry("[test_id:10745] CentOS Stream 9", centosStream9ContainerDisk,
 				map[string]string{"amd64": "centos.stream9", "arm64": "centos.stream9", "s390x": "centos.stream9"},
