@@ -182,7 +182,7 @@ func (c *Context) addToken(tk *token.Token) {
 }
 
 func (c *Context) addBuf(r rune) {
-	if len(c.buf) == 0 && r == ' ' {
+	if len(c.buf) == 0 && (r == ' ' || r == '\t') {
 		return
 	}
 	c.buf = append(c.buf, r)
@@ -198,7 +198,7 @@ func (c *Context) addOriginBuf(r rune) {
 	}
 }
 
-func (c *Context) removeRightSpaceFromBuf() int {
+func (c *Context) removeRightSpaceFromBuf() {
 	trimmedBuf := c.obuf[:c.notSpaceOrgCharPos]
 	buflen := len(trimmedBuf)
 	diff := len(c.obuf) - buflen
@@ -206,7 +206,6 @@ func (c *Context) removeRightSpaceFromBuf() int {
 		c.obuf = c.obuf[:buflen]
 		c.buf = c.bufferedSrc()
 	}
-	return diff
 }
 
 func (c *Context) isDocument() bool {

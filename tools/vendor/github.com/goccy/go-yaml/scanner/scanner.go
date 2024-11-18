@@ -183,6 +183,11 @@ func (s *Scanner) updateIndent(ctx *Context, c rune) {
 		s.indentNum++
 		return
 	}
+	if s.isFirstCharAtLine && c == '\t' {
+		// found tab indent.
+		// In this case, scanTab returns error.
+		return
+	}
 	if !s.isFirstCharAtLine {
 		s.indentState = IndentStateKeep
 		return
@@ -252,8 +257,10 @@ func (s *Scanner) scanSingleQuote(ctx *Context) (*token.Token, error) {
 	}
 	s.progressColumn(ctx, 1)
 	return nil, ErrInvalidToken(
-		"could not find end character of single-quotated text",
-		token.Invalid(string(ctx.obuf), srcpos),
+		token.Invalid(
+			"could not find end character of single-quoted text",
+			string(ctx.obuf), srcpos,
+		),
 	)
 }
 
@@ -294,7 +301,15 @@ func (s *Scanner) scanDoubleQuote(ctx *Context) (*token.Token, error) {
 		c := src[idx]
 		ctx.addOriginBuf(c)
 		if s.isNewLineChar(c) {
-			value = append(value, ' ')
+			if isFirstLineChar {
+				if value[len(value)-1] == ' ' {
+					value[len(value)-1] = '\n'
+				} else {
+					value = append(value, '\n')
+				}
+			} else {
+				value = append(value, ' ')
+			}
 			isFirstLineChar = true
 			isNewLine = true
 			s.progressLine(ctx)
@@ -330,6 +345,10 @@ func (s *Scanner) scanDoubleQuote(ctx *Context) (*token.Token, error) {
 				progress = 1
 				ctx.addOriginBuf(nextChar)
 				value = append(value, '\r')
+			case 't':
+				progress = 1
+				ctx.addOriginBuf(nextChar)
+				value = append(value, '\t')
 			case 'v':
 				progress = 1
 				ctx.addOriginBuf(nextChar)
@@ -388,6 +407,16 @@ func (s *Scanner) scanDoubleQuote(ctx *Context) (*token.Token, error) {
 				progress = 1
 				ctx.addOriginBuf(nextChar)
 				value = append(value, c)
+			case '\n':
+				isFirstLineChar = true
+				isNewLine = true
+				ctx.addOriginBuf(nextChar)
+				s.progressColumn(ctx, 1)
+				s.progressLine(ctx)
+				idx++
+				continue
+			case ' ':
+				// skip escape character.
 			default:
 				value = append(value, c)
 			}
@@ -404,8 +433,10 @@ func (s *Scanner) scanDoubleQuote(ctx *Context) (*token.Token, error) {
 	}
 	s.progressColumn(ctx, 1)
 	return nil, ErrInvalidToken(
-		"could not find end character of double-quotated text",
-		token.Invalid(string(ctx.obuf), srcpos),
+		token.Invalid(
+			"could not find end character of double-quoted text",
+			string(ctx.obuf), srcpos,
+		),
 	)
 }
 
@@ -486,14 +517,20 @@ func (s *Scanner) scanTag(ctx *Context) bool {
 		progress = idx + 1
 		ctx.addOriginBuf(c)
 		switch c {
-		case ' ', '\n', '\r':
+		case ' ':
 			value := ctx.source(ctx.idx-1, ctx.idx+idx)
 			ctx.addToken(token.Tag(value, string(ctx.obuf), s.pos()))
-			progress = len([]rune(value))
-			goto END
+			s.progressColumn(ctx, len([]rune(value)))
+			ctx.clear()
+			return true
+		case '\n', '\r':
+			value := ctx.source(ctx.idx-1, ctx.idx+idx)
+			ctx.addToken(token.Tag(value, string(ctx.obuf), s.pos()))
+			s.progressColumn(ctx, len([]rune(value))-1) // progress column before new-line-char for scanning new-line-char at scanNewLine function.
+			ctx.clear()
+			return true
 		}
 	}
-END:
 	s.progressColumn(ctx, progress)
 	ctx.clear()
 	return true
@@ -541,8 +578,10 @@ func (s *Scanner) trimCommentFromDocumentOpt(text string, header rune) (string, 
 	}
 	if idx == 0 {
 		return "", ErrInvalidToken(
-			fmt.Sprintf("invalid document header %s", text),
-			token.Invalid(string(header)+text, s.pos()),
+			token.Invalid(
+				fmt.Sprintf("invalid document header %s", text),
+				string(header)+text, s.pos(),
+			),
 		)
 	}
 	return text[:idx-1], nil
@@ -553,9 +592,9 @@ func (s *Scanner) scanDocument(ctx *Context, c rune) error {
 	if ctx.isEOS() {
 		ctx.updateDocumentLineIndentColumn(s.column)
 		if err := ctx.validateDocumentLineIndentColumn(); err != nil {
-			invalidTk := token.Invalid(string(ctx.obuf), s.pos())
+			invalidTk := token.Invalid(err.Error(), string(ctx.obuf), s.pos())
 			s.progressColumn(ctx, 1)
-			return ErrInvalidToken(err.Error(), invalidTk)
+			return ErrInvalidToken(invalidTk)
 		}
 		ctx.addBuf(c)
 		value := ctx.bufferedSrc()
@@ -569,15 +608,24 @@ func (s *Scanner) scanDocument(ctx *Context, c rune) error {
 	} else if s.isFirstCharAtLine && c == ' ' {
 		ctx.addDocumentIndent(s.column)
 		s.progressColumn(ctx, 1)
+	} else if s.isFirstCharAtLine && c == '\t' {
+		err := ErrInvalidToken(
+			token.Invalid(
+				"found a tab character where an indentation space is expected",
+				string(ctx.obuf), s.pos(),
+			),
+		)
+		s.progressColumn(ctx, 1)
+		return err
 	} else {
 		ctx.updateDocumentLineIndentColumn(s.column)
 		if ctx.docFirstLineIndentColumn > 0 {
 			s.lastDelimColumn = ctx.docFirstLineIndentColumn - 1
 		}
 		if err := ctx.validateDocumentLineIndentColumn(); err != nil {
-			invalidTk := token.Invalid(string(ctx.obuf), s.pos())
+			invalidTk := token.Invalid(err.Error(), string(ctx.obuf), s.pos())
 			s.progressColumn(ctx, 1)
-			return ErrInvalidToken(err.Error(), invalidTk)
+			return ErrInvalidToken(invalidTk)
 		}
 		ctx.updateDocumentNewLineInFolded(s.column)
 		ctx.addBuf(c)
@@ -588,8 +636,10 @@ func (s *Scanner) scanDocument(ctx *Context, c rune) error {
 
 func (s *Scanner) scanNewLine(ctx *Context, c rune) {
 	if len(ctx.buf) > 0 && s.savedPos == nil {
+		bufLen := len(ctx.bufferedSrc())
 		s.savedPos = s.pos()
-		s.savedPos.Column -= len(ctx.bufferedSrc())
+		s.savedPos.Column -= bufLen
+		s.savedPos.Offset -= bufLen
 	}
 
 	// if the following case, origin buffer has unnecessary two spaces.
@@ -597,14 +647,7 @@ func (s *Scanner) scanNewLine(ctx *Context, c rune) {
 	// ---
 	// a:[space][space]
 	//   b: c
-	removedNum := ctx.removeRightSpaceFromBuf()
-	if removedNum > 0 {
-		s.column -= removedNum
-		s.offset -= removedNum
-		if s.savedPos != nil {
-			s.savedPos.Column -= removedNum
-		}
-	}
+	ctx.removeRightSpaceFromBuf()
 
 	// There is no problem that we ignore CR which followed by LF and normalize it to LF, because of following YAML1.2 spec.
 	// > Line breaks inside scalar content must be normalized by the YAML processor. Each such line break must be parsed into a single line feed character.
@@ -613,6 +656,7 @@ func (s *Scanner) scanNewLine(ctx *Context, c rune) {
 	if c == '\r' && ctx.nextChar() == '\n' {
 		ctx.addOriginBuf('\r')
 		s.progress(ctx, 1)
+		s.offset++
 		c = '\n'
 	}
 
@@ -715,7 +759,7 @@ func (s *Scanner) scanFlowEntry(ctx *Context, c rune) bool {
 
 func (s *Scanner) scanMapDelim(ctx *Context) bool {
 	nc := ctx.nextChar()
-	if s.startedFlowMapNum <= 0 && nc != ' ' && !s.isNewLineChar(nc) && !ctx.isNextEOS() {
+	if s.startedFlowMapNum <= 0 && nc != ' ' && nc != '\t' && !s.isNewLineChar(nc) && !ctx.isNextEOS() {
 		return false
 	}
 
@@ -867,9 +911,9 @@ func (s *Scanner) scanDocumentHeaderOption(ctx *Context) error {
 				return err
 			}
 			if err := s.validateDocumentHeaderOption(opt); err != nil {
-				invalidTk := token.Invalid(string(ctx.obuf), s.pos())
+				invalidTk := token.Invalid(err.Error(), string(ctx.obuf), s.pos())
 				s.progressColumn(ctx, progress)
-				return ErrInvalidToken(err.Error(), invalidTk)
+				return ErrInvalidToken(invalidTk)
 			}
 			hasComment := len(opt) < orgOptLen
 			if s.column == 1 {
@@ -914,9 +958,12 @@ func (s *Scanner) scanDocumentHeaderOption(ctx *Context) error {
 		}
 	}
 	text := string(ctx.src[ctx.idx:])
-	invalidTk := token.Invalid(string(ctx.obuf), s.pos())
+	invalidTk := token.Invalid(
+		fmt.Sprintf("invalid document header: %q", text),
+		string(ctx.obuf), s.pos(),
+	)
 	s.progressColumn(ctx, len(text))
-	return ErrInvalidToken(fmt.Sprintf("invalid document header: %q", text), invalidTk)
+	return ErrInvalidToken(invalidTk)
 }
 
 func (s *Scanner) scanMapKey(ctx *Context) bool {
@@ -983,7 +1030,29 @@ func (s *Scanner) scanReservedChar(ctx *Context, c rune) error {
 
 	ctx.addBuf(c)
 	ctx.addOriginBuf(c)
-	err := ErrInvalidToken("%q is a reserved character", token.Invalid(string(ctx.obuf), s.pos()))
+	err := ErrInvalidToken(
+		token.Invalid(
+			fmt.Sprintf("%q is a reserved character", c),
+			string(ctx.obuf), s.pos(),
+		),
+	)
+	s.progressColumn(ctx, 1)
+	ctx.clear()
+	return err
+}
+
+func (s *Scanner) scanTab(ctx *Context, c rune) error {
+	if !s.isFirstCharAtLine {
+		return nil
+	}
+
+	ctx.addBuf(c)
+	ctx.addOriginBuf(c)
+	err := ErrInvalidToken(
+		token.Invalid("found character '\t' that cannot start any token",
+			string(ctx.obuf), s.pos(),
+		),
+	)
 	s.progressColumn(ctx, 1)
 	ctx.clear()
 	return err
@@ -992,7 +1061,6 @@ func (s *Scanner) scanReservedChar(ctx *Context, c rune) error {
 func (s *Scanner) scan(ctx *Context) error {
 	for ctx.next() {
 		c := ctx.currentChar()
-
 		// First, change the IndentState.
 		// If the target character is the first character in a line, IndentState is Up/Down/Equal state.
 		// The second and subsequent letters are Keep.
@@ -1010,8 +1078,10 @@ func (s *Scanner) scan(ctx *Context) error {
 					// But if literal/folded token column is 1, it is invalid at down state.
 					if tk.Position.Column == 1 {
 						return ErrInvalidToken(
-							"could not find document",
-							token.Invalid(string(ctx.obuf), s.pos()),
+							token.Invalid(
+								"could not find document",
+								string(ctx.obuf), s.pos(),
+							),
 						)
 					}
 					if tk.Type != token.StringType {
@@ -1118,6 +1188,10 @@ func (s *Scanner) scan(ctx *Context) error {
 			}
 		case '@', '`':
 			if err := s.scanReservedChar(ctx, c); err != nil {
+				return err
+			}
+		case '\t':
+			if err := s.scanTab(ctx, c); err != nil {
 				return err
 			}
 		}

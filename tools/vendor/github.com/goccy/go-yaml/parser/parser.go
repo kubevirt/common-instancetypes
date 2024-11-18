@@ -12,12 +12,14 @@ import (
 )
 
 type parser struct {
-	idx    int
-	size   int
-	tokens token.Tokens
+	idx                  int
+	size                 int
+	tokens               token.Tokens
+	pathMap              map[string]ast.Node
+	allowDuplicateMapKey bool
 }
 
-func newParser(tokens token.Tokens, mode Mode) *parser {
+func newParser(tokens token.Tokens, mode Mode, opts []Option) *parser {
 	filteredTokens := []*token.Token{}
 	if mode&ParseComments != 0 {
 		filteredTokens = tokens
@@ -31,11 +33,16 @@ func newParser(tokens token.Tokens, mode Mode) *parser {
 			filteredTokens = append(filteredTokens, tk)
 		}
 	}
-	return &parser{
-		idx:    0,
-		size:   len(filteredTokens),
-		tokens: token.Tokens(filteredTokens),
+	p := &parser{
+		idx:     0,
+		size:    len(filteredTokens),
+		tokens:  token.Tokens(filteredTokens),
+		pathMap: make(map[string]ast.Node),
 	}
+	for _, opt := range opts {
+		opt(p)
+	}
+	return p
 }
 
 func (p *parser) next() bool {
@@ -202,7 +209,7 @@ func (p *parser) parseSequence(ctx *context) (*ast.SequenceNode, error) {
 			break
 		}
 
-		value, err := p.parseToken(ctx.withIndex(uint(len(node.Values))), p.currentToken())
+		value, err := p.parseToken(ctx.withIndex(uint(len(node.Values))).withFlow(true), p.currentToken())
 		if err != nil {
 			return nil, err
 		}
@@ -226,14 +233,22 @@ func (p *parser) parseTag(ctx *context) (*ast.TagNode, error) {
 		err   error
 	)
 	switch token.ReservedTagKeyword(tagToken.Value) {
-	case token.MappingTag,
-		token.OrderedMapTag:
-		value, err = p.parseMapping(ctx)
+	case token.MappingTag, token.OrderedMapTag:
+		tk := p.currentToken()
+		if tk.Type == token.CommentType {
+			tk = p.nextNotCommentToken()
+		}
+		if tk != nil && tk.Type == token.MappingStartType {
+			value, err = p.parseMapping(ctx)
+		} else {
+			value, err = p.parseMappingValue(ctx)
+		}
 	case token.IntegerTag,
 		token.FloatTag,
 		token.StringTag,
 		token.BinaryTag,
 		token.TimestampTag,
+		token.BooleanTag,
 		token.NullTag:
 		typ := p.currentToken().Type
 		if typ == token.LiteralType || typ == token.FoldedType {
@@ -245,8 +260,11 @@ func (p *parser) parseTag(ctx *context) (*ast.TagNode, error) {
 		token.SetTag:
 		err = errors.ErrSyntax(fmt.Sprintf("sorry, currently not supported %s tag", tagToken.Value), tagToken)
 	default:
-		// custom tag
-		value, err = p.parseToken(ctx, p.currentToken())
+		if strings.HasPrefix(tagToken.Value, "!!") {
+			err = errors.ErrSyntax(fmt.Sprintf("unknown secondary tag name %q specified", tagToken.Value), tagToken)
+		} else {
+			value, err = p.parseToken(ctx, p.currentToken())
+		}
 	}
 	if err != nil {
 		return nil, err
@@ -270,7 +288,16 @@ func (p *parser) existsNewLineCharacter(src string) bool {
 	return false
 }
 
-func (p *parser) validateMapKey(tk *token.Token) error {
+func (p *parser) validateMapKey(tk *token.Token, keyPath string) error {
+	if !p.allowDuplicateMapKey {
+		if n, exists := p.pathMap[keyPath]; exists {
+			pos := n.GetToken().Position
+			return errors.ErrSyntax(
+				fmt.Sprintf("mapping key %q already defined at [%d:%d]", tk.Value, pos.Line, pos.Column),
+				tk,
+			)
+		}
+	}
 	if tk.Type != token.StringType {
 		return nil
 	}
@@ -312,7 +339,7 @@ func (p *parser) createMapValueNode(ctx *context, key ast.MapKeyNode, colonToken
 	if tk.Type == token.CommentType {
 		comment = p.parseCommentOnly(ctx)
 		if comment != nil {
-			comment.SetPath(ctx.withChild(key.GetToken().Value).path)
+			comment.SetPath(ctx.withChild(p.mapKeyText(key)).path)
 		}
 		tk = p.currentToken()
 	}
@@ -361,7 +388,12 @@ func (p *parser) createMapValueNode(ctx *context, key ast.MapKeyNode, colonToken
 		return nil, err
 	}
 	if comment != nil {
-		_ = value.SetComment(comment)
+		nextLineComment := key.GetToken().Position.Line < comment.GetToken().Position.Line
+		if n, ok := value.(*ast.MappingNode); ok && nextLineComment && len(n.Values) > 1 {
+			_ = n.Values[0].SetComment(comment)
+		} else {
+			_ = value.SetComment(comment)
+		}
 	}
 	return value, nil
 }
@@ -386,16 +418,28 @@ func (p *parser) validateMapValue(ctx *context, key, value ast.Node) error {
 	return nil
 }
 
+func (p *parser) mapKeyText(n ast.Node) string {
+	switch nn := n.(type) {
+	case *ast.MappingKeyNode:
+		return p.mapKeyText(nn.Value)
+	case *ast.TagNode:
+		return p.mapKeyText(nn.Value)
+	}
+	return n.GetToken().Value
+}
+
 func (p *parser) parseMappingValue(ctx *context) (ast.Node, error) {
 	key, err := p.parseMapKey(ctx)
 	if err != nil {
 		return nil, err
 	}
-	keyText := key.GetToken().Value
-	key.SetPath(ctx.withChild(keyText).path)
-	if err := p.validateMapKey(key.GetToken()); err != nil {
+	keyText := p.mapKeyText(key)
+	keyPath := ctx.withChild(keyText).path
+	key.SetPath(keyPath)
+	if err := p.validateMapKey(key.GetToken(), keyPath); err != nil {
 		return nil, err
 	}
+	p.pathMap[keyPath] = key
 	p.progress(1) // progress to mapping value token
 	if ctx.isFlow {
 		// if "{key}" or "{key," style, returns MappingValueNode.
@@ -481,14 +525,8 @@ func (p *parser) parseMappingValue(ctx *context) (ast.Node, error) {
 		ntk = p.nextNotCommentToken()
 		antk = p.afterNextNotCommentToken()
 	}
-	validationTk := node.Start
-	if len(node.Values) != 0 {
-		validationTk = node.Values[len(node.Values)-1].Key.GetToken()
-	}
-	if tk := p.nextNotCommentToken(); tk != nil && tk.Position.Line > validationTk.Position.Line && tk.Position.Column > validationTk.Position.Column {
-		// a: b
-		//   c <= this token is invalid.
-		return nil, errors.ErrSyntax("value is not allowed in this context", tk)
+	if err := p.validateMapNextToken(ctx, node); err != nil {
+		return nil, err
 	}
 	if len(node.Values) == 1 {
 		mapKeyCol := mvnode.Key.GetToken().Position.Column
@@ -512,6 +550,31 @@ func (p *parser) parseMappingValue(ctx *context) (ast.Node, error) {
 	return node, nil
 }
 
+func (p *parser) validateMapNextToken(ctx *context, node *ast.MappingNode) error {
+	keyTk := node.Start
+	if len(node.Values) != 0 {
+		keyTk = node.Values[len(node.Values)-1].Key.GetToken()
+	}
+	tk := p.nextNotCommentToken()
+	if tk == nil {
+		return nil
+	}
+
+	if ctx.isFlow && (tk.Type == token.CollectEntryType || tk.Type == token.SequenceEndType || tk.Type == token.MappingEndType) {
+		// a: {
+		//  key: value
+		// } , <= if context is flow mode, "," or "]" or "}" is allowed.
+		return nil
+	}
+
+	if tk.Position.Line > keyTk.Position.Line && tk.Position.Column > keyTk.Position.Column {
+		// a: b
+		//   c <= this token is invalid.
+		return errors.ErrSyntax("value is not allowed in this context", tk)
+	}
+	return nil
+}
+
 func (p *parser) parseFlowMapNullValue(ctx *context, key ast.MapKeyNode) (*ast.MappingValueNode, error) {
 	tk := p.currentToken()
 	if tk == nil {
@@ -527,7 +590,7 @@ func (p *parser) parseFlowMapNullValue(ctx *context, key ast.MapKeyNode) (*ast.M
 		return nil, err
 	}
 	node := ast.MappingValue(tk, key, value)
-	node.SetPath(ctx.withChild(key.GetToken().Value).path)
+	node.SetPath(ctx.withChild(p.mapKeyText(key)).path)
 	return node, nil
 }
 
@@ -767,6 +830,7 @@ func (p *parser) setSameLineCommentIfExists(ctx *context, node ast.Node) error {
 }
 
 func (p *parser) parseDocument(ctx *context) (*ast.DocumentNode, error) {
+	p.pathMap = make(map[string]ast.Node)
 	startTk := p.currentToken()
 	p.progress(1) // skip document header token
 	body, err := p.parseToken(ctx, p.currentToken())
@@ -838,7 +902,7 @@ func (p *parser) parseMappingKey(ctx *context) (*ast.MappingKeyNode, error) {
 	node := ast.MappingKey(keyTk)
 	node.SetPath(ctx.path)
 	p.progress(1) // skip mapping key token
-	value, err := p.parseToken(ctx.withChild(keyTk.Value), p.currentToken())
+	value, err := p.parseToken(ctx, p.currentToken())
 	if err != nil {
 		return nil, err
 	}
@@ -899,6 +963,8 @@ func (p *parser) createNodeFromToken(ctx *context, tk *token.Token) (ast.Node, e
 		return p.parseTag(ctx)
 	case token.LiteralType, token.FoldedType:
 		return p.parseLiteral(ctx)
+	case token.MappingValueType:
+		return nil, errors.ErrSyntax("found an invalid key for this map", tk)
 	}
 	return nil, nil
 }
@@ -930,9 +996,9 @@ const (
 )
 
 // ParseBytes parse from byte slice, and returns ast.File
-func ParseBytes(bytes []byte, mode Mode) (*ast.File, error) {
+func ParseBytes(bytes []byte, mode Mode, opts ...Option) (*ast.File, error) {
 	tokens := lexer.Tokenize(string(bytes))
-	f, err := Parse(tokens, mode)
+	f, err := Parse(tokens, mode, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -940,11 +1006,11 @@ func ParseBytes(bytes []byte, mode Mode) (*ast.File, error) {
 }
 
 // Parse parse from token instances, and returns ast.File
-func Parse(tokens token.Tokens, mode Mode) (*ast.File, error) {
+func Parse(tokens token.Tokens, mode Mode, opts ...Option) (*ast.File, error) {
 	if tk := tokens.InvalidToken(); tk != nil {
-		return nil, errors.ErrSyntax("found invalid token", tk)
+		return nil, errors.ErrSyntax(tk.Error, tk)
 	}
-	f, err := newParser(tokens, mode).parse(newContext())
+	f, err := newParser(tokens, mode, opts).parse(newContext())
 	if err != nil {
 		return nil, err
 	}
@@ -952,12 +1018,12 @@ func Parse(tokens token.Tokens, mode Mode) (*ast.File, error) {
 }
 
 // Parse parse from filename, and returns ast.File
-func ParseFile(filename string, mode Mode) (*ast.File, error) {
+func ParseFile(filename string, mode Mode, opts ...Option) (*ast.File, error) {
 	file, err := os.ReadFile(filename)
 	if err != nil {
 		return nil, err
 	}
-	f, err := ParseBytes(file, mode)
+	f, err := ParseBytes(file, mode, opts...)
 	if err != nil {
 		return nil, err
 	}
