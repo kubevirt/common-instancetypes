@@ -8,6 +8,7 @@ resources:
 components:
   - ./metadata
   - ./realtime
+  - ./requirements
   - ../../components/cpu-topology-spread
   - ../../components/interface-multiqueue
 
