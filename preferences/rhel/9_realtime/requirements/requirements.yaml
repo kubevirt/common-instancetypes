@@ -1,0 +1,13 @@
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachinePreference
+metadata:
+  name: requirements
+spec:
+  # https://access.redhat.com/articles/rhel-limits#minimum-required-memory-3
+  requirements:
+    cpu:
+      # required as this preference uses SocketsCoresThreads with a ratio of 2
+      guest: 4
+    memory:
+      guest: 4Gi
