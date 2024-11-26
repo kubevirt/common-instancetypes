@@ -30,6 +30,7 @@ COPY <<EOF startnet.valos.cmd
 @ECHO OFF
 net user Administrator Administrator
 net start sshd
+netsh advfirewall firewall add rule name="sshd" dir=in action=allow protocol=TCP localport=22 remoteip=any
 EOF
 
 # Registry patch enabling the startup script
