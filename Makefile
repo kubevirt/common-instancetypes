@@ -10,7 +10,7 @@ export COMMON_INSTANCETYPES_IMAGE_TAG = v20241017-30aa54a
 
 # Containerdisk image and tag to use for Validation OS functional tests
 export VALIDATION_OS_IMAGE = quay.io/kubevirtci/validation-os-container-disk
-export VALIDATION_OS_IMAGE_TAG = 22621.1702.230501-1115
+export VALIDATION_OS_IMAGE_TAG = $(file < tests/image/validationos.tag)
 
 # Packages of golang tools vendored in ./tools
 # Version to install is defined in ./tools/go.mod
