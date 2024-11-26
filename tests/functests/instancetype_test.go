@@ -108,6 +108,21 @@ var _ = Describe("Common instance types func tests", func() {
 		})
 
 		It("[test_id:10737] can be created when enough resources are provided", func() {
+			for _, preference := range getClusterPreferences(virtClient) {
+				instanceTypeName := "it-for-" + preference.Name
+				createInstancetype(int(preference.Spec.Requirements.CPU.Guest), instanceTypeName, preference.Spec.Requirements.Memory.Guest.String())
+				instanceTypeMatcher := v1.InstancetypeMatcher{
+					Name: instanceTypeName,
+					Kind: "VirtualMachineInstancetype",
+				}
+
+				vm = randomVM(&instanceTypeMatcher, &v1.PreferenceMatcher{Name: preference.Name}, v1.RunStrategyHalted)
+				vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm, metav1.CreateOptions{})
+				Expect(err).ToNot(HaveOccurred())
+			}
+		})
+
+		It("[test_id:TODO] verifies all preferences have at least one compatible instance type", func() {
 			preferenceInstancetypeMap := map[string]string{
 				"centos.stream9.dpdk": "u1.2xlarge",
 				"rhel.8.dpdk":         "u1.2xlarge",
