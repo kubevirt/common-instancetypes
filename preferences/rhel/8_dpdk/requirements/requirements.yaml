@@ -7,6 +7,7 @@ spec:
   # https://access.redhat.com/articles/rhel-limits#minimum-required-memory-3
   requirements:
     cpu:
-      guest: 2
+      # required as this preference uses SocketsCoresThreads with a ratio of 4, 1:4:2 == 8 vCPUs
+      guest: 8
     memory:
       guest: 1.5Gi
