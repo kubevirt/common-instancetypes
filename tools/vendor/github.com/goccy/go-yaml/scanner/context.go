@@ -138,6 +138,13 @@ func (c *Context) updateDocumentNewLineState() {
 	c.docLineIndentColumn = 0
 }
 
+func (c *Context) isIndentColumn(column int) bool {
+	if c.docFirstLineIndentColumn == 0 {
+		return column == 1
+	}
+	return c.docFirstLineIndentColumn > column
+}
+
 func (c *Context) addDocumentIndent(column int) {
 	if c.docFirstLineIndentColumn == 0 {
 		return
@@ -151,6 +158,7 @@ func (c *Context) addDocumentIndent(column int) {
 		}
 		// Since addBuf ignore space character, add to the buffer directly.
 		c.buf = append(c.buf, ' ')
+		c.notSpaceCharPos = len(c.buf)
 	}
 }
 
@@ -167,7 +175,7 @@ func (c *Context) updateDocumentNewLineInFolded(column int) {
 		return
 	}
 	if c.docLineIndentColumn == c.docPrevLineIndentColumn {
-		if c.buf[len(c.buf)-1] == '\n' {
+		if len(c.buf) != 0 && c.buf[len(c.buf)-1] == '\n' {
 			c.buf[len(c.buf)-1] = ' '
 		}
 	}
@@ -187,6 +195,16 @@ func (c *Context) addBuf(r rune) {
 	}
 	c.buf = append(c.buf, r)
 	if r != ' ' && r != '\t' {
+		c.notSpaceCharPos = len(c.buf)
+	}
+}
+
+func (c *Context) addBufWithTab(r rune) {
+	if len(c.buf) == 0 && r == ' ' {
+		return
+	}
+	c.buf = append(c.buf, r)
+	if r != ' ' {
 		c.notSpaceCharPos = len(c.buf)
 	}
 }
@@ -277,7 +295,7 @@ func (c *Context) bufferedSrc() []rune {
 		if c.hasTrimAllEndNewlineOpt() {
 			// If the '-' flag is specified, all trailing newline characters will be removed.
 			src = []rune(strings.TrimRight(string(src), "\n"))
-		} else {
+		} else if !c.hasKeepAllEndNewlineOpt() {
 			// Normally, all but one of the trailing newline characters are removed.
 			var newLineCharCount int
 			for i := len(src) - 1; i >= 0; i-- {
@@ -295,12 +313,17 @@ func (c *Context) bufferedSrc() []rune {
 		}
 
 		// If the text ends with a space character, remove all of them.
-		src = []rune(strings.TrimRight(string(src), " "))
+		if c.hasTrimAllEndNewlineOpt() {
+			src = []rune(strings.TrimRight(string(src), " "))
+		}
 		if string(src) == "\n" {
 			// If the content consists only of a newline,
 			// it can be considered as the document ending without any specified value,
 			// so it is treated as an empty string.
 			src = []rune{}
+		}
+		if c.hasKeepAllEndNewlineOpt() && len(src) == 0 {
+			src = []rune{'\n'}
 		}
 	}
 	return src
@@ -310,12 +333,17 @@ func (c *Context) hasTrimAllEndNewlineOpt() bool {
 	return strings.HasPrefix(c.docOpt, "-") || strings.HasSuffix(c.docOpt, "-") || c.isRawFolded
 }
 
+func (c *Context) hasKeepAllEndNewlineOpt() bool {
+	return strings.HasPrefix(c.docOpt, "+") || strings.HasSuffix(c.docOpt, "+")
+}
+
 func (c *Context) bufferedToken(pos *token.Position) *token.Token {
 	if c.idx == 0 {
 		return nil
 	}
 	source := c.bufferedSrc()
 	if len(source) == 0 {
+		c.buf = c.buf[:0] // clear value's buffer only.
 		return nil
 	}
 	var tk *token.Token
@@ -324,8 +352,23 @@ func (c *Context) bufferedToken(pos *token.Position) *token.Token {
 	} else {
 		tk = token.New(string(source), string(c.obuf), pos)
 	}
+	c.setTokenTypeByPrevTag(tk)
 	c.resetBuffer()
 	return tk
+}
+
+func (c *Context) setTokenTypeByPrevTag(tk *token.Token) {
+	lastTk := c.lastToken()
+	if lastTk == nil {
+		return
+	}
+	if lastTk.Type != token.TagType {
+		return
+	}
+	tag := token.ReservedTagKeyword(lastTk.Value)
+	if _, exists := token.ReservedTagKeywordMap[tag]; !exists {
+		tk.Type = token.StringType
+	}
 }
 
 func (c *Context) lastToken() *token.Token {
