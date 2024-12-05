@@ -109,7 +109,6 @@ var _ = Describe("Common instance types func tests", func() {
 
 		It("[test_id:10737] can be created when enough resources are provided", func() {
 			preferenceInstancetypeMap := map[string]string{
-				"centos.stream8.dpdk": "u1.2xlarge",
 				"centos.stream9.dpdk": "u1.2xlarge",
 				"rhel.8.dpdk":         "u1.2xlarge",
 				"rhel.9.dpdk":         "u1.2xlarge",
@@ -163,10 +162,6 @@ var _ = Describe("Common instance types func tests", func() {
 		},
 			Entry("[test_id:10738] Fedora", fedoraContainerDisk, map[string]string{"amd64": "fedora", "arm64": "fedora.arm64"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("fedora")}),
-			Entry("[test_id:10740] CentOS 7", centos7ContainerDisk, map[string]string{"amd64": "centos.7"},
-				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("centos")}),
-			Entry("[test_id:10744] CentOS Stream 8", centosStream8ContainerDisk, map[string]string{"amd64": "centos.stream8"},
-				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("centos")}),
 			Entry("[test_id:10745] CentOS Stream 9", centosStream9ContainerDisk,
 				map[string]string{"amd64": "centos.stream9", "arm64": "centos.stream9"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("cloud-user")}),
