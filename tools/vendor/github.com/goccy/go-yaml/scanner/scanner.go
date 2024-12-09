@@ -615,11 +615,17 @@ func (s *Scanner) scanWhiteSpace(ctx *Context) bool {
 	if ctx.isDocument() {
 		return false
 	}
-	if !s.isAnchor && !s.isAlias && !s.isFirstCharAtLine {
+	if !s.isAnchor && !s.isDirective && !s.isAlias && !s.isFirstCharAtLine {
 		return false
 	}
 
 	if s.isFirstCharAtLine {
+		s.progressColumn(ctx, 1)
+		ctx.addOriginBuf(' ')
+		return true
+	}
+	if s.isDirective {
+		s.addBufferedTokenIfExists(ctx)
 		s.progressColumn(ctx, 1)
 		ctx.addOriginBuf(' ')
 		return true
@@ -656,7 +662,7 @@ func (s *Scanner) isMergeKey(ctx *Context) bool {
 }
 
 func (s *Scanner) scanTag(ctx *Context) bool {
-	if ctx.existsBuffer() {
+	if ctx.existsBuffer() || s.isDirective {
 		return false
 	}
 
@@ -701,8 +707,11 @@ func (s *Scanner) scanTag(ctx *Context) bool {
 }
 
 func (s *Scanner) scanComment(ctx *Context) bool {
-	if ctx.existsBuffer() && (ctx.previousChar() != ' ' && ctx.previousChar() != '\t') {
-		return false
+	if ctx.existsBuffer() {
+		c := ctx.previousChar()
+		if c != ' ' && c != '\t' && !s.isNewLineChar(c) {
+			return false
+		}
 	}
 
 	s.addBufferedTokenIfExists(ctx)
@@ -711,19 +720,19 @@ func (s *Scanner) scanComment(ctx *Context) bool {
 
 	for idx, c := range ctx.src[ctx.idx:] {
 		ctx.addOriginBuf(c)
-		switch c {
-		case '\n', '\r':
-			if ctx.previousChar() == '\\' {
-				continue
-			}
-			value := ctx.source(ctx.idx, ctx.idx+idx)
-			progress := len([]rune(value))
-			ctx.addToken(token.Comment(value, string(ctx.obuf), s.pos()))
-			s.progressColumn(ctx, progress)
-			s.progressLine(ctx)
-			ctx.clear()
-			return true
+		if !s.isNewLineChar(c) {
+			continue
 		}
+		if ctx.previousChar() == '\\' {
+			continue
+		}
+		value := ctx.source(ctx.idx, ctx.idx+idx)
+		progress := len([]rune(value))
+		ctx.addToken(token.Comment(value, string(ctx.obuf), s.pos()))
+		s.progressColumn(ctx, progress)
+		s.progressLine(ctx)
+		ctx.clear()
+		return true
 	}
 	// document ends with comment.
 	value := string(ctx.src[ctx.idx:])
@@ -755,6 +764,7 @@ func (s *Scanner) scanDocument(ctx *Context, c rune) error {
 		s.progressColumn(ctx, 1)
 	} else if s.isNewLineChar(c) {
 		ctx.addBuf(c)
+		ctx.updateSpaceOnlyIndentColumn(s.column - 1)
 		ctx.updateDocumentNewLineState()
 		s.progressLine(ctx)
 		if ctx.next() {
@@ -778,6 +788,11 @@ func (s *Scanner) scanDocument(ctx *Context, c rune) error {
 		s.progressColumn(ctx, 1)
 		return err
 	} else {
+		if err := ctx.validateDocumentLineIndentAfterSpaceOnly(s.column); err != nil {
+			invalidTk := token.Invalid(err.Error(), string(ctx.obuf), s.pos())
+			s.progressColumn(ctx, 1)
+			return ErrInvalidToken(invalidTk)
+		}
 		ctx.updateDocumentLineIndentColumn(s.column)
 		if ctx.docFirstLineIndentColumn > 0 {
 			s.lastDelimColumn = ctx.docFirstLineIndentColumn - 1
@@ -1167,7 +1182,9 @@ func (s *Scanner) scanDirective(ctx *Context) bool {
 		return false
 	}
 
-	ctx.addToken(token.Directive(string(ctx.obuf)+"%", s.pos()))
+	s.addBufferedTokenIfExists(ctx)
+	ctx.addOriginBuf('%')
+	ctx.addToken(token.Directive(string(ctx.obuf), s.pos()))
 	s.progressColumn(ctx, 1)
 	ctx.clear()
 	s.isDirective = true
