@@ -73,7 +73,7 @@ func (s *Scanner) bufferedToken(ctx *Context) *token.Token {
 	line := s.line
 	column := s.column - len(ctx.buf)
 	level := s.indentLevel
-	if ctx.isDocument() {
+	if ctx.isMultiLine() {
 		line -= s.newLineCount(ctx.buf)
 		column = strings.Index(string(ctx.obuf), string(ctx.buf)) + 1
 		// Since we are in a literal, folded or raw folded
@@ -155,27 +155,16 @@ func (s *Scanner) updateIndentLevel() {
 }
 
 func (s *Scanner) updateIndentState(ctx *Context) {
-	if s.lastDelimColumn > 0 {
-		if s.lastDelimColumn < s.column {
-			s.indentState = IndentStateUp
-		} else {
-			// If lastDelimColumn and s.column are the same,
-			// treat as Down state since it is the same column as delimiter.
-			s.indentState = IndentStateDown
-		}
-	} else {
-		s.indentState = s.indentStateFromIndentNumDifference()
+	if s.lastDelimColumn == 0 {
+		return
 	}
-}
 
-func (s *Scanner) indentStateFromIndentNumDifference() IndentState {
-	switch {
-	case s.prevLineIndentNum < s.indentNum:
-		return IndentStateUp
-	case s.prevLineIndentNum == s.indentNum:
-		return IndentStateEqual
-	default:
-		return IndentStateDown
+	if s.lastDelimColumn < s.column {
+		s.indentState = IndentStateUp
+	} else {
+		// If lastDelimColumn and s.column are the same,
+		// treat as Down state since it is the same column as delimiter.
+		s.indentState = IndentStateDown
 	}
 }
 
@@ -213,8 +202,8 @@ func (s *Scanner) addBufferedTokenIfExists(ctx *Context) {
 	ctx.addToken(s.bufferedToken(ctx))
 }
 
-func (s *Scanner) breakDocument(ctx *Context) {
-	ctx.breakDocument()
+func (s *Scanner) breakMultiLine(ctx *Context) {
+	ctx.breakMultiLine()
 }
 
 func (s *Scanner) scanSingleQuote(ctx *Context) (*token.Token, error) {
@@ -261,7 +250,17 @@ func (s *Scanner) scanSingleQuote(ctx *Context) (*token.Token, error) {
 				}
 			}
 			continue
-		} else if isFirstLineChar && (c == ' ' || c == '\t') {
+		} else if isFirstLineChar && c == ' ' {
+			continue
+		} else if isFirstLineChar && c == '\t' {
+			if s.lastDelimColumn >= s.column {
+				return nil, ErrInvalidToken(
+					token.Invalid(
+						"tab character cannot be used for indentation in single-quoted text",
+						string(ctx.obuf), s.pos(),
+					),
+				)
+			}
 			continue
 		} else if c != '\'' {
 			value = append(value, c)
@@ -349,7 +348,17 @@ func (s *Scanner) scanDoubleQuote(ctx *Context) (*token.Token, error) {
 				}
 			}
 			continue
-		} else if isFirstLineChar && (c == ' ' || c == '\t') {
+		} else if isFirstLineChar && c == ' ' {
+			continue
+		} else if isFirstLineChar && c == '\t' {
+			if s.lastDelimColumn >= s.column {
+				return nil, ErrInvalidToken(
+					token.Invalid(
+						"tab character cannot be used for indentation in double-quoted text",
+						string(ctx.obuf), s.pos(),
+					),
+				)
+			}
 			continue
 		} else if c == '\\' {
 			isFirstLineChar = false
@@ -612,7 +621,7 @@ func (s *Scanner) scanQuote(ctx *Context, ch rune) (bool, error) {
 }
 
 func (s *Scanner) scanWhiteSpace(ctx *Context) bool {
-	if ctx.isDocument() {
+	if ctx.isMultiLine() {
 		return false
 	}
 	if !s.isAnchor && !s.isDirective && !s.isAlias && !s.isFirstCharAtLine {
@@ -661,9 +670,9 @@ func (s *Scanner) isMergeKey(ctx *Context) bool {
 	return false
 }
 
-func (s *Scanner) scanTag(ctx *Context) bool {
+func (s *Scanner) scanTag(ctx *Context) (bool, error) {
 	if ctx.existsBuffer() || s.isDirective {
-		return false
+		return false, nil
 	}
 
 	ctx.addOriginBuf('!')
@@ -679,14 +688,14 @@ func (s *Scanner) scanTag(ctx *Context) bool {
 			ctx.addToken(token.Tag(value, string(ctx.obuf), s.pos()))
 			s.progressColumn(ctx, len([]rune(value)))
 			ctx.clear()
-			return true
+			return true, nil
 		case ',':
 			if s.startedFlowSequenceNum > 0 || s.startedFlowMapNum > 0 {
 				value := ctx.source(ctx.idx-1, ctx.idx+idx)
 				ctx.addToken(token.Tag(value, string(ctx.obuf), s.pos()))
 				s.progressColumn(ctx, len([]rune(value))-1) // progress column before collect-entry for scanning it at scanFlowEntry function.
 				ctx.clear()
-				return true
+				return true, nil
 			} else {
 				ctx.addOriginBuf(c)
 			}
@@ -696,14 +705,19 @@ func (s *Scanner) scanTag(ctx *Context) bool {
 			ctx.addToken(token.Tag(value, string(ctx.obuf), s.pos()))
 			s.progressColumn(ctx, len([]rune(value))-1) // progress column before new-line-char for scanning new-line-char at scanNewLine function.
 			ctx.clear()
-			return true
+			return true, nil
+		case '{', '}':
+			ctx.addOriginBuf(c)
+			s.progressColumn(ctx, progress)
+			invalidTk := token.Invalid(fmt.Sprintf("found invalid tag character %q", c), string(ctx.obuf), s.pos())
+			return false, ErrInvalidToken(invalidTk)
 		default:
 			ctx.addOriginBuf(c)
 		}
 	}
 	s.progressColumn(ctx, progress)
 	ctx.clear()
-	return true
+	return true, nil
 }
 
 func (s *Scanner) scanComment(ctx *Context) bool {
@@ -744,16 +758,17 @@ func (s *Scanner) scanComment(ctx *Context) bool {
 	return true
 }
 
-func (s *Scanner) scanDocument(ctx *Context, c rune) error {
+func (s *Scanner) scanMultiLine(ctx *Context, c rune) error {
+	state := ctx.getMultiLineState()
 	ctx.addOriginBuf(c)
 	if ctx.isEOS() {
 		if s.isFirstCharAtLine && c == ' ' {
-			ctx.addDocumentIndent(s.column)
+			state.addIndent(ctx, s.column)
 		} else {
 			ctx.addBuf(c)
 		}
-		ctx.updateDocumentLineIndentColumn(s.column)
-		if err := ctx.validateDocumentLineIndentColumn(); err != nil {
+		state.updateIndentColumn(s.column)
+		if err := state.validateIndentColumn(); err != nil {
 			invalidTk := token.Invalid(err.Error(), string(ctx.obuf), s.pos())
 			s.progressColumn(ctx, 1)
 			return ErrInvalidToken(invalidTk)
@@ -764,21 +779,21 @@ func (s *Scanner) scanDocument(ctx *Context, c rune) error {
 		s.progressColumn(ctx, 1)
 	} else if s.isNewLineChar(c) {
 		ctx.addBuf(c)
-		ctx.updateSpaceOnlyIndentColumn(s.column - 1)
-		ctx.updateDocumentNewLineState()
+		state.updateSpaceOnlyIndentColumn(s.column - 1)
+		state.updateNewLineState()
 		s.progressLine(ctx)
 		if ctx.next() {
 			if s.foundDocumentSeparatorMarker(ctx.src[ctx.idx:]) {
 				value := ctx.bufferedSrc()
 				ctx.addToken(token.String(string(value), string(ctx.obuf), s.pos()))
 				ctx.clear()
-				s.breakDocument(ctx)
+				s.breakMultiLine(ctx)
 			}
 		}
 	} else if s.isFirstCharAtLine && c == ' ' {
-		ctx.addDocumentIndent(s.column)
+		state.addIndent(ctx, s.column)
 		s.progressColumn(ctx, 1)
-	} else if s.isFirstCharAtLine && c == '\t' && ctx.isIndentColumn(s.column) {
+	} else if s.isFirstCharAtLine && c == '\t' && state.isIndentColumn(s.column) {
 		err := ErrInvalidToken(
 			token.Invalid(
 				"found a tab character where an indentation space is expected",
@@ -787,22 +802,25 @@ func (s *Scanner) scanDocument(ctx *Context, c rune) error {
 		)
 		s.progressColumn(ctx, 1)
 		return err
+	} else if c == '\t' && !state.isIndentColumn(s.column) {
+		ctx.addBufWithTab(c)
+		s.progressColumn(ctx, 1)
 	} else {
-		if err := ctx.validateDocumentLineIndentAfterSpaceOnly(s.column); err != nil {
+		if err := state.validateIndentAfterSpaceOnly(s.column); err != nil {
 			invalidTk := token.Invalid(err.Error(), string(ctx.obuf), s.pos())
 			s.progressColumn(ctx, 1)
 			return ErrInvalidToken(invalidTk)
 		}
-		ctx.updateDocumentLineIndentColumn(s.column)
-		if ctx.docFirstLineIndentColumn > 0 {
-			s.lastDelimColumn = ctx.docFirstLineIndentColumn - 1
-		}
-		if err := ctx.validateDocumentLineIndentColumn(); err != nil {
+		state.updateIndentColumn(s.column)
+		if err := state.validateIndentColumn(); err != nil {
 			invalidTk := token.Invalid(err.Error(), string(ctx.obuf), s.pos())
 			s.progressColumn(ctx, 1)
 			return ErrInvalidToken(invalidTk)
 		}
-		ctx.updateDocumentNewLineInFolded(s.column)
+		if col := state.lastDelimColumn(); col > 0 {
+			s.lastDelimColumn = col
+		}
+		state.updateNewLineInFolded(ctx, s.column)
 		ctx.addBufWithTab(c)
 		s.progressColumn(ctx, 1)
 	}
@@ -940,6 +958,10 @@ func (s *Scanner) scanMapDelim(ctx *Context) (bool, error) {
 	if s.startedFlowMapNum <= 0 && nc != ' ' && nc != '\t' && !s.isNewLineChar(nc) && !ctx.isNextEOS() {
 		return false, nil
 	}
+	if s.startedFlowMapNum > 0 && nc == '/' {
+		// like http://
+		return false, nil
+	}
 
 	if strings.HasPrefix(strings.TrimPrefix(string(ctx.obuf), " "), "\t") && !strings.HasPrefix(string(ctx.buf), "\t") {
 		invalidTk := token.Invalid("tab character cannot use as a map key directly", string(ctx.obuf), s.pos())
@@ -1028,8 +1050,7 @@ func (s *Scanner) scanRawFoldedChar(ctx *Context) bool {
 		return false
 	}
 
-	ctx.updateDocumentLineIndentColumn(s.column)
-	ctx.isRawFolded = true
+	ctx.setRawFolded(s.column)
 	ctx.addBuf('-')
 	ctx.addOriginBuf('-')
 	s.progressColumn(ctx, 1)
@@ -1062,23 +1083,23 @@ func (s *Scanner) scanSequence(ctx *Context) (bool, error) {
 	return true, nil
 }
 
-func (s *Scanner) scanDocumentHeader(ctx *Context) (bool, error) {
+func (s *Scanner) scanMultiLineHeader(ctx *Context) (bool, error) {
 	if ctx.existsBuffer() {
 		return false, nil
 	}
 
-	if err := s.scanDocumentHeaderOption(ctx); err != nil {
+	if err := s.scanMultiLineHeaderOption(ctx); err != nil {
 		return false, err
 	}
-	ctx.updateDocumentIndentColumn()
 	s.progressLine(ctx)
 	return true, nil
 }
 
-func (s *Scanner) validateDocumentHeaderOption(opt string) error {
+func (s *Scanner) validateMultiLineHeaderOption(opt string) error {
 	if len(opt) == 0 {
 		return nil
 	}
+	orgOpt := opt
 	opt = strings.TrimPrefix(opt, "-")
 	opt = strings.TrimPrefix(opt, "+")
 	opt = strings.TrimSuffix(opt, "-")
@@ -1086,74 +1107,75 @@ func (s *Scanner) validateDocumentHeaderOption(opt string) error {
 	if len(opt) == 0 {
 		return nil
 	}
-	if _, err := strconv.ParseInt(opt, 10, 64); err != nil {
-		return fmt.Errorf("invalid header option: %q", opt)
+	if opt == "0" {
+		return fmt.Errorf("invalid header option: %q", orgOpt)
+	}
+	i, err := strconv.ParseInt(opt, 10, 64)
+	if err != nil {
+		return fmt.Errorf("invalid header option: %q", orgOpt)
+	}
+	if i > 9 {
+		return fmt.Errorf("invalid header option: %q", orgOpt)
 	}
 	return nil
 }
 
-func (s *Scanner) scanDocumentHeaderOption(ctx *Context) error {
+func (s *Scanner) scanMultiLineHeaderOption(ctx *Context) error {
 	header := ctx.currentChar()
 	ctx.addOriginBuf(header)
 	s.progress(ctx, 1) // skip '|' or '>' character
-	for idx, c := range ctx.src[ctx.idx:] {
-		progress := idx
-		ctx.addOriginBuf(c)
-		switch c {
-		case '\n', '\r':
-			value := strings.TrimRight(ctx.source(ctx.idx, ctx.idx+idx), " ")
-			commentValueIndex := strings.Index(value, "#")
-			opt := value
-			if commentValueIndex > 0 {
-				opt = value[:commentValueIndex]
-			}
-			opt = strings.TrimRightFunc(opt, func(r rune) bool {
-				return r == ' ' || r == '\t'
-			})
-			if len(opt) != 0 {
-				if err := s.validateDocumentHeaderOption(opt); err != nil {
-					invalidTk := token.Invalid(err.Error(), string(ctx.obuf), s.pos())
-					s.progressColumn(ctx, progress)
-					return ErrInvalidToken(invalidTk)
-				}
-			}
-			if s.column == 1 {
-				s.lastDelimColumn = 1
-			}
 
-			commentIndex := strings.Index(string(ctx.obuf), "#")
-			headerBuf := string(ctx.obuf)
-			if commentIndex > 0 {
-				headerBuf = headerBuf[:commentIndex]
-			}
-			switch header {
-			case '|':
-				ctx.addToken(token.Literal("|"+opt, headerBuf, s.pos()))
-				ctx.isLiteral = true
-			case '>':
-				ctx.addToken(token.Folded(">"+opt, headerBuf, s.pos()))
-				ctx.isFolded = true
-			}
-			if commentIndex > 0 {
-				comment := string(value[commentValueIndex+1:])
-				s.offset += len(headerBuf)
-				s.column += len(headerBuf)
-				ctx.addToken(token.Comment(comment, string(ctx.obuf[len(headerBuf):]), s.pos()))
-			}
-			s.indentState = IndentStateKeep
-			ctx.resetBuffer()
-			ctx.docOpt = opt
-			s.progressColumn(ctx, progress)
-			return nil
+	var progress int
+	for idx, c := range ctx.src[ctx.idx:] {
+		progress = idx
+		ctx.addOriginBuf(c)
+		if s.isNewLineChar(c) {
+			break
 		}
 	}
-	text := string(ctx.src[ctx.idx:])
-	invalidTk := token.Invalid(
-		fmt.Sprintf("invalid document header: %q", text),
-		string(ctx.obuf), s.pos(),
-	)
-	s.progressColumn(ctx, len(text))
-	return ErrInvalidToken(invalidTk)
+	value := strings.TrimRight(ctx.source(ctx.idx, ctx.idx+progress), " ")
+	commentValueIndex := strings.Index(value, "#")
+	opt := value
+	if commentValueIndex > 0 {
+		opt = value[:commentValueIndex]
+	}
+	opt = strings.TrimRightFunc(opt, func(r rune) bool {
+		return r == ' ' || r == '\t'
+	})
+	if len(opt) != 0 {
+		if err := s.validateMultiLineHeaderOption(opt); err != nil {
+			invalidTk := token.Invalid(err.Error(), string(ctx.obuf), s.pos())
+			s.progressColumn(ctx, progress)
+			return ErrInvalidToken(invalidTk)
+		}
+	}
+	if s.column == 1 {
+		s.lastDelimColumn = 1
+	}
+
+	commentIndex := strings.Index(string(ctx.obuf), "#")
+	headerBuf := string(ctx.obuf)
+	if commentIndex > 0 {
+		headerBuf = headerBuf[:commentIndex]
+	}
+	switch header {
+	case '|':
+		ctx.addToken(token.Literal("|"+opt, headerBuf, s.pos()))
+		ctx.setLiteral(s.lastDelimColumn, opt)
+	case '>':
+		ctx.addToken(token.Folded(">"+opt, headerBuf, s.pos()))
+		ctx.setFolded(s.lastDelimColumn, opt)
+	}
+	if commentIndex > 0 {
+		comment := string(value[commentValueIndex+1:])
+		s.offset += len(headerBuf)
+		s.column += len(headerBuf)
+		ctx.addToken(token.Comment(comment, string(ctx.obuf[len(headerBuf):]), s.pos()))
+	}
+	s.indentState = IndentStateKeep
+	ctx.resetBuffer()
+	s.progressColumn(ctx, progress)
+	return nil
 }
 
 func (s *Scanner) scanMapKey(ctx *Context) bool {
@@ -1271,7 +1293,7 @@ func (s *Scanner) scan(ctx *Context) error {
 		if s.isChangedToIndentStateDown() {
 			s.addBufferedTokenIfExists(ctx)
 		}
-		if ctx.isDocument() {
+		if ctx.isMultiLine() {
 			if s.isChangedToIndentStateDown() {
 				if tk := ctx.lastToken(); tk != nil {
 					// If literal/folded content is empty, no string token is added.
@@ -1280,7 +1302,7 @@ func (s *Scanner) scan(ctx *Context) error {
 					if tk.Position.Column == 1 {
 						return ErrInvalidToken(
 							token.Invalid(
-								"could not find document",
+								"could not find multi-line content",
 								string(ctx.obuf), s.pos(),
 							),
 						)
@@ -1289,9 +1311,9 @@ func (s *Scanner) scan(ctx *Context) error {
 						ctx.addToken(token.String("", "", s.pos()))
 					}
 				}
-				s.breakDocument(ctx)
+				s.breakMultiLine(ctx)
 			} else {
-				if err := s.scanDocument(ctx, c); err != nil {
+				if err := s.scanMultiLine(ctx, c); err != nil {
 					return err
 				}
 				continue
@@ -1349,7 +1371,7 @@ func (s *Scanner) scan(ctx *Context) error {
 				continue
 			}
 		case '|', '>':
-			scanned, err := s.scanDocumentHeader(ctx)
+			scanned, err := s.scanMultiLineHeader(ctx)
 			if err != nil {
 				return err
 			}
@@ -1357,7 +1379,11 @@ func (s *Scanner) scan(ctx *Context) error {
 				continue
 			}
 		case '!':
-			if s.scanTag(ctx) {
+			scanned, err := s.scanTag(ctx)
+			if err != nil {
+				return err
+			}
+			if scanned {
 				continue
 			}
 		case '%':
@@ -1402,6 +1428,12 @@ func (s *Scanner) scan(ctx *Context) error {
 		case '\t':
 			if ctx.existsBuffer() && s.lastDelimColumn == 0 {
 				// tab indent for plain text (yaml-test-suite's spec-example-7-12-plain-lines).
+				s.indentNum++
+				ctx.addOriginBuf(c)
+				s.progressColumn(ctx, 1)
+				continue
+			}
+			if s.lastDelimColumn < s.column {
 				s.indentNum++
 				ctx.addOriginBuf(c)
 				s.progressColumn(ctx, 1)

@@ -211,6 +211,9 @@ func (p *parser) parseToken(ctx *context, tk *Token) (ast.Node, error) {
 		if err != nil {
 			return nil, err
 		}
+		if _, ok := value.(*ast.AnchorNode); ok {
+			return nil, errors.ErrSyntax("anchors cannot be used consecutively", value.GetToken())
+		}
 		anchor.Value = value
 		return anchor, nil
 	case TokenGroupAlias:
@@ -241,9 +244,9 @@ func (p *parser) parseToken(ctx *context, tk *Token) (ast.Node, error) {
 	case token.TagType:
 		return p.parseTag(ctx)
 	case token.MappingStartType:
-		return p.parseFlowMap(ctx)
+		return p.parseFlowMap(ctx.withFlow(true))
 	case token.SequenceStartType:
-		return p.parseFlowSequence(ctx)
+		return p.parseFlowSequence(ctx.withFlow(true))
 	case token.SequenceEntryType:
 		return p.parseSequence(ctx)
 	case token.SequenceEndType:
@@ -282,6 +285,9 @@ func (p *parser) parseScalarValue(ctx *context, tk *Token) (ast.ScalarNode, erro
 			value, err := p.parseToken(ctx, ctx.currentToken())
 			if err != nil {
 				return nil, err
+			}
+			if _, ok := value.(*ast.AnchorNode); ok {
+				return nil, errors.ErrSyntax("anchors cannot be used consecutively", value.GetToken())
 			}
 			anchor.Value = value
 			return anchor, nil
@@ -588,7 +594,7 @@ func (p *parser) parseMapKey(ctx *context, g *TokenGroup) (ast.MapKeyNode, error
 		keyText := p.mapKeyText(scalar)
 		keyPath := ctx.withChild(keyText).path
 		key.SetPath(keyPath)
-		if err := p.validateMapKey(key.GetToken(), keyPath); err != nil {
+		if err := p.validateMapKey(ctx, key.GetToken(), keyPath, g.Last()); err != nil {
 			return nil, err
 		}
 		p.pathMap[keyPath] = key
@@ -609,14 +615,14 @@ func (p *parser) parseMapKey(ctx *context, g *TokenGroup) (ast.MapKeyNode, error
 	keyText := p.mapKeyText(key)
 	keyPath := ctx.withChild(keyText).path
 	key.SetPath(keyPath)
-	if err := p.validateMapKey(key.GetToken(), keyPath); err != nil {
+	if err := p.validateMapKey(ctx, key.GetToken(), keyPath, g.Last()); err != nil {
 		return nil, err
 	}
 	p.pathMap[keyPath] = key
 	return key, nil
 }
 
-func (p *parser) validateMapKey(tk *token.Token, keyPath string) error {
+func (p *parser) validateMapKey(ctx *context, tk *token.Token, keyPath string, colonTk *Token) error {
 	if !p.allowDuplicateMapKey {
 		if n, exists := p.pathMap[keyPath]; exists {
 			pos := n.GetToken().Position
@@ -626,29 +632,57 @@ func (p *parser) validateMapKey(tk *token.Token, keyPath string) error {
 			)
 		}
 	}
-	if tk.Type != token.StringType {
+	origin := p.removeLeftWhiteSpace(tk.Origin)
+	if ctx.isFlow {
+		if tk.Type == token.StringType {
+			origin = p.removeRightWhiteSpace(origin)
+			if tk.Position.Line+p.newLineCharacterNum(origin) != colonTk.Line() {
+				return errors.ErrSyntax("map key definition includes an implicit line break", tk)
+			}
+		}
 		return nil
 	}
-	origin := p.removeLeftSideNewLineCharacter(tk.Origin)
+	if tk.Type != token.StringType && tk.Type != token.SingleQuoteType && tk.Type != token.DoubleQuoteType {
+		return nil
+	}
 	if p.existsNewLineCharacter(origin) {
 		return errors.ErrSyntax("unexpected key name", tk)
 	}
 	return nil
 }
 
-func (p *parser) removeLeftSideNewLineCharacter(src string) string {
+func (p *parser) removeLeftWhiteSpace(src string) string {
 	// CR or LF or CRLF
-	return strings.TrimLeft(strings.TrimLeft(strings.TrimLeft(src, "\r"), "\n"), "\r\n")
+	return strings.TrimLeftFunc(src, func(r rune) bool {
+		return r == ' ' || r == '\r' || r == '\n'
+	})
+}
+
+func (p *parser) removeRightWhiteSpace(src string) string {
+	// CR or LF or CRLF
+	return strings.TrimRightFunc(src, func(r rune) bool {
+		return r == ' ' || r == '\r' || r == '\n'
+	})
 }
 
 func (p *parser) existsNewLineCharacter(src string) bool {
-	if strings.Index(src, "\n") > 0 {
-		return true
+	return p.newLineCharacterNum(src) > 0
+}
+
+func (p *parser) newLineCharacterNum(src string) int {
+	var num int
+	for i := 0; i < len(src); i++ {
+		switch src[i] {
+		case '\r':
+			if len(src) > i+1 && src[i+1] == '\n' {
+				i++
+			}
+			num++
+		case '\n':
+			num++
+		}
 	}
-	if strings.Index(src, "\r") > 0 {
-		return true
-	}
-	return false
+	return num
 }
 
 func (p *parser) mapKeyText(n ast.Node) string {
@@ -720,6 +754,11 @@ func (p *parser) parseMapValue(ctx *context, key ast.MapKeyNode, colonTk *Token)
 		// &anchor
 		return nil, errors.ErrSyntax("anchor is not allowed in this context", tk.RawToken())
 	}
+	if tk.Column() <= keyCol && tk.Type() == token.TagType {
+		// key: <value does not defined>
+		// !!tag
+		return nil, errors.ErrSyntax("tag is not allowed in this context", tk.RawToken())
+	}
 
 	if tk.Column() < keyCol {
 		// in this case,
@@ -751,7 +790,41 @@ func (p *parser) parseMapValue(ctx *context, key ast.MapKeyNode, colonTk *Token)
 	if err != nil {
 		return nil, err
 	}
+	if err := p.validateAnchorValueInMapOrSeq(value, keyCol); err != nil {
+		return nil, err
+	}
 	return value, nil
+}
+
+func (p *parser) validateAnchorValueInMapOrSeq(value ast.Node, col int) error {
+	anchor, ok := value.(*ast.AnchorNode)
+	if !ok {
+		return nil
+	}
+	tag, ok := anchor.Value.(*ast.TagNode)
+	if !ok {
+		return nil
+	}
+	anchorTk := anchor.GetToken()
+	tagTk := tag.GetToken()
+
+	if anchorTk.Position.Line == tagTk.Position.Line {
+		// key:
+		//   &anchor !!tag
+		//
+		// - &anchor !!tag
+		return nil
+	}
+
+	if tagTk.Position.Column <= col {
+		// key: &anchor
+		// !!tag
+		//
+		// - &anchor
+		// !!tag
+		return errors.ErrSyntax("tag is not allowed in this context", tagTk)
+	}
+	return nil
 }
 
 func (p *parser) parseAnchor(ctx *context, g *TokenGroup) (*ast.AnchorNode, error) {
@@ -768,6 +841,9 @@ func (p *parser) parseAnchor(ctx *context, g *TokenGroup) (*ast.AnchorNode, erro
 	value, err := p.parseToken(ctx, ctx.currentToken())
 	if err != nil {
 		return nil, err
+	}
+	if _, ok := value.(*ast.AnchorNode); ok {
+		return nil, errors.ErrSyntax("anchors cannot be used consecutively", value.GetToken())
 	}
 	anchor.Value = value
 	return anchor, nil
@@ -900,7 +976,7 @@ func (p *parser) parseTagValue(ctx *context, tagRawTk *token.Token, tk *Token) (
 			return nil, errors.ErrSyntax("could not find map", tk.RawToken())
 		}
 		if tk.Type() == token.MappingStartType {
-			return p.parseFlowMap(ctx)
+			return p.parseFlowMap(ctx.withFlow(true))
 		}
 		return p.parseMap(ctx)
 	case token.IntegerTag, token.FloatTag, token.StringTag, token.BinaryTag, token.TimestampTag, token.BooleanTag, token.NullTag:
@@ -917,7 +993,7 @@ func (p *parser) parseTagValue(ctx *context, tagRawTk *token.Token, tk *Token) (
 		return scalar, nil
 	case token.SequenceTag, token.OrderedMapTag:
 		if tk.Type() == token.SequenceStartType {
-			return p.parseFlowSequence(ctx)
+			return p.parseFlowSequence(ctx.withFlow(true))
 		}
 		return p.parseSequence(ctx)
 	}
@@ -940,6 +1016,9 @@ func (p *parser) parseFlowSequence(ctx *context) (*ast.SequenceNode, error) {
 		}
 
 		if tk.Type() == token.CollectEntryType {
+			if isFirst {
+				return nil, errors.ErrSyntax("expected sequence element, but found ','", tk.RawToken())
+			}
 			ctx.goNext()
 		} else if !isFirst {
 			return nil, errors.ErrSyntax("',' or ']' must be specified", tk.RawToken())
@@ -956,7 +1035,7 @@ func (p *parser) parseFlowSequence(ctx *context) (*ast.SequenceNode, error) {
 			break
 		}
 
-		value, err := p.parseToken(ctx.withIndex(uint(len(node.Values))).withFlow(true), ctx.currentToken())
+		value, err := p.parseToken(ctx.withIndex(uint(len(node.Values))), ctx.currentToken())
 		if err != nil {
 			return nil, err
 		}
@@ -1052,6 +1131,11 @@ func (p *parser) parseSequenceValue(ctx *context, seqTk *Token) (ast.Node, error
 		// &anchor
 		return nil, errors.ErrSyntax("anchor is not allowed in this sequence context", tk.RawToken())
 	}
+	if tk.Column() <= seqCol && tk.Type() == token.TagType {
+		// - <value does not defined>
+		// !!tag
+		return nil, errors.ErrSyntax("tag is not allowed in this sequence context", tk.RawToken())
+	}
 
 	if tk.Column() < seqCol {
 		// in this case,
@@ -1081,6 +1165,9 @@ func (p *parser) parseSequenceValue(ctx *context, seqTk *Token) (ast.Node, error
 
 	value, err := p.parseToken(ctx, ctx.currentToken())
 	if err != nil {
+		return nil, err
+	}
+	if err := p.validateAnchorValueInMapOrSeq(value, seqCol); err != nil {
 		return nil, err
 	}
 	return value, nil
