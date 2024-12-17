@@ -7,8 +7,6 @@ linters-settings:
   funlen:
     lines: 100
     statements: 50
-  gci:
-    local-prefixes: github.com/kubevirt/common-instancetypes
   goconst:
     min-len: 2
     min-occurrences: 2
@@ -33,21 +31,18 @@ linters-settings:
         sizeThreshold: 1024
   gocyclo:
     min-complexity: 15
-  gomnd:
-    settings:
-      mnd:
-        # don't include the "operation" and "assign"
-        checks: argument,case,condition,return
-  govet:
-    check-shadowing: true
+  mnd:
+    # don't include the "operation" and "assign"
+    checks:
+      - argument
+      - case
+      - condition
+      - return
   lll:
     line-length: 140
-  maligned:
-    suggest-new: true
   misspell:
     locale: US
   nolintlint:
-    allow-leading-space: true # don't require machine-readable nolint directives (i.e. with no leading space)
     allow-unused: false # report any unused nolint directives
     require-explanation: false # don't require an explanation for nolint directives
     require-specific: false # don't require nolint directives to be specific about which linter is being skipped
@@ -60,10 +55,10 @@ linters:
   disable-all: true
   enable:
     - bodyclose
+    - copyloopvar
     - dogsled
     - dupl
     - errcheck
-    - exportloopref
     - exhaustive
     - funlen
     - gochecknoinits
@@ -73,7 +68,6 @@ linters:
     - gofmt
     - goheader
     - goimports
-    - gomnd
     - goprintffuncname
     - gosec
     - gosimple
@@ -81,6 +75,7 @@ linters:
     - ineffassign
     - lll
     - misspell
+    - mnd
     - nakedret
     - noctx
     - nolintlint
