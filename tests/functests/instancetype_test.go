@@ -110,7 +110,7 @@ var _ = Describe("Common instance types func tests", func() {
 		It("[test_id:10737] can be created when enough resources are provided", func() {
 			for _, preference := range getClusterPreferences(virtClient) {
 				instanceTypeName := "it-for-" + preference.Name
-				createInstancetype(int(preference.Spec.Requirements.CPU.Guest), instanceTypeName, preference.Spec.Requirements.Memory.Guest.String())
+				createInstancetype(preference.Spec.Requirements.CPU.Guest, instanceTypeName, preference.Spec.Requirements.Memory.Guest.String())
 				instanceTypeMatcher := v1.InstancetypeMatcher{
 					Name: instanceTypeName,
 					Kind: "VirtualMachineInstancetype",
@@ -253,14 +253,14 @@ func getClusterPreferences(virtClient kubecli.KubevirtClient) []instancetypev1be
 	return clusterPreferences.Items
 }
 
-func createInstancetype(cpu int, name, memory string) {
+func createInstancetype(cpu uint32, name, memory string) {
 	instancetype := &instancetypev1beta1.VirtualMachineInstancetype{
 		ObjectMeta: metav1.ObjectMeta{
 			Name: name,
 		},
 		Spec: instancetypev1beta1.VirtualMachineInstancetypeSpec{
 			CPU: instancetypev1beta1.CPUInstancetype{
-				Guest: uint32(cpu),
+				Guest: cpu,
 			},
 			Memory: instancetypev1beta1.MemoryInstancetype{
 				Guest: resource.MustParse(memory),
