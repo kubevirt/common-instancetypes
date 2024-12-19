@@ -160,22 +160,28 @@ var _ = Describe("Common instance types func tests", func() {
 				testFn(virtClient, vm.Name)
 			}
 		},
-			Entry("[test_id:10738] Fedora", fedoraContainerDisk, map[string]string{"amd64": "fedora", "arm64": "fedora.arm64"},
+			Entry("[test_id:10738] Fedora", fedoraContainerDisk,
+				map[string]string{"amd64": "fedora", "arm64": "fedora.arm64", "s390x": "fedora.s390x"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("fedora")}),
 			Entry("[test_id:10745] CentOS Stream 9", centosStream9ContainerDisk,
-				map[string]string{"amd64": "centos.stream9", "arm64": "centos.stream9"},
+				map[string]string{"amd64": "centos.stream9", "arm64": "centos.stream9", "s390x": "centos.stream9"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("cloud-user")}),
-			Entry("[test_id:TODO] RHEL 9", rhel9ContainerDisk, map[string]string{"amd64": "rhel.9", "arm64": "rhel.9.arm64"},
+			Entry("[test_id:TODO] RHEL 9", rhel9ContainerDisk,
+				map[string]string{"amd64": "rhel.9", "arm64": "rhel.9.arm64", "s390x": "rhel.9.s390x"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("cloud-user")}),
 			Entry("[test_id:TODO] RHEL 10", rhel10ContainerDisk, map[string]string{"amd64": "rhel.10", "arm64": "rhel.10.arm64"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("cloud-user")}),
-			Entry("[test_id:10741] Ubuntu 18.04", ubuntu1804ContainerDisk, map[string]string{"amd64": "ubuntu"},
+			Entry("[test_id:10741] Ubuntu 18.04", ubuntu1804ContainerDisk,
+				map[string]string{"amd64": "ubuntu"},
 				[]testFn{expectSSHToRunCommandOnLinux("ubuntu")}),
-			Entry("[test_id:10742] Ubuntu 20.04", ubuntu2004ContainerDisk, map[string]string{"amd64": "ubuntu", "arm64": "ubuntu"},
+			Entry("[test_id:10742] Ubuntu 20.04", ubuntu2004ContainerDisk,
+				map[string]string{"amd64": "ubuntu", "arm64": "ubuntu", "s390x": "ubuntu"},
 				[]testFn{expectSSHToRunCommandOnLinux("ubuntu")}),
-			Entry("[test_id:10743] Ubuntu 22.04", ubuntu2204ContainerDisk, map[string]string{"amd64": "ubuntu", "arm64": "ubuntu"},
+			Entry("[test_id:10743] Ubuntu 22.04", ubuntu2204ContainerDisk,
+				map[string]string{"amd64": "ubuntu", "arm64": "ubuntu", "s390x": "ubuntu"},
 				[]testFn{expectSSHToRunCommandOnLinux("ubuntu")}),
-			Entry("[test_id:TODO] Ubuntu 24.04", ubuntu2404ContainerDisk, map[string]string{"amd64": "ubuntu", "arm64": "ubuntu"},
+			Entry("[test_id:TODO] Ubuntu 24.04", ubuntu2404ContainerDisk,
+				map[string]string{"amd64": "ubuntu", "arm64": "ubuntu", "s390x": "ubuntu"},
 				[]testFn{expectSSHToRunCommandOnLinux("ubuntu")}),
 			Entry("[test_id:TODO] OpenSUSE Tumbleweed", openSUSETumbleweedContainerDisk, map[string]string{"amd64": "opensuse.tumbleweed"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("opensuse")}),
@@ -186,7 +192,11 @@ var _ = Describe("Common instance types func tests", func() {
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("sles")}),
 		)
 
-		DescribeTable("a Windows guest with", func(containerDisk, preference string, testFns []testFn) {
+		DescribeTable("a Windows guest with", func(containerDisk string, preferences map[string]string, testFns []testFn) {
+			preference, hasArch := preferences[rt.GOARCH]
+			if !hasArch {
+				Skip(fmt.Sprintf("skipping as no preference provided for arch %s", rt.GOARCH))
+			}
 			vm = randomVM(&v1.InstancetypeMatcher{Name: "u1.2xmedium"}, &v1.PreferenceMatcher{Name: preference}, v1.RunStrategyAlways)
 			addContainerDisk(vm, containerDisk)
 			vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm, metav1.CreateOptions{})
@@ -196,19 +206,19 @@ var _ = Describe("Common instance types func tests", func() {
 				testFn(virtClient, vm.Name)
 			}
 		},
-			Entry("[test_id:10739] Validation OS", validationOsContainerDisk, "windows.11",
+			Entry("[test_id:10739] Validation OS", validationOsContainerDisk, map[string]string{"amd64": "windows.11"},
 				[]testFn{expectSSHToRunCommandOnWindows}),
-			Entry("[test_id:????] Windows 10", windows10ContainerDisk, "windows.10.virtio",
+			Entry("[test_id:????] Windows 10", windows10ContainerDisk, map[string]string{"amd64": "windows.10.virtio"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnWindows}),
-			Entry("[test_id:????] Windows 11", windows11ContainerDisk, "windows.11.virtio",
+			Entry("[test_id:????] Windows 11", windows11ContainerDisk, map[string]string{"amd64": "windows.11.virtio"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnWindows}),
-			Entry("[test_id:????] Windows Server 2016", windows2k16ContainerDisk, "windows.2k16.virtio",
-				[]testFn{expectGuestAgentToBeConnected}),
-			Entry("[test_id:????] Windows Server 2019", windows2k19ContainerDisk, "windows.2k19.virtio",
+			Entry("[test_id:????] Windows Server 2016", windows2k16ContainerDisk, map[string]string{"amd64": "windows.2k16.virtio"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnWindows}),
-			Entry("[test_id:????] Windows Server 2022", windows2k22ContainerDisk, "windows.2k22.virtio",
+			Entry("[test_id:????] Windows Server 2019", windows2k19ContainerDisk, map[string]string{"amd64": "windows.2k19.virtio"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnWindows}),
-			Entry("[test_id:????] Windows Server 2025", windows2k25ContainerDisk, "windows.2k25.virtio",
+			Entry("[test_id:????] Windows Server 2022", windows2k22ContainerDisk, map[string]string{"amd64": "windows.2k22.virtio"},
+				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnWindows}),
+			Entry("[test_id:????] Windows Server 2025", windows2k25ContainerDisk, map[string]string{"amd64": "windows.2k25.virtio"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnWindows}),
 		)
 	})
