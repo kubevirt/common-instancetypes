@@ -147,7 +147,7 @@ func (d *Decoder) setToMapValue(node ast.Node, m map[string]interface{}) error {
 	d.setPathToCommentMap(node)
 	switch n := node.(type) {
 	case *ast.MappingValueNode:
-		if n.Key.Type() == ast.MergeKeyType {
+		if n.Key.IsMergeKey() {
 			if err := d.setToMapValue(d.mergeValueNode(n.Value), m); err != nil {
 				return err
 			}
@@ -185,7 +185,7 @@ func (d *Decoder) setToOrderedMapValue(node ast.Node, m *MapSlice) error {
 	d.setPathToCommentMap(node)
 	switch n := node.(type) {
 	case *ast.MappingValueNode:
-		if n.Key.Type() == ast.MergeKeyType {
+		if n.Key.IsMergeKey() {
 			if err := d.setToOrderedMapValue(d.mergeValueNode(n.Value), m); err != nil {
 				return err
 			}
@@ -211,6 +211,9 @@ func (d *Decoder) setToOrderedMapValue(node ast.Node, m *MapSlice) error {
 }
 
 func (d *Decoder) setPathToCommentMap(node ast.Node) {
+	if node == nil {
+		return
+	}
 	if d.toCommentMap == nil {
 		return
 	}
@@ -464,7 +467,7 @@ func (d *Decoder) nodeToValue(node ast.Node) (any, error) {
 	case *ast.MappingKeyNode:
 		return d.nodeToValue(n.Value)
 	case *ast.MappingValueNode:
-		if n.Key.Type() == ast.MergeKeyType {
+		if n.Key.IsMergeKey() {
 			value := d.mergeValueNode(n.Value)
 			if d.useOrderedMap {
 				m := MapSlice{}
@@ -555,7 +558,7 @@ func (d *Decoder) resolveAlias(node ast.Node) (ast.Node, error) {
 		}
 		n.Value = value
 	case *ast.MappingValueNode:
-		if n.Key.Type() == ast.MergeKeyType && n.Value.Type() == ast.AliasType {
+		if n.Key.IsMergeKey() && n.Value.Type() == ast.AliasType {
 			value, err := d.resolveAlias(n.Value)
 			if err != nil {
 				return nil, err
@@ -994,7 +997,11 @@ func (d *Decoder) decodeValue(ctx context.Context, dst reflect.Value, src ast.No
 		if err := d.decodeValue(ctx, v, src); err != nil {
 			return err
 		}
-		dst.Set(d.castToAssignableValue(v, dst.Type()))
+		castedValue, err := d.castToAssignableValue(v, dst.Type(), src)
+		if err != nil {
+			return err
+		}
+		dst.Set(castedValue)
 	case reflect.Interface:
 		if dst.Type() == astNodeType {
 			dst.Set(reflect.ValueOf(src))
@@ -1118,23 +1125,26 @@ func (d *Decoder) createDecodableValue(typ reflect.Type) reflect.Value {
 	return reflect.New(typ).Elem()
 }
 
-func (d *Decoder) castToAssignableValue(value reflect.Value, target reflect.Type) reflect.Value {
+func (d *Decoder) castToAssignableValue(value reflect.Value, target reflect.Type, src ast.Node) (reflect.Value, error) {
 	if target.Kind() != reflect.Ptr {
-		return value
-	}
-	maxTryCount := 5
-	tryCount := 0
-	for {
-		if tryCount > maxTryCount {
-			return value
+		if !value.Type().AssignableTo(target) {
+			return reflect.Value{}, errors.ErrTypeMismatch(target, value.Type(), src.GetToken())
 		}
+		return value, nil
+	}
+
+	const maxAddrCount = 5
+
+	for i := 0; i < maxAddrCount; i++ {
 		if value.Type().AssignableTo(target) {
 			break
 		}
 		value = value.Addr()
-		tryCount++
 	}
-	return value
+	if !value.Type().AssignableTo(target) {
+		return reflect.Value{}, errors.ErrTypeMismatch(target, value.Type(), src.GetToken())
+	}
+	return value, nil
 }
 
 func (d *Decoder) createDecodedNewValue(
@@ -1142,9 +1152,16 @@ func (d *Decoder) createDecodedNewValue(
 ) (reflect.Value, error) {
 	if node.Type() == ast.AliasType {
 		aliasName := node.(*ast.AliasNode).Value.GetToken().Value
-		newValue := d.anchorValueMap[aliasName]
-		if newValue.IsValid() {
-			return newValue, nil
+		value := d.anchorValueMap[aliasName]
+		if value.IsValid() {
+			v, err := d.castToAssignableValue(value, typ, node)
+			if err == nil {
+				return v, nil
+			}
+		}
+		anchor, exists := d.anchorNodeMap[aliasName]
+		if exists {
+			node = anchor
 		}
 	}
 	var newValue reflect.Value
@@ -1161,10 +1178,10 @@ func (d *Decoder) createDecodedNewValue(
 	}
 	if node.Type() != ast.NullType {
 		if err := d.decodeValue(ctx, newValue, node); err != nil {
-			return newValue, err
+			return reflect.Value{}, err
 		}
 	}
-	return newValue, nil
+	return d.castToAssignableValue(newValue, typ, node)
 }
 
 func (d *Decoder) keyToNodeMap(node ast.Node, ignoreMergeKey bool, getKeyOrValueNode func(*ast.MapNodeIter) ast.Node) (map[string]ast.Node, error) {
@@ -1186,7 +1203,7 @@ func (d *Decoder) keyToNodeMap(node ast.Node, ignoreMergeKey bool, getKeyOrValue
 	mapIter := mapNode.MapRange()
 	for mapIter.Next() {
 		keyNode := mapIter.Key()
-		if keyNode.Type() == ast.MergeKeyType {
+		if keyNode.IsMergeKey() {
 			if ignoreMergeKey {
 				continue
 			}
@@ -1235,6 +1252,9 @@ func (d *Decoder) keyToValueNodeMap(node ast.Node, ignoreMergeKey bool) (map[str
 }
 
 func (d *Decoder) setDefaultValueIfConflicted(v reflect.Value, fieldMap StructFieldMap) error {
+	for v.Type().Kind() == reflect.Ptr {
+		v = v.Elem()
+	}
 	typ := v.Type()
 	if typ.Kind() != reflect.Struct {
 		return nil
@@ -1349,7 +1369,7 @@ func (d *Decoder) getMergeAliasName(src ast.Node) string {
 	for mapIter.Next() {
 		key := mapIter.Key()
 		value := mapIter.Value()
-		if key.Type() == ast.MergeKeyType && value.Type() == ast.AliasType {
+		if key.IsMergeKey() && value.Type() == ast.AliasType {
 			return value.(*ast.AliasNode).Value.GetToken().Value
 		}
 	}
@@ -1410,7 +1430,11 @@ func (d *Decoder) decodeStruct(ctx context.Context, dst reflect.Value, src ast.N
 				if aliasName != "" {
 					newFieldValue := d.anchorValueMap[aliasName]
 					if newFieldValue.IsValid() {
-						fieldValue.Set(d.castToAssignableValue(newFieldValue, fieldValue.Type()))
+						value, err := d.castToAssignableValue(newFieldValue, fieldValue.Type(), d.anchorNodeMap[aliasName])
+						if err != nil {
+							return err
+						}
+						fieldValue.Set(value)
 					}
 				}
 				continue
@@ -1456,7 +1480,7 @@ func (d *Decoder) decodeStruct(ctx context.Context, dst reflect.Value, src ast.N
 				continue
 			}
 			_ = d.setDefaultValueIfConflicted(newFieldValue, structFieldMap)
-			fieldValue.Set(d.castToAssignableValue(newFieldValue, fieldValue.Type()))
+			fieldValue.Set(newFieldValue)
 			continue
 		}
 		v, exists := keyToNodeMap[structField.RenderName]
@@ -1485,7 +1509,7 @@ func (d *Decoder) decodeStruct(ctx context.Context, dst reflect.Value, src ast.N
 			}
 			continue
 		}
-		fieldValue.Set(d.castToAssignableValue(newFieldValue, fieldValue.Type()))
+		fieldValue.Set(newFieldValue)
 	}
 	if foundErr != nil {
 		return foundErr
@@ -1563,9 +1587,8 @@ func (d *Decoder) decodeArray(ctx context.Context, dst reflect.Value, src ast.No
 					foundErr = err
 				}
 				continue
-			} else {
-				arrayValue.Index(idx).Set(d.castToAssignableValue(dstValue, elemType))
 			}
+			arrayValue.Index(idx).Set(dstValue)
 		}
 		idx++
 	}
@@ -1610,7 +1633,7 @@ func (d *Decoder) decodeSlice(ctx context.Context, dst reflect.Value, src ast.No
 			}
 			continue
 		}
-		sliceValue = reflect.Append(sliceValue, d.castToAssignableValue(dstValue, elemType))
+		sliceValue = reflect.Append(sliceValue, dstValue)
 	}
 	dst.Set(sliceValue)
 	if foundErr != nil {
@@ -1639,7 +1662,7 @@ func (d *Decoder) decodeMapItem(ctx context.Context, dst *MapItem, src ast.Node)
 	}
 	key := mapIter.Key()
 	value := mapIter.Value()
-	if key.Type() == ast.MergeKeyType {
+	if key.IsMergeKey() {
 		if err := d.decodeMapItem(ctx, dst, value); err != nil {
 			return err
 		}
@@ -1691,7 +1714,7 @@ func (d *Decoder) decodeMapSlice(ctx context.Context, dst *MapSlice, src ast.Nod
 	for mapIter.Next() {
 		key := mapIter.Key()
 		value := mapIter.Value()
-		if key.Type() == ast.MergeKeyType {
+		if key.IsMergeKey() {
 			var m MapSlice
 			if err := d.decodeMapSlice(ctx, &m, value); err != nil {
 				return err
@@ -1745,7 +1768,7 @@ func (d *Decoder) decodeMap(ctx context.Context, dst reflect.Value, src ast.Node
 	for mapIter.Next() {
 		key := mapIter.Key()
 		value := mapIter.Value()
-		if key.Type() == ast.MergeKeyType {
+		if key.IsMergeKey() {
 			if err := d.decodeMap(ctx, dst, value); err != nil {
 				return err
 			}
@@ -1793,7 +1816,7 @@ func (d *Decoder) decodeMap(ctx context.Context, dst reflect.Value, src ast.Node
 		}
 		if !k.IsValid() {
 			// expect nil key
-			mapValue.SetMapIndex(d.createDecodableValue(keyType), d.castToAssignableValue(dstValue, valueType))
+			mapValue.SetMapIndex(d.createDecodableValue(keyType), dstValue)
 			continue
 		}
 		if keyType.Kind() != k.Kind() {
@@ -1802,7 +1825,7 @@ func (d *Decoder) decodeMap(ctx context.Context, dst reflect.Value, src ast.Node
 				key.GetToken(),
 			)
 		}
-		mapValue.SetMapIndex(k, d.castToAssignableValue(dstValue, valueType))
+		mapValue.SetMapIndex(k, dstValue)
 	}
 	dst.Set(mapValue)
 	if foundErr != nil {
