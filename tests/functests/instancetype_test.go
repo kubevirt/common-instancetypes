@@ -117,7 +117,11 @@ var _ = Describe("Common instance types func tests", func() {
 				}
 
 				vm = randomVM(&instanceTypeMatcher, &v1.PreferenceMatcher{Name: preference.Name}, v1.RunStrategyHalted)
-				vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm, metav1.CreateOptions{})
+				vm, err = virtClient.VirtualMachine(testNamespace).Create(
+					context.Background(),
+					vm,
+					metav1.CreateOptions{DryRun: []string{metav1.DryRunAll}},
+				)
 				Expect(err).ToNot(HaveOccurred())
 			}
 		})
