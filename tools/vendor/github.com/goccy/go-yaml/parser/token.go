@@ -201,7 +201,7 @@ func (g *TokenGroup) TokenType() token.Type {
 	return g.Tokens[0].Type()
 }
 
-func createGroupedTokens(tokens token.Tokens) ([]*Token, error) {
+func CreateGroupedTokens(tokens token.Tokens) ([]*Token, error) {
 	var err error
 	tks := newTokens(tokens)
 	tks = createLineCommentTokenGroups(tks)
@@ -423,6 +423,10 @@ func createScalarTagTokenGroups(tokens []*Token) ([]*Token, error) {
 				continue
 			}
 			if tokens[i+1].GroupType() == TokenGroupAnchorName {
+				ret = append(ret, tk)
+				continue
+			}
+			if isFlowType(tokens[i+1]) {
 				ret = append(ret, tk)
 				continue
 			}
@@ -730,4 +734,12 @@ func isNotMapKeyType(tk *Token) bool {
 		typ == token.SequenceStartType ||
 		typ == token.SequenceEntryType ||
 		typ == token.SequenceEndType
+}
+
+func isFlowType(tk *Token) bool {
+	typ := tk.Type()
+	return typ == token.MappingStartType ||
+		typ == token.MappingEndType ||
+		typ == token.SequenceStartType ||
+		typ == token.SequenceEntryType
 }

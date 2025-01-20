@@ -62,6 +62,12 @@ The repositories that use goccy/go-yaml are listed here.
 The source data is [here](https://github.com/goccy/go-yaml/network/dependents). 
 It is already being used in many repositories. Now it's your turn 😄
 
+# Playground
+
+The Playground visualizes how go-yaml processes YAML text. Use it to assist with your debugging or issue reporting.
+
+https://goccy.github.io/go-yaml
+
 # Installation
 
 ```sh
@@ -186,7 +192,9 @@ fmt.Printf("%+v\n", v) // {A:{B:1 C:hello}}
 
 ### 3.1. Explicitly declared `Anchor` name and `Alias` name
 
-If you want to use `anchor` or `alias`, you can define it as a struct tag.
+If you want to use `anchor`, you can define it as a struct tag.
+If the value specified for an anchor is a pointer type and the same address as the pointer is found, the value is automatically set to alias.
+If an explicit alias name is specified, an error is raised if its value is different from the value specified in the anchor.
 
 ```go
 type T struct {
@@ -216,10 +224,7 @@ d: *x
 
 If you do not explicitly declare the anchor name, the default behavior is to
 use the equivalent of `strings.ToLower($FieldName)` as the name of the anchor.
-
-If you do not explicitly declare the alias name AND the value is a pointer
-to another element, we look up the anchor name by finding out which anchor
-field the value is assigned to by looking up its pointer address.
+If the value specified for an anchor is a pointer type and the same address as the pointer is found, the value is automatically set to alias.
 
 ```go
 type T struct {
@@ -229,8 +234,8 @@ type T struct {
 var v struct {
 	A *T `yaml:"a,anchor"`
 	B *T `yaml:"b,anchor"`
-	C *T `yaml:"c,alias"`
-	D *T `yaml:"d,alias"`
+	C *T `yaml:"c"`
+	D *T `yaml:"d"`
 }
 v.A = &T{I: 1, S: "hello"}
 v.B = &T{I: 2, S: "world"}

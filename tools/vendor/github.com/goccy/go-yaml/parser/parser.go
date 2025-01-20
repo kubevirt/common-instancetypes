@@ -95,7 +95,7 @@ func newParser(tokens token.Tokens, mode Mode, opts []Option) (*parser, error) {
 			filteredTokens = append(filteredTokens, tk)
 		}
 	}
-	tks, err := createGroupedTokens(token.Tokens(filteredTokens))
+	tks, err := CreateGroupedTokens(token.Tokens(filteredTokens))
 	if err != nil {
 		return nil, err
 	}
@@ -533,7 +533,7 @@ func (p *parser) validateMapKeyValueNextToken(ctx *context, keyTk, tk *Token) er
 	if tk.Column() <= keyTk.Column() {
 		return nil
 	}
-	if ctx.isFlow && tk.Type() == token.CollectEntryType {
+	if ctx.isFlow && (tk.Type() == token.CollectEntryType || tk.Type() == token.SequenceEndType) {
 		return nil
 	}
 	// a: b
@@ -561,11 +561,13 @@ func (p *parser) parseMapKeyValue(ctx *context, g *TokenGroup) (*ast.MappingValu
 	if err != nil {
 		return nil, err
 	}
-	value, err := p.parseToken(ctx.withChild(p.mapKeyText(key)), g.Last())
+
+	c := ctx.withChild(p.mapKeyText(key))
+	value, err := p.parseToken(c, g.Last())
 	if err != nil {
 		return nil, err
 	}
-	return newMappingValueNode(ctx, keyGroup.Last(), key, value)
+	return newMappingValueNode(c, keyGroup.Last(), key, value)
 }
 
 func (p *parser) parseMapKey(ctx *context, g *TokenGroup) (ast.MapKeyNode, error) {
@@ -705,7 +707,7 @@ func (p *parser) mapKeyText(n ast.Node) string {
 func (p *parser) parseMapValue(ctx *context, key ast.MapKeyNode, colonTk *Token) (ast.Node, error) {
 	tk := ctx.currentToken()
 	if tk == nil {
-		return newNullNode(ctx, ctx.insertNullToken(colonTk))
+		return newNullNode(ctx, ctx.addNullValueToken(colonTk))
 	}
 
 	if ctx.isComment() {
@@ -1091,7 +1093,7 @@ func (p *parser) parseSequence(ctx *context) (*ast.SequenceNode, error) {
 func (p *parser) parseSequenceValue(ctx *context, seqTk *Token) (ast.Node, error) {
 	tk := ctx.currentToken()
 	if tk == nil {
-		return newNullNode(ctx, ctx.insertNullToken(seqTk))
+		return newNullNode(ctx, ctx.addNullValueToken(seqTk))
 	}
 
 	if ctx.isComment() {
