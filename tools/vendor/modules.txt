@@ -169,7 +169,7 @@ golang.org/x/text/language
 golang.org/x/text/runes
 golang.org/x/text/transform
 golang.org/x/text/unicode/norm
-# google.golang.org/protobuf v1.36.3
+# google.golang.org/protobuf v1.36.4
 ## explicit; go 1.21
 google.golang.org/protobuf/encoding/prototext
 google.golang.org/protobuf/encoding/protowire
