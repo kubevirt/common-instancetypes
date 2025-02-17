@@ -21,7 +21,7 @@ require (
 	github.com/go-openapi/jsonreference v0.21.0 // indirect
 	github.com/go-openapi/swag v0.23.0 // indirect
 	github.com/goccy/go-json v0.10.5 // indirect
-	github.com/goccy/go-yaml v1.15.19 // indirect
+	github.com/goccy/go-yaml v1.15.23 // indirect
 	github.com/google/gnostic-models v0.6.9 // indirect
 	github.com/google/shlex v0.0.0-20191202100458-e7afc7fbc510 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
@@ -38,11 +38,11 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/santhosh-tekuri/jsonschema/v5 v5.3.1 // indirect
 	github.com/sergi/go-diff v1.3.1 // indirect
-	github.com/spf13/cobra v1.8.1 // indirect
+	github.com/spf13/cobra v1.9.1 // indirect
 	github.com/spf13/pflag v1.0.6 // indirect
 	github.com/xlab/treeprint v1.2.0 // indirect
 	github.com/yuin/gopher-lua v1.1.1 // indirect
-	golang.org/x/net v0.34.0 // indirect
+	golang.org/x/net v0.35.0 // indirect
 	golang.org/x/sys v0.30.0 // indirect
 	golang.org/x/text v0.22.0 // indirect
 	google.golang.org/protobuf v1.36.5 // indirect

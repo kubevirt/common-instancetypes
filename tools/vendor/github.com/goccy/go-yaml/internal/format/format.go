@@ -7,20 +7,186 @@ import (
 	"github.com/goccy/go-yaml/token"
 )
 
-func FormatNode(n ast.Node, existsComment bool) string {
-	return newFormatter(n.GetToken(), existsComment).format(n)
+func FormatNodeWithResolvedAlias(n ast.Node, anchorNodeMap map[string]ast.Node) string {
+	tk := getFirstToken(n)
+	if tk == nil {
+		return ""
+	}
+	formatter := newFormatter(tk, hasComment(n))
+	formatter.anchorNodeMap = anchorNodeMap
+	return formatter.format(n)
 }
 
-func FormatFile(file *ast.File, existsComment bool) string {
+func FormatNode(n ast.Node) string {
+	tk := getFirstToken(n)
+	if tk == nil {
+		return ""
+	}
+	return newFormatter(tk, hasComment(n)).format(n)
+}
+
+func FormatFile(file *ast.File) string {
 	if len(file.Docs) == 0 {
 		return ""
 	}
-	return newFormatter(file.Docs[0].GetToken(), existsComment).formatFile(file)
+	tk := getFirstToken(file.Docs[0])
+	if tk == nil {
+		return ""
+	}
+	return newFormatter(tk, hasCommentFile(file)).formatFile(file)
+}
+
+func hasCommentFile(f *ast.File) bool {
+	for _, doc := range f.Docs {
+		if hasComment(doc.Body) {
+			return true
+		}
+	}
+	return false
+}
+
+func hasComment(n ast.Node) bool {
+	if n == nil {
+		return false
+	}
+	switch nn := n.(type) {
+	case *ast.DocumentNode:
+		return hasComment(nn.Body)
+	case *ast.NullNode:
+		return nn.Comment != nil
+	case *ast.BoolNode:
+		return nn.Comment != nil
+	case *ast.IntegerNode:
+		return nn.Comment != nil
+	case *ast.FloatNode:
+		return nn.Comment != nil
+	case *ast.StringNode:
+		return nn.Comment != nil
+	case *ast.InfinityNode:
+		return nn.Comment != nil
+	case *ast.NanNode:
+		return nn.Comment != nil
+	case *ast.LiteralNode:
+		return nn.Comment != nil
+	case *ast.DirectiveNode:
+		if nn.Comment != nil {
+			return true
+		}
+		for _, value := range nn.Values {
+			if hasComment(value) {
+				return true
+			}
+		}
+	case *ast.TagNode:
+		if nn.Comment != nil {
+			return true
+		}
+		return hasComment(nn.Value)
+	case *ast.MappingNode:
+		if nn.Comment != nil || nn.FootComment != nil {
+			return true
+		}
+		for _, value := range nn.Values {
+			if value.Comment != nil || value.FootComment != nil {
+				return true
+			}
+			if hasComment(value.Key) {
+				return true
+			}
+			if hasComment(value.Value) {
+				return true
+			}
+		}
+	case *ast.MappingKeyNode:
+		return nn.Comment != nil
+	case *ast.MergeKeyNode:
+		return nn.Comment != nil
+	case *ast.SequenceNode:
+		if nn.Comment != nil || nn.FootComment != nil {
+			return true
+		}
+		for _, entry := range nn.Entries {
+			if entry.Comment != nil || entry.HeadComment != nil || entry.LineComment != nil {
+				return true
+			}
+			if hasComment(entry.Value) {
+				return true
+			}
+		}
+	case *ast.AnchorNode:
+		if nn.Comment != nil {
+			return true
+		}
+		if hasComment(nn.Name) || hasComment(nn.Value) {
+			return true
+		}
+	case *ast.AliasNode:
+		if nn.Comment != nil {
+			return true
+		}
+		if hasComment(nn.Value) {
+			return true
+		}
+	}
+	return false
+}
+
+func getFirstToken(n ast.Node) *token.Token {
+	if n == nil {
+		return nil
+	}
+	switch nn := n.(type) {
+	case *ast.DocumentNode:
+		if nn.Start != nil {
+			return nn.Start
+		}
+		return getFirstToken(nn.Body)
+	case *ast.NullNode:
+		return nn.Token
+	case *ast.BoolNode:
+		return nn.Token
+	case *ast.IntegerNode:
+		return nn.Token
+	case *ast.FloatNode:
+		return nn.Token
+	case *ast.StringNode:
+		return nn.Token
+	case *ast.InfinityNode:
+		return nn.Token
+	case *ast.NanNode:
+		return nn.Token
+	case *ast.LiteralNode:
+		return nn.Start
+	case *ast.DirectiveNode:
+		return nn.Start
+	case *ast.TagNode:
+		return nn.Start
+	case *ast.MappingNode:
+		if nn.IsFlowStyle {
+			return nn.Start
+		}
+		if len(nn.Values) == 0 {
+			return nn.Start
+		}
+		return getFirstToken(nn.Values[0].Key)
+	case *ast.MappingKeyNode:
+		return nn.Start
+	case *ast.MergeKeyNode:
+		return nn.Token
+	case *ast.SequenceNode:
+		return nn.Start
+	case *ast.AnchorNode:
+		return nn.Start
+	case *ast.AliasNode:
+		return nn.Start
+	}
+	return nil
 }
 
 type Formatter struct {
 	existsComment    bool
 	tokenToOriginMap map[*token.Token]string
+	anchorNodeMap    map[string]ast.Node
 }
 
 func newFormatter(tk *token.Token, existsComment bool) *Formatter {
@@ -41,17 +207,66 @@ func newFormatter(tk *token.Token, existsComment bool) *Formatter {
 		tokenToOriginMap[tk] = origin
 		origin = ""
 	}
-
 	return &Formatter{
 		existsComment:    existsComment,
 		tokenToOriginMap: tokenToOriginMap,
 	}
 }
 
+func getIndentNumByFirstLineToken(tk *token.Token) int {
+	defaultIndent := tk.Position.Column - 1
+
+	// key: value
+	//    ^
+	//   next
+	if tk.Type == token.SequenceEntryType {
+		// If the current token is the sequence entry.
+		// the indent is calculated from the column value of the current token.
+		return defaultIndent
+	}
+
+	// key: value
+	//    ^
+	//   next
+	if tk.Next != nil && tk.Next.Type == token.MappingValueType {
+		// If the current token is the key in the mapping-value,
+		// the indent is calculated from the column value of the current token.
+		return defaultIndent
+	}
+
+	if tk.Prev == nil {
+		return defaultIndent
+	}
+	prev := tk.Prev
+
+	// key: value
+	//    ^
+	//   prev
+	if prev.Type == token.MappingValueType {
+		// If the current token is the value in the mapping-value,
+		// the indent is calculated from the column value of the key two steps back.
+		if prev.Prev == nil {
+			return defaultIndent
+		}
+		return prev.Prev.Position.Column - 1
+	}
+
+	// - value
+	// ^
+	// prev
+	if prev.Type == token.SequenceEntryType {
+		// If the value is not a mapping-value and the previous token was a sequence entry,
+		// the indent is calculated using the column value of the sequence entry token.
+		return prev.Position.Column - 1
+	}
+
+	return defaultIndent
+}
+
 func (f *Formatter) format(n ast.Node) string {
 	return f.trimSpacePrefix(
 		f.trimIndentSpace(
-			n.GetToken().Position.IndentNum,
+			getIndentNumByFirstLineToken(getFirstToken(n)),
 			f.trimNewLineCharPrefix(f.formatNode(n)),
 		),
 	)
@@ -69,6 +284,9 @@ func (f *Formatter) formatFile(file *ast.File) string {
 }
 
 func (f *Formatter) origin(tk *token.Token) string {
+	if tk == nil {
+		return ""
+	}
 	if f.existsComment {
 		return tk.Origin
 	}
@@ -134,27 +352,14 @@ func (f *Formatter) formatDirective(n *ast.DirectiveNode) string {
 }
 
 func (f *Formatter) formatMapping(n *ast.MappingNode) string {
-	if len(n.Values) == 0 {
-		return "{}"
-	}
-
 	var ret string
 	if n.IsFlowStyle {
 		ret = f.origin(n.Start)
 	}
 	ret += f.formatCommentGroup(n.Comment)
-	entry := n.Start
 	for _, value := range n.Values {
-		if n.IsFlowStyle {
-			tk := value.GetToken()
-			for tk.Prev != nil && tk != entry {
-				tk = tk.Prev
-				if tk.Type == token.CollectEntryType {
-					ret += f.origin(tk)
-					entry = tk
-					break
-				}
-			}
+		if value.CollectEntry != nil {
+			ret += f.origin(value.CollectEntry)
 		}
 		ret += f.formatMappingValue(value)
 	}
@@ -173,31 +378,12 @@ func (f *Formatter) formatMappingKey(n *ast.MappingKeyNode) string {
 }
 
 func (f *Formatter) formatSequence(n *ast.SequenceNode) string {
-	if len(n.Values) == 0 {
-		return "[]"
-	}
-
-	var (
-		ret   string
-		entry = n.Start
-	)
+	var ret string
 	if n.IsFlowStyle {
 		ret = f.origin(n.Start)
 	}
-	for idx, value := range n.Values {
-		tk := value.GetToken()
-		for tk.Prev != nil && tk != entry {
-			tk = tk.Prev
-			if tk.Type == token.SequenceEntryType || tk.Type == token.CollectEntryType {
-				ret += f.origin(tk)
-				entry = tk
-				break
-			}
-		}
-		if len(n.ValueHeadComments) > idx {
-			ret += f.formatCommentGroup(n.ValueHeadComments[idx])
-		}
-		ret += f.formatNode(value)
+	for _, entry := range n.Entries {
+		ret += f.formatNode(entry)
 	}
 	if n.IsFlowStyle {
 		ret += f.origin(n.End)
@@ -206,11 +392,29 @@ func (f *Formatter) formatSequence(n *ast.SequenceNode) string {
 	return ret
 }
 
+func (f *Formatter) formatSequenceEntry(n *ast.SequenceEntryNode) string {
+	return f.formatCommentGroup(n.HeadComment) + f.origin(n.Start) + f.formatCommentGroup(n.LineComment) + f.formatNode(n.Value)
+}
+
 func (f *Formatter) formatAnchor(n *ast.AnchorNode) string {
 	return f.origin(n.Start) + f.formatNode(n.Name) + f.formatNode(n.Value)
 }
 
 func (f *Formatter) formatAlias(n *ast.AliasNode) string {
+	if f.anchorNodeMap != nil {
+		anchorName := n.Value.GetToken().Value
+		node := f.anchorNodeMap[anchorName]
+		if node != nil {
+			formatted := f.formatNode(node)
+			// If formatted text contains newline characters, indentation needs to be considered.
+			if strings.Contains(formatted, "\n") {
+				// If the first character is not a newline, the first line should be output without indentation.
+				isIgnoredFirstLine := !strings.HasPrefix(formatted, "\n")
+				formatted = f.addIndentSpace(n.GetToken().Position.IndentNum, formatted, isIgnoredFirstLine)
+			}
+			return formatted
+		}
+	}
 	return f.origin(n.Start) + f.formatNode(n.Value)
 }
 
@@ -248,6 +452,8 @@ func (f *Formatter) formatNode(n ast.Node) string {
 		return f.formatMergeKey(nn)
 	case *ast.SequenceNode:
 		return f.formatSequence(nn)
+	case *ast.SequenceEntryNode:
+		return f.formatSequenceEntry(nn)
 	case *ast.AnchorNode:
 		return f.formatAnchor(nn)
 	case *ast.AliasNode:
@@ -300,12 +506,29 @@ func (f *Formatter) trimIndentSpace(trimIndentNum int, v string) string {
 	}
 	lines := strings.Split(normalizeNewLineChars(v), "\n")
 	out := make([]string, 0, len(lines))
-	for _, line := range strings.Split(v, "\n") {
+	for _, line := range lines {
 		var cnt int
 		out = append(out, strings.TrimLeftFunc(line, func(r rune) bool {
 			cnt++
 			return r == ' ' && cnt <= trimIndentNum
 		}))
+	}
+	return strings.Join(out, "\n")
+}
+
+func (f *Formatter) addIndentSpace(indentNum int, v string, isIgnoredFirstLine bool) string {
+	if indentNum == 0 {
+		return v
+	}
+	indent := strings.Repeat(" ", indentNum)
+	lines := strings.Split(normalizeNewLineChars(v), "\n")
+	out := make([]string, 0, len(lines))
+	for idx, line := range lines {
+		if line == "" || (isIgnoredFirstLine && idx == 0) {
+			out = append(out, line)
+			continue
+		}
+		out = append(out, indent+line)
 	}
 	return strings.Join(out, "\n")
 }
