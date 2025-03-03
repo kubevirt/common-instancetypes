@@ -1,6 +1,7 @@
 module github.com/kubevirt/common-instancetypes/tools
 
 go 1.22.9
+toolchain go1.24.0
 
 require (
 	github.com/mikefarah/yq/v4 v4.45.1
@@ -9,7 +10,7 @@ require (
 )
 
 require (
-	github.com/a8m/envsubst v1.4.2 // indirect
+	github.com/a8m/envsubst v1.4.3 // indirect
 	github.com/alecthomas/participle/v2 v2.1.1 // indirect
 	github.com/blang/semver/v4 v4.0.0 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
