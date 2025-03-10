@@ -12,3 +12,5 @@ resources:
   - ./alpine
   - ./opensuse
   - ./sles
+  - ./linux-efi
+  - ./linux

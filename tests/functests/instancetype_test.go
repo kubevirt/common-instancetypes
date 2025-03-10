@@ -71,13 +71,28 @@ var _ = Describe("Common instance types func tests", func() {
 	})
 
 	Context("VirtualMachine using a preference with resource requirements", func() {
+		clusterPreferencesWithRequirements :=
+			func() []instancetypev1beta1.VirtualMachineClusterPreference {
+				clusterPreferences, listErr := virtClient.VirtualMachineClusterPreference().List(context.Background(), metav1.ListOptions{})
+				Expect(listErr).ToNot(HaveOccurred())
+				Expect(clusterPreferences.Items).ToNot(BeEmpty())
+
+				var completePreferences []instancetypev1beta1.VirtualMachineClusterPreference
+				for _, preference := range clusterPreferences.Items {
+					if preference.Spec.Requirements != nil {
+						completePreferences = append(completePreferences, preference)
+					}
+				}
+				return completePreferences
+			}
+
 		It("[test_id:10736] is rejected if it does not provide enough memory resources", func() {
 			createInstancetype(8, "tiny-instancetype-memory", "64M")
 			instanceTypeMatcher := v1.InstancetypeMatcher{
 				Name: "tiny-instancetype-memory",
 				Kind: "VirtualMachineInstancetype",
 			}
-			for _, preference := range getClusterPreferences(virtClient) {
+			for _, preference := range clusterPreferencesWithRequirements() {
 				vm = randomVM(&instanceTypeMatcher, &v1.PreferenceMatcher{Name: preference.Name}, v1.RunStrategyHalted)
 				_, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm, metav1.CreateOptions{})
 				Expect(err).To(MatchError(
@@ -96,7 +111,7 @@ var _ = Describe("Common instance types func tests", func() {
 				Name: "tiny-instancetype-cpu",
 				Kind: "VirtualMachineInstancetype",
 			}
-			for _, preference := range getClusterPreferences(virtClient) {
+			for _, preference := range clusterPreferencesWithRequirements() {
 				if preference.Spec.Requirements.CPU == nil || preference.Spec.Requirements.CPU.Guest < 2 {
 					continue
 				}
@@ -115,7 +130,7 @@ var _ = Describe("Common instance types func tests", func() {
 				"windows.11":          "u1.2xmedium",
 				"windows.11.virtio":   "u1.2xmedium",
 			}
-			for _, preference := range getClusterPreferences(virtClient) {
+			for _, preference := range clusterPreferencesWithRequirements() {
 				instancetype := "u1.medium"
 				if pInstancetype, ok := preferenceInstancetypeMap[preference.Name]; ok {
 					instancetype = pInstancetype
@@ -231,13 +246,6 @@ func getClusterInstancetypes(virtClient kubecli.KubevirtClient) []instancetypev1
 	Expect(err).ToNot(HaveOccurred())
 	Expect(clusterInstancetypes.Items).ToNot(BeEmpty())
 	return clusterInstancetypes.Items
-}
-
-func getClusterPreferences(virtClient kubecli.KubevirtClient) []instancetypev1beta1.VirtualMachineClusterPreference {
-	clusterPreferences, err := virtClient.VirtualMachineClusterPreference().List(context.Background(), metav1.ListOptions{})
-	Expect(err).ToNot(HaveOccurred())
-	Expect(clusterPreferences.Items).ToNot(BeEmpty())
-	return clusterPreferences.Items
 }
 
 func createInstancetype(cpu int, name, memory string) {
