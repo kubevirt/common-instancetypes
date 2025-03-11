@@ -12,3 +12,4 @@ resources:
   - ./alpine
   - ./linux-efi
   - ./linux
+  - ./legacy
