@@ -320,6 +320,7 @@ centos.stream9.dpdk | CentOS Stream 9
 cirros | Cirros
 fedora | Fedora (amd64)
 fedora.arm64 | Fedora (arm64)
+legacy | Legacy Guest
 linux | Linux Guest
 linux.efi | Linux EFI Guest
 opensuse.leap | OpenSUSE Leap
