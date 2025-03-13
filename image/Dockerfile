@@ -8,10 +8,10 @@
 #    * [openapi2jsonschema](https://github.com/instrumenta/openapi2jsonschema)
 #
 # Golang is provided to allow running other Makefile targets
+FROM quay.io/kubevirtci/golang:v20250211-4e3c019
+ENV GIMME_GO_VERSION=1.23.7
 
-FROM quay.io/fedora/fedora-minimal:41
-
-RUN microdnf install -y make tar golang python3-pip ShellCheck && microdnf clean all -y
+RUN dnf install -y make tar python3-pip ShellCheck && dnf clean all -y
 
 # yamllint openapi2jsonschema
 RUN pip install yamllint && \
