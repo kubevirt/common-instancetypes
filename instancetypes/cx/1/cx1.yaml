@@ -16,6 +16,7 @@ metadata:
       In addition, in this series, the NUMA topology of the used
       cores is provided to the VM.
     instancetype.kubevirt.io/displayName: "Compute Exclusive"
+    instancetype.kubevirt.io/useCaseExamples: "Databases"
   labels:
     instancetype.kubevirt.io/class: "compute.exclusive"
     instancetype.kubevirt.io/icon-pf: "pficon-registry"
