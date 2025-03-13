@@ -71,7 +71,7 @@ If [hugepages](https://kubevirt.io/user-guide/compute/hugepages/) are requested 
 
 ### `instancetype.kubevirt.io/os-type`
 
-The underlying type of the workload supported by the preference, current values are `linux` or `windows`.
+The underlying type of the workload supported by the preference, current values are `linux`, `windows` or `legacy`.
 
 ### `instancetype.kubevirt.io/arch`
 
