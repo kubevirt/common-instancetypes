@@ -223,6 +223,10 @@ var _ = Describe("Common instance types func tests", func() {
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("opensuse")}),
 			Entry("[test_id:TODO] SLES 15", sles15ContainerDisk, map[string]string{"amd64": "sles"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("sles")}),
+			Entry("[test_id:TODO] Debian 11", debian11ContainerDisk, map[string]string{"amd64": "debian", "arm64": "debian"},
+				[]testFn{expectSSHToRunCommandOnLinux("debian")}),
+			Entry("[test_id:TODO] Debian 12", debian12ContainerDisk, map[string]string{"amd64": "debian", "arm64": "debian"},
+				[]testFn{expectSSHToRunCommandOnLinux("debian")}),
 		)
 
 		DescribeTable("a Windows guest with", func(containerDisk string, preferences map[string]string, testFns []testFn) {
