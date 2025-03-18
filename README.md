@@ -278,6 +278,7 @@ centos.stream9 | CentOS Stream 9
 centos.stream9.desktop | CentOS Stream 9
 centos.stream9.dpdk | CentOS Stream 9
 cirros | Cirros
+debian | Debian
 fedora | Fedora
 legacy | Legacy Guest
 linux | Linux Guest

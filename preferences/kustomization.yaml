@@ -13,3 +13,4 @@ resources:
   - ./linux-efi
   - ./linux
   - ./legacy
+  - ./debian
