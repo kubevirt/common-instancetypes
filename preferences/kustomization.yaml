@@ -12,3 +12,4 @@ resources:
   - ./alpine
   - ./opensuse
   - ./sles
+  - ./debian
