@@ -1,0 +1,9 @@
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachinePreference
+metadata:
+  name: metadata
+  annotations:
+    tags: "hidden,kubevirt,debian"
+    iconClass: "icon-debian"
+    openshift.io/display-name: "Debian"
