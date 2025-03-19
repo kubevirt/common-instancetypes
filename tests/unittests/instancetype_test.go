@@ -14,7 +14,6 @@ import (
 
 const (
 	expectedVersion          = "instancetype.kubevirt.io/v1beta1"
-	expectedVendor           = "kubevirt.io"
 	instanceTypeErrorMessage = "%s label does not match in instancetype: %s"
 	preferenceErrorMessage   = "%s label does not match in preference: %s"
 )
