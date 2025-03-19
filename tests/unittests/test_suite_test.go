@@ -2,6 +2,7 @@ package tests
 
 import (
 	"bytes"
+	"flag"
 	"io"
 	"os"
 	"testing"
@@ -14,9 +15,19 @@ import (
 )
 
 const (
+	defaultExpectedVendor = "kubevirt.io"
+
 	clusterInstanceTypesBundlePath = "../../_build/common-clusterinstancetypes-bundle.yaml"
 	clusterPreferencesBundlePath   = "../../_build/common-clusterpreferences-bundle.yaml"
 )
+
+var expectedVendor string
+
+//nolint:gochecknoinits
+func init() {
+	flag.StringVar(&expectedVendor, "expected-vendor",
+		defaultExpectedVendor, "expected instancetype.kubevirt.io/vendor value for all resources")
+}
 
 var (
 	loadedVirtualMachineClusterInstanceTypes []instancetypev1beta1.VirtualMachineClusterInstancetype
