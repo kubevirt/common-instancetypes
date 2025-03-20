@@ -68,6 +68,12 @@ var _ = Describe("Common instance types func tests", func() {
 	})
 
 	Context("VirtualMachine using a preference with resource requirements", func() {
+		var skipPreference = map[string]any{
+			"legacy":    nil,
+			"linux":     nil,
+			"linux.efi": nil,
+		}
+
 		clusterPreferencesWithRequirements :=
 			func() []instancetypev1beta1.VirtualMachineClusterPreference {
 				clusterPreferences, listErr := virtClient.VirtualMachineClusterPreference().List(context.Background(), metav1.ListOptions{})
@@ -76,7 +82,8 @@ var _ = Describe("Common instance types func tests", func() {
 
 				var completePreferences []instancetypev1beta1.VirtualMachineClusterPreference
 				for _, preference := range clusterPreferences.Items {
-					if preference.Spec.Requirements != nil {
+					if _, ok := skipPreference[preference.Name]; !ok {
+						Expect(preference.Spec.Requirements).ToNot(BeNil())
 						completePreferences = append(completePreferences, preference)
 					}
 				}
