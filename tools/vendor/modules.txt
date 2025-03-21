@@ -1,7 +1,7 @@
 # github.com/a8m/envsubst v1.4.2
 ## explicit; go 1.17
 github.com/a8m/envsubst/parse
-# github.com/alecthomas/participle/v2 v2.1.1
+# github.com/alecthomas/participle/v2 v2.1.2
 ## explicit; go 1.18
 github.com/alecthomas/participle/v2/lexer
 # github.com/blang/semver/v4 v4.0.0
@@ -22,14 +22,14 @@ github.com/fatih/color
 # github.com/go-errors/errors v1.5.1
 ## explicit; go 1.14
 github.com/go-errors/errors
-# github.com/go-openapi/jsonpointer v0.21.0
+# github.com/go-openapi/jsonpointer v0.21.1
 ## explicit; go 1.20
 github.com/go-openapi/jsonpointer
 # github.com/go-openapi/jsonreference v0.21.0
 ## explicit; go 1.20
 github.com/go-openapi/jsonreference
 github.com/go-openapi/jsonreference/internal
-# github.com/go-openapi/swag v0.23.0
+# github.com/go-openapi/swag v0.23.1
 ## explicit; go 1.20
 github.com/go-openapi/swag
 # github.com/goccy/go-json v0.10.5
@@ -43,7 +43,7 @@ github.com/goccy/go-json/internal/encoder/vm_color_indent
 github.com/goccy/go-json/internal/encoder/vm_indent
 github.com/goccy/go-json/internal/errors
 github.com/goccy/go-json/internal/runtime
-# github.com/goccy/go-yaml v1.15.23
+# github.com/goccy/go-yaml v1.16.0
 ## explicit; go 1.21.0
 github.com/goccy/go-yaml
 github.com/goccy/go-yaml/ast
