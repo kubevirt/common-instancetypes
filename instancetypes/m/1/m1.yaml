@@ -9,6 +9,7 @@ metadata:
 
       *M* is the abbreviation of "Memory".
     instancetype.kubevirt.io/displayName: "Memory Intensive"
+    instancetype.kubevirt.io/useCaseExamples: "In-Memory Databases, Cache Services"
   labels:
     instancetype.kubevirt.io/class: "memory.intensive"
     instancetype.kubevirt.io/icon-pf: "fa-memory"
