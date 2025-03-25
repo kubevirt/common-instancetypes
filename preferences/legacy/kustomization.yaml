@@ -3,11 +3,12 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - ../linux-efi
+  - ../base
 
 components:
   - ./metadata
-  - ./requirements
+  - ../components/interfacemodel-e1000
+  - ../components/diskbus-scsi
 
 patches:
   - target:
@@ -15,10 +16,10 @@ patches:
     patch: |-
       - op: replace
         path: /metadata/name
-        value: debian
+        value: legacy
   - target:
       kind: VirtualMachineClusterPreference
     patch: |-
       - op: replace
         path: /metadata/name
-        value: debian
+        value: legacy

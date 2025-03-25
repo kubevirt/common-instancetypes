@@ -286,6 +286,9 @@ debian | Debian
 fedora | Fedora (amd64)
 fedora.arm64 | Fedora (arm64)
 fedora.s390x | Fedora (s390x)
+legacy | Legacy Guest
+linux | Linux Guest
+linux.efi | Linux EFI Guest
 opensuse.leap | OpenSUSE Leap
 opensuse.tumbleweed | OpenSUSE Tumbleweed
 rhel.10 | Red Hat Enterprise Linux 10 Beta (amd64)
