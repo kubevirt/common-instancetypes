@@ -32,13 +32,9 @@ type Encoder struct {
 	isFlowStyle                bool
 	isJSONStyle                bool
 	useJSONMarshaler           bool
-	enableSmartAnchor          bool
-	aliasRefToName             map[uintptr]string
-	anchorRefToName            map[uintptr]string
-	anchorNameMap              map[string]struct{}
 	anchorCallback             func(*ast.AnchorNode, interface{}) error
+	anchorPtrToNameMap         map[uintptr]string
 	customMarshalerMap         map[reflect.Type]func(interface{}) ([]byte, error)
-	autoInt                    bool
 	useLiteralStyleIfMultiline bool
 	commentMap                 map[*Path][]*Comment
 	written                    bool
@@ -57,14 +53,12 @@ func NewEncoder(w io.Writer, opts ...EncodeOption) *Encoder {
 	return &Encoder{
 		writer:             w,
 		opts:               opts,
+		anchorPtrToNameMap: map[uintptr]string{},
 		customMarshalerMap: map[reflect.Type]func(interface{}) ([]byte, error){},
 		line:               1,
 		column:             1,
 		offset:             0,
 		indentNum:          DefaultIndentSpaces,
-		anchorRefToName:    make(map[uintptr]string),
-		anchorNameMap:      make(map[string]struct{}),
-		aliasRefToName:     make(map[uintptr]string),
 	}
 }
 
@@ -115,13 +109,6 @@ func (e *Encoder) EncodeToNodeContext(ctx context.Context, v interface{}) (ast.N
 		if err := opt(e); err != nil {
 			return nil, err
 		}
-	}
-	if e.enableSmartAnchor {
-		// during the first encoding, store all mappings between alias addresses and their names.
-		if _, err := e.encodeValue(ctx, reflect.ValueOf(v), 1); err != nil {
-			return nil, err
-		}
-		e.clearSmartAnchorRef()
 	}
 	node, err := e.encodeValue(ctx, reflect.ValueOf(v), 1)
 	if err != nil {
@@ -458,8 +445,12 @@ func (e *Encoder) encodeValue(ctx context.Context, v reflect.Value, column int) 
 	case reflect.Float64:
 		return e.encodeFloat(v.Float(), 64), nil
 	case reflect.Ptr:
-		if value := e.encodePtrAnchor(v, column); value != nil {
-			return value, nil
+		anchorName := e.anchorPtrToNameMap[v.Pointer()]
+		if anchorName != "" {
+			aliasName := anchorName
+			alias := ast.Alias(token.New("*", "*", e.pos(column)))
+			alias.Value = ast.String(token.New(aliasName, aliasName, e.pos(column)))
+			return alias, nil
 		}
 		return e.encodeValue(ctx, v.Elem(), column)
 	case reflect.Interface:
@@ -471,9 +462,6 @@ func (e *Encoder) encodeValue(ctx context.Context, v reflect.Value, column int) 
 	case reflect.Slice:
 		if mapSlice, ok := v.Interface().(MapSlice); ok {
 			return e.encodeMapSlice(ctx, mapSlice, column)
-		}
-		if value := e.encodePtrAnchor(v, column); value != nil {
-			return value, nil
 		}
 		return e.encodeSlice(ctx, v)
 	case reflect.Array:
@@ -489,25 +477,10 @@ func (e *Encoder) encodeValue(ctx context.Context, v reflect.Value, column int) 
 		}
 		return e.encodeStruct(ctx, v, column)
 	case reflect.Map:
-		if value := e.encodePtrAnchor(v, column); value != nil {
-			return value, nil
-		}
-		return e.encodeMap(ctx, v, column)
+		return e.encodeMap(ctx, v, column), nil
 	default:
 		return nil, fmt.Errorf("unknown value type %s", v.Type().String())
 	}
-}
-
-func (e *Encoder) encodePtrAnchor(v reflect.Value, column int) ast.Node {
-	anchorName, exists := e.getAnchor(v.Pointer())
-	if !exists {
-		return nil
-	}
-	aliasName := anchorName
-	alias := ast.Alias(token.New("*", "*", e.pos(column)))
-	alias.Value = ast.String(token.New(aliasName, aliasName, e.pos(column)))
-	e.setSmartAlias(aliasName, v.Pointer())
-	return alias
 }
 
 func (e *Encoder) pos(column int) *token.Position {
@@ -548,9 +521,6 @@ func (e *Encoder) encodeFloat(v float64, bitSize int) ast.Node {
 	}
 	value := strconv.FormatFloat(v, 'g', -1, bitSize)
 	if !strings.Contains(value, ".") && !strings.Contains(value, "e") {
-		if e.autoInt {
-			return ast.Integer(token.New(value, value, e.pos(e.column)))
-		}
 		// append x.0 suffix to keep float value context
 		value = fmt.Sprintf("%s.0", value)
 	}
@@ -684,7 +654,7 @@ func (e *Encoder) isTagAndMapNode(node ast.Node) bool {
 	return ok && e.isMapNode(tn.Value)
 }
 
-func (e *Encoder) encodeMap(ctx context.Context, value reflect.Value, column int) (ast.Node, error) {
+func (e *Encoder) encodeMap(ctx context.Context, value reflect.Value, column int) ast.Node {
 	node := ast.Mapping(token.New("", "", e.pos(column)), e.isFlowStyle)
 	keys := make([]interface{}, len(value.MapKeys()))
 	for i, k := range value.MapKeys() {
@@ -698,7 +668,7 @@ func (e *Encoder) encodeMap(ctx context.Context, value reflect.Value, column int
 		v := value.MapIndex(k)
 		value, err := e.encodeValue(ctx, v, column)
 		if err != nil {
-			return nil, err
+			return nil
 		}
 		if e.isMapNode(value) {
 			value.AddColumn(e.indentNum)
@@ -706,25 +676,13 @@ func (e *Encoder) encodeMap(ctx context.Context, value reflect.Value, column int
 		if e.isTagAndMapNode(value) {
 			value.AddColumn(e.indentNum)
 		}
-		keyText := fmt.Sprint(key)
-		vRef := e.toPointer(v)
-
-		// during the second encoding, an anchor is assigned if it is found to be used by an alias.
-		if aliasName, exists := e.getSmartAlias(vRef); exists {
-			anchorName := aliasName
-			anchorNode := ast.Anchor(token.New("&", "&", e.pos(column)))
-			anchorNode.Name = ast.String(token.New(anchorName, anchorName, e.pos(column)))
-			anchorNode.Value = value
-			value = anchorNode
-		}
 		node.Values = append(node.Values, ast.MappingValue(
 			nil,
-			e.encodeString(keyText, column),
+			e.encodeString(fmt.Sprint(key), column),
 			value,
 		))
-		e.setSmartAnchor(vRef, keyText)
 	}
-	return node, nil
+	return node
 }
 
 // IsZeroer is used to check whether an object is zero to determine
@@ -803,7 +761,7 @@ func (e *Encoder) encodeAnchor(anchorName string, value ast.Node, fieldValue ref
 		}
 	}
 	if fieldValue.Kind() == reflect.Ptr {
-		e.setAnchor(fieldValue.Pointer(), anchorName)
+		e.anchorPtrToNameMap[fieldValue.Pointer()] = anchorName
 	}
 	return anchorNode, nil
 }
@@ -918,87 +876,9 @@ func (e *Encoder) encodeStruct(ctx context.Context, value reflect.Value, column 
 			}
 		}
 		if inlineAnchorValue.Kind() == reflect.Ptr {
-			e.setAnchor(inlineAnchorValue.Pointer(), anchorName)
+			e.anchorPtrToNameMap[inlineAnchorValue.Pointer()] = anchorName
 		}
 		return anchorNode, nil
 	}
 	return node, nil
-}
-
-func (e *Encoder) toPointer(v reflect.Value) uintptr {
-	if e.isInvalidValue(v) {
-		return 0
-	}
-
-	switch v.Type().Kind() {
-	case reflect.Ptr:
-		return v.Pointer()
-	case reflect.Interface:
-		return e.toPointer(v.Elem())
-	case reflect.Slice:
-		return v.Pointer()
-	case reflect.Map:
-		return v.Pointer()
-	}
-	return 0
-}
-
-func (e *Encoder) clearSmartAnchorRef() {
-	if !e.enableSmartAnchor {
-		return
-	}
-	e.anchorRefToName = make(map[uintptr]string)
-	e.anchorNameMap = make(map[string]struct{})
-}
-
-func (e *Encoder) setSmartAnchor(ptr uintptr, name string) {
-	if !e.enableSmartAnchor {
-		return
-	}
-	e.setAnchor(ptr, e.generateAnchorName(name))
-}
-
-func (e *Encoder) setAnchor(ptr uintptr, name string) {
-	if ptr == 0 {
-		return
-	}
-	if name == "" {
-		return
-	}
-	e.anchorRefToName[ptr] = name
-	e.anchorNameMap[name] = struct{}{}
-}
-
-func (e *Encoder) generateAnchorName(base string) string {
-	if _, exists := e.anchorNameMap[base]; !exists {
-		return base
-	}
-	for i := 1; i < 100; i++ {
-		name := base + strconv.Itoa(i)
-		if _, exists := e.anchorNameMap[name]; exists {
-			continue
-		}
-		return name
-	}
-	return ""
-}
-
-func (e *Encoder) getAnchor(ref uintptr) (string, bool) {
-	anchorName, exists := e.anchorRefToName[ref]
-	return anchorName, exists
-}
-
-func (e *Encoder) setSmartAlias(name string, ref uintptr) {
-	if !e.enableSmartAnchor {
-		return
-	}
-	e.aliasRefToName[ref] = name
-}
-
-func (e *Encoder) getSmartAlias(ref uintptr) (string, bool) {
-	if !e.enableSmartAnchor {
-		return "", false
-	}
-	aliasName, exists := e.aliasRefToName[ref]
-	return aliasName, exists
 }

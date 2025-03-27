@@ -7,7 +7,6 @@ type SimpleRule struct {
 }
 
 // MustSimple creates a new Stateful lexer with only a single root state.
-// The rules are tried in order.
 //
 // It panics if there is an error.
 func MustSimple(rules []SimpleRule) *StatefulDefinition {
@@ -19,7 +18,6 @@ func MustSimple(rules []SimpleRule) *StatefulDefinition {
 }
 
 // NewSimple creates a new Stateful lexer with only a single root state.
-// The rules are tried in order.
 func NewSimple(rules []SimpleRule) (*StatefulDefinition, error) {
 	fullRules := make([]Rule, len(rules))
 	for i, rule := range rules {
