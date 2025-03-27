@@ -312,39 +312,23 @@ type VolumePreferences struct {
 type PreferredCPUTopology string
 
 const (
+
 	// Prefer vCPUs to be exposed as cores to the guest
-	DeprecatedPreferCores PreferredCPUTopology = "preferCores"
+	PreferCores PreferredCPUTopology = "preferCores"
 
 	// Prefer vCPUs to be exposed as sockets to the guest, this is the default for the PreferredCPUTopology attribute of CPUPreferences.
-	DeprecatedPreferSockets PreferredCPUTopology = "preferSockets"
+	PreferSockets PreferredCPUTopology = "preferSockets"
 
 	// Prefer vCPUs to be exposed as threads to the guest
-	DeprecatedPreferThreads PreferredCPUTopology = "preferThreads"
+	PreferThreads PreferredCPUTopology = "preferThreads"
 
 	// Prefer vCPUs to be spread evenly between cores and sockets with any remaining vCPUs being presented as cores
-	DeprecatedPreferSpread PreferredCPUTopology = "preferSpread"
+	PreferSpread PreferredCPUTopology = "preferSpread"
 
 	// Prefer vCPUs to be spread according to VirtualMachineInstanceTemplateSpec
 	//
 	// If used with VirtualMachineInstanceType it will use sockets as default
-	DeprecatedPreferAny PreferredCPUTopology = "preferAny"
-
-	// Prefer vCPUs to be exposed as cores to the guest
-	Cores PreferredCPUTopology = "cores"
-
-	// Prefer vCPUs to be exposed as sockets to the guest, this is the default for the PreferredCPUTopology attribute of CPUPreferences.
-	Sockets PreferredCPUTopology = "sockets"
-
-	// Prefer vCPUs to be exposed as threads to the guest
-	Threads PreferredCPUTopology = "threads"
-
-	// Prefer vCPUs to be spread evenly between cores and sockets with any remaining vCPUs being presented as cores
-	Spread PreferredCPUTopology = "spread"
-
-	// Prefer vCPUs to be spread according to VirtualMachineInstanceTemplateSpec
-	//
-	// If used with VirtualMachineInstanceType it will use sockets as default
-	Any PreferredCPUTopology = "any"
+	PreferAny PreferredCPUTopology = "preferAny"
 )
 
 // CPUPreferences contains various optional CPU preferences.
@@ -581,11 +565,6 @@ type FirmwarePreferences struct {
 	//
 	// +optional
 	PreferredUseSecureBoot *bool `json:"preferredUseSecureBoot,omitempty"`
-
-	// PreferredEfi optionally enables EFI
-	//
-	// +optional
-	PreferredEfi *v1.EFI `json:"preferredEfi,omitempty"`
 }
 
 // MachinePreferences contains various optional defaults for Machine.

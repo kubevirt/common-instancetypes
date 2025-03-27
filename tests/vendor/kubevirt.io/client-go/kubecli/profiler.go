@@ -31,7 +31,7 @@ import (
 	v1 "kubevirt.io/api/core/v1"
 )
 
-func (k *kubevirtClient) ClusterProfiler() *ClusterProfiler {
+func (k *kubevirt) ClusterProfiler() *ClusterProfiler {
 	return &ClusterProfiler{
 		restClient: k.restClient,
 		resource:   "cluster-profiler",
