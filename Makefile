@@ -109,7 +109,7 @@ kubevirt-functest:
 
 .PHONY: test
 test: generate
-	cd tests && go test -v -timeout 0 ./unittests/...
+	cd tests && go test -v -timeout 0 ./unittests/... $(UNITTEST_EXTRA_ARGS) 
 
 .PHONY: test-fmt
 test-fmt:
