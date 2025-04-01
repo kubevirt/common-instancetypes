@@ -74,6 +74,7 @@ var (
 	openSUSELeap15ContainerDisk     string
 	sles15ContainerDisk             string
 
+	preferenceArch      string
 	windowsReadyTimeout time.Duration
 )
 
@@ -123,8 +124,16 @@ func init() {
 		defaultWindows2k22ContainerDisk, "Windows Server 2022 container disk used by functional tests")
 	flag.StringVar(&windows2k25ContainerDisk, "windows-2k25-container-disk",
 		defaultWindows2k25ContainerDisk, "Windows Server 2025 container disk used by functional tests")
+	flag.StringVar(&preferenceArch, "preference-arch", "", "Architecture to test preferences for")
 	flag.DurationVar(&windowsReadyTimeout, "windows-ready-timeout",
 		defaultVMReadyTimeout, "Duration after Windows VM will timeout")
+}
+
+func getClusterArch(virtClient kubecli.KubevirtClient) string {
+	nodes, err := virtClient.CoreV1().Nodes().List(context.Background(), metav1.ListOptions{})
+	Expect(err).ToNot(HaveOccurred())
+	Expect(nodes.Items).ToNot(BeEmpty())
+	return nodes.Items[0].Status.NodeInfo.Architecture
 }
 
 func checkDeployedResources() {
@@ -150,6 +159,10 @@ var _ = BeforeSuite(func() {
 
 	virtClient, err = kubecli.GetKubevirtClientFromRESTConfig(config)
 	Expect(err).ToNot(HaveOccurred())
+
+	if preferenceArch == "" {
+		preferenceArch = getClusterArch(virtClient)
+	}
 
 	namespaceObj := &core.Namespace{
 		ObjectMeta: metav1.ObjectMeta{
