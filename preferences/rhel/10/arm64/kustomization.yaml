@@ -9,6 +9,5 @@ components:
   - ./metadata
   - ./requirements
   - ../../../components/disk-dedicatediothread
-  - ../../../components/rng
 
 nameSuffix: ".10.arm64"

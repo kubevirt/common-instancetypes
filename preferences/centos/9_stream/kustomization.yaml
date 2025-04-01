@@ -8,7 +8,6 @@ resources:
 components:
   - ./metadata
   - ./requirements
-  - ../../components/rng
   - ../../components/disk-dedicatediothread
 
 nameSuffix: ".stream9"
