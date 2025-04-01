@@ -9,7 +9,6 @@ components:
   - ./metadata
   - ./requirements
   - ../../../components/disk-dedicatediothread
-  - ../../../components/rng
   - ../../../components/secureboot
 
 nameSuffix: ".9"
