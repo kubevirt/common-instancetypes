@@ -13,6 +13,7 @@ metadata:
       VMs of instance types will share physical CPU cores on a
       time-slice basis with other VMs.
     instancetype.kubevirt.io/displayName: "General Purpose"
+    instancetype.kubevirt.io/useCaseExamples: "Client, Desktop, VDI"
   labels:
     instancetype.kubevirt.io/class: "general.purpose"
     instancetype.kubevirt.io/icon-pf: "pficon-server-group"
