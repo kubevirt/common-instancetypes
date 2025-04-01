@@ -5,7 +5,6 @@ import (
 	"crypto/ed25519"
 	"encoding/json"
 	"fmt"
-	rt "runtime"
 	"time"
 
 	. "github.com/onsi/ginkgo/v2"
@@ -183,9 +182,9 @@ var _ = Describe("Common instance types func tests", func() {
 		})
 
 		DescribeTable("a Linux guest with", func(containerDisk string, preferences map[string]string, testFns []testFn) {
-			preference, hasArch := preferences[rt.GOARCH]
+			preference, hasArch := preferences[preferenceArch]
 			if !hasArch {
-				Skip(fmt.Sprintf("skipping as no preference provided for arch %s", rt.GOARCH))
+				Skip(fmt.Sprintf("skipping as no preference provided for arch %s", preferenceArch))
 			}
 			vm = randomVM(&v1.InstancetypeMatcher{Name: "u1.small"}, &v1.PreferenceMatcher{Name: preference}, v1.RunStrategyAlways)
 			addContainerDisk(vm, containerDisk)
@@ -237,9 +236,9 @@ var _ = Describe("Common instance types func tests", func() {
 		)
 
 		DescribeTable("a Windows guest with", func(containerDisk string, preferences map[string]string, testFns []testFn) {
-			preference, hasArch := preferences[rt.GOARCH]
+			preference, hasArch := preferences[preferenceArch]
 			if !hasArch {
-				Skip(fmt.Sprintf("skipping as no preference provided for arch %s", rt.GOARCH))
+				Skip(fmt.Sprintf("skipping as no preference provided for arch %s", preferenceArch))
 			}
 			vm = randomVM(&v1.InstancetypeMatcher{Name: "u1.2xmedium"}, &v1.PreferenceMatcher{Name: preference}, v1.RunStrategyAlways)
 			addContainerDisk(vm, containerDisk)
