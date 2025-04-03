@@ -83,6 +83,14 @@ function kubevirtci::sync-containerdisks() {
   podman push --tls-verify=false \
     "${VALIDATION_OS_IMAGE}:${VALIDATION_OS_IMAGE_TAG}" \
     "$(kubevirtci::registry)/validation-os-container-disk:latest"
+
+  mapfile -t tags <<< "$ORACLE_LINUX_TAGS"
+  for tag in "${tags[@]}"; do
+    podman pull "${ORACLE_LINUX_IMAGE}:${tag}"
+    podman push --tls-verify=false \
+        "${ORACLE_LINUX_IMAGE}:${tag}" \
+        "$(kubevirtci::registry)/oraclelinux:${tag}"
+  done
 }
 
 function kubevirtci::kubeconfig() {
