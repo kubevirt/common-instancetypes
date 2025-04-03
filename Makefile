@@ -12,6 +12,10 @@ export COMMON_INSTANCETYPES_IMAGE_TAG = v20241217-0005325
 export VALIDATION_OS_IMAGE = quay.io/kubevirtci/validation-os-container-disk
 export VALIDATION_OS_IMAGE_TAG = $(file < tests/image/validationos.tag)
 
+# Containerdisk image for Oracle Linux functional tests
+export ORACLE_LINUX_IMAGE = quay.io/jcanocan/oraclelinux
+export ORACLE_LINUX_TAGS = $(file < tests/image/oraclelinux.tag)
+
 # Packages of golang tools vendored in ./tools
 # Version to install is defined in ./tools/go.mod
 KUSTOMIZE_PACKAGE ?= sigs.k8s.io/kustomize/kustomize/v5
@@ -83,6 +87,10 @@ cluster-sync: kustomize
 cluster-sync-containerdisks:
 	scripts/kubevirtci.sh sync-containerdisks
 
+.PHONY: cluster-sync-ol-containerdisks
+cluster-sync-ol-containerdisks:
+	scripts/kubevirtci.sh sync-ol-containerdisks
+
 .PHONY: cluster-functest
 cluster-functest:
 	cd tests && KUBECONFIG=$$(../scripts/kubevirtci.sh kubeconfig) go test -v -timeout 0 ./functests/... -ginkgo.v -ginkgo.randomize-all $(FUNCTEST_EXTRA_ARGS)
@@ -102,6 +110,10 @@ kubevirt-sync: kustomize
 .PHONY: kubevirt-sync-containerdisks
 kubevirt-sync-containerdisks:
 	scripts/kubevirt.sh sync-containerdisks
+
+.PHONY: kubevirt-sync-ol-containerdisks
+kubevirt-sync-ol-containerdisks:
+	scripts/kubevirt.sh sync-ol-containerdisks
 
 .PHONY: kubevirt-functest
 kubevirt-functest:
