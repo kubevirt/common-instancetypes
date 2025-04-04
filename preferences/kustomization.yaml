@@ -14,3 +14,4 @@ resources:
   - ./linux
   - ./legacy
   - ./debian
+  - ./oraclelinux

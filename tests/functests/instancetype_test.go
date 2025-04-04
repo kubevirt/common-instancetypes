@@ -135,8 +135,8 @@ var _ = Describe("Common instance types func tests", func() {
 			Expect(err).ToNot(HaveOccurred())
 		})
 
-		DescribeTable("a Linux guest with", func(containerDisk, preference string, testFns []testFn) {
-			vm = randomVM(&v1.InstancetypeMatcher{Name: "u1.small"}, &v1.PreferenceMatcher{Name: preference}, true)
+		DescribeTable("a Linux guest with", func(containerDisk, instancetype, preference string, testFns []testFn) {
+			vm = randomVM(&v1.InstancetypeMatcher{Name: instancetype}, &v1.PreferenceMatcher{Name: preference}, true)
 			addContainerDisk(vm, containerDisk)
 			addCloudInitWithAuthorizedKey(vm, privKey)
 			vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm)
@@ -146,27 +146,31 @@ var _ = Describe("Common instance types func tests", func() {
 				testFn(virtClient, vm.Name)
 			}
 		},
-			Entry("[test_id:10738] Fedora", fedoraContainerDisk, "fedora",
+			Entry("[test_id:10738] Fedora", fedoraContainerDisk, "u1.small", "fedora",
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("fedora")}),
-			Entry("[test_id:10740] CentOS 7", centos7ContainerDisk, "centos.7",
+			Entry("[test_id:10740] CentOS 7", centos7ContainerDisk, "u1.small", "centos.7",
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("centos")}),
-			Entry("[test_id:10744] CentOS Stream 8", centosStream8ContainerDisk, "centos.stream8",
+			Entry("[test_id:10744] CentOS Stream 8", centosStream8ContainerDisk, "u1.small", "centos.stream8",
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("centos")}),
-			Entry("[test_id:10745] CentOS Stream 9", centosStream9ContainerDisk, "centos.stream9",
+			Entry("[test_id:10745] CentOS Stream 9", centosStream9ContainerDisk, "u1.small", "centos.stream9",
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("cloud-user")}),
-			Entry("[test_id:TODO] RHEL 9", rhel9ContainerDisk, "rhel.9",
+			Entry("[test_id:TODO] RHEL 9", rhel9ContainerDisk, "u1.small", "rhel.9",
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("cloud-user")}),
-			Entry("[test_id:TODO] RHEL 10", rhel10ContainerDisk, "rhel.10",
+			Entry("[test_id:TODO] RHEL 10", rhel10ContainerDisk, "u1.small", "rhel.10",
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("cloud-user")}),
-			Entry("[test_id:10741] Ubuntu 18.04", ubuntu1804ContainerDisk, "ubuntu",
+			Entry("[test_id:10741] Ubuntu 18.04", ubuntu1804ContainerDisk, "u1.small", "ubuntu",
 				[]testFn{expectSSHToRunCommandOnLinux("ubuntu")}),
-			Entry("[test_id:10742] Ubuntu 20.04", ubuntu2004ContainerDisk, "ubuntu",
+			Entry("[test_id:10742] Ubuntu 20.04", ubuntu2004ContainerDisk, "u1.small", "ubuntu",
 				[]testFn{expectSSHToRunCommandOnLinux("ubuntu")}),
-			Entry("[test_id:10743] Ubuntu 22.04", ubuntu2204ContainerDisk, "ubuntu",
+			Entry("[test_id:10743] Ubuntu 22.04", ubuntu2204ContainerDisk, "u1.small", "ubuntu",
 				[]testFn{expectSSHToRunCommandOnLinux("ubuntu")}),
-			Entry("[test_id:TODO] Debian 11", debian11ContainerDisk, "debian",
+			Entry("[test_id:TODO] Oracle Linux 8", ol8ContainerDisk, "u1.2xmedium", "oraclelinux",
+				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("cloud-user")}),
+			Entry("[test_id:TODO] Oracle Linux 9", ol9ContainerDisk, "u1.2xmedium", "oraclelinux",
+				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("cloud-user")}),
+			Entry("[test_id:TODO] Debian 11", debian11ContainerDisk, "u1.small", "debian",
 				[]testFn{expectSSHToRunCommandOnLinux("debian")}),
-			Entry("[test_id:TODO] Debian 12", debian12ContainerDisk, "debian",
+			Entry("[test_id:TODO] Debian 12", debian12ContainerDisk, "u1.small", "debian",
 				[]testFn{expectSSHToRunCommandOnLinux("debian")}),
 		)
 
