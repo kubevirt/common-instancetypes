@@ -60,6 +60,16 @@ function kubevirt::sync-containerdisks() {
     "$(kubevirt::registry)/validation-os-container-disk:latest"
 }
 
+function kubevirt::sync-ol-containerdisks() {
+  mapfile -t tags <<< "$ORACLE_LINUX_TAGS"
+  for tag in "${tags[@]}"; do
+    podman pull "${ORACLE_LINUX_IMAGE}:${tag}"
+    podman push --tls-verify=false \
+        "${ORACLE_LINUX_IMAGE}:${tag}" \
+        "$(kubevirt::registry)/oraclelinux:${tag}"
+  done
+}
+
 function kubevirt::kubeconfig() {
   "${_base_dir}/_kubevirt/kubevirtci/cluster-up/kubeconfig.sh"
 }
@@ -85,6 +95,9 @@ case ${_action} in
     ;;
   "sync-containerdisks")
     kubevirt::sync-containerdisks
+    ;;
+  "sync-ol-containerdisks")
+    kubevirt::sync-ol-containerdisks
     ;;
   "kubeconfig")
     kubevirt::kubeconfig
