@@ -1,0 +1,8 @@
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachinePreference
+metadata:
+  name: e1000
+spec:
+  devices:
+    preferredInterfaceModel: e1000
