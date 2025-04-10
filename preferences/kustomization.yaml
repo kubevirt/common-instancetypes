@@ -10,3 +10,6 @@ resources:
   - ./fedora
   - ./cirros
   - ./alpine
+  - ./linux-efi
+  - ./linux
+  - ./legacy
