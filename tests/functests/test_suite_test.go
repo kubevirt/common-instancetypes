@@ -36,6 +36,10 @@ const (
 	defaultUbuntu2404ContainerDisk         = "quay.io/containerdisks/ubuntu:24.04"
 	defaultOpenSUSETumbleweedContainerDisk = "quay.io/containerdisks/opensuse-tumbleweed:1.0.0"
 	defaultOpenSUSELeap15ContainerDisk     = "quay.io/containerdisks/opensuse-leap:15.6"
+	defaultDebian11ContainerDisk           = "quay.io/containerdisks/debian:11"
+	defaultDebian12ContainerDisk           = "quay.io/containerdisks/debian:12"
+	defaultOL8ContainerDisk                = "registry:5000/oraclelinux:8.10"
+	defaultOL9ContainerDisk                = "registry:5000/oraclelinux:9.5"
 	defaultSLES15ContainerDisk             = "registry:5000/sles15-container-disk:latest"
 	defaultValidationOsContainerDisk       = "registry:5000/validation-os-container-disk:latest"
 	defaultWindows10ContainerDisk          = "registry:5000/windows10-container-disk:latest"
@@ -73,6 +77,10 @@ var (
 	openSUSETumbleweedContainerDisk string
 	openSUSELeap15ContainerDisk     string
 	sles15ContainerDisk             string
+	debian11ContainerDisk           string
+	debian12ContainerDisk           string
+	ol8ContainerDisk                string
+	ol9ContainerDisk                string
 
 	preferenceArch      string
 	windowsReadyTimeout time.Duration
@@ -108,6 +116,14 @@ func init() {
 		defaultOpenSUSETumbleweedContainerDisk, "OpenSUSE Tumbleweed container disk used by functional tests")
 	flag.StringVar(&openSUSELeap15ContainerDisk, "opensuse-leap-container-disk",
 		defaultOpenSUSELeap15ContainerDisk, "OpenSUSE Leap container disk used by functional tests")
+	flag.StringVar(&debian11ContainerDisk, "debian-11-container-disk",
+		defaultDebian11ContainerDisk, "Debian 11 container disk used by functional tests")
+	flag.StringVar(&debian12ContainerDisk, "debian-12-container-disk",
+		defaultDebian12ContainerDisk, "Debian 12 container disk used by functional tests")
+	flag.StringVar(&ol8ContainerDisk, "ol-8-container-disk",
+		defaultOL8ContainerDisk, "Oracle Linux 8 container disk used by function tests")
+	flag.StringVar(&ol9ContainerDisk, "ol-9-container-disk",
+		defaultOL9ContainerDisk, "Oracle Linux 9 container disk used by function tests")
 	flag.StringVar(&sles15ContainerDisk, "sles15-container-disk",
 		defaultSLES15ContainerDisk, "SLES 15 container disk used by functional tests")
 	flag.StringVar(&validationOsContainerDisk, "validation-os-container-disk",

@@ -1,0 +1,13 @@
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachinePreference
+metadata:
+  name: requirements
+spec:
+  # https://www.debian.org/releases/stable/amd64/ch03s04.en.html
+  # https://www.debian.org/releases/stable/arm64/ch03s04.en.html
+  requirements:
+    cpu:
+      guest: 1
+    memory:
+      guest: 512Mi
