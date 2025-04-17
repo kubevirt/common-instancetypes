@@ -30,6 +30,7 @@ for version in "${!version_images[@]}"; do
     echo "Building ${arch} image with disk: ${image}"
     podman build \
       --platform="linux/${arch}" \
+      --format "docker" \
       --build-arg disk="${image}" \
       -t "${temp_tag}" \
       -f "${context_dir}/oraclelinux.Dockerfile" \
