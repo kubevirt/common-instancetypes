@@ -14,6 +14,10 @@ export COMMON_INSTANCETYPES_IMAGE_TAG = v20231205-3b7ed7e
 export VALIDATION_OS_IMAGE = quay.io/kubevirtci/validation-os-container-disk
 export VALIDATION_OS_IMAGE_TAG = 22621.1702.230501-1115
 
+# Containerdisk image for Oracle Linux functional tests
+export ORACLE_LINUX_IMAGE = quay.io/kubevirtci/oraclelinux
+export ORACLE_LINUX_TAGS = $(file < image/oraclelinux.tag)
+
 # Packages of golang tools vendored in ./tools
 # Version to install is defined in ./tools/go.mod
 KUSTOMIZE_PACKAGE ?= sigs.k8s.io/kustomize/kustomize/v5

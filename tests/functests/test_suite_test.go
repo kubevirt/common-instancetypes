@@ -32,6 +32,10 @@ const (
 	defaultUbuntu1804ContainerDisk    = "quay.io/containerdisks/ubuntu:18.04"
 	defaultUbuntu2004ContainerDisk    = "quay.io/containerdisks/ubuntu:20.04"
 	defaultUbuntu2204ContainerDisk    = "quay.io/containerdisks/ubuntu:22.04"
+	defaultDebian11ContainerDisk      = "quay.io/containerdisks/debian:11"
+	defaultDebian12ContainerDisk      = "quay.io/containerdisks/debian:12"
+	defaultOL8ContainerDisk           = "registry:5000/oraclelinux:8.10"
+	defaultOL9ContainerDisk           = "registry:5000/oraclelinux:9.5"
 	defaultValidationOsContainerDisk  = "registry:5000/validation-os-container-disk:latest"
 	defaultWindows10ContainerDisk     = "registry:5000/windows10-container-disk:latest"
 	defaultWindows11ContainerDisk     = "registry:5000/windows11-container-disk:latest"
@@ -61,6 +65,10 @@ var (
 	windows2k16ContainerDisk   string
 	windows2k19ContainerDisk   string
 	windows2k22ContainerDisk   string
+	debian11ContainerDisk      string
+	debian12ContainerDisk      string
+	ol8ContainerDisk           string
+	ol9ContainerDisk           string
 
 	windowsReadyTimeout time.Duration
 )
@@ -87,6 +95,14 @@ func init() {
 		defaultUbuntu2004ContainerDisk, "Ubuntu 20.04 container disk used by functional tests")
 	flag.StringVar(&ubuntu2204ContainerDisk, "ubuntu-2204-container-disk",
 		defaultUbuntu2204ContainerDisk, "Ubuntu 22.04 container disk used by functional tests")
+	flag.StringVar(&debian11ContainerDisk, "debian-11-container-disk",
+		defaultDebian11ContainerDisk, "Debian 11 container disk used by functional tests")
+	flag.StringVar(&debian12ContainerDisk, "debian-12-container-disk",
+		defaultDebian12ContainerDisk, "Debian 12 container disk used by functional tests")
+	flag.StringVar(&ol8ContainerDisk, "ol-8-container-disk",
+		defaultOL8ContainerDisk, "Oracle Linux 8 container disk used by function tests")
+	flag.StringVar(&ol9ContainerDisk, "ol-9-container-disk",
+		defaultOL9ContainerDisk, "Oracle Linux 9 container disk used by function tests")
 	flag.StringVar(&validationOsContainerDisk, "validation-os-container-disk",
 		defaultValidationOsContainerDisk, "Validation OS container disk used by functional tests")
 	flag.StringVar(&windows10ContainerDisk, "windows-10-container-disk",
