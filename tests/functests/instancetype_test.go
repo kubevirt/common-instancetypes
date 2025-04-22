@@ -138,6 +138,7 @@ var _ = Describe("Common instance types func tests", func() {
 				"rhel.9.realtime":     "u1.xlarge",
 				"windows.11":          "u1.2xmedium",
 				"windows.11.virtio":   "u1.2xmedium",
+				"oraclelinux":         "u1.2xmedium",
 			}
 			for _, preference := range clusterPreferencesWithRequirements() {
 				instancetype := "u1.medium"
@@ -168,12 +169,12 @@ var _ = Describe("Common instance types func tests", func() {
 			Expect(err).ToNot(HaveOccurred())
 		})
 
-		DescribeTable("a Linux guest with", func(containerDisk string, preferences map[string]string, testFns []testFn) {
+		DescribeTable("a Linux guest with", func(containerDisk, instancetype string, preferences map[string]string, testFns []testFn) {
 			preference, hasArch := preferences[rt.GOARCH]
 			if !hasArch {
 				Skip(fmt.Sprintf("skipping as no preference provided for arch %s", rt.GOARCH))
 			}
-			vm = randomVM(&v1.InstancetypeMatcher{Name: "u1.small"}, &v1.PreferenceMatcher{Name: preference}, true)
+			vm = randomVM(&v1.InstancetypeMatcher{Name: instancetype}, &v1.PreferenceMatcher{Name: preference}, true)
 			addContainerDisk(vm, containerDisk)
 			addCloudInitWithAuthorizedKey(vm, privKey)
 			vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm, metav1.CreateOptions{})
@@ -183,34 +184,57 @@ var _ = Describe("Common instance types func tests", func() {
 				testFn(virtClient, vm.Name)
 			}
 		},
-			Entry("[test_id:10738] Fedora", fedoraContainerDisk, map[string]string{"amd64": "fedora", "arm64": "fedora.arm64"},
+			Entry("[test_id:10738] Fedora", fedoraContainerDisk, "u1.small",
+				map[string]string{"amd64": "fedora", "arm64": "fedora.arm64"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("fedora")}),
-			Entry("[test_id:10740] CentOS 7", centos7ContainerDisk, map[string]string{"amd64": "centos.7"},
+			Entry("[test_id:10740] CentOS 7", centos7ContainerDisk, "u1.small",
+				map[string]string{"amd64": "centos.7"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("centos")}),
-			Entry("[test_id:10744] CentOS Stream 8", centosStream8ContainerDisk, map[string]string{"amd64": "centos.stream8"},
+			Entry("[test_id:10744] CentOS Stream 8", centosStream8ContainerDisk, "u1.small",
+				map[string]string{"amd64": "centos.stream8"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("centos")}),
-			Entry("[test_id:10745] CentOS Stream 9", centosStream9ContainerDisk,
+			Entry("[test_id:10745] CentOS Stream 9", centosStream9ContainerDisk, "u1.small",
 				map[string]string{"amd64": "centos.stream9", "arm64": "centos.stream9"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("cloud-user")}),
-			Entry("[test_id:TODO] RHEL 9", rhel9ContainerDisk, map[string]string{"amd64": "rhel.9", "arm64": "rhel.9.arm64"},
+			Entry("[test_id:TODO] RHEL 9", rhel9ContainerDisk, "u1.small",
+				map[string]string{"amd64": "rhel.9", "arm64": "rhel.9.arm64"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("cloud-user")}),
-			Entry("[test_id:TODO] RHEL 10", rhel10ContainerDisk, map[string]string{"amd64": "rhel.10", "arm64": "rhel.10.arm64"},
+			Entry("[test_id:TODO] RHEL 10", rhel10ContainerDisk, "u1.small",
+				map[string]string{"amd64": "rhel.10", "arm64": "rhel.10.arm64"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("cloud-user")}),
-			Entry("[test_id:10741] Ubuntu 18.04", ubuntu1804ContainerDisk, map[string]string{"amd64": "ubuntu"},
+			Entry("[test_id:10741] Ubuntu 18.04", ubuntu1804ContainerDisk, "u1.small",
+				map[string]string{"amd64": "ubuntu"},
 				[]testFn{expectSSHToRunCommandOnLinux("ubuntu")}),
-			Entry("[test_id:10742] Ubuntu 20.04", ubuntu2004ContainerDisk, map[string]string{"amd64": "ubuntu", "arm64": "ubuntu"},
+			Entry("[test_id:10742] Ubuntu 20.04", ubuntu2004ContainerDisk, "u1.small",
+				map[string]string{"amd64": "ubuntu", "arm64": "ubuntu"},
 				[]testFn{expectSSHToRunCommandOnLinux("ubuntu")}),
-			Entry("[test_id:10743] Ubuntu 22.04", ubuntu2204ContainerDisk, map[string]string{"amd64": "ubuntu", "arm64": "ubuntu"},
+			Entry("[test_id:10743] Ubuntu 22.04", ubuntu2204ContainerDisk, "u1.small",
+				map[string]string{"amd64": "ubuntu", "arm64": "ubuntu"},
 				[]testFn{expectSSHToRunCommandOnLinux("ubuntu")}),
-			Entry("[test_id:TODO] Ubuntu 24.04", ubuntu2404ContainerDisk, map[string]string{"amd64": "ubuntu", "arm64": "ubuntu"},
+			Entry("[test_id:TODO] Ubuntu 24.04", ubuntu2404ContainerDisk, "u1.small",
+				map[string]string{"amd64": "ubuntu", "arm64": "ubuntu"},
 				[]testFn{expectSSHToRunCommandOnLinux("ubuntu")}),
-			Entry("[test_id:TODO] OpenSUSE Tumbleweed", openSUSETumbleweedContainerDisk, map[string]string{"amd64": "opensuse.tumbleweed"},
+			Entry("[test_id:TODO] OpenSUSE Tumbleweed", openSUSETumbleweedContainerDisk, "u1.small",
+				map[string]string{"amd64": "opensuse.tumbleweed"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("opensuse")}),
-			Entry("[test_id:TODO] OpenSUSE Leap 15", openSUSELeap15ContainerDisk,
+			Entry("[test_id:TODO] OpenSUSE Leap 15", openSUSELeap15ContainerDisk, "u1.small",
 				map[string]string{"amd64": "opensuse.leap", "arm64": "opensuse.leap"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("opensuse")}),
-			Entry("[test_id:TODO] SLES 15", sles15ContainerDisk, map[string]string{"amd64": "sles"},
+			Entry("[test_id:TODO] Oracle Linux 8", ol8ContainerDisk, "u1.2xmedium",
+				map[string]string{"amd64": "oraclelinux", "arm64": "oraclelinux"},
+				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("cloud-user")}),
+			Entry("[test_id:TODO] Oracle Linux 9", ol9ContainerDisk, "u1.2xmedium",
+				map[string]string{"amd64": "oraclelinux", "arm64": "oraclelinux"},
+				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("cloud-user")}),
+			Entry("[test_id:TODO] SLES 15", sles15ContainerDisk, "u1.small",
+				map[string]string{"amd64": "sles"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("sles")}),
+			Entry("[test_id:TODO] Debian 11", debian11ContainerDisk, "u1.small",
+				map[string]string{"amd64": "debian", "arm64": "debian"},
+				[]testFn{expectSSHToRunCommandOnLinux("debian")}),
+			Entry("[test_id:TODO] Debian 12", debian12ContainerDisk, "u1.small",
+				map[string]string{"amd64": "debian", "arm64": "debian"},
+				[]testFn{expectSSHToRunCommandOnLinux("debian")}),
 		)
 
 		DescribeTable("a Windows guest with", func(containerDisk, preference string, testFns []testFn) {

@@ -15,3 +15,5 @@ resources:
   - ./linux-efi
   - ./linux
   - ./legacy
+  - ./debian
+  - ./oraclelinux

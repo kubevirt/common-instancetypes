@@ -318,6 +318,7 @@ centos.stream9 | CentOS Stream 9
 centos.stream9.desktop | CentOS Stream 9
 centos.stream9.dpdk | CentOS Stream 9
 cirros | Cirros
+debian | Debian
 fedora | Fedora (amd64)
 fedora.arm64 | Fedora (arm64)
 legacy | Legacy Guest
@@ -325,6 +326,7 @@ linux | Linux Guest
 linux.efi | Linux EFI Guest
 opensuse.leap | OpenSUSE Leap
 opensuse.tumbleweed | OpenSUSE Tumbleweed
+oraclelinux | Oracle Linux
 rhel.10 | Red Hat Enterprise Linux 10 Beta (amd64)
 rhel.10.arm64 | Red Hat Enterprise Linux 10 Beta (arm64)
 rhel.7 | Red Hat Enterprise Linux 7
