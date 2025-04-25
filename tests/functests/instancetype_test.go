@@ -205,7 +205,7 @@ var _ = Describe("Common instance types func tests", func() {
 				map[string]string{"amd64": "rhel.9", "arm64": "rhel.9.arm64", "s390x": "rhel.9.s390x"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("cloud-user")}),
 			Entry("[test_id:TODO] RHEL 10", rhel10ContainerDisk, "u1.small",
-				map[string]string{"amd64": "rhel.10", "arm64": "rhel.10.arm64"},
+				map[string]string{"amd64": "rhel.10", "arm64": "rhel.10.arm64", "s390x": "rhel.10.s390x"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("cloud-user")}),
 			Entry("[test_id:10741] Ubuntu 18.04", ubuntu1804ContainerDisk, "u1.small",
 				map[string]string{"amd64": "ubuntu"},
