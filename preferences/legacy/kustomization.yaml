@@ -8,7 +8,7 @@ resources:
 components:
   - ./metadata
   - ../components/interfacemodel-e1000
-  - ../components/diskbus-scsi
+  - ../components/diskbus-sata
 
 patches:
   - target:
