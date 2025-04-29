@@ -16,9 +16,6 @@
 
 set -ex
 
-# Required by the VMPersistentState feature that currently needs a RWX FS mode SC
-# https://kubevirt.io/user-guide/virtual_machines/persistent_tpm_and_uefi_state/
-export KUBEVIRT_DEPLOY_NFS_CSI="${KUBEVIRT_DEPLOY_NFS_CSI:-true}"
 export KUBEVIRT_MEMORY_SIZE="${KUBEVIRT_MEMORY_SIZE:-16G}"
 export KUBEVIRTCI_TAG=${KUBEVIRTCI_TAG:-$(curl -sfL https://storage.googleapis.com/kubevirt-prow/release/kubevirt/kubevirtci/latest)}
 export KUBEVIRT_DEPLOY_CDI="true"
@@ -58,8 +55,8 @@ function kubevirtci::up() {
   echo "waiting for kubevirt to become ready, this can take a few minutes..."
   ${_kubectl} -n kubevirt wait kv kubevirt --for condition=Available --timeout=15m
 
-  echo "enabling feature gates to validate instance types and preferences"
-  ${_kubectl} patch kv/kubevirt -n kubevirt --type merge -p '{"spec":{"configuration":{"commonInstancetypesDeployment": {"enabled": false},"developerConfiguration":{"featureGates": ["VMPersistentState"]},"vmStateStorageClass":"nfs-csi"}}}'
+  echo "disable common-instancetypes deployment"
+  ${_kubectl} patch kv/kubevirt -n kubevirt --type merge -p '{"spec":{"configuration":{"commonInstancetypesDeployment": {"enabled": false},"developerConfiguration":{"featureGates": ["VMPersistentState"]}}}}'
 
   echo "waiting for kubevirt to become ready, this can take a few minutes..."
   ${_kubectl} -n kubevirt wait kv kubevirt --for condition=Available --timeout=15m
