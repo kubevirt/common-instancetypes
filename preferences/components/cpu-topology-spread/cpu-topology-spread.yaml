@@ -8,4 +8,3 @@ spec:
     preferredCPUTopology: spread
     spreadOptions:
       across: SocketsCoresThreads
-
