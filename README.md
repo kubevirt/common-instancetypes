@@ -294,6 +294,7 @@ opensuse.tumbleweed | OpenSUSE Tumbleweed
 oraclelinux | Oracle Linux
 rhel.10 | Red Hat Enterprise Linux 10 Beta (amd64)
 rhel.10.arm64 | Red Hat Enterprise Linux 10 Beta (arm64)
+rhel.10.s390x | Red Hat Enterprise Linux 10 Beta (s390x)
 rhel.7 | Red Hat Enterprise Linux 7
 rhel.7.desktop | Red Hat Enterprise Linux 7
 rhel.8 | Red Hat Enterprise Linux 8
