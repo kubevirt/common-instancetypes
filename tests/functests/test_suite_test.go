@@ -48,6 +48,7 @@ const (
 	defaultWindows2k19ContainerDisk        = "registry:5000/windows2k19-container-disk:latest"
 	defaultWindows2k22ContainerDisk        = "registry:5000/windows2k22-container-disk:latest"
 	defaultWindows2k25ContainerDisk        = "registry:5000/windows2k25-container-disk:latest"
+	defaultWindowsXpContainerDisk          = "registry:5000/windowsxp-container-disk:latest"
 
 	defaultVMReadyTimeout = 300 * time.Second
 )
@@ -74,6 +75,7 @@ var (
 	windows2k19ContainerDisk        string
 	windows2k22ContainerDisk        string
 	windows2k25ContainerDisk        string
+	windowsXpContainerDisk          string
 	openSUSETumbleweedContainerDisk string
 	openSUSELeap15ContainerDisk     string
 	sles15ContainerDisk             string
@@ -140,6 +142,8 @@ func init() {
 		defaultWindows2k22ContainerDisk, "Windows Server 2022 container disk used by functional tests")
 	flag.StringVar(&windows2k25ContainerDisk, "windows-2k25-container-disk",
 		defaultWindows2k25ContainerDisk, "Windows Server 2025 container disk used by functional tests")
+	flag.StringVar(&windowsXpContainerDisk, "windows-xp-container-disk",
+		defaultWindowsXpContainerDisk, "Windows XP container disk used by functional tests")
 	flag.StringVar(&preferenceArch, "preference-arch", "", "Architecture to test preferences for")
 	flag.DurationVar(&windowsReadyTimeout, "windows-ready-timeout",
 		defaultVMReadyTimeout, "Duration after Windows VM will timeout")
