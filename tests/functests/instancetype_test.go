@@ -1,20 +1,24 @@
 package tests
 
 import (
+	"bytes"
 	"context"
 	"crypto/ed25519"
 	"encoding/json"
 	"fmt"
+	"strings"
 	"time"
 
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 
 	"golang.org/x/crypto/ssh"
+	extv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	k8srand "k8s.io/apimachinery/pkg/util/rand"
+	"k8s.io/client-go/util/jsonpath"
 	"k8s.io/utils/ptr"
 	v1 "kubevirt.io/api/core/v1"
 	instancetypev1beta1 "kubevirt.io/api/instancetype/v1beta1"
@@ -289,6 +293,36 @@ var _ = Describe("Common instance types func tests", func() {
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnWindows}),
 		)
 	})
+
+	Context("with deprecated fields used", func() {
+		It("[test_id:11951] rejects them in instance type", func() {
+			deprecatedFields := getDeprecatedFieldFromCrd(virtClient, "virtualmachineinstancetypes.instancetype.kubevirt.io")
+
+			clusterInstancetype, err := virtClient.VirtualMachineClusterInstancetype().List(context.Background(), metav1.ListOptions{})
+			Expect(err).ToNot(HaveOccurred())
+			Expect(clusterInstancetype.Items).ToNot(BeEmpty())
+
+			for _, instancetype := range clusterInstancetype.Items {
+				for _, deprecatedFieldPath := range deprecatedFields {
+					Expect(isFieldUsed(deprecatedFieldPath, serialize(instancetype))).To(BeFalse())
+				}
+			}
+		})
+
+		It("[test_id:11952] rejects them in preference", func() {
+			deprecatedFields := getDeprecatedFieldFromCrd(virtClient, "virtualmachineclusterpreferences.instancetype.kubevirt.io")
+			clusterPreferences, err := virtClient.VirtualMachineClusterPreference().List(context.Background(), metav1.ListOptions{})
+			Expect(err).ToNot(HaveOccurred())
+			Expect(clusterPreferences.Items).ToNot(BeEmpty())
+
+			for _, preference := range clusterPreferences.Items {
+				for _, deprecatedFieldPath := range deprecatedFields {
+					Expect(isFieldUsed(deprecatedFieldPath, serialize(preference))).To(BeFalse())
+				}
+			}
+		})
+	})
+
 })
 
 func getClusterInstancetypes(virtClient kubecli.KubevirtClient) []instancetypev1beta1.VirtualMachineClusterInstancetype {
@@ -436,4 +470,65 @@ func expectSSHToRunCommand(virtClient kubecli.KubevirtClient, vmName, username s
 		err = session.Run("echo hello")
 		g.Expect(err).ToNot(HaveOccurred())
 	}, defaultVMReadyTimeout, 10*time.Second).Should(Succeed())
+}
+
+func getDeprecatedFieldFromCrd(virtClient kubecli.KubevirtClient, apiResourceIdentifier string) []string {
+	crd, err := virtClient.ExtensionsClient().ApiextensionsV1().CustomResourceDefinitions().Get(
+		context.Background(), apiResourceIdentifier, metav1.GetOptions{})
+	Expect(err).ToNot(HaveOccurred())
+
+	var nonDeprecatedVersion extv1.CustomResourceDefinitionVersion
+	for _, version := range crd.Spec.Versions {
+		if !version.Deprecated {
+			nonDeprecatedVersion = version
+		}
+	}
+	Expect(nonDeprecatedVersion.Name).ToNot(BeEmpty())
+	schema := nonDeprecatedVersion.Schema.OpenAPIV3Schema
+
+	return findDeprecatedFields(schema)
+}
+
+func findDeprecatedFields(schema *extv1.JSONSchemaProps) []string {
+	var deprecatedFields []string
+
+	var collectDeprecatedFields func(schema *extv1.JSONSchemaProps, path string)
+	collectDeprecatedFields = func(schema *extv1.JSONSchemaProps, path string) {
+		for propName, propSchema := range schema.Properties {
+			fullPath := propName
+			if path != "" {
+				fullPath = path + "." + propName
+			}
+			if strings.Contains(strings.ToLower(propSchema.Description), "deprecated") {
+				deprecatedFields = append(deprecatedFields, fullPath)
+			}
+			collectDeprecatedFields(&propSchema, fullPath)
+		}
+	}
+
+	collectDeprecatedFields(schema, "")
+	for i, field := range deprecatedFields {
+		deprecatedFields[i] = "." + field
+	}
+
+	return deprecatedFields
+}
+
+func isFieldUsed(path string, data any) bool {
+	jp := jsonpath.New("isFieldUsed")
+	Expect(jp.Parse(fmt.Sprintf("{ %s }", path))).To(Succeed())
+	var buf bytes.Buffer
+	err := jp.Execute(&buf, data)
+	if err != nil {
+		return false
+	}
+	return err == nil
+}
+
+func serialize(data any) map[string]any {
+	m, err := json.Marshal(data)
+	Expect(err).ToNot(HaveOccurred())
+	var obj map[string]any
+	Expect(json.Unmarshal(m, &obj)).To(Succeed())
+	return obj
 }
