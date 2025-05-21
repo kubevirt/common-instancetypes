@@ -1,0 +1,12 @@
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachinePreference
+metadata:
+  name: requirements
+spec:
+  # https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2003/cc738496(v=ws.10)#windows-server-2003-standard-edition-system-requirements-1
+  requirements:
+    cpu:
+      guest: 1
+    memory:
+      guest: 256Mi
