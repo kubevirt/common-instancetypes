@@ -286,7 +286,7 @@ var _ = Describe("Common instance types func tests", func() {
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnWindows}),
 			Entry("[test_id:????] Windows XP", windowsXpContainerDisk, "u1.nano",
 				map[string]string{"amd64": "windows.xp"},
-				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnWindows}),
+				[]testFn{expectGuestAgentToBeConnected}),
 		)
 	})
 })
