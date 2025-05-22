@@ -44,6 +44,7 @@ const (
 	defaultValidationOsContainerDisk       = "registry:5000/validation-os-container-disk:latest"
 	defaultWindows10ContainerDisk          = "registry:5000/windows10-container-disk:latest"
 	defaultWindows11ContainerDisk          = "registry:5000/windows11-container-disk:latest"
+	defaultWindows2k3ContainerDisk         = "registry:5000/windows2k3-container-disk:latest"
 	defaultWindows2k16ContainerDisk        = "registry:5000/windows2k16-container-disk:latest"
 	defaultWindows2k19ContainerDisk        = "registry:5000/windows2k19-container-disk:latest"
 	defaultWindows2k22ContainerDisk        = "registry:5000/windows2k22-container-disk:latest"
@@ -71,6 +72,7 @@ var (
 	validationOsContainerDisk       string
 	windows10ContainerDisk          string
 	windows11ContainerDisk          string
+	windows2k3ContainerDisk         string
 	windows2k16ContainerDisk        string
 	windows2k19ContainerDisk        string
 	windows2k22ContainerDisk        string
@@ -134,6 +136,8 @@ func init() {
 		defaultWindows10ContainerDisk, "Windows 10 container disk used by functional tests")
 	flag.StringVar(&windows11ContainerDisk, "windows-11-container-disk",
 		defaultWindows11ContainerDisk, "Windows 11 container disk used by functional tests")
+	flag.StringVar(&windows2k3ContainerDisk, "windows-2k3-container-disk",
+		defaultWindows2k3ContainerDisk, "Windows Server 2003 container disk used by functional tests")
 	flag.StringVar(&windows2k16ContainerDisk, "windows-2k16-container-disk",
 		defaultWindows2k16ContainerDisk, "Windows Server 2016 container disk used by functional tests")
 	flag.StringVar(&windows2k19ContainerDisk, "windows-2k19-container-disk",
