@@ -2,18 +2,21 @@
 package validator
 
 import (
-	"bytes"
 	"context"
 	"errors"
 	"fmt"
-	"io"
-
-	jsonschema "github.com/santhosh-tekuri/jsonschema/v5"
-	_ "github.com/santhosh-tekuri/jsonschema/v5/httploader"
+	jsonschema "github.com/santhosh-tekuri/jsonschema/v6"
 	"github.com/yannh/kubeconform/pkg/cache"
+	"github.com/yannh/kubeconform/pkg/loader"
 	"github.com/yannh/kubeconform/pkg/registry"
 	"github.com/yannh/kubeconform/pkg/resource"
+	"golang.org/x/text/language"
+	"golang.org/x/text/message"
+	"io"
+	"os"
 	"sigs.k8s.io/yaml"
+	"strings"
+	"time"
 )
 
 // Different types of validation results
@@ -92,19 +95,48 @@ func New(schemaLocations []string, opts Opts) (Validator, error) {
 		opts.RejectKinds = map[string]struct{}{}
 	}
 
+	var filecache cache.Cache = nil
+	if opts.Cache != "" {
+		fi, err := os.Stat(opts.Cache)
+		if err != nil {
+			return nil, fmt.Errorf("failed opening cache folder %s: %s", opts.Cache, err)
+		}
+		if !fi.IsDir() {
+			return nil, fmt.Errorf("cache folder %s is not a directory", err)
+		}
+
+		filecache = cache.NewOnDiskCache(opts.Cache)
+	}
+
+	httpLoader, err := loader.NewHTTPURLLoader(false, filecache)
+	if err != nil {
+		return nil, fmt.Errorf("failed creating HTTP loader: %s", err)
+	}
+
 	return &v{
-		opts:           opts,
-		schemaDownload: downloadSchema,
-		schemaCache:    cache.NewInMemoryCache(),
-		regs:           registries,
+		opts:              opts,
+		schemaDownload:    downloadSchema,
+		schemaMemoryCache: cache.NewInMemoryCache(),
+		regs:              registries,
+		loader: jsonschema.SchemeURLLoader{
+			"file":  jsonschema.FileLoader{},
+			"http":  httpLoader,
+			"https": httpLoader,
+		},
 	}, nil
 }
 
 type v struct {
-	opts           Opts
-	schemaCache    cache.Cache
-	schemaDownload func(registries []registry.Registry, kind, version, k8sVersion string) (*jsonschema.Schema, error)
-	regs           []registry.Registry
+	opts              Opts
+	schemaDiskCache   cache.Cache
+	schemaMemoryCache cache.Cache
+	schemaDownload    func(registries []registry.Registry, loader jsonschema.SchemeURLLoader, kind, version, k8sVersion string) (*jsonschema.Schema, error)
+	regs              []registry.Registry
+	loader            jsonschema.SchemeURLLoader
+}
+
+func key(resourceKind, resourceAPIVersion, k8sVersion string) string {
+	return fmt.Sprintf("%s-%s-%s", resourceKind, resourceAPIVersion, k8sVersion)
 }
 
 // ValidateResource validates a single resource. This allows to validate
@@ -165,8 +197,8 @@ func (val *v) ValidateResource(res resource.Resource) Result {
 	cached := false
 	var schema *jsonschema.Schema
 
-	if val.schemaCache != nil {
-		s, err := val.schemaCache.Get(sig.Kind, sig.Version, val.opts.KubernetesVersion)
+	if val.schemaMemoryCache != nil {
+		s, err := val.schemaMemoryCache.Get(key(sig.Kind, sig.Version, val.opts.KubernetesVersion))
 		if err == nil {
 			cached = true
 			schema = s.(*jsonschema.Schema)
@@ -174,12 +206,12 @@ func (val *v) ValidateResource(res resource.Resource) Result {
 	}
 
 	if !cached {
-		if schema, err = val.schemaDownload(val.regs, sig.Kind, sig.Version, val.opts.KubernetesVersion); err != nil {
+		if schema, err = val.schemaDownload(val.regs, val.loader, sig.Kind, sig.Version, val.opts.KubernetesVersion); err != nil {
 			return Result{Resource: res, Err: err, Status: Error}
 		}
 
-		if val.schemaCache != nil {
-			val.schemaCache.Set(sig.Kind, sig.Version, val.opts.KubernetesVersion, schema)
+		if val.schemaMemoryCache != nil {
+			val.schemaMemoryCache.Set(key(sig.Kind, sig.Version, val.opts.KubernetesVersion), schema)
 		}
 	}
 
@@ -197,17 +229,22 @@ func (val *v) ValidateResource(res resource.Resource) Result {
 		var e *jsonschema.ValidationError
 		if errors.As(err, &e) {
 			for _, ve := range e.Causes {
+				path := ""
+				for _, f := range ve.InstanceLocation {
+					path = path + "/" + f
+				}
 				validationErrors = append(validationErrors, ValidationError{
-					Path: ve.InstanceLocation,
-					Msg:  ve.Message,
+					Path: path,
+					Msg:  ve.ErrorKind.LocalizedString(message.NewPrinter(language.English)),
 				})
 			}
 
 		}
+
 		return Result{
 			Resource:         res,
 			Status:           Invalid,
-			Err:              fmt.Errorf("problem validating schema. Check JSON formatting: %s", err),
+			Err:              fmt.Errorf("problem validating schema. Check JSON formatting: %s", strings.ReplaceAll(err.Error(), "\n", " ")),
 			ValidationErrors: validationErrors,
 		}
 	}
@@ -248,17 +285,98 @@ func (val *v) Validate(filename string, r io.ReadCloser) []Result {
 	return val.ValidateWithContext(context.Background(), filename, r)
 }
 
-func downloadSchema(registries []registry.Registry, kind, version, k8sVersion string) (*jsonschema.Schema, error) {
+// validateDuration is a custom validator for the duration format
+// as JSONSchema only supports the ISO 8601 format, i.e. `PT1H30M`,
+// while Kubernetes API machinery expects the Go duration format, i.e. `1h30m`
+// which is commonly used in Kubernetes operators for specifying intervals.
+// https://github.com/kubernetes/apiextensions-apiserver/blob/1ecd29f74da0639e2e6e3b8fac0c9bfd217e05eb/pkg/apis/apiextensions/v1/types_jsonschema.go#L71
+func validateDuration(v any) error {
+	// Try validation with the Go duration format
+	if _, err := time.ParseDuration(v.(string)); err == nil {
+		return nil
+	}
+
+	s, ok := v.(string)
+	if !ok {
+		return nil
+	}
+
+	// must start with 'P'
+	s, ok = strings.CutPrefix(s, "P")
+	if !ok {
+		return fmt.Errorf("must start with P")
+	}
+	if s == "" {
+		return fmt.Errorf("nothing after P")
+	}
+
+	// dur-week
+	if s, ok := strings.CutSuffix(s, "W"); ok {
+		if s == "" {
+			return fmt.Errorf("no number in week")
+		}
+		for _, ch := range s {
+			if ch < '0' || ch > '9' {
+				return fmt.Errorf("invalid week")
+			}
+		}
+		return nil
+	}
+
+	allUnits := []string{"YMD", "HMS"}
+	for i, s := range strings.Split(s, "T") {
+		if i != 0 && s == "" {
+			return fmt.Errorf("no time elements")
+		}
+		if i >= len(allUnits) {
+			return fmt.Errorf("more than one T")
+		}
+		units := allUnits[i]
+		for s != "" {
+			digitCount := 0
+			for _, ch := range s {
+				if ch >= '0' && ch <= '9' {
+					digitCount++
+				} else {
+					break
+				}
+			}
+			if digitCount == 0 {
+				return fmt.Errorf("missing number")
+			}
+			s = s[digitCount:]
+			if s == "" {
+				return fmt.Errorf("missing unit")
+			}
+			unit := s[0]
+			j := strings.IndexByte(units, unit)
+			if j == -1 {
+				if strings.IndexByte(allUnits[i], unit) != -1 {
+					return fmt.Errorf("unit %q out of order", unit)
+				}
+				return fmt.Errorf("invalid unit %q", unit)
+			}
+			units = units[j+1:]
+			s = s[1:]
+		}
+	}
+
+	return nil
+}
+
+func downloadSchema(registries []registry.Registry, l jsonschema.SchemeURLLoader, kind, version, k8sVersion string) (*jsonschema.Schema, error) {
 	var err error
-	var schemaBytes []byte
 	var path string
+	var s any
 
 	for _, reg := range registries {
-		path, schemaBytes, err = reg.DownloadSchema(kind, version, k8sVersion)
+		path, s, err = reg.DownloadSchema(kind, version, k8sVersion)
 		if err == nil {
 			c := jsonschema.NewCompiler()
-			c.Draft = jsonschema.Draft4
-			if err := c.AddResource(path, bytes.NewReader(schemaBytes)); err != nil {
+			c.RegisterFormat(&jsonschema.Format{"duration", validateDuration})
+			c.UseLoader(l)
+			c.DefaultDraft(jsonschema.Draft4)
+			if err := c.AddResource(path, s); err != nil {
 				continue
 			}
 			schema, err := c.Compile(path)
@@ -266,11 +384,13 @@ func downloadSchema(registries []registry.Registry, kind, version, k8sVersion st
 			if err != nil {
 				continue
 			}
-			return schema, err
+			return schema, nil
 		}
 
-		// If we get a 404, we try the next registry, but we exit if we get a real failure
-		if _, notfound := err.(*registry.NotFoundError); notfound {
+		if _, notfound := err.(*loader.NotFoundError); notfound {
+			continue
+		}
+		if _, nonJSONError := err.(*loader.NonJSONResponseError); nonJSONError {
 			continue
 		}
 
