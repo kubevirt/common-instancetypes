@@ -5,12 +5,16 @@ import (
 	"crypto/ed25519"
 	"encoding/json"
 	"fmt"
+	"reflect"
+	"strings"
 	"time"
 
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 
 	"golang.org/x/crypto/ssh"
+	// extv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
+	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -292,6 +296,36 @@ var _ = Describe("Common instance types func tests", func() {
 				[]testFn{expectGuestAgentToBeConnected}),
 		)
 	})
+
+	Context("with deprecated fields used", func() {
+		It("[test_id:11951] rejects them in instance type", func() {
+			deprecatedFields := getDeprecatedFieldFromCrd(virtClient, "virtualmachineinstancetypes.instancetype.kubevirt.io")
+
+			clusterInstancetype, err := virtClient.VirtualMachineClusterInstancetype().List(context.Background(), metav1.ListOptions{})
+			Expect(err).ToNot(HaveOccurred())
+			Expect(clusterInstancetype.Items).ToNot(BeEmpty())
+
+			for _, instancetype := range clusterInstancetype.Items {
+				for _, deprecatedFieldPath := range deprecatedFields {
+					Expect(isFieldUsed(instancetype, deprecatedFieldPath)).To(BeFalse())
+				}
+			}
+		})
+
+		It("[test_id:11952] rejects them in preference", func() {
+			var deprecatedFields = getDeprecatedFieldFromCrd(virtClient, "virtualmachineclusterpreferences.instancetype.kubevirt.io")
+			clusterPreferences, err := virtClient.VirtualMachineClusterPreference().List(context.Background(), metav1.ListOptions{})
+			Expect(err).ToNot(HaveOccurred())
+			Expect(clusterPreferences.Items).ToNot(BeEmpty())
+
+			for _, preference := range clusterPreferences.Items {
+				for _, deprecatedFieldPath := range deprecatedFields {
+					Expect(isFieldUsed(preference, deprecatedFieldPath)).To(BeFalse())
+				}
+			}
+		})
+	})
+
 })
 
 func getClusterInstancetypes(virtClient kubecli.KubevirtClient) []instancetypev1beta1.VirtualMachineClusterInstancetype {
@@ -439,4 +473,61 @@ func expectSSHToRunCommand(virtClient kubecli.KubevirtClient, vmName, username s
 		err = session.Run("echo hello")
 		g.Expect(err).ToNot(HaveOccurred())
 	}, defaultVMReadyTimeout, 10*time.Second).Should(Succeed())
+}
+
+func getDeprecatedFieldFromCrd(virtClient kubecli.KubevirtClient, apiResourceIdentifier string) []string {
+	crd, err := virtClient.ExtensionsClient().ApiextensionsV1().CustomResourceDefinitions().Get(
+		context.Background(), apiResourceIdentifier, metav1.GetOptions{})
+	Expect(err).ToNot(HaveOccurred())
+
+	var nonDeprecatedVersion apiextensionsv1.CustomResourceDefinitionVersion
+	for _, version := range crd.Spec.Versions {
+		if !version.Deprecated {
+			nonDeprecatedVersion = version
+		}
+	}
+	Expect(nonDeprecatedVersion.Name).ToNot(BeEmpty())
+	schema := nonDeprecatedVersion.Schema.OpenAPIV3Schema
+
+	return findDeprecatedFields(schema)
+}
+
+func findDeprecatedFields(schema *apiextensionsv1.JSONSchemaProps) []string {
+	var deprecatedFields []string
+
+	var collectDeprecatedFields func(schema *apiextensionsv1.JSONSchemaProps, path string)
+	collectDeprecatedFields = func(schema *apiextensionsv1.JSONSchemaProps, path string) {
+		for propName, propSchema := range schema.Properties {
+			fullPath := propName
+			if path != "" {
+				fullPath = path + "." + propName
+			}
+			if strings.Contains(strings.ToLower(propSchema.Description), "deprecated") {
+				deprecatedFields = append(deprecatedFields, fullPath)
+			}
+			collectDeprecatedFields(&propSchema, fullPath)
+		}
+	}
+
+	collectDeprecatedFields(schema, "")
+	return deprecatedFields
+}
+
+func isFieldUsed(obj interface{}, path string) bool {
+	val := reflect.ValueOf(obj)
+	for _, part := range strings.Split(path, ".") {
+		if val.Kind() == reflect.Ptr {
+			val = val.Elem()
+		}
+		if val.Kind() != reflect.Struct {
+			return false
+		}
+		val = val.FieldByNameFunc(func(fieldName string) bool {
+			return strings.EqualFold(fieldName, part)
+		})
+		if !val.IsValid() {
+			return false
+		}
+	}
+	return !val.IsZero()
 }
