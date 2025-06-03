@@ -40,6 +40,7 @@ const (
 	defaultOL8ContainerDisk             = "registry:5000/oraclelinux:8.10"
 	defaultOL9ContainerDisk             = "registry:5000/oraclelinux:9.5"
 	defaultValidationOsContainerDisk    = "registry:5000/validation-os-container-disk:latest"
+	defaultWindows7ContainerDisk        = "registry:5000/windows7-container-disk:latest"
 	defaultWindows10ContainerDisk       = "registry:5000/windows10-container-disk:latest"
 	defaultWindows11ContainerDisk       = "registry:5000/windows11-container-disk:latest"
 	defaultWindows2k8I386ContainerDisk  = "registry:5000/windows2k8-container-disk:i386"
@@ -71,6 +72,7 @@ var (
 	ubuntu2004ContainerDisk      string
 	ubuntu2204ContainerDisk      string
 	validationOsContainerDisk    string
+	windows7ContainerDisk        string
 	windows10ContainerDisk       string
 	windows11ContainerDisk       string
 	windows2k8I386ContainerDisk  string
@@ -127,6 +129,8 @@ func init() {
 		defaultOL9ContainerDisk, "Oracle Linux 9 container disk used by function tests")
 	flag.StringVar(&validationOsContainerDisk, "validation-os-container-disk",
 		defaultValidationOsContainerDisk, "Validation OS container disk used by functional tests")
+	flag.StringVar(&windows7ContainerDisk, "windows-7-container-disk",
+		defaultWindows7ContainerDisk, "Windows 7 container disk used by functional tests")
 	flag.StringVar(&windows10ContainerDisk, "windows-10-container-disk",
 		defaultWindows10ContainerDisk, "Windows 10 container disk used by functional tests")
 	flag.StringVar(&windows11ContainerDisk, "windows-11-container-disk",
