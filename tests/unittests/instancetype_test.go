@@ -116,15 +116,21 @@ func checkMemory(labelValue, labelName string, instanceType instancetypev1beta1.
 }
 
 func checkHugepages(labelValue, labelName string, instanceType instancetypev1beta1.VirtualMachineClusterInstancetype) error {
-	boolValue, err := strconv.ParseBool(labelValue)
+	labelQuantity, err := resource.ParseQuantity(labelValue)
 	if err != nil {
 		return err
 	}
-
-	if (instanceType.Spec.Memory.Hugepages == nil && boolValue) || (instanceType.Spec.Memory.Hugepages != nil && !boolValue) {
+	if labelQuantity.IsZero() || instanceType.Spec.Memory.Hugepages == nil || instanceType.Spec.Memory.Hugepages.PageSize == "" {
 		return fmt.Errorf(instanceTypeErrorMessage, labelName, instanceType.Name)
 	}
 
+	specQuantity, err := resource.ParseQuantity(instanceType.Spec.Memory.Hugepages.PageSize)
+	if err != nil {
+		return err
+	}
+	if labelQuantity.Cmp(specQuantity) != 0 {
+		return fmt.Errorf(instanceTypeErrorMessage, labelName, instanceType.Name)
+	}
 	return nil
 }
 
