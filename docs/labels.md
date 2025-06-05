@@ -66,7 +66,7 @@ If [isolateEmulatorThread](https://kubevirt.io/user-guide/compute/dedicated_cpu_
 
 ### `instancetype.kubevirt.io/hugepages` (optional)
 
-If [hugepages](https://kubevirt.io/user-guide/compute/hugepages/) are requested by the instance type.
+The size of [hugepages](https://kubevirt.io/user-guide/compute/hugepages/) requested by the instance type.
 
 ### `instancetype.kubevirt.io/gpus` (optional)
 
