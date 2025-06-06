@@ -49,6 +49,8 @@ const (
 	defaultWindows2k8I386ContainerDisk     = "registry:5000/windows2k8-container-disk:i386"
 	defaultWindows2k8Amd64ContainerDisk    = "registry:5000/windows2k8-container-disk:amd64"
 	defaultWindows2k8R2ContainerDisk       = "registry:5000/windows2k8r2-container-disk:latest"
+	defaultWindows2k12ContainerDisk        = "registry:5000/windows2k12-container-disk:latest"
+	defaultWindows2k12R2ContainerDisk      = "registry:5000/windows2k12r2-container-disk:latest"
 	defaultWindows2k16ContainerDisk        = "registry:5000/windows2k16-container-disk:latest"
 	defaultWindows2k19ContainerDisk        = "registry:5000/windows2k19-container-disk:latest"
 	defaultWindows2k22ContainerDisk        = "registry:5000/windows2k22-container-disk:latest"
@@ -81,6 +83,8 @@ var (
 	windows2k8I386ContainerDisk     string
 	windows2k8Amd64ContainerDisk    string
 	windows2k8R2ContainerDisk       string
+	windows2k12ContainerDisk        string
+	windows2k12R2ContainerDisk      string
 	windows2k16ContainerDisk        string
 	windows2k19ContainerDisk        string
 	windows2k22ContainerDisk        string
@@ -154,6 +158,10 @@ func init() {
 		defaultWindows2k8Amd64ContainerDisk, "Windows Server 2008 amd64 container disk used by functional tests")
 	flag.StringVar(&windows2k8R2ContainerDisk, "windows-2k8r2-container-disk",
 		defaultWindows2k8R2ContainerDisk, "Windows Server 2008 R2 container disk used by functional tests")
+	flag.StringVar(&windows2k12ContainerDisk, "windows-2k12-container-disk",
+		defaultWindows2k12ContainerDisk, "Windows Server 2012 container disk used by functional tests")
+	flag.StringVar(&windows2k12R2ContainerDisk, "windows-2k12r2-container-disk",
+		defaultWindows2k12R2ContainerDisk, "Windows Server 2012 R2 container disk used by functional tests")
 	flag.StringVar(&windows2k16ContainerDisk, "windows-2k16-container-disk",
 		defaultWindows2k16ContainerDisk, "Windows Server 2016 container disk used by functional tests")
 	flag.StringVar(&windows2k19ContainerDisk, "windows-2k19-container-disk",
