@@ -12,8 +12,9 @@ resources:
   - ./alpine
   - ./opensuse
   - ./sles
-  - ./linux-efi
   - ./linux
+  - ./linux-efi
+  - ./linux-virtio-transitional
   - ./legacy
   - ./debian
   - ./oraclelinux
