@@ -69,9 +69,10 @@ var _ = Describe("Common instance types func tests", func() {
 
 	Context("VirtualMachine using a preference with resource requirements", func() {
 		var skipPreference = map[string]any{
-			"legacy":    nil,
-			"linux":     nil,
-			"linux.efi": nil,
+			"legacy":                   nil,
+			"linux":                    nil,
+			"linux.efi":                nil,
+			"linux.virtiotransitional": nil,
 		}
 
 		clusterPreferencesWithRequirements :=
