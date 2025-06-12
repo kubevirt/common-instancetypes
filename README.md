@@ -320,6 +320,7 @@ fedora.s390x | Fedora (s390x)
 legacy | Legacy Guest
 linux | Linux Guest
 linux.efi | Linux EFI Guest
+linux.virtiotransitional | Linux Virtio Transitional Guest
 opensuse.leap | OpenSUSE Leap
 opensuse.tumbleweed | OpenSUSE Tumbleweed
 oraclelinux | Oracle Linux
