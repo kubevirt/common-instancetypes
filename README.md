@@ -283,6 +283,7 @@ fedora | Fedora
 legacy | Legacy Guest
 linux | Linux Guest
 linux.efi | Linux EFI Guest
+linux.virtiotransitional | Linux Virtio Transitional Guest
 oraclelinux | Oracle Linux
 rhel.10 | Red Hat Enterprise Linux 10 Beta (amd64)
 rhel.7 | Red Hat Enterprise Linux 7

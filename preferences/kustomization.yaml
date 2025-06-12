@@ -10,8 +10,9 @@ resources:
   - ./fedora
   - ./cirros
   - ./alpine
-  - ./linux-efi
   - ./linux
+  - ./linux-efi
+  - ./linux-virtio-transitional
   - ./legacy
   - ./debian
   - ./oraclelinux
