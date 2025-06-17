@@ -4,6 +4,6 @@ kind: VirtualMachinePreference
 metadata:
   name: metadata
   annotations:
-    openshift.io/display-name: "Red Hat Enterprise Linux 10 Beta (arm64)"
+    openshift.io/display-name: "Red Hat Enterprise Linux 10 (arm64)"
   labels:
     instancetype.kubevirt.io/arch: "arm64"
