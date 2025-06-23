@@ -1,6 +1,6 @@
 module github.com/kubevirt/common-instancetypes/tools
 
-go 1.24
+go 1.24.4
 
 require (
 	github.com/mikefarah/yq/v4 v4.45.4
