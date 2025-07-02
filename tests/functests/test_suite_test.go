@@ -230,7 +230,7 @@ var _ = BeforeSuite(func() {
 		},
 	}
 	_, err = virtClient.CoreV1().Namespaces().Create(context.TODO(), namespaceObj, metav1.CreateOptions{})
-	Expect(err).ToNot(HaveOccurred())
+	Expect(err).ToNot(And(HaveOccurred(), Not(MatchError(errors.IsAlreadyExists, "errors.IsAlreadyExists"))))
 
 	checkDeployedResources()
 })
