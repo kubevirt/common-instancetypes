@@ -27,6 +27,7 @@ const (
 	defaultCentos7ContainerDisk       = "quay.io/containerdisks/centos:7-2009"
 	defaultCentosStream8ContainerDisk = "quay.io/containerdisks/centos-stream:8"
 	defaultCentosStream9ContainerDisk = "quay.io/containerdisks/centos-stream:9"
+	defaultRHEL6ContainerDisk         = "registry:5000/rhel-guest-image:6"
 	defaultRHEL7ContainerDisk         = "registry:5000/rhel-guest-image:7"
 	defaultRHEL8ContainerDisk         = "registry:5000/rhel-guest-image:8"
 	defaultRHEL9ContainerDisk         = "registry:5000/rhel-guest-image:9"
@@ -56,6 +57,7 @@ var (
 	centos7ContainerDisk       string
 	centosStream8ContainerDisk string
 	centosStream9ContainerDisk string
+	rhel6ContainerDisk         string
 	rhel7ContainerDisk         string
 	rhel8ContainerDisk         string
 	rhel9ContainerDisk         string
@@ -89,6 +91,8 @@ func init() {
 		defaultCentosStream8ContainerDisk, "CentOS Stream 8 container disk used by functional tests")
 	flag.StringVar(&centosStream9ContainerDisk, "centos-stream-9-container-disk",
 		defaultCentosStream9ContainerDisk, "CentOS Stream 9 container disk used by functional tests")
+	flag.StringVar(&rhel6ContainerDisk, "rhel-6-container-disk",
+		defaultRHEL6ContainerDisk, "RHEL 6 container disk used by functional tests")
 	flag.StringVar(&rhel7ContainerDisk, "rhel-7-container-disk",
 		defaultRHEL7ContainerDisk, "RHEL 7 container disk used by functional tests")
 	flag.StringVar(&rhel8ContainerDisk, "rhel-8-container-disk",
