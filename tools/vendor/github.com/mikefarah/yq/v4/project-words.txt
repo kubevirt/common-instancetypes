@@ -257,3 +257,14 @@ noyaml
 nolint
 shortfile
 Unmarshalling
+noini
+<<<<<<< Updated upstream
+nocsv
+nobase64
+nouri
+noprops
+nosh
+noshell
+=======
+tinygo
+>>>>>>> Stashed changes
