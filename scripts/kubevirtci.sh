@@ -18,7 +18,7 @@ set -ex
 
 export KUBEVIRT_MEMORY_SIZE="${KUBEVIRT_MEMORY_SIZE:-16G}"
 export KUBEVIRT_DEPLOY_CDI="true"
-export KUBEVIRT_VERSION=${KUBEVIRT_VERSION:-main)}
+export KUBEVIRT_VERSION=${KUBEVIRT_VERSION:-main}
 export KUBEVIRTCI_TAG=${KUBEVIRTCI_TAG:-$(curl -sfL https://raw.githubusercontent.com/kubevirt/kubevirt/"${KUBEVIRT_VERSION}"/kubevirtci/cluster-up/version.txt)}
 
 _base_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
