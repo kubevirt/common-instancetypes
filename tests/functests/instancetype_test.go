@@ -72,28 +72,27 @@ var _ = Describe("Common instance types func tests", func() {
 	})
 
 	Context("VirtualMachine using a preference with resource requirements", func() {
-		var skipPreference = map[string]any{
+		skipPreference := map[string]any{
 			"legacy":                   nil,
 			"linux":                    nil,
 			"linux.efi":                nil,
 			"linux.virtiotransitional": nil,
 		}
 
-		clusterPreferencesWithRequirements :=
-			func() []instancetypev1beta1.VirtualMachineClusterPreference {
-				clusterPreferences, err := virtClient.VirtualMachineClusterPreference().List(context.Background(), metav1.ListOptions{})
-				Expect(err).ToNot(HaveOccurred())
-				Expect(clusterPreferences.Items).ToNot(BeEmpty())
+		clusterPreferencesWithRequirements := func() []instancetypev1beta1.VirtualMachineClusterPreference {
+			clusterPreferences, listErr := virtClient.VirtualMachineClusterPreference().List(context.Background(), metav1.ListOptions{})
+			Expect(listErr).ToNot(HaveOccurred())
+			Expect(clusterPreferences.Items).ToNot(BeEmpty())
 
-				var completePreferences []instancetypev1beta1.VirtualMachineClusterPreference
-				for _, preference := range clusterPreferences.Items {
-					if _, ok := skipPreference[preference.Name]; !ok {
-						Expect(preference.Spec.Requirements).ToNot(BeNil())
-						completePreferences = append(completePreferences, preference)
-					}
+			var completePreferences []instancetypev1beta1.VirtualMachineClusterPreference
+			for _, preference := range clusterPreferences.Items {
+				if _, ok := skipPreference[preference.Name]; !ok {
+					Expect(preference.Spec.Requirements).ToNot(BeNil())
+					completePreferences = append(completePreferences, preference)
 				}
-				return completePreferences
 			}
+			return completePreferences
+		}
 
 		It("[test_id:10736] is rejected if it does not provide enough memory resources", func() {
 			createInstancetype(8, "tiny-instancetype-memory", "64M")

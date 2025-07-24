@@ -8,8 +8,8 @@
 #    * [openapi2jsonschema](https://github.com/instrumenta/openapi2jsonschema)
 #
 # Golang is provided to allow running other Makefile targets
-FROM quay.io/kubevirtci/golang:v20250211-4e3c019
-ENV GIMME_GO_VERSION=1.23.7
+FROM quay.io/kubevirtci/golang:v20250701-f32dbda
+ENV GIMME_GO_VERSION=1.24.5
 
 RUN dnf install -y make tar python3-pip ShellCheck && dnf clean all -y
 

@@ -1,6 +1,6 @@
 module github.com/kubevirt/common-instancetypes/tests
 
-go 1.23.7
+go 1.24.4
 
 require (
 	github.com/onsi/ginkgo/v2 v2.23.0

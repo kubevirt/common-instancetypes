@@ -19,7 +19,6 @@ const (
 )
 
 var _ = Describe("Common instance types unit tests", func() {
-
 	skipLabels := map[string]bool{
 		"instancetype.kubevirt.io/arch":                         true,
 		"instancetype.kubevirt.io/os-type":                      true,
@@ -65,7 +64,6 @@ var _ = Describe("Common instance types unit tests", func() {
 				}
 			}
 		})
-
 	})
 
 	Context("VirtualMachineClusterInstanceType", func() {
