@@ -23,7 +23,7 @@ KUBECONFORM_PACKAGE ?= github.com/yannh/kubeconform/cmd/kubeconform
 YQ_PACKAGE ?= github.com/mikefarah/yq/v4
 
 # Version of golangci-lint to install
-GOLANGCI_LINT_VERSION ?= v1.62.2
+GOLANGCI_LINT_VERSION ?= v2.2.2
 
 # Kubeconfig default value
 KUBECONFIG ?= ~/.kube/config
@@ -116,8 +116,8 @@ test: generate
 	cd tests && go test -v -timeout 0 ./unittests/... $(UNITTEST_EXTRA_ARGS) 
 
 .PHONY: test-fmt
-test-fmt:
-	cd tests && go fmt ./...
+test-fmt: gofumpt
+	cd tests && gofumpt -w -extra .
 
 .PHONY: test-vet
 test-vet:
@@ -156,3 +156,8 @@ GOLANGCI_LINT ?= $(LOCALBIN)/golangci-lint
 golangci-lint: $(GOLANGCI_LINT)
 $(GOLANGCI_LINT): $(LOCALBIN)
 	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(LOCALBIN) $(GOLANGCI_LINT_VERSION)
+
+GOFUMPT ?= $(LOCALBIN)/gofumpt
+gofumpt: $(GOFUMPT)
+$(GOFUMPT): $(LOCALBIN)
+	test -s $(LOCALBIN)/gofumpt || GOBIN=$(LOCALBIN) go install mvdan.cc/gofumpt@latest

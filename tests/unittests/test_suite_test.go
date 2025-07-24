@@ -65,18 +65,17 @@ func FetchBundleResource[C clusterType](path string) ([]C, error) {
 }
 
 func fetchResourcesFromBundle() ([]instancetypev1beta1.VirtualMachineClusterInstancetype,
-	[]instancetypev1beta1.VirtualMachineClusterPreference, error) {
-	virtualMachineClusterInstancetypes, err :=
-		FetchBundleResource[instancetypev1beta1.VirtualMachineClusterInstancetype](clusterInstanceTypesBundlePath)
+	[]instancetypev1beta1.VirtualMachineClusterPreference, error,
+) {
+	instancetypes, err := FetchBundleResource[instancetypev1beta1.VirtualMachineClusterInstancetype](clusterInstanceTypesBundlePath)
 	if err != nil {
 		return nil, nil, err
 	}
-	virtualMachineClusterPreferences, err :=
-		FetchBundleResource[instancetypev1beta1.VirtualMachineClusterPreference](clusterPreferencesBundlePath)
+	preferences, err := FetchBundleResource[instancetypev1beta1.VirtualMachineClusterPreference](clusterPreferencesBundlePath)
 	if err != nil {
 		return nil, nil, err
 	}
-	return virtualMachineClusterInstancetypes, virtualMachineClusterPreferences, err
+	return instancetypes, preferences, err
 }
 
 // end of functions taken from SSP operator
@@ -91,8 +90,8 @@ func loadBundles() {
 var _ = BeforeSuite(func() {
 	loadBundles()
 
-	Expect(len(loadedVirtualMachineClusterInstanceTypes)).ToNot(BeZero())
-	Expect(len(loadedVirtualMachineClusterPreferences)).ToNot(BeZero())
+	Expect(loadedVirtualMachineClusterInstanceTypes).ToNot(BeEmpty())
+	Expect(loadedVirtualMachineClusterPreferences).ToNot(BeEmpty())
 })
 
 func TestUnit(t *testing.T) {
