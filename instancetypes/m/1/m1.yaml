@@ -14,8 +14,4 @@ metadata:
     instancetype.kubevirt.io/icon-pf: "fa-memory"
     instancetype.kubevirt.io/version: "1"
     instancetype.kubevirt.io/vendor: "kubevirt.io"
-    instancetype.kubevirt.io/hugepages: "true"
-spec:
-  memory:
-    hugepages:
-      pageSize: "2Mi"
+spec: {}
