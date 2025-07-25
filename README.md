@@ -226,16 +226,27 @@ provided by this project:
 Name | vCPUs | Memory
 -----|-------|-------
 cx1.2xlarge  |  8  |  16Gi
+cx1.2xlarge1gi  |  8  |  16Gi
 cx1.4xlarge  |  16  |  32Gi
+cx1.4xlarge1gi  |  16  |  32Gi
 cx1.8xlarge  |  32  |  64Gi
+cx1.8xlarge1gi  |  32  |  64Gi
 cx1.large  |  2  |  4Gi
+cx1.large1gi  |  2  |  4Gi
 cx1.medium  |  1  |  2Gi
+cx1.medium1gi  |  1  |  2Gi
 cx1.xlarge  |  4  |  8Gi
+cx1.xlarge1gi  |  4  |  8Gi
 m1.2xlarge  |  8  |  64Gi
+m1.2xlarge1gi  |  8  |  64Gi
 m1.4xlarge  |  16  |  128Gi
+m1.4xlarge1gi  |  16  |  128Gi
 m1.8xlarge  |  32  |  256Gi
+m1.8xlarge1gi  |  32  |  256Gi
 m1.large  |  2  |  16Gi
+m1.large1gi  |  2  |  16Gi
 m1.xlarge  |  4  |  32Gi
+m1.xlarge1gi  |  4  |  32Gi
 n1.2xlarge  |  16  |  32Gi
 n1.4xlarge  |  32  |  64Gi
 n1.8xlarge  |  64  |  128Gi
