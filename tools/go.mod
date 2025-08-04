@@ -3,16 +3,15 @@ module github.com/kubevirt/common-instancetypes/tools
 go 1.24.4
 
 require (
-	github.com/mikefarah/yq/v4 v4.46.1
+	github.com/mikefarah/yq/v4 v4.47.1
 	github.com/yannh/kubeconform v0.7.0
-	sigs.k8s.io/kustomize/kustomize/v5 v5.7.0
+	sigs.k8s.io/kustomize/kustomize/v5 v5.7.1
 )
 
 require (
 	github.com/a8m/envsubst v1.4.3 // indirect
 	github.com/alecthomas/participle/v2 v2.1.4 // indirect
 	github.com/blang/semver/v4 v4.0.0 // indirect
-	github.com/carapace-sh/carapace-shlex v1.0.1 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/dimchansky/utfbom v1.1.1 // indirect
 	github.com/elliotchance/orderedmap v1.8.0 // indirect
@@ -40,7 +39,7 @@ require (
 	github.com/santhosh-tekuri/jsonschema/v6 v6.0.2 // indirect
 	github.com/sergi/go-diff v1.4.0 // indirect
 	github.com/spf13/cobra v1.9.1 // indirect
-	github.com/spf13/pflag v1.0.6 // indirect
+	github.com/spf13/pflag v1.0.7 // indirect
 	github.com/xlab/treeprint v1.2.0 // indirect
 	github.com/yuin/gopher-lua v1.1.1 // indirect
 	go.yaml.in/yaml/v2 v2.4.2 // indirect
@@ -54,8 +53,8 @@ require (
 	gopkg.in/op/go-logging.v1 v1.0.0-20160211212156-b2cb9fa56473 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	k8s.io/kube-openapi v0.0.0-20241212222426-2c72e554b1e7 // indirect
-	sigs.k8s.io/kustomize/api v0.20.0 // indirect
-	sigs.k8s.io/kustomize/cmd/config v0.20.0 // indirect
-	sigs.k8s.io/kustomize/kyaml v0.20.0 // indirect
-	sigs.k8s.io/yaml v1.5.0 // indirect
+	sigs.k8s.io/kustomize/api v0.20.1 // indirect
+	sigs.k8s.io/kustomize/cmd/config v0.20.1 // indirect
+	sigs.k8s.io/kustomize/kyaml v0.20.1 // indirect
+	sigs.k8s.io/yaml v1.6.0 // indirect
 )
