@@ -324,6 +324,8 @@ windows.10 | Microsoft Windows 10
 windows.10.virtio | Microsoft Windows 10 (virtio)
 windows.11 | Microsoft Windows 11
 windows.11.virtio | Microsoft Windows 11 (virtio)
+windows.2k12 | Microsoft Windows Server 2012/2012 R2
+windows.2k12.virtio | Microsoft Windows Server 2012/2012 R2 (virtio)
 windows.2k16 | Microsoft Windows Server 2016
 windows.2k16.virtio | Microsoft Windows Server 2016 (virtio)
 windows.2k19 | Microsoft Windows Server 2019
