@@ -15,6 +15,15 @@ metadata:
       the IO threading from cores dedicated to the workload.
       In addition, in this series, the NUMA topology of the used
       cores is provided to the VM.
+
+      The amount of spec.cpu.maxSockets is set to the same as
+      guest cpus. This avoids KubeVirt's default behavior of
+      providing extra CPUs for hotplugging, which can exceed the
+      amount of available CPUs on a node and cause the VM to fail.
+
+      Requirements for CX series instance types:
+      - CPU manager has to be enabled.
+      - Huge pages have to be available on the nodes.
     instancetype.kubevirt.io/displayName: "Compute Exclusive"
   labels:
     instancetype.kubevirt.io/class: "compute.exclusive"
