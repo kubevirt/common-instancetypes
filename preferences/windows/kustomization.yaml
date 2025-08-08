@@ -5,6 +5,8 @@ kind: Kustomization
 resources:
   - ./2k8
   - ./2k8_virtio
+  - ./2k12
+  - ./2k12_virtio
   - ./2k16
   - ./2k16_virtio
   - ./2k19
