@@ -23,28 +23,31 @@ import (
 const (
 	testNamespace = "common-instancetype-functest"
 
-	defaultFedoraContainerDisk        = "quay.io/containerdisks/fedora:latest"
-	defaultCentos7ContainerDisk       = "quay.io/containerdisks/centos:7-2009"
-	defaultCentosStream8ContainerDisk = "quay.io/containerdisks/centos-stream:8"
-	defaultCentosStream9ContainerDisk = "quay.io/containerdisks/centos-stream:9"
-	defaultRHEL6ContainerDisk         = "registry:5000/rhel-guest-image:6"
-	defaultRHEL7ContainerDisk         = "registry:5000/rhel-guest-image:7"
-	defaultRHEL8ContainerDisk         = "registry:5000/rhel-guest-image:8"
-	defaultRHEL9ContainerDisk         = "registry:5000/rhel-guest-image:9"
-	defaultRHEL10ContainerDisk        = "registry:5000/rhel-guest-image:10"
-	defaultUbuntu1804ContainerDisk    = "quay.io/containerdisks/ubuntu:18.04"
-	defaultUbuntu2004ContainerDisk    = "quay.io/containerdisks/ubuntu:20.04"
-	defaultUbuntu2204ContainerDisk    = "quay.io/containerdisks/ubuntu:22.04"
-	defaultDebian11ContainerDisk      = "quay.io/containerdisks/debian:11"
-	defaultDebian12ContainerDisk      = "quay.io/containerdisks/debian:12"
-	defaultOL8ContainerDisk           = "registry:5000/oraclelinux:8.10"
-	defaultOL9ContainerDisk           = "registry:5000/oraclelinux:9.5"
-	defaultValidationOsContainerDisk  = "registry:5000/validation-os-container-disk:latest"
-	defaultWindows10ContainerDisk     = "registry:5000/windows10-container-disk:latest"
-	defaultWindows11ContainerDisk     = "registry:5000/windows11-container-disk:latest"
-	defaultWindows2k16ContainerDisk   = "registry:5000/windows2k16-container-disk:latest"
-	defaultWindows2k19ContainerDisk   = "registry:5000/windows2k19-container-disk:latest"
-	defaultWindows2k22ContainerDisk   = "registry:5000/windows2k22-container-disk:latest"
+	defaultFedoraContainerDisk          = "quay.io/containerdisks/fedora:latest"
+	defaultCentos7ContainerDisk         = "quay.io/containerdisks/centos:7-2009"
+	defaultCentosStream8ContainerDisk   = "quay.io/containerdisks/centos-stream:8"
+	defaultCentosStream9ContainerDisk   = "quay.io/containerdisks/centos-stream:9"
+	defaultRHEL6ContainerDisk           = "registry:5000/rhel-guest-image:6"
+	defaultRHEL7ContainerDisk           = "registry:5000/rhel-guest-image:7"
+	defaultRHEL8ContainerDisk           = "registry:5000/rhel-guest-image:8"
+	defaultRHEL9ContainerDisk           = "registry:5000/rhel-guest-image:9"
+	defaultRHEL10ContainerDisk          = "registry:5000/rhel-guest-image:10"
+	defaultUbuntu1804ContainerDisk      = "quay.io/containerdisks/ubuntu:18.04"
+	defaultUbuntu2004ContainerDisk      = "quay.io/containerdisks/ubuntu:20.04"
+	defaultUbuntu2204ContainerDisk      = "quay.io/containerdisks/ubuntu:22.04"
+	defaultDebian11ContainerDisk        = "quay.io/containerdisks/debian:11"
+	defaultDebian12ContainerDisk        = "quay.io/containerdisks/debian:12"
+	defaultOL8ContainerDisk             = "registry:5000/oraclelinux:8.10"
+	defaultOL9ContainerDisk             = "registry:5000/oraclelinux:9.5"
+	defaultValidationOsContainerDisk    = "registry:5000/validation-os-container-disk:latest"
+	defaultWindows10ContainerDisk       = "registry:5000/windows10-container-disk:latest"
+	defaultWindows11ContainerDisk       = "registry:5000/windows11-container-disk:latest"
+	defaultWindows2k8I386ContainerDisk  = "registry:5000/windows2k8-container-disk:i386"
+	defaultWindows2k8Amd64ContainerDisk = "registry:5000/windows2k8-container-disk:amd64"
+	defaultWindows2k8R2ContainerDisk    = "registry:5000/windows2k8r2-container-disk:latest"
+	defaultWindows2k16ContainerDisk     = "registry:5000/windows2k16-container-disk:latest"
+	defaultWindows2k19ContainerDisk     = "registry:5000/windows2k19-container-disk:latest"
+	defaultWindows2k22ContainerDisk     = "registry:5000/windows2k22-container-disk:latest"
 
 	defaultVMReadyTimeout = 300 * time.Second
 )
@@ -53,28 +56,31 @@ var (
 	afterSuiteReporters []Reporter
 	virtClient          kubecli.KubevirtClient
 
-	fedoraContainerDisk        string
-	centos7ContainerDisk       string
-	centosStream8ContainerDisk string
-	centosStream9ContainerDisk string
-	rhel6ContainerDisk         string
-	rhel7ContainerDisk         string
-	rhel8ContainerDisk         string
-	rhel9ContainerDisk         string
-	rhel10ContainerDisk        string
-	ubuntu1804ContainerDisk    string
-	ubuntu2004ContainerDisk    string
-	ubuntu2204ContainerDisk    string
-	validationOsContainerDisk  string
-	windows10ContainerDisk     string
-	windows11ContainerDisk     string
-	windows2k16ContainerDisk   string
-	windows2k19ContainerDisk   string
-	windows2k22ContainerDisk   string
-	debian11ContainerDisk      string
-	debian12ContainerDisk      string
-	ol8ContainerDisk           string
-	ol9ContainerDisk           string
+	fedoraContainerDisk          string
+	centos7ContainerDisk         string
+	centosStream8ContainerDisk   string
+	centosStream9ContainerDisk   string
+	rhel6ContainerDisk           string
+	rhel7ContainerDisk           string
+	rhel8ContainerDisk           string
+	rhel9ContainerDisk           string
+	rhel10ContainerDisk          string
+	ubuntu1804ContainerDisk      string
+	ubuntu2004ContainerDisk      string
+	ubuntu2204ContainerDisk      string
+	validationOsContainerDisk    string
+	windows10ContainerDisk       string
+	windows11ContainerDisk       string
+	windows2k8I386ContainerDisk  string
+	windows2k8Amd64ContainerDisk string
+	windows2k8R2ContainerDisk    string
+	windows2k16ContainerDisk     string
+	windows2k19ContainerDisk     string
+	windows2k22ContainerDisk     string
+	debian11ContainerDisk        string
+	debian12ContainerDisk        string
+	ol8ContainerDisk             string
+	ol9ContainerDisk             string
 
 	windowsReadyTimeout time.Duration
 )
@@ -121,6 +127,12 @@ func init() {
 		defaultWindows10ContainerDisk, "Windows 10 container disk used by functional tests")
 	flag.StringVar(&windows11ContainerDisk, "windows-11-container-disk",
 		defaultWindows11ContainerDisk, "Windows 11 container disk used by functional tests")
+	flag.StringVar(&windows2k8I386ContainerDisk, "windows-2k8-i386-container-disk",
+		defaultWindows2k8I386ContainerDisk, "Windows Server 2008 i368 container disk used by functional tests")
+	flag.StringVar(&windows2k8Amd64ContainerDisk, "windows-2k8-amd64-container-disk",
+		defaultWindows2k8Amd64ContainerDisk, "Windows Server 2008 amd64 container disk used by functional tests")
+	flag.StringVar(&windows2k8R2ContainerDisk, "windows-2k8r2-container-disk",
+		defaultWindows2k8R2ContainerDisk, "Windows Server 2008 R2 container disk used by functional tests")
 	flag.StringVar(&windows2k16ContainerDisk, "windows-2k16-container-disk",
 		defaultWindows2k16ContainerDisk, "Windows Server 2016 container disk used by functional tests")
 	flag.StringVar(&windows2k19ContainerDisk, "windows-2k19-container-disk",

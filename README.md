@@ -318,3 +318,5 @@ windows.2k19 | Microsoft Windows Server 2019
 windows.2k19.virtio | Microsoft Windows Server 2019 (virtio)
 windows.2k22 | Microsoft Windows Server 2022
 windows.2k22.virtio | Microsoft Windows Server 2022 (virtio)
+windows.2k8 | Microsoft Windows Server 2008/2008 R2
+windows.2k8.virtio | Microsoft Windows Server 2008/2008 R2 (virtio)
