@@ -264,6 +264,8 @@ var _ = Describe("Common instance types func tests", func() {
 		},
 			Entry("[test_id:10739] Validation OS", validationOsContainerDisk, "u1.2xmedium", "windows.11",
 				[]testFn{expectSSHToRunCommandOnWindows}),
+			Entry("[test_id:????] Windows 7", windows7ContainerDisk, "u1.small", "windows.7.virtio",
+				[]testFn{expectGuestAgentToBeConnected}),
 			Entry("[test_id:????] Windows 10", windows10ContainerDisk, "u1.2xmedium", "windows.10.virtio",
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnWindows}),
 			Entry("[test_id:????] Windows 11", windows11ContainerDisk, "u1.2xmedium", "windows.11.virtio",

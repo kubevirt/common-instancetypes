@@ -15,6 +15,8 @@ resources:
   - ./2k22_virtio
   - ./2k25
   - ./2k25_virtio
+  - ./7
+  - ./7_virtio
   - ./10
   - ./10_virtio
   - ./11
