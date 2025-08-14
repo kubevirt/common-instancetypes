@@ -318,7 +318,7 @@ rhel.9.desktop | Red Hat Enterprise Linux 9 Desktop (amd64)
 rhel.9.dpdk | Red Hat Enterprise Linux 9 DPDK (amd64)
 rhel.9.realtime | Red Hat Enterprise Linux 9 Realtime (amd64)
 rhel.9.s390x | Red Hat Enterprise Linux 9 (s390x)
-sles | SUSE Linux Enterprise Server
+sles | SUSE Linux Enterprise Server (amd64)
 ubuntu | Ubuntu
 windows.10 | Microsoft Windows 10
 windows.10.virtio | Microsoft Windows 10 (virtio)

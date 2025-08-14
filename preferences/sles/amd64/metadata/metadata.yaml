@@ -6,4 +6,6 @@ metadata:
   annotations:
     tags: "hidden,kubevirt,sles"
     iconClass: "icon-sles"
-    openshift.io/display-name: "SUSE Linux Enterprise Server"
+    openshift.io/display-name: "SUSE Linux Enterprise Server (amd64)"
+  labels:
+    instancetype.kubevirt.io/arch: "amd64"
