@@ -37,6 +37,7 @@ const (
 	defaultUbuntu2204ContainerDisk      = "quay.io/containerdisks/ubuntu:22.04"
 	defaultDebian11ContainerDisk        = "quay.io/containerdisks/debian:11"
 	defaultDebian12ContainerDisk        = "quay.io/containerdisks/debian:12"
+	defaultDebian13ContainerDisk        = "quay.io/containerdisks/debian:13"
 	defaultOL8ContainerDisk             = "registry:5000/oraclelinux:8.10"
 	defaultOL9ContainerDisk             = "registry:5000/oraclelinux:9.5"
 	defaultValidationOsContainerDisk    = "registry:5000/validation-os-container-disk:latest"
@@ -85,6 +86,7 @@ var (
 	windows2k22ContainerDisk     string
 	debian11ContainerDisk        string
 	debian12ContainerDisk        string
+	debian13ContainerDisk        string
 	ol8ContainerDisk             string
 	ol9ContainerDisk             string
 
@@ -123,6 +125,8 @@ func init() {
 		defaultDebian11ContainerDisk, "Debian 11 container disk used by functional tests")
 	flag.StringVar(&debian12ContainerDisk, "debian-12-container-disk",
 		defaultDebian12ContainerDisk, "Debian 12 container disk used by functional tests")
+	flag.StringVar(&debian13ContainerDisk, "debian-13-container-disk",
+		defaultDebian13ContainerDisk, "Debian 13 container disk used by functional tests")
 	flag.StringVar(&ol8ContainerDisk, "ol-8-container-disk",
 		defaultOL8ContainerDisk, "Oracle Linux 8 container disk used by function tests")
 	flag.StringVar(&ol9ContainerDisk, "ol-9-container-disk",
