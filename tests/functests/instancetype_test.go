@@ -250,6 +250,8 @@ var _ = Describe("Common instance types func tests", func() {
 			Entry("[test_id:TODO] Debian 12", debian12ContainerDisk, "u1.small",
 				map[string]string{"amd64": "debian", "arm64": "debian"},
 				[]testFn{expectSSHToRunCommandOnLinux("debian")}),
+			Entry("[test_id:TODO] Debian 13", debian13ContainerDisk, "u1.small",
+				map[string]string{"amd64": "debian", "arm64": "debian"}, []testFn{expectSSHToRunCommandOnLinux("debian")}),
 		)
 
 		DescribeTable("a Windows guest with", func(containerDisk, instancetype, preference string, testFns []testFn) {
