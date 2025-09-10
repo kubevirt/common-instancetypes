@@ -44,7 +44,8 @@ const (
 	defaultDebian13ContainerDisk           = "quay.io/containerdisks/debian:13"
 	defaultOL8ContainerDisk                = "registry:5000/oraclelinux:8.10"
 	defaultOL9ContainerDisk                = "registry:5000/oraclelinux:9.5"
-	defaultSLES15ContainerDisk             = "registry:5000/sles15-container-disk:latest"
+	defaultSLES15SP6ContainerDisk          = "registry:5000/sles15sp6-container-disk:latest"
+	defaultSLES15SP7ContainerDisk          = "registry:5000/sles15sp7-container-disk:latest"
 	defaultValidationOsContainerDisk       = "registry:5000/validation-os-container-disk:latest"
 	defaultWindows7ContainerDisk           = "registry:5000/windows7-container-disk:latest"
 	defaultWindows10ContainerDisk          = "registry:5000/windows10-container-disk:latest"
@@ -95,7 +96,8 @@ var (
 	windows2k25ContainerDisk        string
 	openSUSETumbleweedContainerDisk string
 	openSUSELeap15ContainerDisk     string
-	sles15ContainerDisk             string
+	sles15SP6ContainerDisk          string
+	sles15SP7ContainerDisk          string
 	debian11ContainerDisk           string
 	debian12ContainerDisk           string
 	debian13ContainerDisk           string
@@ -152,8 +154,10 @@ func init() {
 		defaultOL8ContainerDisk, "Oracle Linux 8 container disk used by function tests")
 	flag.StringVar(&ol9ContainerDisk, "ol-9-container-disk",
 		defaultOL9ContainerDisk, "Oracle Linux 9 container disk used by function tests")
-	flag.StringVar(&sles15ContainerDisk, "sles15-container-disk",
-		defaultSLES15ContainerDisk, "SLES 15 container disk used by functional tests")
+	flag.StringVar(&sles15SP6ContainerDisk, "sles15sp6-container-disk",
+		defaultSLES15SP6ContainerDisk, "SLES 15 SP 6 container disk used by functional tests")
+	flag.StringVar(&sles15SP7ContainerDisk, "sles15sp7-container-disk",
+		defaultSLES15SP7ContainerDisk, "SLES 15 SP 7 container disk used by functional tests")
 	flag.StringVar(&validationOsContainerDisk, "validation-os-container-disk",
 		defaultValidationOsContainerDisk, "Validation OS container disk used by functional tests")
 	flag.StringVar(&windows7ContainerDisk, "windows-7-container-disk",
