@@ -237,6 +237,8 @@ var _ = Describe("Common instance types func tests", func() {
 			Entry("[test_id:TODO] Oracle Linux 9 arm64", ol9ContainerDisk, "u1.2xmedium",
 				map[string]string{"arm64": "oraclelinux"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("opc")}),
+			Entry("[test_id:TODO] SLES 15 SP5", sles15SP5ContainerDisk, "u1.small", map[string]string{"amd64": "sles"},
+				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("sles")}),
 			Entry("[test_id:TODO] SLES 15 SP6", sles15SP6ContainerDisk, "u1.small", map[string]string{"amd64": "sles"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("sles")}),
 			Entry("[test_id:TODO] SLES 15 SP7", sles15SP7ContainerDisk, "u1.small", map[string]string{"amd64": "sles"},
