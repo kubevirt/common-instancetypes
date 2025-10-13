@@ -3,7 +3,7 @@ module github.com/kubevirt/common-instancetypes/tools
 go 1.24.4
 
 require (
-	github.com/mikefarah/yq/v4 v4.47.2
+	github.com/mikefarah/yq/v4 v4.48.1
 	github.com/yannh/kubeconform v0.7.0
 	sigs.k8s.io/kustomize/kustomize/v5 v5.7.1
 )
@@ -52,9 +52,9 @@ require (
 	github.com/yuin/gopher-lua v1.1.1 // indirect
 	go.yaml.in/yaml/v2 v2.4.3 // indirect
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
-	golang.org/x/net v0.44.0 // indirect
-	golang.org/x/sys v0.36.0 // indirect
-	golang.org/x/text v0.29.0 // indirect
+	golang.org/x/net v0.46.0 // indirect
+	golang.org/x/sys v0.37.0 // indirect
+	golang.org/x/text v0.30.0 // indirect
 	google.golang.org/protobuf v1.36.10 // indirect
 	gopkg.in/evanphx/json-patch.v4 v4.13.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
