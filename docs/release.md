@@ -1,19 +1,26 @@
 # Release Process
 
-The common-instancetypes project releases just ahead of the core KubeVirt Code Freeze to allow the resulting manifests to be pulled into the kubevirt/kubevirt project and virt-operator component.
+The common-instancetypes project releases after the `beta.0` release of `kubevirt/kubevirt`:
 
-## Release tagging
+<https://github.com/kubevirt/sig-release/blob/main/releases/release-checklist.md#kubevirt-pre-release-checklist>
 
-The initial release is always tagged as `v1.${y}.0` on main with a `release-1.${y}` branch then cut from this tag.
+## Checklist
 
-The following release workflow is provided to then generate the release notes and release artifacts:
-
-<https://github.com/kubevirt/common-instancetypes/blob/67e413352b081deaec3ec504912947836532a731/.github/workflows/release.yaml>
-
-## Sync with kubevirt/kubevirt
-
-Releases of common-instancetypes are sync'd into the core kubevirt/kubevirt codebase by the following periodic automation:
-
-<https://github.com/kubevirt/project-infra/blob/3c7dc66b31fa5b54b25c3b7712d1e1bd9fdc42da/github/ci/prow-deploy/files/jobs/kubevirt/common-instancetypes/common-instancetypes-periodics.yaml>
-
-This automation must be updated when new releases of both common-instancetypes and kubevirt are cut.
+* [ ] Tag `v.${Y}.0` release on `main` branch and generate release in the UI
+* [ ] Cut `release-1.${Y}` branch from this tag using the UI
+* [ ] Ensure the [release
+workflow](https://github.com/kubevirt/common-instancetypes/blob/67e413352b081deaec3ec504912947836532a731/.github/workflows/release.yaml)
+runs and succeeds
+* [ ] Copy and rename main pre-submit jobs definitions to a new release specific
+file
+* [ ] Update `periodic-update-common-instancetypes-bundles` periodic to sync
+latest release with `kubevirt/kubevirt` `main`
+* [ ] Once `periodic-update-common-instancetypes-bundles` runs work to merge
+new release into `kubevirt/kubevirt` `main`
+* [ ] Introduce `periodic-update-common-instancetypes-bundles-1.${Y}` once a
+new version of `kubevirt/kubevirt` is cut to keep the corresponding `release`
+branch sync'd with our `releease-1.${Y}` branch
+* [ ] Create a `v1.{Y+1}.0` milestone for the new release cycle and copy this
+checklist into description
+* [ ] Update milestone once release schedule for the corresponding
+`kubevirt/kubevirt` release agreed on
