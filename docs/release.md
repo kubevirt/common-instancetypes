@@ -6,8 +6,8 @@ The common-instancetypes project releases after the `beta.0` release of `kubevir
 
 ## Checklist
 
-* [ ] Tag `v.${Y}.0` release on `main` branch and generate release in the UI
-* [ ] Cut `release-1.${Y}` branch from this tag using the UI
+* [ ] Cut `release-1.${Y}` branch from `main`
+* [ ] Tag `v1.${Y}.0` release on `release-1.${Y}` branch and generate release
 * [ ] Ensure the [release
 workflow](https://github.com/kubevirt/common-instancetypes/blob/67e413352b081deaec3ec504912947836532a731/.github/workflows/release.yaml)
 runs and succeeds
