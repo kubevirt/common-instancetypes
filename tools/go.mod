@@ -3,7 +3,7 @@ module github.com/kubevirt/common-instancetypes/tools
 go 1.24.4
 
 require (
-	github.com/mikefarah/yq/v4 v4.48.2
+	github.com/mikefarah/yq/v4 v4.49.1
 	github.com/yannh/kubeconform v0.7.0
 	sigs.k8s.io/kustomize/kustomize/v5 v5.8.0
 )
@@ -18,23 +18,23 @@ require (
 	github.com/fatih/color v1.18.0 // indirect
 	github.com/go-errors/errors v1.5.1 // indirect
 	github.com/go-ini/ini v1.67.0 // indirect
-	github.com/go-openapi/jsonpointer v0.22.2 // indirect
+	github.com/go-openapi/jsonpointer v0.22.3 // indirect
 	github.com/go-openapi/jsonreference v0.21.3 // indirect
-	github.com/go-openapi/swag v0.25.1 // indirect
-	github.com/go-openapi/swag/cmdutils v0.25.1 // indirect
-	github.com/go-openapi/swag/conv v0.25.1 // indirect
-	github.com/go-openapi/swag/fileutils v0.25.1 // indirect
-	github.com/go-openapi/swag/jsonname v0.25.1 // indirect
-	github.com/go-openapi/swag/jsonutils v0.25.1 // indirect
-	github.com/go-openapi/swag/loading v0.25.1 // indirect
-	github.com/go-openapi/swag/mangling v0.25.1 // indirect
-	github.com/go-openapi/swag/netutils v0.25.1 // indirect
-	github.com/go-openapi/swag/stringutils v0.25.1 // indirect
-	github.com/go-openapi/swag/typeutils v0.25.1 // indirect
-	github.com/go-openapi/swag/yamlutils v0.25.1 // indirect
+	github.com/go-openapi/swag v0.25.3 // indirect
+	github.com/go-openapi/swag/cmdutils v0.25.3 // indirect
+	github.com/go-openapi/swag/conv v0.25.3 // indirect
+	github.com/go-openapi/swag/fileutils v0.25.3 // indirect
+	github.com/go-openapi/swag/jsonname v0.25.3 // indirect
+	github.com/go-openapi/swag/jsonutils v0.25.3 // indirect
+	github.com/go-openapi/swag/loading v0.25.3 // indirect
+	github.com/go-openapi/swag/mangling v0.25.3 // indirect
+	github.com/go-openapi/swag/netutils v0.25.3 // indirect
+	github.com/go-openapi/swag/stringutils v0.25.3 // indirect
+	github.com/go-openapi/swag/typeutils v0.25.3 // indirect
+	github.com/go-openapi/swag/yamlutils v0.25.3 // indirect
 	github.com/goccy/go-json v0.10.5 // indirect
 	github.com/goccy/go-yaml v1.18.0 // indirect
-	github.com/google/gnostic-models v0.7.0 // indirect
+	github.com/google/gnostic-models v0.7.1 // indirect
 	github.com/hashicorp/go-cleanhttp v0.5.2 // indirect
 	github.com/hashicorp/go-retryablehttp v0.7.8 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect

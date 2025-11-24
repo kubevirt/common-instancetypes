@@ -1,3 +1,15 @@
+4.49.1:
+  - Added `--security` flags to disable env and file ops #2515
+  - Fixing TOML ArrayTable parsing issues #1758
+  - Fixing parsing of escaped characters #2506
+
+4.48.2:
+  - Strip whitespace when decoding base64 #2507
+  - Upgraded to go-yaml v4! (thanks @ccoVeille, @ingydotnet)
+  - Add linux/loong64 to release target (thanks @znley)
+  - Added --shell-key-separator flag for customizable shell output format #2497 (thanks @rsleedbx)
+  - Bumped dependencies 
+
 4.48.1:
   - Added 'parents' operator, to return a list of all the hierarchical parents of a node
   - Added 'first(exp)' operator, to return the first entry matching an expression in an array 

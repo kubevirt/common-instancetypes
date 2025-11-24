@@ -25,50 +25,50 @@ github.com/go-errors/errors
 # github.com/go-ini/ini v1.67.0
 ## explicit
 github.com/go-ini/ini
-# github.com/go-openapi/jsonpointer v0.22.2
+# github.com/go-openapi/jsonpointer v0.22.3
 ## explicit; go 1.24.0
 github.com/go-openapi/jsonpointer
 # github.com/go-openapi/jsonreference v0.21.3
 ## explicit; go 1.24.0
 github.com/go-openapi/jsonreference
 github.com/go-openapi/jsonreference/internal
-# github.com/go-openapi/swag v0.25.1
+# github.com/go-openapi/swag v0.25.3
 ## explicit; go 1.24.0
 github.com/go-openapi/swag
-# github.com/go-openapi/swag/cmdutils v0.25.1
+# github.com/go-openapi/swag/cmdutils v0.25.3
 ## explicit; go 1.24.0
 github.com/go-openapi/swag/cmdutils
-# github.com/go-openapi/swag/conv v0.25.1
+# github.com/go-openapi/swag/conv v0.25.3
 ## explicit; go 1.24.0
 github.com/go-openapi/swag/conv
-# github.com/go-openapi/swag/fileutils v0.25.1
+# github.com/go-openapi/swag/fileutils v0.25.3
 ## explicit; go 1.24.0
 github.com/go-openapi/swag/fileutils
-# github.com/go-openapi/swag/jsonname v0.25.1
+# github.com/go-openapi/swag/jsonname v0.25.3
 ## explicit; go 1.24.0
 github.com/go-openapi/swag/jsonname
-# github.com/go-openapi/swag/jsonutils v0.25.1
+# github.com/go-openapi/swag/jsonutils v0.25.3
 ## explicit; go 1.24.0
 github.com/go-openapi/swag/jsonutils
 github.com/go-openapi/swag/jsonutils/adapters
 github.com/go-openapi/swag/jsonutils/adapters/ifaces
 github.com/go-openapi/swag/jsonutils/adapters/stdlib/json
-# github.com/go-openapi/swag/loading v0.25.1
+# github.com/go-openapi/swag/loading v0.25.3
 ## explicit; go 1.24.0
 github.com/go-openapi/swag/loading
-# github.com/go-openapi/swag/mangling v0.25.1
+# github.com/go-openapi/swag/mangling v0.25.3
 ## explicit; go 1.24.0
 github.com/go-openapi/swag/mangling
-# github.com/go-openapi/swag/netutils v0.25.1
+# github.com/go-openapi/swag/netutils v0.25.3
 ## explicit; go 1.24.0
 github.com/go-openapi/swag/netutils
-# github.com/go-openapi/swag/stringutils v0.25.1
+# github.com/go-openapi/swag/stringutils v0.25.3
 ## explicit; go 1.24.0
 github.com/go-openapi/swag/stringutils
-# github.com/go-openapi/swag/typeutils v0.25.1
+# github.com/go-openapi/swag/typeutils v0.25.3
 ## explicit; go 1.24.0
 github.com/go-openapi/swag/typeutils
-# github.com/go-openapi/swag/yamlutils v0.25.1
+# github.com/go-openapi/swag/yamlutils v0.25.3
 ## explicit; go 1.24.0
 github.com/go-openapi/swag/yamlutils
 # github.com/goccy/go-json v0.10.5
@@ -93,7 +93,7 @@ github.com/goccy/go-yaml/parser
 github.com/goccy/go-yaml/printer
 github.com/goccy/go-yaml/scanner
 github.com/goccy/go-yaml/token
-# github.com/google/gnostic-models v0.7.0
+# github.com/google/gnostic-models v0.7.1
 ## explicit; go 1.22
 github.com/google/gnostic-models/compiler
 github.com/google/gnostic-models/extensions
@@ -120,7 +120,7 @@ github.com/mattn/go-colorable
 # github.com/mattn/go-isatty v0.0.20
 ## explicit; go 1.15
 github.com/mattn/go-isatty
-# github.com/mikefarah/yq/v4 v4.48.2
+# github.com/mikefarah/yq/v4 v4.49.1
 ## explicit; go 1.24.0
 github.com/mikefarah/yq/v4
 github.com/mikefarah/yq/v4/cmd
