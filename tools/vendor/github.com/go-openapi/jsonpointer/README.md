@@ -3,14 +3,13 @@
 <!-- Badges: status  -->
 [![Tests][test-badge]][test-url] [![Coverage][cov-badge]][cov-url] [![CI vuln scan][vuln-scan-badge]][vuln-scan-url] [![CodeQL][codeql-badge]][codeql-url]
 <!-- Badges: release & docker images  -->
-[![Release][release-badge]][release-url]
 <!-- Badges: code quality  -->
-[![Go Report Card][gocard-badge]][gocard-url] [![CodeFactor Grade][codefactor-badge]][codefactor-url]
 <!-- Badges: license & compliance -->
-[![License][license-badge]][license-url]
+[![Release][release-badge]][release-url] [![Go Report Card][gocard-badge]][gocard-url] [![CodeFactor Grade][codefactor-badge]][codefactor-url] [![License][license-badge]][license-url]
 <!-- Badges: documentation & support -->
 <!-- Badges: others & stats -->
-[![GoDoc][godoc-badge]][godoc-url] [![Slack Channel][slack-badge]][slack-url] [![go version][goversion-badge]][goversion-url] ![Top language][top-badge] ![Commits since latest release][commits-badge]
+<!-- Slack badge disabled until I am able to restore a valid link to the chat -->
+[![GoDoc][godoc-badge]][godoc-url] <!-- [![Slack Channel][slack-badge]][slack-url] -->[![go version][goversion-badge]][goversion-url] ![Top language][top-badge] ![Commits since latest release][commits-badge]
 
 ---
 
@@ -28,12 +27,17 @@ go get github.com/go-openapi/jsonpointer
 
 ## Basic usage
 
-See [examples](./examples_test.go)
+See also some [examples](./examples_test.go)
+
+### Retrieving a value
 
 ```go
   import (
     "github.com/go-openapi/jsonpointer"
   )
+
+
+  var doc any
 
   ...
 
@@ -48,6 +52,23 @@ See [examples](./examples_test.go)
 	}
 
   ...
+```
+
+### Setting a value
+
+```go
+  ...
+  var doc any
+  ...
+	pointer, err := jsonpointer.New("/foo/1")
+	if err != nil {
+		... // error: e.g. invalid JSON pointer specification
+  }
+
+	doc, err = p.Set(doc, "value")
+	if err != nil {
+		... // error: e.g. key not found, index out of bounds, etc.
+	}
 ```
 
 ## Change log
@@ -76,6 +97,13 @@ That is because our implementation of the JSON pointer only supports explicit re
 the provision in the spec to resolve non-existent members as "the last element in the array",
 using the special trailing character "-" is not implemented.
 
+## Other documentation
+
+* [All-time contributors](./CONTRIBUTORS.md)
+* [Contributing guidelines](.github/CONTRIBUTING.md)
+* [Maintainers documentation](docs/MAINTAINERS.md)
+* [Code style](docs/STYLE.md)
+
 <!-- Badges: status  -->
 [test-badge]: https://github.com/go-openapi/jsonpointer/actions/workflows/go-test.yml/badge.svg
 [test-url]: https://github.com/go-openapi/jsonpointer/actions/workflows/go-test.yml
@@ -86,8 +114,8 @@ using the special trailing character "-" is not implemented.
 [codeql-badge]: https://github.com/go-openapi/jsonpointer/actions/workflows/codeql.yml/badge.svg
 [codeql-url]: https://github.com/go-openapi/jsonpointer/actions/workflows/codeql.yml
 <!-- Badges: release & docker images  -->
-[release-badge]: https://badge.fury.io/gh/go-openapi%2Fjsonpointer.svg
-[release-url]: https://badge.fury.io/gh/go-openapi%2Fjsonpointer
+[release-badge]: https://badge.fury.io/go/github.com%2Fgo-openapi%2Fjsonpointer.svg
+[release-url]: https://badge.fury.io/go/github.com%2Fgo-openapi%2Fjsonpointer
 <!-- Badges: code quality  -->
 [gocard-badge]: https://goreportcard.com/badge/github.com/go-openapi/jsonpointer
 [gocard-url]: https://goreportcard.com/report/github.com/go-openapi/jsonpointer
@@ -96,7 +124,7 @@ using the special trailing character "-" is not implemented.
 <!-- Badges: documentation & support -->
 [doc-badge]: https://img.shields.io/badge/doc-site-blue?link=https%3A%2F%2Fgoswagger.io%2Fgo-openapi%2F
 [doc-url]: https://goswagger.io/go-openapi
-[godoc-badge]: https://pkg.go.dev/github.com/go-openapi/jsonpointer?status.svg
+[godoc-badge]: https://pkg.go.dev/badge/github.com/go-openapi/jsonpointer
 [godoc-url]: http://pkg.go.dev/github.com/go-openapi/jsonpointer
 [slack-badge]: https://slackin.goswagger.io/badge.svg
 [slack-url]: https://slackin.goswagger.io
