@@ -32,43 +32,43 @@ github.com/go-openapi/jsonpointer
 ## explicit; go 1.24.0
 github.com/go-openapi/jsonreference
 github.com/go-openapi/jsonreference/internal
-# github.com/go-openapi/swag v0.25.3
+# github.com/go-openapi/swag v0.25.4
 ## explicit; go 1.24.0
 github.com/go-openapi/swag
-# github.com/go-openapi/swag/cmdutils v0.25.3
+# github.com/go-openapi/swag/cmdutils v0.25.4
 ## explicit; go 1.24.0
 github.com/go-openapi/swag/cmdutils
-# github.com/go-openapi/swag/conv v0.25.3
+# github.com/go-openapi/swag/conv v0.25.4
 ## explicit; go 1.24.0
 github.com/go-openapi/swag/conv
-# github.com/go-openapi/swag/fileutils v0.25.3
+# github.com/go-openapi/swag/fileutils v0.25.4
 ## explicit; go 1.24.0
 github.com/go-openapi/swag/fileutils
-# github.com/go-openapi/swag/jsonname v0.25.3
+# github.com/go-openapi/swag/jsonname v0.25.4
 ## explicit; go 1.24.0
 github.com/go-openapi/swag/jsonname
-# github.com/go-openapi/swag/jsonutils v0.25.3
+# github.com/go-openapi/swag/jsonutils v0.25.4
 ## explicit; go 1.24.0
 github.com/go-openapi/swag/jsonutils
 github.com/go-openapi/swag/jsonutils/adapters
 github.com/go-openapi/swag/jsonutils/adapters/ifaces
 github.com/go-openapi/swag/jsonutils/adapters/stdlib/json
-# github.com/go-openapi/swag/loading v0.25.3
+# github.com/go-openapi/swag/loading v0.25.4
 ## explicit; go 1.24.0
 github.com/go-openapi/swag/loading
-# github.com/go-openapi/swag/mangling v0.25.3
+# github.com/go-openapi/swag/mangling v0.25.4
 ## explicit; go 1.24.0
 github.com/go-openapi/swag/mangling
-# github.com/go-openapi/swag/netutils v0.25.3
+# github.com/go-openapi/swag/netutils v0.25.4
 ## explicit; go 1.24.0
 github.com/go-openapi/swag/netutils
-# github.com/go-openapi/swag/stringutils v0.25.3
+# github.com/go-openapi/swag/stringutils v0.25.4
 ## explicit; go 1.24.0
 github.com/go-openapi/swag/stringutils
-# github.com/go-openapi/swag/typeutils v0.25.3
+# github.com/go-openapi/swag/typeutils v0.25.4
 ## explicit; go 1.24.0
 github.com/go-openapi/swag/typeutils
-# github.com/go-openapi/swag/yamlutils v0.25.3
+# github.com/go-openapi/swag/yamlutils v0.25.4
 ## explicit; go 1.24.0
 github.com/go-openapi/swag/yamlutils
 # github.com/goccy/go-json v0.10.5
@@ -82,7 +82,7 @@ github.com/goccy/go-json/internal/encoder/vm_color_indent
 github.com/goccy/go-json/internal/encoder/vm_indent
 github.com/goccy/go-json/internal/errors
 github.com/goccy/go-json/internal/runtime
-# github.com/goccy/go-yaml v1.18.0
+# github.com/goccy/go-yaml v1.19.0
 ## explicit; go 1.21.0
 github.com/goccy/go-yaml
 github.com/goccy/go-yaml/ast
@@ -120,7 +120,7 @@ github.com/mattn/go-colorable
 # github.com/mattn/go-isatty v0.0.20
 ## explicit; go 1.15
 github.com/mattn/go-isatty
-# github.com/mikefarah/yq/v4 v4.49.1
+# github.com/mikefarah/yq/v4 v4.49.2
 ## explicit; go 1.24.0
 github.com/mikefarah/yq/v4
 github.com/mikefarah/yq/v4/cmd
