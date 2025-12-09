@@ -22,4 +22,5 @@ resources:
   - ./10_virtio
   - ./11
   - ./11_virtio
+  - ./11_virtio_dedicated
   - ./xp

@@ -1,0 +1,18 @@
+resources:
+  - ../11_virtio
+
+nameSuffix: .dedicated
+
+patches:
+  - target:
+      kind: VirtualMachinePreference
+    patch: |
+      - op: add
+        path: /spec/cpu/dedicatedCpuPlacement
+        value: true
+  - target:
+      kind: VirtualMachineClusterPreference
+    patch: |
+      - op: add
+        path: /spec/cpu/dedicatedCpuPlacement
+        value: true
