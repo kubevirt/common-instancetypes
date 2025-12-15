@@ -38,6 +38,7 @@ cleanup
 cmlu
 colorise
 colors
+coloring
 compinit
 coolioo
 coverprofile
@@ -189,8 +190,11 @@ risentveber
 rmescandon
 Rosey
 roundtrip
+roundtrips
 Roundtrip
 roundtripping
+Interp
+interp
 runningvms
 sadface
 selfupdate
@@ -266,3 +270,10 @@ nosh
 noshell
 tinygo
 nonexistent
+hclsyntax
+hclwrite
+nohcl
+zclconf
+cty
+go-cty
+unlabeled
