@@ -3,6 +3,9 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   name: requirements
+  labels:
+    instancetype.kubevirt.io/required-cpu: "1"
+    instancetype.kubevirt.io/required-memory: "256Mi"
 spec:
   # https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2003/cc738496(v=ws.10)#windows-server-2003-standard-edition-system-requirements-1
   requirements:

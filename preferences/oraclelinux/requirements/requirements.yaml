@@ -3,6 +3,9 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   name: requirements
+  labels:
+    instancetype.kubevirt.io/required-cpu: "2"
+    instancetype.kubevirt.io/required-memory: "4Gi"
 spec:
   # https://docs.oracle.com/en/operating-systems/oracle-linux/limits/
   requirements:
