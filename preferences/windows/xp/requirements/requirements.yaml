@@ -3,6 +3,9 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   name: requirements
+  labels:
+    instancetype.kubevirt.io/required-cpu: "1"
+    instancetype.kubevirt.io/required-memory: "128Mi"
 spec:
   # https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-xp/bb490858(v=technet.10)#windows-xp-professional-system-requirements
   requirements:

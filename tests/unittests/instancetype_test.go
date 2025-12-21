@@ -30,8 +30,8 @@ var _ = Describe("Common instance types unit tests", func() {
 	}
 
 	instanceTypeFunctionMap := map[string]func(string, string, instancetypev1beta1.VirtualMachineClusterInstancetype) error{
-		"instancetype.kubevirt.io/cpu":                   checkCPU,
-		"instancetype.kubevirt.io/memory":                checkMemory,
+		"instancetype.kubevirt.io/cpu":                   checkCPUInstanceType,
+		"instancetype.kubevirt.io/memory":                checkMemoryInstanceType,
 		"instancetype.kubevirt.io/size":                  checkSize,
 		"instancetype.kubevirt.io/hugepages":             checkHugepages,
 		"instancetype.kubevirt.io/numa":                  checkNuma,
@@ -42,8 +42,10 @@ var _ = Describe("Common instance types unit tests", func() {
 	}
 
 	preferenceFunctionMap := map[string]func(string, string, instancetypev1beta1.VirtualMachineClusterPreference) error{
-		"openshift.io/display-name":       checkDisplayName,
-		"instancetype.kubevirt.io/vendor": preferenceCheckVendor,
+		"openshift.io/display-name":                checkDisplayName,
+		"instancetype.kubevirt.io/vendor":          preferenceCheckVendor,
+		"instancetype.kubevirt.io/required-cpu":    checkCPUPreferenceType,
+		"instancetype.kubevirt.io/required-memory": checkMemoryPreferenceType,
 	}
 
 	Context("VirtualMachineClusterPreference", func() {
@@ -87,7 +89,7 @@ var _ = Describe("Common instance types unit tests", func() {
 	})
 })
 
-func checkCPU(labelValue, labelName string, instanceType instancetypev1beta1.VirtualMachineClusterInstancetype) error {
+func checkCPUInstanceType(labelValue, labelName string, instanceType instancetypev1beta1.VirtualMachineClusterInstancetype) error {
 	expectedCPU, err := strconv.ParseUint(labelValue, 10, 32)
 	if err != nil {
 		return err
@@ -100,7 +102,20 @@ func checkCPU(labelValue, labelName string, instanceType instancetypev1beta1.Vir
 	return nil
 }
 
-func checkMemory(labelValue, labelName string, instanceType instancetypev1beta1.VirtualMachineClusterInstancetype) error {
+func checkCPUPreferenceType(labelValue, labelName string, preferenceType instancetypev1beta1.VirtualMachineClusterPreference) error {
+	expectedCPU, err := strconv.ParseUint(labelValue, 10, 32)
+	if err != nil {
+		return err
+	}
+
+	if uint64(preferenceType.Spec.Requirements.CPU.Guest) != expectedCPU {
+		return fmt.Errorf(preferenceErrorMessage, labelName, preferenceType.Name)
+	}
+
+	return nil
+}
+
+func checkMemoryInstanceType(labelValue, labelName string, instanceType instancetypev1beta1.VirtualMachineClusterInstancetype) error {
 	memory, err := resource.ParseQuantity(labelValue)
 	if err != nil {
 		return err
@@ -108,6 +123,19 @@ func checkMemory(labelValue, labelName string, instanceType instancetypev1beta1.
 
 	if instanceType.Spec.Memory.Guest != memory {
 		return fmt.Errorf(instanceTypeErrorMessage, labelName, instanceType.Name)
+	}
+
+	return nil
+}
+
+func checkMemoryPreferenceType(labelValue, labelName string, preferenceType instancetypev1beta1.VirtualMachineClusterPreference) error {
+	memory, err := resource.ParseQuantity(labelValue)
+	if err != nil {
+		return err
+	}
+
+	if !memory.Equal(preferenceType.Spec.Requirements.Memory.Guest) {
+		return fmt.Errorf(preferenceErrorMessage, labelName, preferenceType.Name)
 	}
 
 	return nil

@@ -3,6 +3,9 @@ apiVersion: instancetype.kubevirt.io/v1beta1
 kind: VirtualMachinePreference
 metadata:
   name: requirements
+  labels:
+    instancetype.kubevirt.io/required-cpu: "1"
+    instancetype.kubevirt.io/required-memory: "2Gi"
 spec:
   # https://docs.fedoraproject.org/en-US/fedora/latest/release-notes/welcome/Hardware_Overview/
   requirements:
