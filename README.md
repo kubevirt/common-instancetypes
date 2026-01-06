@@ -45,6 +45,9 @@ Network([Network]):::series --> n1:::instancetype
 
 wrklds:::grp --> Realtime:::series
 Realtime([Realtime]):::series --> rt1:::instancetype
+
+wrklds:::grp --> Dedicated:::series
+Dedicated([Dedicated]):::series --> d1:::instancetype
 ```
 
 ### Labels
@@ -71,15 +74,15 @@ size = "small" | "medium" | "large" | [( "2" | "4" | "8" )] , "xlarge";
 
 # Series
 
-.                           |  U  |  O  |  CX  |  M  |  N  |  RT
-----------------------------|-----|-----|------|-----|-----|------
-*Hugepages*                 |     |     |  ✓   |  ✓  |  ✓  |  ✓
-*Overcommitted Memory*      |     |  ✓  |      |     |     |
-*Dedicated CPU*             |     |     |  ✓   |     |  ✓  |  ✓
-*Burstable CPU performance* |  ✓  |  ✓  |      |  ✓  |     |
-*Isolated emulator threads* |     |     |  ✓   |     |  ✓  |  ✓
-*vNUMA*                     |     |     |  ✓   |     |     |  ✓
-*vCPU-To-Memory Ratio*      | 1:4 | 1:4 |  1:2 | 1:8 | 1:2 | 1:4
+.                           |  U  |  O  |  CX  |  M  |  N  |  RT |  D
+----------------------------|-----|-----|------|-----|-----|-----|------
+*Hugepages*                 |     |     |  ✓   |  ✓  |  ✓  |  ✓  |     
+*Overcommitted Memory*      |     |  ✓  |      |     |     |     |     
+*Dedicated CPU*             |     |     |  ✓   |     |  ✓  |  ✓  |  ✓
+*Burstable CPU performance* |  ✓  |  ✓  |      |  ✓  |     |     |     
+*Isolated emulator threads* |     |     |  ✓   |     |  ✓  |  ✓  |  ✓
+*vNUMA*                     |     |     |  ✓   |     |     |  ✓  |     
+*vCPU-To-Memory Ratio*      | 1:4 | 1:4 |  1:2 | 1:8 | 1:2 | 1:4 | 1:4
 
 ## U Series
 
@@ -213,6 +216,26 @@ Specific characteristics of this series are:
 - *vCPU-To-Memory Ratio (1:4)* - A vCPU-to-Memory ratio of 1:4 starting from
   the medium size.
 
+## D Series
+
+The D Series provides resources for workloads that need dedicated CPU cores.
+
+*D* is the abbreviation for "Dedicated".
+
+This series is suitable for standard enterprise applications and workloads
+requiring predictable compute.
+
+### D Series Characteristics
+
+Specific characteristics of this series are:
+
+- _Dedicated CPU_ - Physical cores are exclusively assigned to every
+  vCPU in order to provide fixed and high compute guarantees to the
+  workload.
+- _Isolated emulator threads_ - Hypervisor emulator threads are isolated
+  from the vCPUs in order to reduce emaulation related impact on the
+  workload.
+
 ## Development
 
 To get started with customizing or creating your own instancetypes and preferences
@@ -237,6 +260,16 @@ cx1.medium  |  1  |  2Gi
 cx1.medium1gi  |  1  |  2Gi
 cx1.xlarge  |  4  |  8Gi
 cx1.xlarge1gi  |  4  |  8Gi
+d1.2xlarge  |  8  |  32Gi
+d1.2xmedium  |  2  |  4Gi
+d1.4xlarge  |  16  |  64Gi
+d1.8xlarge  |  32  |  128Gi
+d1.large  |  2  |  8Gi
+d1.medium  |  1  |  4Gi
+d1.micro  |  1  |  1Gi
+d1.nano  |  1  |  512Mi
+d1.small  |  1  |  2Gi
+d1.xlarge  |  4  |  16Gi
 m1.2xlarge  |  8  |  64Gi
 m1.2xlarge1gi  |  8  |  64Gi
 m1.4xlarge  |  16  |  128Gi
