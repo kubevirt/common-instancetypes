@@ -235,7 +235,7 @@ var _ = Describe("Common instance types func tests", func() {
 				map[string]string{"amd64": "ubuntu", "arm64": "ubuntu", "s390x": "ubuntu"},
 				[]testFn{expectSSHToRunCommandOnLinux("ubuntu")}),
 			Entry("[test_id:TODO] OpenSUSE Tumbleweed", openSUSETumbleweedContainerDisk, "u1.small",
-				map[string]string{"amd64": "opensuse.tumbleweed"},
+				map[string]string{"amd64": "opensuse.tumbleweed", "s390x": "opensuse.tumbleweed"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("opensuse")}),
 			Entry("[test_id:TODO] OpenSUSE Leap 15", openSUSELeap15ContainerDisk, "u1.small",
 				map[string]string{"amd64": "opensuse.leap", "arm64": "opensuse.leap"},
