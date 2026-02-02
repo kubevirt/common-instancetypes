@@ -30,7 +30,7 @@ func multiplyAssignOperator(d *dataTreeNavigator, context Context, expressionNod
 
 func multiplyOperator(d *dataTreeNavigator, context Context, expressionNode *ExpressionNode) (Context, error) {
 	log.Debugf("MultiplyOperator")
-	return crossFunction(d, context, expressionNode, multiply(expressionNode.Operation.Preferences.(multiplyPreferences)), false)
+	return crossFunction(d, context.ReadOnlyClone(), expressionNode, multiply(expressionNode.Operation.Preferences.(multiplyPreferences)), false)
 }
 
 func getComments(lhs *CandidateNode, rhs *CandidateNode) (leadingContent string, headComment string, footComment string) {
@@ -168,7 +168,7 @@ func mergeObjects(d *dataTreeNavigator, context Context, lhs *CandidateNode, rhs
 
 	// only need to recurse the array if we are doing a deep merge
 	prefs := recursiveDescentPreferences{RecurseArray: preferences.DeepMergeArrays,
-		TraversePreferences: traversePreferences{DontFollowAlias: true, IncludeMapKeys: true}}
+		TraversePreferences: traversePreferences{DontFollowAlias: true, IncludeMapKeys: true, ExactKeyMatch: true}}
 	log.Debugf("merge - preferences.DeepMergeArrays %v", preferences.DeepMergeArrays)
 	log.Debugf("merge - preferences.AppendArrays %v", preferences.AppendArrays)
 	err := recursiveDecent(results, context.SingleChildContext(rhs), prefs)

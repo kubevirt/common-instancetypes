@@ -139,7 +139,7 @@ github.com/mattn/go-colorable
 # github.com/mattn/go-isatty v0.0.20
 ## explicit; go 1.15
 github.com/mattn/go-isatty
-# github.com/mikefarah/yq/v4 v4.50.1
+# github.com/mikefarah/yq/v4 v4.52.2
 ## explicit; go 1.24.0
 github.com/mikefarah/yq/v4
 github.com/mikefarah/yq/v4/cmd

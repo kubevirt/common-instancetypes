@@ -43,9 +43,11 @@ yq*.snap
 
 test.yml
 test*.yml
+test*.tf
 test*.xml
 test*.toml
 test*.yaml
+*.kyaml
 test_dir1/
 test_dir2/
 0.yml
@@ -68,3 +70,7 @@ debian/files
 .vscode
 
 yq3
+
+# Golang
+.gomodcache/
+.gocache/

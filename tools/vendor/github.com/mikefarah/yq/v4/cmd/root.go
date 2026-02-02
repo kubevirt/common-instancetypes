@@ -184,7 +184,7 @@ yq -P -oy sample.json
 	}
 	rootCmd.Flags().BoolVarP(&version, "version", "V", false, "Print version information and quit")
 	rootCmd.PersistentFlags().BoolVarP(&writeInplace, "inplace", "i", false, "update the file in place of first file given.")
-	rootCmd.PersistentFlags().VarP(unwrapScalarFlag, "unwrapScalar", "r", "unwrap scalar, print the value with no quotes, colors or comments. Defaults to true for yaml")
+	rootCmd.PersistentFlags().VarP(unwrapScalarFlag, "unwrapScalar", "r", "unwrap scalar, print the value with no quotes, colours or comments. Defaults to true for yaml")
 	rootCmd.PersistentFlags().Lookup("unwrapScalar").NoOptDefVal = "true"
 	rootCmd.PersistentFlags().BoolVarP(&nulSepOutput, "nul-output", "0", false, "Use NUL char to separate values. If unwrap scalar is also set, fail if unwrapped scalar contains NUL char.")
 
@@ -203,6 +203,7 @@ yq -P -oy sample.json
 	}
 	rootCmd.PersistentFlags().BoolVarP(&yqlib.ConfiguredYamlPreferences.LeadingContentPreProcessing, "header-preprocess", "", true, "Slurp any header comments and separators before processing expression.")
 	rootCmd.PersistentFlags().BoolVarP(&yqlib.ConfiguredYamlPreferences.FixMergeAnchorToSpec, "yaml-fix-merge-anchor-to-spec", "", false, "Fix merge anchor to match YAML spec. Will default to true in late 2025")
+	rootCmd.PersistentFlags().BoolVarP(&yqlib.ConfiguredYamlPreferences.CompactSequenceIndent, "yaml-compact-seq-indent", "c", false, "Use compact sequence indentation where '- ' is considered part of the indentation.")
 
 	rootCmd.PersistentFlags().StringVarP(&splitFileExp, "split-exp", "s", "", "print each result (or doc) into a file named (exp). [exp] argument must return a string. You can use $index in the expression as the result counter. The necessary directories will be created.")
 	if err = rootCmd.RegisterFlagCompletionFunc("split-exp", cobra.NoFileCompletions); err != nil {
