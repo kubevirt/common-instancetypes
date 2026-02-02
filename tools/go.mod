@@ -3,7 +3,7 @@ module github.com/kubevirt/common-instancetypes/tools
 go 1.24.4
 
 require (
-	github.com/mikefarah/yq/v4 v4.50.1
+	github.com/mikefarah/yq/v4 v4.52.2
 	github.com/yannh/kubeconform v0.7.0
 	sigs.k8s.io/kustomize/kustomize/v5 v5.8.0
 )
