@@ -11,6 +11,7 @@ import (
 	. "github.com/onsi/gomega"
 
 	"golang.org/x/crypto/ssh"
+	k8sv1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -399,7 +400,8 @@ func addContainerDisk(vm *v1.VirtualMachine, image string) {
 		Name: "containerdisk-" + k8srand.String(5),
 		VolumeSource: v1.VolumeSource{
 			ContainerDisk: &v1.ContainerDiskSource{
-				Image: image,
+				Image:           image,
+				ImagePullPolicy: k8sv1.PullIfNotPresent,
 			},
 		},
 	}
