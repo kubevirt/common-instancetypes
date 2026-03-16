@@ -8,6 +8,8 @@ resources:
 components:
   - ./metadata
   - ./requirements
+  - ../../../components/preferred-architecture/s390x
+  - ../../../components/required-architecture/s390x
   - ../../../components/disk-dedicatediothread
   - ../../../components/rng
 

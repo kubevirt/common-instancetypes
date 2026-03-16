@@ -8,6 +8,8 @@ resources:
 components:
   - ./metadata
   - ../requirements
+  - ../../components/preferred-architecture/arm64
+  - ../../components/required-architecture/arm64
 
 patches:
   - target:

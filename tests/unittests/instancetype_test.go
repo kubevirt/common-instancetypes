@@ -42,10 +42,12 @@ var _ = Describe("Common instance types unit tests", func() {
 	}
 
 	preferenceFunctionMap := map[string]func(string, string, instancetypev1beta1.VirtualMachineClusterPreference) error{
-		"openshift.io/display-name":                checkDisplayName,
-		"instancetype.kubevirt.io/vendor":          preferenceCheckVendor,
-		"instancetype.kubevirt.io/required-cpu":    checkCPUPreferenceType,
-		"instancetype.kubevirt.io/required-memory": checkMemoryPreferenceType,
+		"openshift.io/display-name":                       checkDisplayName,
+		"instancetype.kubevirt.io/vendor":                 preferenceCheckVendor,
+		"instancetype.kubevirt.io/required-cpu":           checkCPUPreferenceType,
+		"instancetype.kubevirt.io/required-memory":        checkMemoryPreferenceType,
+		"instancetype.kubevirt.io/preferred-architecture": checkPreferredArchitecture,
+		"instancetype.kubevirt.io/required-architecture":  checkRequiredArchitecture,
 	}
 
 	Context("VirtualMachineClusterPreference", func() {
@@ -217,6 +219,24 @@ func checkRealtime(labelValue, labelName string, instanceType instancetypev1beta
 	if (instanceType.Spec.CPU.Realtime == nil && boolValue) ||
 		(instanceType.Spec.CPU.Realtime != nil && !boolValue) {
 		return fmt.Errorf(instanceTypeErrorMessage, labelName, instanceType.Name)
+	}
+
+	return nil
+}
+
+func checkPreferredArchitecture(labelValue, labelName string, preference instancetypev1beta1.VirtualMachineClusterPreference) error {
+	if preference.Spec.PreferredArchitecture == nil || *preference.Spec.PreferredArchitecture != labelValue {
+		return fmt.Errorf(preferenceErrorMessage, labelName, preference.Name)
+	}
+
+	return nil
+}
+
+func checkRequiredArchitecture(labelValue, labelName string, preference instancetypev1beta1.VirtualMachineClusterPreference) error {
+	if preference.Spec.Requirements == nil ||
+		preference.Spec.Requirements.Architecture == nil ||
+		*preference.Spec.Requirements.Architecture != labelValue {
+		return fmt.Errorf(preferenceErrorMessage, labelName, preference.Name)
 	}
 
 	return nil
