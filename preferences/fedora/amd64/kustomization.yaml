@@ -8,6 +8,8 @@ resources:
 components:
   - ./metadata
   - ../requirements
+  - ../../components/preferred-architecture/amd64
+  - ../../components/required-architecture/amd64
   - ../../components/secureboot
 
 patches:

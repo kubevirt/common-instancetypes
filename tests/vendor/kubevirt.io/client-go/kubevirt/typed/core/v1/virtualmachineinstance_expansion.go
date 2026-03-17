@@ -27,6 +27,7 @@ import (
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
+	backupv1 "kubevirt.io/api/backup/v1alpha1"
 	v1 "kubevirt.io/api/core/v1"
 	"kubevirt.io/client-go/log"
 )
@@ -40,17 +41,21 @@ type SerialConsoleOptions struct {
 type VirtualMachineInstanceExpansion interface {
 	SerialConsole(name string, options *SerialConsoleOptions) (StreamInterface, error)
 	USBRedir(vmiName string) (StreamInterface, error)
-	VNC(name string) (StreamInterface, error)
+	VNC(name string, preserveSession bool) (StreamInterface, error)
 	Screenshot(ctx context.Context, name string, options *v1.ScreenshotOptions) ([]byte, error)
 	PortForward(name string, port int, protocol string) (StreamInterface, error)
+	Backup(ctx context.Context, name string, backupOptions *backupv1.BackupOptions) error
+	RedefineCheckpoint(ctx context.Context, name string, checkpoint *backupv1.BackupCheckpoint) error
 	Pause(ctx context.Context, name string, pauseOptions *v1.PauseOptions) error
 	Unpause(ctx context.Context, name string, unpauseOptions *v1.UnpauseOptions) error
 	Freeze(ctx context.Context, name string, unfreezeTimeout time.Duration) error
 	Unfreeze(ctx context.Context, name string) error
+	Reset(ctx context.Context, name string) error
 	SoftReboot(ctx context.Context, name string) error
 	GuestOsInfo(ctx context.Context, name string) (v1.VirtualMachineInstanceGuestAgentInfo, error)
 	UserList(ctx context.Context, name string) (v1.VirtualMachineInstanceGuestOSUserList, error)
 	FilesystemList(ctx context.Context, name string) (v1.VirtualMachineInstanceFileSystemList, error)
+	ObjectGraph(ctx context.Context, name string, objectGraphOptions *v1.ObjectGraphOptions) (v1.ObjectGraphNode, error)
 	AddVolume(ctx context.Context, name string, addVolumeOptions *v1.AddVolumeOptions) error
 	RemoveVolume(ctx context.Context, name string, removeVolumeOptions *v1.RemoveVolumeOptions) error
 	VSOCK(name string, options *v1.VSOCKOptions) (StreamInterface, error)
@@ -58,6 +63,7 @@ type VirtualMachineInstanceExpansion interface {
 	SEVQueryLaunchMeasurement(ctx context.Context, name string) (v1.SEVMeasurementInfo, error)
 	SEVSetupSession(ctx context.Context, name string, sevSessionOptions *v1.SEVSessionOptions) error
 	SEVInjectLaunchSecret(ctx context.Context, name string, sevSecretOptions *v1.SEVSecretOptions) error
+	EvacuateCancel(ctx context.Context, name string, evacuateCancelOptions *v1.EvacuateCancelOptions) error
 }
 
 func (c *virtualMachineInstances) SerialConsole(name string, options *SerialConsoleOptions) (StreamInterface, error) {
@@ -72,7 +78,7 @@ func (c *virtualMachineInstances) USBRedir(vmiName string) (StreamInterface, err
 	return nil, fmt.Errorf("USBRedir is not implemented yet in generated client")
 }
 
-func (c *virtualMachineInstances) VNC(name string) (StreamInterface, error) {
+func (c *virtualMachineInstances) VNC(name string, preserveSession bool) (StreamInterface, error) {
 	// TODO not implemented yet
 	//  requires clientConfig
 	return nil, fmt.Errorf("VNC is not implemented yet in generated client")
@@ -104,6 +110,42 @@ func (c *virtualMachineInstances) PortForward(name string, port int, protocol st
 	// TODO not implemented yet
 	//  requires clientConfig
 	return nil, fmt.Errorf("PortForward is not implemented yet in generated client")
+}
+
+func (c *virtualMachineInstances) Backup(ctx context.Context, name string, backupOptions *backupv1.BackupOptions) error {
+	log.Log.Infof("Backup VMI %s", name)
+	body, err := json.Marshal(backupOptions)
+	if err != nil {
+		return err
+	}
+
+	return c.GetClient().Put().
+		AbsPath(fmt.Sprintf(vmiSubresourceURL, v1.ApiStorageVersion)).
+		Namespace(c.GetNamespace()).
+		Resource("virtualmachineinstances").
+		Name(name).
+		SubResource("backup").
+		Body(body).
+		Do(ctx).
+		Error()
+}
+
+func (c *virtualMachineInstances) RedefineCheckpoint(ctx context.Context, name string, checkpoint *backupv1.BackupCheckpoint) error {
+	log.Log.Infof("RedefineCheckpoint VMI %s with checkpoint %s", name, checkpoint.Name)
+	body, err := json.Marshal(checkpoint)
+	if err != nil {
+		return err
+	}
+
+	return c.GetClient().Put().
+		AbsPath(fmt.Sprintf(vmiSubresourceURL, v1.ApiStorageVersion)).
+		Namespace(c.GetNamespace()).
+		Resource("virtualmachineinstances").
+		Name(name).
+		SubResource("redefine-checkpoint").
+		Body(body).
+		Do(ctx).
+		Error()
 }
 
 func (c *virtualMachineInstances) Pause(ctx context.Context, name string, pauseOptions *v1.PauseOptions) error {
@@ -172,6 +214,18 @@ func (c *virtualMachineInstances) Unfreeze(ctx context.Context, name string) err
 		Resource("virtualmachineinstances").
 		Name(name).
 		SubResource("unfreeze").
+		Do(ctx).
+		Error()
+}
+
+func (c *virtualMachineInstances) Reset(ctx context.Context, name string) error {
+	log.Log.Infof("Reset VMI")
+	return c.GetClient().Put().
+		AbsPath(fmt.Sprintf(vmiSubresourceURL, v1.ApiStorageVersion)).
+		Namespace(c.GetNamespace()).
+		Resource("virtualmachineinstances").
+		Name(name).
+		SubResource("reset").
 		Do(ctx).
 		Error()
 }
@@ -262,6 +316,27 @@ func (c *virtualMachineInstances) FilesystemList(ctx context.Context, name strin
 	return fsList, err
 }
 
+func (c *virtualMachineInstances) ObjectGraph(ctx context.Context, name string, objectGraphOptions *v1.ObjectGraphOptions) (v1.ObjectGraphNode, error) {
+	objectGraph := v1.ObjectGraphNode{}
+
+	body, err := json.Marshal(objectGraphOptions)
+	if err != nil {
+		return objectGraph, err
+	}
+
+	err = c.GetClient().Get().
+		AbsPath(fmt.Sprintf(vmiSubresourceURL, v1.ApiStorageVersion)).
+		Namespace(c.GetNamespace()).
+		Resource("virtualmachineinstances").
+		Name(name).
+		SubResource("objectgraph").
+		Body(body).
+		Do(ctx).
+		Into(&objectGraph)
+
+	return objectGraph, err
+}
+
 func (c *virtualMachineInstances) AddVolume(ctx context.Context, name string, addVolumeOptions *v1.AddVolumeOptions) error {
 	body, err := json.Marshal(addVolumeOptions)
 	if err != nil {
@@ -310,7 +385,7 @@ func (c *virtualMachineInstances) SEVFetchCertChain(ctx context.Context, name st
 		Resource("virtualmachineinstances").
 		Name(name).
 		SubResource("sev", "fetchcertchain").
-		Do(context.Background()).
+		Do(ctx).
 		Into(&sevPlatformInfo)
 
 	return sevPlatformInfo, err
@@ -324,7 +399,7 @@ func (c *virtualMachineInstances) SEVQueryLaunchMeasurement(ctx context.Context,
 		Resource("virtualmachineinstances").
 		Name(name).
 		SubResource("sev", "querylaunchmeasurement").
-		Do(context.Background()).
+		Do(ctx).
 		Into(&sevMeasurementInfo)
 
 	return sevMeasurementInfo, err
@@ -343,7 +418,7 @@ func (c *virtualMachineInstances) SEVSetupSession(ctx context.Context, name stri
 		Name(name).
 		SubResource("sev", "setupsession").
 		Body(body).
-		Do(context.Background()).
+		Do(ctx).
 		Error()
 }
 
@@ -359,6 +434,23 @@ func (c *virtualMachineInstances) SEVInjectLaunchSecret(ctx context.Context, nam
 		Name(name).
 		SubResource("sev", "injectlaunchsecret").
 		Body(body).
-		Do(context.Background()).
+		Do(ctx).
+		Error()
+}
+
+func (c *virtualMachineInstances) EvacuateCancel(ctx context.Context, name string, evacuateCancelOptions *v1.EvacuateCancelOptions) error {
+	body, err := json.Marshal(evacuateCancelOptions)
+	if err != nil {
+		return err
+	}
+
+	return c.GetClient().Put().
+		AbsPath(fmt.Sprintf(vmiSubresourceURL, v1.ApiStorageVersion)).
+		Namespace(c.GetNamespace()).
+		Resource("virtualmachineinstances").
+		Name(name).
+		SubResource("evacuate", "cancel").
+		Body(body).
+		Do(ctx).
 		Error()
 }

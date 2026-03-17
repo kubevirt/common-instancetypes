@@ -112,6 +112,10 @@ type VirtualMachineInstancetypeSpec struct {
 	// +optional
 	IOThreadsPolicy *v1.IOThreadsPolicy `json:"ioThreadsPolicy,omitempty"`
 
+	// Optionally specifies the IOThreads options to be used by the instancetype.
+	// +optional
+	IOThreads *v1.DiskIOThreads `json:"ioThreads,omitempty"`
+
 	// Optionally defines the LaunchSecurity to be used by the instancetype.
 	//
 	// +optional
@@ -298,6 +302,11 @@ type VirtualMachinePreferenceSpec struct {
 	//
 	//+optional
 	PreferSpreadSocketToCoreRatio uint32 `json:"preferSpreadSocketToCoreRatio,omitempty"`
+
+	// PreferredArchitecture defines a prefeerred architecture for the VirtualMachine
+	//
+	//+optional
+	PreferredArchitecture *string `json:"preferredArchitecture,omitempty"`
 }
 
 type VolumePreferences struct {
@@ -519,6 +528,11 @@ type DevicePreferences struct {
 	//
 	// +optional
 	PreferredInterfaceMasquerade *v1.InterfaceMasquerade `json:"preferredInterfaceMasquerade,omitempty"`
+
+	// PreferredPanicDeviceModel optionally defines the preferred panic device model to use with panic devices.
+	//
+	// +optional
+	PreferredPanicDeviceModel *v1.PanicDeviceModel `json:"preferredPanicDeviceModel,omitempty"`
 }
 
 // FeaturePreferences contains various optional defaults for Features.
@@ -573,14 +587,16 @@ type FirmwarePreferences struct {
 	// PreferredUseEfi optionally enables EFI
 	//
 	// +optional
-	PreferredUseEfi *bool `json:"preferredUseEfi,omitempty"`
+	// Deprecated: Will be removed with v1beta2 or v1
+	DeprecatedPreferredUseEfi *bool `json:"preferredUseEfi,omitempty"`
 
 	// PreferredUseSecureBoot optionally enables SecureBoot and the OVMF roms will be swapped for SecureBoot-enabled ones.
 	//
 	// Requires PreferredUseEfi and PreferredSmm to be enabled.
 	//
 	// +optional
-	PreferredUseSecureBoot *bool `json:"preferredUseSecureBoot,omitempty"`
+	// Deprecated: Will be removed with v1beta2 or v1
+	DeprecatedPreferredUseSecureBoot *bool `json:"preferredUseSecureBoot,omitempty"`
 
 	// PreferredEfi optionally enables EFI
 	//
@@ -622,6 +638,11 @@ type PreferenceRequirements struct {
 	//
 	//+optional
 	Memory *MemoryPreferenceRequirement `json:"memory,omitempty"`
+
+	// Required Architecture of the VM referencing this preference
+	//
+	//+optional
+	Architecture *string `json:"architecture,omitempty"`
 }
 
 type CPUPreferenceRequirement struct {
