@@ -3,7 +3,7 @@ module github.com/kubevirt/common-instancetypes/tools
 go 1.25.0
 
 require (
-	github.com/mikefarah/yq/v4 v4.52.4
+	github.com/mikefarah/yq/v4 v4.52.5
 	github.com/yannh/kubeconform v0.7.0
 	sigs.k8s.io/kustomize/kustomize/v5 v5.8.1
 )
@@ -48,7 +48,7 @@ require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mitchellh/go-wordwrap v1.0.1 // indirect
 	github.com/monochromegane/go-gitignore v0.0.0-20200626010858-205db1a8cc00 // indirect
-	github.com/pelletier/go-toml/v2 v2.2.4 // indirect
+	github.com/pelletier/go-toml/v2 v2.3.0 // indirect
 	github.com/santhosh-tekuri/jsonschema/v6 v6.0.2 // indirect
 	github.com/sergi/go-diff v1.4.0 // indirect
 	github.com/spf13/cobra v1.10.2 // indirect
