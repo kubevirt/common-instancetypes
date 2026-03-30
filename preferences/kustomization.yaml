@@ -17,4 +17,5 @@ resources:
   - ./linux-virtio-transitional
   - ./legacy
   - ./debian
+  - ./elxr
   - ./oraclelinux

@@ -39,6 +39,7 @@ const (
 	defaultUbuntu2404ContainerDisk         = "quay.io/containerdisks/ubuntu:24.04"
 	defaultOpenSUSETumbleweedContainerDisk = "quay.io/containerdisks/opensuse-tumbleweed:1.0.0"
 	defaultOpenSUSELeap15ContainerDisk     = "quay.io/containerdisks/opensuse-leap:15.6"
+	defaultElxrContainerDisk               = "registry:5000/elxr-container-disk:latest"
 	defaultDebian11ContainerDisk           = "quay.io/containerdisks/debian:11"
 	defaultDebian12ContainerDisk           = "quay.io/containerdisks/debian:12"
 	defaultDebian13ContainerDisk           = "quay.io/containerdisks/debian:13"
@@ -104,6 +105,7 @@ var (
 	sles15SP5ContainerDisk          string
 	sles15SP6ContainerDisk          string
 	sles15SP7ContainerDisk          string
+	elxrContainerDisk               string
 	debian11ContainerDisk           string
 	debian12ContainerDisk           string
 	debian13ContainerDisk           string
@@ -150,6 +152,8 @@ func init() {
 		defaultOpenSUSETumbleweedContainerDisk, "OpenSUSE Tumbleweed container disk used by functional tests")
 	flag.StringVar(&openSUSELeap15ContainerDisk, "opensuse-leap-container-disk",
 		defaultOpenSUSELeap15ContainerDisk, "OpenSUSE Leap container disk used by functional tests")
+	flag.StringVar(&elxrContainerDisk, "elxr-container-disk",
+		defaultElxrContainerDisk, "eLxr container disk used by functional tests")
 	flag.StringVar(&debian11ContainerDisk, "debian-11-container-disk",
 		defaultDebian11ContainerDisk, "Debian 11 container disk used by functional tests")
 	flag.StringVar(&debian12ContainerDisk, "debian-12-container-disk",
