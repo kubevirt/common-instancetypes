@@ -139,8 +139,8 @@ github.com/mattn/go-colorable
 # github.com/mattn/go-isatty v0.0.20
 ## explicit; go 1.15
 github.com/mattn/go-isatty
-# github.com/mikefarah/yq/v4 v4.52.4
-## explicit; go 1.24.0
+# github.com/mikefarah/yq/v4 v4.52.5
+## explicit; go 1.25.0
 github.com/mikefarah/yq/v4
 github.com/mikefarah/yq/v4/cmd
 github.com/mikefarah/yq/v4/pkg/yqlib
@@ -150,10 +150,9 @@ github.com/mitchellh/go-wordwrap
 # github.com/monochromegane/go-gitignore v0.0.0-20200626010858-205db1a8cc00
 ## explicit
 github.com/monochromegane/go-gitignore
-# github.com/pelletier/go-toml/v2 v2.2.4
+# github.com/pelletier/go-toml/v2 v2.3.0
 ## explicit; go 1.21.0
 github.com/pelletier/go-toml/v2/internal/characters
-github.com/pelletier/go-toml/v2/internal/danger
 github.com/pelletier/go-toml/v2/unstable
 # github.com/santhosh-tekuri/jsonschema/v6 v6.0.2
 ## explicit; go 1.21
