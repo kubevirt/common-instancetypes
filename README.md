@@ -327,6 +327,8 @@ centos.stream9.desktop | CentOS Stream 9
 centos.stream9.dpdk | CentOS Stream 9
 cirros | Cirros
 debian | Debian
+elxr | eLxr Linux (amd64)
+elxr.arm64 | eLxr Linux (arm64)
 fedora | Fedora (amd64)
 fedora.arm64 | Fedora (arm64)
 fedora.s390x | Fedora (s390x)
