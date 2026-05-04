@@ -1,0 +1,11 @@
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachinePreference
+metadata:
+  name: metadata
+  annotations:
+    tags: "hidden,kubevirt,elxr"
+    iconClass: "icon-debian"
+    openshift.io/display-name: "eLxr Linux (arm64)"
+  labels:
+    instancetype.kubevirt.io/arch: "arm64"
