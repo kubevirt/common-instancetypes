@@ -10,5 +10,6 @@ components:
   - ../../components/diskbus-virtio-blk
   - ../../components/interfacemodel-virtio-net
   - ../../components/tablet-virtio
+  - ../../components/videotype-virtio
 
 nameSuffix: .virtio
