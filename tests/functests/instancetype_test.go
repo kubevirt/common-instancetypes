@@ -109,7 +109,8 @@ var _ = Describe("Common instance types func tests", func() {
 							"failure checking preference requirements: "+
 							"insufficient Memory resources of 64M provided by instance type, preference requires %s",
 						preference.Spec.Requirements.Memory.Guest.String(),
-					)))
+					),
+				))
 			}
 		})
 
@@ -183,21 +184,22 @@ var _ = Describe("Common instance types func tests", func() {
 			Expect(err).ToNot(HaveOccurred())
 		})
 
-		DescribeTable("a Linux guest with", func(containerDisk, instancetype string, preferences map[string]string, testFns []testFn) {
-			preference, hasArch := preferences[preferenceArch]
-			if !hasArch {
-				Skip(fmt.Sprintf("skipping as no preference provided for arch %s", preferenceArch))
-			}
-			vm = randomVM(&v1.InstancetypeMatcher{Name: instancetype}, &v1.PreferenceMatcher{Name: preference}, v1.RunStrategyAlways)
-			addContainerDisk(vm, containerDisk)
-			addCloudInitWithAuthorizedKey(vm, privKey)
-			vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm, metav1.CreateOptions{})
-			Expect(err).ToNot(HaveOccurred())
-			expectVMToBeReady(virtClient, vm.Name, defaultVMReadyTimeout)
-			for _, testFn := range testFns {
-				testFn(virtClient, vm.Name)
-			}
-		},
+		DescribeTable(
+			"a Linux guest with", func(containerDisk, instancetype string, preferences map[string]string, testFns []testFn) {
+				preference, hasArch := preferences[preferenceArch]
+				if !hasArch {
+					Skip(fmt.Sprintf("skipping as no preference provided for arch %s", preferenceArch))
+				}
+				vm = randomVM(&v1.InstancetypeMatcher{Name: instancetype}, &v1.PreferenceMatcher{Name: preference}, v1.RunStrategyAlways)
+				addContainerDisk(vm, containerDisk)
+				addCloudInitWithAuthorizedKey(vm, privKey)
+				vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm, metav1.CreateOptions{})
+				Expect(err).ToNot(HaveOccurred())
+				expectVMToBeReady(virtClient, vm.Name, defaultVMReadyTimeout)
+				for _, testFn := range testFns {
+					testFn(virtClient, vm.Name)
+				}
+			},
 			Entry("[test_id:10738] Fedora", fedoraContainerDisk, "u1.small",
 				map[string]string{"amd64": "fedora", "arm64": "fedora.arm64", "s390x": "fedora.s390x"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("fedora")}),
@@ -266,20 +268,21 @@ var _ = Describe("Common instance types func tests", func() {
 				map[string]string{"amd64": "debian", "arm64": "debian"}, []testFn{expectSSHToRunCommandOnLinux("debian")}),
 		)
 
-		DescribeTable("a Windows guest with", func(containerDisk, instancetype string, preferences map[string]string, testFns []testFn) {
-			preference, hasArch := preferences[preferenceArch]
-			if !hasArch {
-				Skip(fmt.Sprintf("skipping as no preference provided for arch %s", preferenceArch))
-			}
-			vm = randomVM(&v1.InstancetypeMatcher{Name: instancetype}, &v1.PreferenceMatcher{Name: preference}, v1.RunStrategyAlways)
-			addContainerDisk(vm, containerDisk)
-			vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm, metav1.CreateOptions{})
-			Expect(err).ToNot(HaveOccurred())
-			expectVMToBeReady(virtClient, vm.Name, windowsReadyTimeout)
-			for _, testFn := range testFns {
-				testFn(virtClient, vm.Name)
-			}
-		},
+		DescribeTable(
+			"a Windows guest with", func(containerDisk, instancetype string, preferences map[string]string, testFns []testFn) {
+				preference, hasArch := preferences[preferenceArch]
+				if !hasArch {
+					Skip(fmt.Sprintf("skipping as no preference provided for arch %s", preferenceArch))
+				}
+				vm = randomVM(&v1.InstancetypeMatcher{Name: instancetype}, &v1.PreferenceMatcher{Name: preference}, v1.RunStrategyAlways)
+				addContainerDisk(vm, containerDisk)
+				vm, err = virtClient.VirtualMachine(testNamespace).Create(context.Background(), vm, metav1.CreateOptions{})
+				Expect(err).ToNot(HaveOccurred())
+				expectVMToBeReady(virtClient, vm.Name, windowsReadyTimeout)
+				for _, testFn := range testFns {
+					testFn(virtClient, vm.Name)
+				}
+			},
 			Entry("[test_id:10739] Validation OS", validationOsContainerDisk, "u1.2xmedium",
 				map[string]string{"amd64": "windows.11"}, []testFn{expectSSHToRunCommandOnWindows}),
 			Entry("[test_id:????] Windows 7", windows7ContainerDisk, "u1.small",
