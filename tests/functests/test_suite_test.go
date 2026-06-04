@@ -39,6 +39,7 @@ const (
 	defaultUbuntu2404ContainerDisk         = "quay.io/containerdisks/ubuntu:24.04"
 	defaultOpenSUSETumbleweedContainerDisk = "quay.io/containerdisks/opensuse-tumbleweed:1.0.0"
 	defaultOpenSUSELeap15ContainerDisk     = "quay.io/containerdisks/opensuse-leap:15.6"
+	defaultOpenSUSELeap16ContainerDisk     = "quay.io/containerdisks/opensuse-leap:16.0"
 	defaultDebian11ContainerDisk           = "quay.io/containerdisks/debian:11"
 	defaultDebian12ContainerDisk           = "quay.io/containerdisks/debian:12"
 	defaultDebian13ContainerDisk           = "quay.io/containerdisks/debian:13"
@@ -47,6 +48,7 @@ const (
 	defaultSLES15SP5ContainerDisk          = "registry:5000/sles15sp5-container-disk:latest"
 	defaultSLES15SP6ContainerDisk          = "registry:5000/sles15sp6-container-disk:latest"
 	defaultSLES15SP7ContainerDisk          = "registry:5000/sles15sp7-container-disk:latest"
+	defaultSLES16ContainerDisk             = "registry:5000/sles16-container-disk:latest"
 	defaultValidationOsContainerDisk       = "registry:5000/validation-os-container-disk:latest"
 	defaultWindows7ContainerDisk           = "registry:5000/windows7-container-disk:latest"
 	defaultWindows10ContainerDisk          = "registry:5000/windows10-container-disk:latest"
@@ -101,9 +103,11 @@ var (
 	windowsXpContainerDisk          string
 	openSUSETumbleweedContainerDisk string
 	openSUSELeap15ContainerDisk     string
+	openSUSELeap16ContainerDisk     string
 	sles15SP5ContainerDisk          string
 	sles15SP6ContainerDisk          string
 	sles15SP7ContainerDisk          string
+	sles16ContainerDisk             string
 	debian11ContainerDisk           string
 	debian12ContainerDisk           string
 	debian13ContainerDisk           string
@@ -150,6 +154,8 @@ func init() {
 		defaultOpenSUSETumbleweedContainerDisk, "OpenSUSE Tumbleweed container disk used by functional tests")
 	flag.StringVar(&openSUSELeap15ContainerDisk, "opensuse-leap-container-disk",
 		defaultOpenSUSELeap15ContainerDisk, "OpenSUSE Leap container disk used by functional tests")
+	flag.StringVar(&openSUSELeap16ContainerDisk, "opensuse-leap-16-container-disk",
+		defaultOpenSUSELeap16ContainerDisk, "OpenSUSE Leap 16 container disk used by functional tests")
 	flag.StringVar(&debian11ContainerDisk, "debian-11-container-disk",
 		defaultDebian11ContainerDisk, "Debian 11 container disk used by functional tests")
 	flag.StringVar(&debian12ContainerDisk, "debian-12-container-disk",
@@ -166,6 +172,8 @@ func init() {
 		defaultSLES15SP6ContainerDisk, "SLES 15 SP 6 container disk used by functional tests")
 	flag.StringVar(&sles15SP7ContainerDisk, "sles15sp7-container-disk",
 		defaultSLES15SP7ContainerDisk, "SLES 15 SP 7 container disk used by functional tests")
+	flag.StringVar(&sles16ContainerDisk, "sles16-container-disk",
+		defaultSLES16ContainerDisk, "SLES 16 container disk used by functional tests")
 	flag.StringVar(&validationOsContainerDisk, "validation-os-container-disk",
 		defaultValidationOsContainerDisk, "Validation OS container disk used by functional tests")
 	flag.StringVar(&windows7ContainerDisk, "windows-7-container-disk",
