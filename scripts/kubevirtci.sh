@@ -55,8 +55,8 @@ function kubevirtci::up() {
   echo "waiting for kubevirt to become ready, this can take a few minutes..."
   ${_kubectl} -n kubevirt wait kv kubevirt --for condition=Available --timeout=15m
 
-  echo "disable common-instancetypes deployment"
-  ${_kubectl} patch kv/kubevirt -n kubevirt --type merge -p '{"spec":{"configuration":{"commonInstancetypesDeployment": {"enabled": false}}}}'
+  echo "disable common-instancetypes deployment and ImageVolume feature gate"
+  ${_kubectl} patch kv/kubevirt -n kubevirt --type merge -p '{"spec":{"configuration":{"commonInstancetypesDeployment": {"enabled": false}, "developerConfiguration": {"disabledFeatureGates": ["ImageVolume"]}}}}'
 
   echo "waiting for kubevirt to become ready, this can take a few minutes..."
   ${_kubectl} -n kubevirt wait kv kubevirt --for condition=Available --timeout=15m
