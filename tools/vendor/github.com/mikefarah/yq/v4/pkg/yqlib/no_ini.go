@@ -2,7 +2,7 @@
 
 package yqlib
 
-func NewINIDecoder(prefs INIPreferences) Decoder {
+func NewINIDecoder() Decoder {
 	return nil
 }
 

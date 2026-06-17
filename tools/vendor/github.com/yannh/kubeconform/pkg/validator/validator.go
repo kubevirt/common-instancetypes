@@ -5,10 +5,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"io"
-	"os"
-	"strings"
-
 	jsonschema "github.com/santhosh-tekuri/jsonschema/v6"
 	"github.com/yannh/kubeconform/pkg/cache"
 	"github.com/yannh/kubeconform/pkg/loader"
@@ -16,8 +12,11 @@ import (
 	"github.com/yannh/kubeconform/pkg/resource"
 	"golang.org/x/text/language"
 	"golang.org/x/text/message"
-	"k8s.io/kube-openapi/pkg/validation/strfmt"
+	"io"
+	"os"
 	"sigs.k8s.io/yaml"
+	"strings"
+	"time"
 )
 
 // Different types of validation results
@@ -64,7 +63,7 @@ type Opts struct {
 	SkipKinds            map[string]struct{} // List of resource Kinds to ignore
 	RejectKinds          map[string]struct{} // List of resource Kinds to reject
 	KubernetesVersion    string              // Kubernetes Version - has to match one in https://github.com/instrumenta/kubernetes-json-schema
-	Strict               bool                // Throws an error if resources contain undocumented fields
+	Strict               bool                // thros an error if resources contain undocumented fields
 	IgnoreMissingSchemas bool                // skip a resource if no schema for that resource can be found
 }
 
@@ -103,7 +102,7 @@ func New(schemaLocations []string, opts Opts) (Validator, error) {
 			return nil, fmt.Errorf("failed opening cache folder %s: %s", opts.Cache, err)
 		}
 		if !fi.IsDir() {
-			return nil, fmt.Errorf("cache folder %s is not a directory", opts.Cache)
+			return nil, fmt.Errorf("cache folder %s is not a directory", err)
 		}
 
 		filecache = cache.NewOnDiskCache(opts.Cache)
@@ -292,13 +291,13 @@ func (val *v) Validate(filename string, r io.ReadCloser) []Result {
 // which is commonly used in Kubernetes operators for specifying intervals.
 // https://github.com/kubernetes/apiextensions-apiserver/blob/1ecd29f74da0639e2e6e3b8fac0c9bfd217e05eb/pkg/apis/apiextensions/v1/types_jsonschema.go#L71
 func validateDuration(v any) error {
-	s, ok := v.(string)
-	if !ok {
+	// Try validation with the Go duration format
+	if _, err := time.ParseDuration(v.(string)); err == nil {
 		return nil
 	}
 
-	// Try validation with the Go duration format
-	if _, err := strfmt.ParseDuration(s); err == nil {
+	s, ok := v.(string)
+	if !ok {
 		return nil
 	}
 
@@ -373,13 +372,6 @@ func downloadSchema(registries []registry.Registry, l jsonschema.SchemeURLLoader
 	for _, reg := range registries {
 		path, s, err = reg.DownloadSchema(kind, version, k8sVersion)
 		if err == nil {
-			// A schema document that decodes to nil (for example a file whose
-			// entire content is the literal "null") is accepted by AddResource
-			// but makes Compile dereference a nil root and panic. Treat it as a
-			// non-parseable response and try the next registry instead.
-			if s == nil {
-				continue
-			}
 			c := jsonschema.NewCompiler()
 			c.RegisterFormat(&jsonschema.Format{"duration", validateDuration})
 			c.UseLoader(l)

@@ -2,216 +2,81 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-//go:build !goexperiment.jsonv2 || !go1.25
-
-package jsontext
+package json
 
 import (
-	"errors"
-	"iter"
 	"math"
 	"strconv"
-	"strings"
-	"unicode/utf8"
-
-	"k8s.io/kube-openapi/pkg/internal/third_party/go-json-experiment/json/internal/jsonwire"
 )
-
-// ErrDuplicateName indicates that a JSON token could not be
-// encoded or decoded because it results in a duplicate JSON object name.
-// This error is directly wrapped within a [SyntacticError] when produced.
-//
-// The name of a duplicate JSON object member can be extracted as:
-//
-//	err := ...
-//	var serr jsontext.SyntacticError
-//	if errors.As(err, &serr) && serr.Err == jsontext.ErrDuplicateName {
-//		ptr := serr.JSONPointer // JSON pointer to duplicate name
-//		name := ptr.LastToken() // duplicate name itself
-//		...
-//	}
-//
-// This error is only returned if [AllowDuplicateNames] is false.
-var ErrDuplicateName = errors.New("duplicate object member name")
-
-// ErrNonStringName indicates that a JSON token could not be
-// encoded or decoded because it is not a string,
-// as required for JSON object names according to RFC 8259, section 4.
-// This error is directly wrapped within a [SyntacticError] when produced.
-var ErrNonStringName = errors.New("object member name must be a string")
 
 var (
-	errMissingValue  = errors.New("missing value after object name")
-	errMismatchDelim = errors.New("mismatching structural token for object or array")
-	errMaxDepth      = errors.New("exceeded max depth")
-
-	errInvalidNamespace = errors.New("object namespace is in an invalid state")
+	errMissingName   = &SyntacticError{str: "missing string for object name"}
+	errMissingColon  = &SyntacticError{str: "missing character ':' after object name"}
+	errMissingValue  = &SyntacticError{str: "missing value after object name"}
+	errMissingComma  = &SyntacticError{str: "missing character ',' after object or array value"}
+	errMismatchDelim = &SyntacticError{str: "mismatching structural token for object or array"}
 )
 
-// Per RFC 8259, section 9, implementations may enforce a maximum depth.
-// Such a limit is necessary to prevent stack overflows.
-const maxNestingDepth = 10000
+const errInvalidNamespace = jsonError("object namespace is in an invalid state")
 
 type state struct {
-	// Tokens validates whether the next token kind is valid.
-	Tokens stateMachine
+	// tokens validates whether the next token kind is valid.
+	tokens stateMachine
 
-	// Names is a stack of object names.
-	Names objectNameStack
+	// names is a stack of object names.
+	// Not used if AllowDuplicateNames is true.
+	names objectNameStack
 
-	// Namespaces is a stack of object namespaces.
+	// namespaces is a stack of object namespaces.
 	// For performance reasons, Encoder or Decoder may not update this
 	// if Marshal or Unmarshal is able to track names in a more efficient way.
 	// See makeMapArshaler and makeStructArshaler.
 	// Not used if AllowDuplicateNames is true.
-	Namespaces objectNamespaceStack
-}
-
-// needObjectValue reports whether the next token should be an object value.
-// This method is used by [wrapSyntacticError].
-func (s *state) needObjectValue() bool {
-	return s.Tokens.Last.needObjectValue()
+	namespaces objectNamespaceStack
 }
 
 func (s *state) reset() {
-	s.Tokens.reset()
-	s.Names.reset()
-	s.Namespaces.reset()
-}
-
-// Pointer is a JSON Pointer (RFC 6901) that references a particular JSON value
-// relative to the root of the top-level JSON value.
-//
-// A Pointer is a slash-separated list of tokens, where each token is
-// either a JSON object name or an index to a JSON array element
-// encoded as a base-10 integer value.
-// It is impossible to distinguish between an array index and an object name
-// (that happens to be an base-10 encoded integer) without also knowing
-// the structure of the top-level JSON value that the pointer refers to.
-//
-// There is exactly one representation of a pointer to a particular value,
-// so comparability of Pointer values is equivalent to checking whether
-// they both point to the exact same value.
-type Pointer string
-
-// IsValid reports whether p is a valid JSON Pointer according to RFC 6901.
-// Note that the concatenation of two valid pointers produces a valid pointer.
-func (p Pointer) IsValid() bool {
-	for i, r := range p {
-		switch {
-		case r == '~' && (i+1 == len(p) || (p[i+1] != '0' && p[i+1] != '1')):
-			return false // invalid escape
-		case r == '\ufffd' && !strings.HasPrefix(string(p[i:]), "\ufffd"):
-			return false // invalid UTF-8
-		}
-	}
-	return len(p) == 0 || p[0] == '/'
-}
-
-// Contains reports whether the JSON value that p points to
-// is equal to or contains the JSON value that pc points to.
-func (p Pointer) Contains(pc Pointer) bool {
-	// Invariant: len(p) <= len(pc) if p.Contains(pc)
-	suffix, ok := strings.CutPrefix(string(pc), string(p))
-	return ok && (suffix == "" || suffix[0] == '/')
-}
-
-// Parent strips off the last token and returns the remaining pointer.
-// The parent of an empty p is an empty string.
-func (p Pointer) Parent() Pointer {
-	return p[:max(strings.LastIndexByte(string(p), '/'), 0)]
-}
-
-// LastToken returns the last token in the pointer.
-// The last token of an empty p is an empty string.
-func (p Pointer) LastToken() string {
-	last := p[max(strings.LastIndexByte(string(p), '/'), 0):]
-	return unescapePointerToken(strings.TrimPrefix(string(last), "/"))
-}
-
-// AppendToken appends a token to the end of p and returns the full pointer.
-func (p Pointer) AppendToken(tok string) Pointer {
-	return Pointer(appendEscapePointerName([]byte(p+"/"), tok))
-}
-
-// TODO: Add Pointer.AppendTokens,
-// but should this take in a ...string or an iter.Seq[string]?
-
-// Tokens returns an iterator over the reference tokens in the JSON pointer,
-// starting from the first token until the last token (unless stopped early).
-func (p Pointer) Tokens() iter.Seq[string] {
-	return func(yield func(string) bool) {
-		for len(p) > 0 {
-			p = Pointer(strings.TrimPrefix(string(p), "/"))
-			i := min(uint(strings.IndexByte(string(p), '/')), uint(len(p)))
-			if !yield(unescapePointerToken(string(p)[:i])) {
-				return
-			}
-			p = p[i:]
-		}
-	}
-}
-
-func unescapePointerToken(token string) string {
-	if strings.Contains(token, "~") {
-		// Per RFC 6901, section 3, unescape '~' and '/' characters.
-		token = strings.ReplaceAll(token, "~1", "/")
-		token = strings.ReplaceAll(token, "~0", "~")
-	}
-	return token
+	s.tokens.reset()
+	s.names.reset()
+	s.namespaces.reset()
 }
 
 // appendStackPointer appends a JSON Pointer (RFC 6901) to the current value.
-//
-//   - If where is -1, then it points to the previously processed token.
-//
-//   - If where is 0, then it points to the parent JSON object or array,
-//     or an object member if in-between an object member key and value.
-//     This is useful when the position is ambiguous whether
-//     we are interested in the previous or next token, or
-//     when we are uncertain whether the next token
-//     continues or terminates the current object or array.
-//
-//   - If where is +1, then it points to the next expected value,
-//     assuming that it continues the current JSON object or array.
-//     As a special case, if the next token is a JSON object name,
-//     then it points to the parent JSON object.
+// The returned pointer is only accurate if s.names is populated,
+// otherwise it uses the numeric index as the object member name.
 //
 // Invariant: Must call s.names.copyQuotedBuffer beforehand.
-func (s state) appendStackPointer(b []byte, where int) []byte {
+func (s state) appendStackPointer(b []byte) []byte {
 	var objectDepth int
-	for i := 1; i < s.Tokens.Depth(); i++ {
-		e := s.Tokens.index(i)
-		arrayDelta := -1 // by default point to previous array element
-		if isLast := i == s.Tokens.Depth()-1; isLast {
-			switch {
-			case where < 0 && e.Length() == 0 || where == 0 && !e.needObjectValue() || where > 0 && e.NeedObjectName():
-				return b
-			case where > 0 && e.isArray():
-				arrayDelta = 0 // point to next array element
-			}
+	for i := 1; i < s.tokens.depth(); i++ {
+		e := s.tokens.index(i)
+		if e.length() == 0 {
+			break // empty object or array
 		}
+		b = append(b, '/')
 		switch {
 		case e.isObject():
-			b = appendEscapePointerName(append(b, '/'), s.Names.getUnquoted(objectDepth))
+			if objectDepth < s.names.length() {
+				for _, c := range s.names.getUnquoted(objectDepth) {
+					// Per RFC 6901, section 3, escape '~' and '/' characters.
+					switch c {
+					case '~':
+						b = append(b, "~0"...)
+					case '/':
+						b = append(b, "~1"...)
+					default:
+						b = append(b, c)
+					}
+				}
+			} else {
+				// Since the names stack is unpopulated, the name is unknown.
+				// As a best-effort replacement, use the numeric member index.
+				// While inaccurate, it produces a syntactically valid pointer.
+				b = strconv.AppendUint(b, uint64((e.length()-1)/2), 10)
+			}
 			objectDepth++
 		case e.isArray():
-			b = strconv.AppendUint(append(b, '/'), uint64(e.Length()+int64(arrayDelta)), 10)
-		}
-	}
-	return b
-}
-
-func appendEscapePointerName[Bytes ~[]byte | ~string](b []byte, name Bytes) []byte {
-	for _, r := range string(name) {
-		// Per RFC 6901, section 3, escape '~' and '/' characters.
-		switch r {
-		case '~':
-			b = append(b, "~0"...)
-		case '/':
-			b = append(b, "~1"...)
-		default:
-			b = utf8.AppendRune(b, r)
+			b = strconv.AppendUint(b, uint64(e.length()-1), 10)
 		}
 	}
 	return b
@@ -227,54 +92,54 @@ func appendEscapePointerName[Bytes ~[]byte | ~string](b []byte, name Bytes) []by
 // The top-level virtual JSON array is special in that it doesn't require commas
 // between each JSON value.
 //
-// For performance, most methods are carefully written to be inlinable.
+// For performance, most methods are carefully written to be inlineable.
 // The zero value is a valid state machine ready for use.
 type stateMachine struct {
-	Stack []stateEntry
-	Last  stateEntry
+	stack []stateEntry
+	last  stateEntry
 }
 
 // reset resets the state machine.
 // The machine always starts with a minimum depth of 1.
 func (m *stateMachine) reset() {
-	m.Stack = m.Stack[:0]
-	if cap(m.Stack) > 1<<10 {
-		m.Stack = nil
+	m.stack = m.stack[:0]
+	if cap(m.stack) > 1<<10 {
+		m.stack = nil
 	}
-	m.Last = stateTypeArray
+	m.last = stateTypeArray
 }
 
-// Depth is the current nested depth of JSON objects and arrays.
+// depth is the current nested depth of JSON objects and arrays.
 // It is one-indexed (i.e., top-level values have a depth of 1).
-func (m stateMachine) Depth() int {
-	return len(m.Stack) + 1
+func (m stateMachine) depth() int {
+	return len(m.stack) + 1
 }
 
 // index returns a reference to the ith entry.
 // It is only valid until the next push method call.
 func (m *stateMachine) index(i int) *stateEntry {
-	if i == len(m.Stack) {
-		return &m.Last
+	if i == len(m.stack) {
+		return &m.last
 	}
-	return &m.Stack[i]
+	return &m.stack[i]
 }
 
-// DepthLength reports the current nested depth and
+// depthLength reports the current nested depth and
 // the length of the last JSON object or array.
-func (m stateMachine) DepthLength() (int, int64) {
-	return m.Depth(), m.Last.Length()
+func (m stateMachine) depthLength() (int, int) {
+	return m.depth(), m.last.length()
 }
 
 // appendLiteral appends a JSON literal as the next token in the sequence.
 // If an error is returned, the state is not mutated.
 func (m *stateMachine) appendLiteral() error {
 	switch {
-	case m.Last.NeedObjectName():
-		return ErrNonStringName
-	case !m.Last.isValidNamespace():
+	case m.last.needObjectName():
+		return errMissingName
+	case !m.last.isValidNamespace():
 		return errInvalidNamespace
 	default:
-		m.Last.Increment()
+		m.last.increment()
 		return nil
 	}
 }
@@ -283,10 +148,10 @@ func (m *stateMachine) appendLiteral() error {
 // If an error is returned, the state is not mutated.
 func (m *stateMachine) appendString() error {
 	switch {
-	case !m.Last.isValidNamespace():
+	case !m.last.isValidNamespace():
 		return errInvalidNamespace
 	default:
-		m.Last.Increment()
+		m.last.increment()
 		return nil
 	}
 }
@@ -297,20 +162,18 @@ func (m *stateMachine) appendNumber() error {
 	return m.appendLiteral()
 }
 
-// pushObject appends a JSON begin object token as next in the sequence.
+// pushObject appends a JSON start object token as next in the sequence.
 // If an error is returned, the state is not mutated.
 func (m *stateMachine) pushObject() error {
 	switch {
-	case m.Last.NeedObjectName():
-		return ErrNonStringName
-	case !m.Last.isValidNamespace():
+	case m.last.needObjectName():
+		return errMissingName
+	case !m.last.isValidNamespace():
 		return errInvalidNamespace
-	case len(m.Stack) == maxNestingDepth:
-		return errMaxDepth
 	default:
-		m.Last.Increment()
-		m.Stack = append(m.Stack, m.Last)
-		m.Last = stateTypeObject
+		m.last.increment()
+		m.stack = append(m.stack, m.last)
+		m.last = stateTypeObject
 		return nil
 	}
 }
@@ -319,33 +182,31 @@ func (m *stateMachine) pushObject() error {
 // If an error is returned, the state is not mutated.
 func (m *stateMachine) popObject() error {
 	switch {
-	case !m.Last.isObject():
+	case !m.last.isObject():
 		return errMismatchDelim
-	case m.Last.needObjectValue():
+	case m.last.needObjectValue():
 		return errMissingValue
-	case !m.Last.isValidNamespace():
+	case !m.last.isValidNamespace():
 		return errInvalidNamespace
 	default:
-		m.Last = m.Stack[len(m.Stack)-1]
-		m.Stack = m.Stack[:len(m.Stack)-1]
+		m.last = m.stack[len(m.stack)-1]
+		m.stack = m.stack[:len(m.stack)-1]
 		return nil
 	}
 }
 
-// pushArray appends a JSON begin array token as next in the sequence.
+// pushArray appends a JSON start array token as next in the sequence.
 // If an error is returned, the state is not mutated.
 func (m *stateMachine) pushArray() error {
 	switch {
-	case m.Last.NeedObjectName():
-		return ErrNonStringName
-	case !m.Last.isValidNamespace():
+	case m.last.needObjectName():
+		return errMissingName
+	case !m.last.isValidNamespace():
 		return errInvalidNamespace
-	case len(m.Stack) == maxNestingDepth:
-		return errMaxDepth
 	default:
-		m.Last.Increment()
-		m.Stack = append(m.Stack, m.Last)
-		m.Last = stateTypeArray
+		m.last.increment()
+		m.stack = append(m.stack, m.last)
+		m.last = stateTypeArray
 		return nil
 	}
 }
@@ -354,43 +215,43 @@ func (m *stateMachine) pushArray() error {
 // If an error is returned, the state is not mutated.
 func (m *stateMachine) popArray() error {
 	switch {
-	case !m.Last.isArray() || len(m.Stack) == 0: // forbid popping top-level virtual JSON array
+	case !m.last.isArray() || len(m.stack) == 0: // forbid popping top-level virtual JSON array
 		return errMismatchDelim
-	case !m.Last.isValidNamespace():
+	case !m.last.isValidNamespace():
 		return errInvalidNamespace
 	default:
-		m.Last = m.Stack[len(m.Stack)-1]
-		m.Stack = m.Stack[:len(m.Stack)-1]
+		m.last = m.stack[len(m.stack)-1]
+		m.stack = m.stack[:len(m.stack)-1]
 		return nil
 	}
 }
 
-// NeedIndent reports whether indent whitespace should be injected.
+// needIndent reports whether indent whitespace should be injected.
 // A zero value means that no whitespace should be injected.
 // A positive value means '\n', indentPrefix, and (n-1) copies of indentBody
 // should be appended to the output immediately before the next token.
-func (m stateMachine) NeedIndent(next Kind) (n int) {
+func (m stateMachine) needIndent(next Kind) (n int) {
 	willEnd := next == '}' || next == ']'
 	switch {
-	case m.Depth() == 1:
+	case m.depth() == 1:
 		return 0 // top-level values are never indented
-	case m.Last.Length() == 0 && willEnd:
+	case m.last.length() == 0 && willEnd:
 		return 0 // an empty object or array is never indented
-	case m.Last.Length() == 0 || m.Last.needImplicitComma(next):
-		return m.Depth()
+	case m.last.length() == 0 || m.last.needImplicitComma(next):
+		return m.depth()
 	case willEnd:
-		return m.Depth() - 1
+		return m.depth() - 1
 	default:
 		return 0
 	}
 }
 
-// MayAppendDelim appends a colon or comma that may precede the next token.
-func (m stateMachine) MayAppendDelim(b []byte, next Kind) []byte {
+// mayAppendDelim appends a colon or comma that may precede the next token.
+func (m stateMachine) mayAppendDelim(b []byte, next Kind) []byte {
 	switch {
-	case m.Last.needImplicitColon():
+	case m.last.needImplicitColon():
 		return append(b, ':')
-	case m.Last.needImplicitComma(next) && len(m.Stack) != 0: // comma not needed for top-level values
+	case m.last.needImplicitComma(next) && len(m.stack) != 0: // comma not needed for top-level values
 		return append(b, ',')
 	default:
 		return b
@@ -402,24 +263,39 @@ func (m stateMachine) MayAppendDelim(b []byte, next Kind) []byte {
 // A zero value means no delimiter should be emitted.
 func (m stateMachine) needDelim(next Kind) (delim byte) {
 	switch {
-	case m.Last.needImplicitColon():
+	case m.last.needImplicitColon():
 		return ':'
-	case m.Last.needImplicitComma(next) && len(m.Stack) != 0: // comma not needed for top-level values
+	case m.last.needImplicitComma(next) && len(m.stack) != 0: // comma not needed for top-level values
 		return ','
 	default:
 		return 0
 	}
 }
 
-// InvalidateDisabledNamespaces marks all disabled namespaces as invalid.
+// checkDelim reports whether the specified delimiter should be there given
+// the kind of the next token that appears immediately afterwards.
+func (m stateMachine) checkDelim(delim byte, next Kind) error {
+	switch needDelim := m.needDelim(next); {
+	case needDelim == delim:
+		return nil
+	case needDelim == ':':
+		return errMissingColon
+	case needDelim == ',':
+		return errMissingComma
+	default:
+		return newInvalidCharacterError([]byte{delim}, "before next token")
+	}
+}
+
+// invalidateDisabledNamespaces marks all disabled namespaces as invalid.
 //
 // For efficiency, Marshal and Unmarshal may disable namespaces since there are
 // more efficient ways to track duplicate names. However, if an error occurs,
 // the namespaces in Encoder or Decoder will be left in an inconsistent state.
 // Mark the namespaces as invalid so that future method calls on
 // Encoder or Decoder will return an error.
-func (m *stateMachine) InvalidateDisabledNamespaces() {
-	for i := range m.Depth() {
+func (m *stateMachine) invalidateDisabledNamespaces() {
+	for i := 0; i < m.depth(); i++ {
 		e := m.index(i)
 		if !e.isActiveNamespace() {
 			e.invalidateNamespace()
@@ -453,10 +329,10 @@ const (
 	stateCountEven    stateEntry = 0x0000_0000_0000_0000
 )
 
-// Length reports the number of elements in the JSON object or array.
+// length reports the number of elements in the JSON object or array.
 // Each name and value in an object entry is treated as a separate element.
-func (e stateEntry) Length() int64 {
-	return int64(e & stateCountMask)
+func (e stateEntry) length() int {
+	return int(e & stateCountMask)
 }
 
 // isObject reports whether this is a JSON object.
@@ -469,9 +345,9 @@ func (e stateEntry) isArray() bool {
 	return e&stateTypeMask == stateTypeArray
 }
 
-// NeedObjectName reports whether the next token must be a JSON string,
+// needObjectName reports whether the next token must be a JSON string,
 // which is necessary for JSON object names.
-func (e stateEntry) NeedObjectName() bool {
+func (e stateEntry) needObjectName() bool {
 	return e&(stateTypeMask|stateCountLSBMask) == stateTypeObject|stateCountEven
 }
 
@@ -491,13 +367,13 @@ func (e stateEntry) needObjectValue() bool {
 // which always occurs after a value in a JSON object or array
 // before the next value (or name).
 func (e stateEntry) needImplicitComma(next Kind) bool {
-	return !e.needObjectValue() && e.Length() > 0 && next != '}' && next != ']'
+	return !e.needObjectValue() && e.length() > 0 && next != '}' && next != ']'
 }
 
-// Increment increments the number of elements for the current object or array.
+// increment increments the number of elements for the current object or array.
 // This assumes that overflow won't practically be an issue since
 // 1<<bits.OnesCount(stateCountMask) is sufficiently large.
-func (e *stateEntry) Increment() {
+func (e *stateEntry) increment() {
 	(*e)++
 }
 
@@ -507,9 +383,9 @@ func (e *stateEntry) decrement() {
 	(*e)--
 }
 
-// DisableNamespace disables the JSON object namespace such that the
+// disableNamespace disables the JSON object namespace such that the
 // Encoder or Decoder no longer updates the namespace.
-func (e *stateEntry) DisableNamespace() {
+func (e *stateEntry) disableNamespace() {
 	*e |= stateDisableNamespace
 }
 
@@ -566,7 +442,7 @@ func (ns *objectNameStack) length() int {
 	return len(ns.offsets)
 }
 
-// getUnquoted retrieves the ith unquoted name in the stack.
+// getUnquoted retrieves the ith unquoted name in the namespace.
 // It returns an empty string if the last object is empty.
 //
 // Invariant: Must call copyQuotedBuffer beforehand.
@@ -587,10 +463,10 @@ func (ns *objectNameStack) push() {
 	ns.offsets = append(ns.offsets, invalidOffset)
 }
 
-// ReplaceLastQuotedOffset replaces the last name with the starting offset
+// replaceLastQuotedOffset replaces the last name with the starting offset
 // to the quoted name in some remote buffer. All offsets provided must be
 // relative to the same buffer until copyQuotedBuffer is called.
-func (ns *objectNameStack) ReplaceLastQuotedOffset(i int) {
+func (ns *objectNameStack) replaceLastQuotedOffset(i int) {
 	// Use bit-wise inversion instead of naive multiplication by -1 to avoid
 	// ambiguity regarding zero (which is a valid offset into the names field).
 	// Bit-wise inversion is mathematically equivalent to -i-1,
@@ -658,10 +534,10 @@ func (ns *objectNameStack) copyQuotedBuffer(b []byte) {
 		if i > 0 {
 			startOffset = ns.offsets[i-1]
 		}
-		if n := jsonwire.ConsumeSimpleString(quotedName); n > 0 {
+		if n := consumeSimpleString(quotedName); n > 0 {
 			ns.unquotedNames = append(ns.unquotedNames[:startOffset], quotedName[len(`"`):n-len(`"`)]...)
 		} else {
-			ns.unquotedNames, _ = jsonwire.AppendUnquote(ns.unquotedNames[:startOffset], quotedName)
+			ns.unquotedNames, _ = unescapeString(ns.unquotedNames[:startOffset], quotedName)
 		}
 		ns.offsets[i] = len(ns.unquotedNames)
 	}
@@ -689,14 +565,14 @@ func (nss *objectNamespaceStack) reset() {
 func (nss *objectNamespaceStack) push() {
 	if cap(*nss) > len(*nss) {
 		*nss = (*nss)[:len(*nss)+1]
-		nss.Last().reset()
+		nss.last().reset()
 	} else {
 		*nss = append(*nss, objectNamespace{})
 	}
 }
 
-// Last returns a pointer to the last JSON object namespace.
-func (nss objectNamespaceStack) Last() *objectNamespace {
+// last returns a pointer to the last JSON object namespace.
+func (nss objectNamespaceStack) last() *objectNamespace {
 	return &nss[len(nss)-1]
 }
 
@@ -765,13 +641,13 @@ func (ns *objectNamespace) insertQuoted(name []byte, isVerbatim bool) bool {
 	}
 	return ns.insert(name, !isVerbatim)
 }
-func (ns *objectNamespace) InsertUnquoted(name []byte) bool {
+func (ns *objectNamespace) insertUnquoted(name []byte) bool {
 	return ns.insert(name, false)
 }
 func (ns *objectNamespace) insert(name []byte, quoted bool) bool {
 	var allNames []byte
 	if quoted {
-		allNames, _ = jsonwire.AppendUnquote(ns.allUnquotedNames, name)
+		allNames, _ = unescapeString(ns.allUnquotedNames, name)
 	} else {
 		allNames = append(ns.allUnquotedNames, name...)
 	}
@@ -824,5 +700,48 @@ func (ns *objectNamespace) removeLast() {
 	} else {
 		ns.endOffsets = ns.endOffsets[:ns.length()-1]
 		ns.allUnquotedNames = ns.allUnquotedNames[:ns.endOffsets[ns.length()-1]]
+	}
+}
+
+type uintSet64 uint64
+
+func (s uintSet64) has(i uint) bool { return s&(1<<i) > 0 }
+func (s *uintSet64) set(i uint)     { *s |= 1 << i }
+
+// uintSet is a set of unsigned integers.
+// It is optimized for most integers being close to zero.
+type uintSet struct {
+	lo uintSet64
+	hi []uintSet64
+}
+
+// has reports whether i is in the set.
+func (s *uintSet) has(i uint) bool {
+	if i < 64 {
+		return s.lo.has(i)
+	} else {
+		i -= 64
+		iHi, iLo := int(i/64), i%64
+		return iHi < len(s.hi) && s.hi[iHi].has(iLo)
+	}
+}
+
+// insert inserts i into the set and reports whether it was the first insertion.
+func (s *uintSet) insert(i uint) bool {
+	// TODO: Make this inlineable at least for the lower 64-bit case.
+	if i < 64 {
+		has := s.lo.has(i)
+		s.lo.set(i)
+		return !has
+	} else {
+		i -= 64
+		iHi, iLo := int(i/64), i%64
+		if iHi >= len(s.hi) {
+			s.hi = append(s.hi, make([]uintSet64, iHi+1-len(s.hi))...)
+			s.hi = s.hi[:cap(s.hi)]
+		}
+		has := s.hi[iHi].has(iLo)
+		s.hi[iHi].set(iLo)
+		return !has
 	}
 }

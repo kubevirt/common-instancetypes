@@ -2,18 +2,11 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-//go:build !goexperiment.jsonv2 || !go1.25
-
-package jsontext
+package json
 
 import (
-	"bytes"
-	"errors"
 	"math"
 	"strconv"
-
-	"k8s.io/kube-openapi/pkg/internal/third_party/go-json-experiment/json/internal/jsonflags"
-	"k8s.io/kube-openapi/pkg/internal/third_party/go-json-experiment/json/internal/jsonwire"
 )
 
 // NOTE: Token is analogous to v1 json.Token.
@@ -24,19 +17,17 @@ const (
 	maxUint64 = math.MaxUint64
 	minUint64 = 0 // for consistency and readability purposes
 
-	invalidTokenPanic = "invalid jsontext.Token; it has been voided by a subsequent json.Decoder call"
+	invalidTokenPanic = "invalid json.Token; it has been voided by a subsequent json.Decoder call"
 )
-
-var errInvalidToken = errors.New("invalid jsontext.Token")
 
 // Token represents a lexical JSON token, which may be one of the following:
 //   - a JSON literal (i.e., null, true, or false)
 //   - a JSON string (e.g., "hello, world!")
 //   - a JSON number (e.g., 123.456)
-//   - a begin or end delimiter for a JSON object (i.e., { or } )
-//   - a begin or end delimiter for a JSON array (i.e., [ or ] )
+//   - a start or end delimiter for a JSON object (i.e., { or } )
+//   - a start or end delimiter for a JSON array (i.e., [ or ] )
 //
-// A Token cannot represent entire array or object values, while a [Value] can.
+// A Token cannot represent entire array or object values, while a RawValue can.
 // There is no Token to represent commas and colons since
 // these structural tokens can be inferred from the surrounding context.
 type Token struct {
@@ -96,10 +87,10 @@ var (
 	False Token = rawToken("false")
 	True  Token = rawToken("true")
 
-	BeginObject Token = rawToken("{")
-	EndObject   Token = rawToken("}")
-	BeginArray  Token = rawToken("[")
-	EndArray    Token = rawToken("]")
+	ObjectStart Token = rawToken("{")
+	ObjectEnd   Token = rawToken("}")
+	ArrayStart  Token = rawToken("[")
+	ArrayEnd    Token = rawToken("]")
 
 	zeroString Token = rawToken(`""`)
 	zeroNumber Token = rawToken(`0`)
@@ -165,7 +156,7 @@ func Uint(n uint64) Token {
 }
 
 // Clone makes a copy of the Token such that its value remains valid
-// even after a subsequent [Decoder.Read] call.
+// even after a subsequent Decoder.Read call.
 func (t Token) Clone() Token {
 	// TODO: Allow caller to avoid any allocations?
 	if raw := t.raw; raw != nil {
@@ -178,21 +169,22 @@ func (t Token) Clone() Token {
 				return False
 			case True.raw:
 				return True
-			case BeginObject.raw:
-				return BeginObject
-			case EndObject.raw:
-				return EndObject
-			case BeginArray.raw:
-				return BeginArray
-			case EndArray.raw:
-				return EndArray
+			case ObjectStart.raw:
+				return ObjectStart
+			case ObjectEnd.raw:
+				return ObjectEnd
+			case ArrayStart.raw:
+				return ArrayStart
+			case ArrayEnd.raw:
+				return ArrayEnd
 			}
 		}
 
 		if uint64(raw.previousOffsetStart()) != t.num {
 			panic(invalidTokenPanic)
 		}
-		buf := bytes.Clone(raw.previousBuffer())
+		// TODO(https://go.dev/issue/45038): Use bytes.Clone.
+		buf := append([]byte(nil), raw.previousBuffer()...)
 		return Token{raw: &decodeBuffer{buf: buf, prevStart: 0, prevEnd: len(buf)}}
 	}
 	return t
@@ -213,20 +205,20 @@ func (t Token) Bool() bool {
 
 // appendString appends a JSON string to dst and returns it.
 // It panics if t is not a JSON string.
-func (t Token) appendString(dst []byte, flags *jsonflags.Flags) ([]byte, error) {
+func (t Token) appendString(dst []byte, validateUTF8, preserveRaw bool, escapeRune func(rune) bool) ([]byte, error) {
 	if raw := t.raw; raw != nil {
 		// Handle raw string value.
 		buf := raw.previousBuffer()
 		if Kind(buf[0]) == '"' {
-			if jsonwire.ConsumeSimpleString(buf) == len(buf) {
+			if escapeRune == nil && consumeSimpleString(buf) == len(buf) {
 				return append(dst, buf...), nil
 			}
-			dst, _, err := jsonwire.ReformatString(dst, buf, flags)
+			dst, _, err := reformatString(dst, buf, validateUTF8, preserveRaw, escapeRune)
 			return dst, err
 		}
 	} else if len(t.str) != 0 && t.num == 0 {
 		// Handle exact string value.
-		return jsonwire.AppendQuote(dst, t.str, flags)
+		return appendString(dst, t.str, validateUTF8, escapeRune)
 	}
 
 	panic("invalid JSON token kind: " + t.Kind().String())
@@ -252,9 +244,9 @@ func (t Token) string() (string, []byte) {
 		}
 		buf := raw.previousBuffer()
 		if buf[0] == '"' {
-			// TODO: Preserve ValueFlags in Token?
-			isVerbatim := jsonwire.ConsumeSimpleString(buf) == len(buf)
-			return "", jsonwire.UnquoteMayCopy(buf, isVerbatim)
+			// TODO: Preserve valueFlags in Token?
+			isVerbatim := consumeSimpleString(buf) == len(buf)
+			return "", unescapeStringMayCopy(buf, isVerbatim)
 		}
 		// Handle tokens that are not JSON strings for fmt.Stringer.
 		return "", buf
@@ -266,31 +258,34 @@ func (t Token) string() (string, []byte) {
 	if t.num > 0 {
 		switch t.str[0] {
 		case 'f':
-			return string(jsonwire.AppendFloat(nil, math.Float64frombits(t.num), 64)), nil
+			return string(appendNumber(nil, math.Float64frombits(t.num), 64)), nil
 		case 'i':
 			return strconv.FormatInt(int64(t.num), 10), nil
 		case 'u':
 			return strconv.FormatUint(uint64(t.num), 10), nil
 		}
 	}
-	return "<invalid jsontext.Token>", nil
+	return "<invalid json.Token>", nil
 }
 
 // appendNumber appends a JSON number to dst and returns it.
 // It panics if t is not a JSON number.
-func (t Token) appendNumber(dst []byte, flags *jsonflags.Flags) ([]byte, error) {
+func (t Token) appendNumber(dst []byte, canonicalize bool) ([]byte, error) {
 	if raw := t.raw; raw != nil {
 		// Handle raw number value.
 		buf := raw.previousBuffer()
 		if Kind(buf[0]).normalize() == '0' {
-			dst, _, err := jsonwire.ReformatNumber(dst, buf, flags)
+			if !canonicalize {
+				return append(dst, buf...), nil
+			}
+			dst, _, err := reformatNumber(dst, buf, canonicalize)
 			return dst, err
 		}
 	} else if t.num != 0 {
 		// Handle exact number value.
 		switch t.str[0] {
 		case 'f':
-			return jsonwire.AppendFloat(dst, math.Float64frombits(t.num), 64), nil
+			return appendNumber(dst, math.Float64frombits(t.num), 64), nil
 		case 'i':
 			return strconv.AppendInt(dst, int64(t.num), 10), nil
 		case 'u':
@@ -313,7 +308,7 @@ func (t Token) Float() float64 {
 		}
 		buf := raw.previousBuffer()
 		if Kind(buf[0]).normalize() == '0' {
-			fv, _ := jsonwire.ParseFloat(buf, 64)
+			fv, _ := parseFloat(buf, 64)
 			return fv
 		}
 	} else if t.num != 0 {
@@ -359,7 +354,7 @@ func (t Token) Int() int64 {
 		if len(buf) > 0 && buf[0] == '-' {
 			neg, buf = true, buf[1:]
 		}
-		if numAbs, ok := jsonwire.ParseUint(buf); ok {
+		if numAbs, ok := parseDecUint(buf); ok {
 			if neg {
 				if numAbs > -minInt64 {
 					return minInt64
@@ -420,7 +415,7 @@ func (t Token) Uint() uint64 {
 		if len(buf) > 0 && buf[0] == '-' {
 			neg, buf = true, buf[1:]
 		}
-		if num, ok := jsonwire.ParseUint(buf); ok {
+		if num, ok := parseDecUint(buf); ok {
 			if neg {
 				return minUint64
 			}
@@ -481,9 +476,9 @@ func (t Token) Kind() Kind {
 //   - 't': true
 //   - '"': string
 //   - '0': number
-//   - '{': object begin
+//   - '{': object start
 //   - '}': object end
-//   - '[': array begin
+//   - '[': array start
 //   - ']': array end
 //
 // An invalid kind is usually represented using 0,
@@ -514,7 +509,7 @@ func (k Kind) String() string {
 	case ']':
 		return "]"
 	default:
-		return "<invalid jsontext.Kind: " + jsonwire.QuoteRune(string(k)) + ">"
+		return "<invalid json.Kind: " + quoteRune([]byte{byte(k)}) + ">"
 	}
 }
 
