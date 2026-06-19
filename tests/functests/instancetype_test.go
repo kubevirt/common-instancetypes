@@ -242,7 +242,7 @@ var _ = Describe("Common instance types func tests", func() {
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("opensuse")}),
 			Entry("[test_id:TODO] OpenSUSE Leap 16", openSUSELeap16ContainerDisk, "u1.small",
 				map[string]string{"amd64": "opensuse.leap", "arm64": "opensuse.leap"},
-				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("opensuse")}),
+				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("sles")}),
 			Entry("[test_id:TODO] Oracle Linux 8 amd64", ol8ContainerDisk, "u1.2xmedium",
 				map[string]string{"amd64": "oraclelinux"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("cloud-user")}),
