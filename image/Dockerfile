@@ -9,7 +9,7 @@
 #
 # Golang is provided to allow running other Makefile targets
 FROM quay.io/kubevirtci/golang:v20251022-6eb3ab1
-ENV GIMME_GO_VERSION=1.24.9
+ENV GIMME_GO_VERSION=1.26.4
 
 RUN dnf install -y make tar python3-pip ShellCheck && dnf clean all -y
 
