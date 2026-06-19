@@ -155,7 +155,7 @@ $(YQ): $(LOCALBIN)
 GOLANGCI_LINT ?= $(LOCALBIN)/golangci-lint
 golangci-lint: $(GOLANGCI_LINT)
 $(GOLANGCI_LINT): $(LOCALBIN)
-	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(LOCALBIN) $(GOLANGCI_LINT_VERSION)
+	curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/$(GOLANGCI_LINT_VERSION)/install.sh | sh -s -- -b $(LOCALBIN) $(GOLANGCI_LINT_VERSION)
 
 GOFUMPT ?= $(LOCALBIN)/gofumpt
 gofumpt: $(GOFUMPT)
