@@ -23,7 +23,7 @@ KUBECONFORM_PACKAGE ?= github.com/yannh/kubeconform/cmd/kubeconform
 YQ_PACKAGE ?= github.com/mikefarah/yq/v4
 
 # Version of golangci-lint to install
-GOLANGCI_LINT_VERSION ?= v2.2.2
+GOLANGCI_LINT_VERSION ?= v2.12.2
 
 # Kubeconfig default value
 KUBECONFIG ?= ~/.kube/config
