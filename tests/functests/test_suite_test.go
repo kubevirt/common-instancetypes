@@ -23,6 +23,8 @@ import (
 const (
 	testNamespace = "common-instancetype-functest"
 
+	defaultAlmaLinux9ContainerDisk         = "quay.io/containerdisks/almalinux:9"
+	defaultAlmaLinux10ContainerDisk        = "quay.io/containerdisks/almalinux:10"
 	defaultFedoraContainerDisk             = "quay.io/containerdisks/fedora:latest"
 	defaultCentos7ContainerDisk            = "quay.io/containerdisks/centos:7-2009"
 	defaultCentosStream8ContainerDisk      = "quay.io/containerdisks/centos-stream:8"
@@ -70,6 +72,8 @@ var (
 	afterSuiteReporters []Reporter
 	virtClient          kubecli.KubevirtClient
 
+	almaLinux9ContainerDisk         string
+	almaLinux10ContainerDisk        string
 	fedoraContainerDisk             string
 	centos7ContainerDisk            string
 	centosStream8ContainerDisk      string
@@ -118,6 +122,10 @@ var (
 func init() {
 	kubecli.Init()
 
+	flag.StringVar(&almaLinux9ContainerDisk, "almalinux-9-container-disk",
+		defaultAlmaLinux9ContainerDisk, "AlmaLinux 9 container disk used by functional tests")
+	flag.StringVar(&almaLinux10ContainerDisk, "almalinux-10-container-disk",
+		defaultAlmaLinux10ContainerDisk, "AlmaLinux 10 container disk used by functional tests")
 	flag.StringVar(&fedoraContainerDisk, "fedora-container-disk",
 		defaultFedoraContainerDisk, "Fedora container disk used by functional tests")
 	flag.StringVar(&centos7ContainerDisk, "centos-7-container-disk",

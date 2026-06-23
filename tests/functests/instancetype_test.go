@@ -200,6 +200,12 @@ var _ = Describe("Common instance types func tests", func() {
 					testFn(virtClient, vm.Name)
 				}
 			},
+			Entry("[test_id:TODO] AlmaLinux 9", almaLinux9ContainerDisk, "u1.medium",
+				map[string]string{"amd64": "rhel.9", "arm64": "rhel.9.arm64", "s390x": "rhel.9.s390x"},
+				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("almalinux")}),
+			Entry("[test_id:TODO] AlmaLinux 10", almaLinux10ContainerDisk, "u1.medium",
+				map[string]string{"amd64": "rhel.10", "arm64": "rhel.10.arm64", "s390x": "rhel.10.s390x"},
+				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("almalinux")}),
 			Entry("[test_id:10738] Fedora", fedoraContainerDisk, "u1.small",
 				map[string]string{"amd64": "fedora", "arm64": "fedora.arm64", "s390x": "fedora.s390x"},
 				[]testFn{expectGuestAgentToBeConnected, expectSSHToRunCommandOnLinux("fedora")}),
