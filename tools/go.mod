@@ -20,7 +20,7 @@ require (
 	github.com/fatih/color v1.19.0 // indirect
 	github.com/go-errors/errors v1.5.1 // indirect
 	github.com/go-ini/ini v1.67.0 // indirect
-	github.com/go-openapi/jsonpointer v0.23.1 // indirect
+	github.com/go-openapi/jsonpointer v0.23.2 // indirect
 	github.com/go-openapi/jsonreference v0.21.6 // indirect
 	github.com/go-openapi/swag v0.26.1 // indirect
 	github.com/go-openapi/swag/cmdutils v0.26.1 // indirect
@@ -48,7 +48,7 @@ require (
 	github.com/mattn/go-isatty v0.0.22 // indirect
 	github.com/mitchellh/go-wordwrap v1.0.1 // indirect
 	github.com/monochromegane/go-gitignore v0.0.0-20200626010858-205db1a8cc00 // indirect
-	github.com/pelletier/go-toml/v2 v2.4.0 // indirect
+	github.com/pelletier/go-toml/v2 v2.4.2 // indirect
 	github.com/santhosh-tekuri/jsonschema/v6 v6.0.2 // indirect
 	github.com/sergi/go-diff v1.4.0 // indirect
 	github.com/spf13/cobra v1.10.2 // indirect
@@ -64,7 +64,7 @@ require (
 	golang.org/x/sync v0.21.0 // indirect
 	golang.org/x/sys v0.46.0 // indirect
 	golang.org/x/text v0.38.0 // indirect
-	golang.org/x/tools v0.46.0 // indirect
+	golang.org/x/tools v0.47.0 // indirect
 	google.golang.org/protobuf v1.36.11 // indirect
 	gopkg.in/evanphx/json-patch.v4 v4.13.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
