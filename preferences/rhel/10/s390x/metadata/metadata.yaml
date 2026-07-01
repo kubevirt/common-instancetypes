@@ -1,0 +1,9 @@
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachinePreference
+metadata:
+  name: metadata
+  annotations:
+    openshift.io/display-name: "Red Hat Enterprise Linux 10 (s390x)"
+  labels:
+    instancetype.kubevirt.io/arch: "s390x"

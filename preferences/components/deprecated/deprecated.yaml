@@ -1,0 +1,7 @@
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachinePreference
+metadata:
+  name: VirtualMachinePreference
+  labels:
+    instancetype.kubevirt.io/deprecated: "true"

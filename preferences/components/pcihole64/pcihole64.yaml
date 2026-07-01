@@ -1,0 +1,8 @@
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachinePreference
+metadata:
+  name: pcihole64
+spec:
+  annotations:
+    kubevirt.io/disablePCIHole64: "true"

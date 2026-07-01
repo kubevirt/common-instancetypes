@@ -1,0 +1,11 @@
+.vscode/*
+.history
+.idea
+_bin/
+_build/
+_cluster-up/
+_kubevirt/
+_schemas/
+common-*-bundle.yaml
+CHECKSUMS.sha256
+*.qcow2

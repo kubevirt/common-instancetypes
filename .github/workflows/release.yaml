@@ -1,0 +1,30 @@
+---
+name: Release
+on:
+  push:
+    tags:
+      - "v*.*.*"
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - uses: actions/setup-go@v4
+        with:
+          go-version-file: tools/go.mod
+      - name: Build
+        run: .github/scripts/build.sh
+        env:
+          COMMON_INSTANCETYPES_CRI: podman
+          COMMON_INSTANCETYPES_VERSION: ${{ github.ref_name }}
+      - name: Release
+        id: release
+        uses: softprops/action-gh-release@v1
+        with:
+          generate_release_notes: true
+          fail_on_unmatched_files: true
+          files: |
+            _build/common-*-bundle-${{ github.ref_name }}.yaml
+            _build/CHECKSUMS.sha256
+            LICENSE

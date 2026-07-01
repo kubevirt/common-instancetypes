@@ -1,0 +1,34 @@
+---
+kind: VirtualMachineClusterInstancetype
+metadata:
+  name: "n"
+  annotations:
+    instancetype.kubevirt.io/description: |-
+      The N Series provides resources for network intensive DPDK
+      applications, like VNFs.
+
+      *N* is the abbreviation for "Network".
+
+      This series of instancetypes requires nodes capable
+      of running DPDK workloads and being marked with the respective
+      node-role.kubevirt.io/worker-dpdk label as such.
+    instancetype.kubevirt.io/displayName: "Network"
+  labels:
+    instancetype.kubevirt.io/class: "network"
+    instancetype.kubevirt.io/icon-pf: "pficon-network"
+    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/vendor: "kubevirt.io"
+    instancetype.kubevirt.io/dedicatedCPUPlacement: "true"
+    instancetype.kubevirt.io/isolateEmulatorThread: "true"
+    instancetype.kubevirt.io/hugepages: "1Gi"
+spec:
+  annotations:
+    cpu-load-balancing.crio.io: "disable"
+    cpu-quota.crio.io: "disable"
+    irq-load-balancing.crio.io: "disable"
+  cpu:
+    dedicatedCPUPlacement: true
+    isolateEmulatorThread: true
+  memory:
+    hugepages:
+      pageSize: "1Gi"

@@ -1,0 +1,14 @@
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachinePreference
+metadata:
+  name: metadata
+  annotations:
+    tags: "hidden,kubevirt,legacy"
+    iconClass: "icon-other"
+    openshift.io/display-name: "Legacy Guest"
+  labels:
+    instancetype.kubevirt.io/os-type: "legacy"
+spec:
+  annotations:
+    vm.kubevirt.io/os: "legacy"

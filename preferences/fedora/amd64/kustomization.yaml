@@ -1,0 +1,27 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../linux
+
+components:
+  - ./metadata
+  - ../requirements
+  - ../../components/preferred-architecture/amd64
+  - ../../components/required-architecture/amd64
+  - ../../components/secureboot
+
+patches:
+  - target:
+      kind: VirtualMachinePreference
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: fedora
+  - target:
+      kind: VirtualMachineClusterPreference
+    patch: |-
+      - op: replace
+        path: /metadata/name
+        value: fedora

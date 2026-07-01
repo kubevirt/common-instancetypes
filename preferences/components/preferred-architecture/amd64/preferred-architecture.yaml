@@ -1,0 +1,9 @@
+---
+apiVersion: instancetype.kubevirt.io/v1beta1
+kind: VirtualMachinePreference
+metadata:
+  name: preferred-architecture
+  labels:
+    instancetype.kubevirt.io/preferred-architecture: "amd64"
+spec:
+  preferredArchitecture: "amd64"

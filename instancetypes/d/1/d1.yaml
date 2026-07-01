@@ -1,0 +1,27 @@
+---
+kind: VirtualMachineClusterInstancetype
+metadata:
+  name: "d"
+  annotations:
+    instancetype.kubevirt.io/description: |-
+      The D Series is designed for consistent and predictable performance,
+      providing resources for general purpose applications.
+
+      *D* is the abbreviation for "Dedicated", reflecting the use of
+      dedicated CPU placement for workloads.
+
+      VMs of this instance type are assigned exclusive physical CPU cores,
+      avoiding CPU sharing and time-slice contention with other VMs.
+    instancetype.kubevirt.io/displayName: "Dedicated vCPU"
+  labels:
+    instancetype.kubevirt.io/class: "dedicated.vcpu"
+    instancetype.kubevirt.io/icon-pf: "pficon-server-group"
+    instancetype.kubevirt.io/version: "1"
+    instancetype.kubevirt.io/vendor: "kubevirt.io"
+    instancetype.kubevirt.io/dedicatedCPUPlacement: "true"
+    instancetype.kubevirt.io/isolateEmulatorThread: "true"
+spec:
+  cpu:
+    dedicatedCPUPlacement: true
+    isolateEmulatorThread: true
+  ioThreadsPolicy: "auto"
