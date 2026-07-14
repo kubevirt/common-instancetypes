@@ -8,6 +8,7 @@ resources:
 components:
   - ./metadata
   - ./requirements
+  - ../../components/cpu-topology-cores
   - ../../components/efi-persisted
   - ../../components/tpm
   - ../../components/secureboot
