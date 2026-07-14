@@ -35,8 +35,8 @@ function kubevirt::install() {
 function kubevirt::up() {
   make cluster-up -C "${_base_dir}/_kubevirt" && make cluster-sync -C "${_base_dir}/_kubevirt"
 
-  echo "disable common-instancetypes deployment"
-  ${_kubectl} patch kv/kubevirt -n kubevirt --type merge -p '{"spec":{"configuration":{"commonInstancetypesDeployment": {"enabled": false}}}}'
+  echo "disable common-instancetypes deployment and ImageVolume feature gate"
+  ${_kubectl} patch kv/kubevirt -n kubevirt --type merge -p '{"spec":{"configuration":{"commonInstancetypesDeployment": {"enabled": false}, "developerConfiguration": {"disabledFeatureGates": ["ImageVolume"]}}}}'
 
   echo "waiting for kubevirt to become ready, this can take a few minutes..."
   ${_kubectl} -n kubevirt wait kv kubevirt --for condition=Available --timeout=15m

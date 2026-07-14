@@ -19,7 +19,7 @@ set -ex
 export KUBEVIRT_MEMORY_SIZE="${KUBEVIRT_MEMORY_SIZE:-16G}"
 export KUBEVIRT_DEPLOY_CDI="true"
 export KUBEVIRT_VERSION=${KUBEVIRT_VERSION:-main}
-export KUBEVIRTCI_TAG=${KUBEVIRTCI_TAG:-$(curl -sfL https://raw.githubusercontent.com/kubevirt/kubevirt/"${KUBEVIRT_VERSION}"/kubevirtci/cluster-up/version.txt)}
+export KUBEVIRTCI_TAG=${KUBEVIRTCI_TAG:-2606122341-dc57311b}
 
 _base_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 _cluster_up_dir="${_base_dir}/_cluster-up"
@@ -55,8 +55,8 @@ function kubevirtci::up() {
   echo "waiting for kubevirt to become ready, this can take a few minutes..."
   ${_kubectl} -n kubevirt wait kv kubevirt --for condition=Available --timeout=15m
 
-  echo "disable common-instancetypes deployment"
-  ${_kubectl} patch kv/kubevirt -n kubevirt --type merge -p '{"spec":{"configuration":{"commonInstancetypesDeployment": {"enabled": false}}}}'
+  echo "disable common-instancetypes deployment and ImageVolume feature gate"
+  ${_kubectl} patch kv/kubevirt -n kubevirt --type merge -p '{"spec":{"configuration":{"commonInstancetypesDeployment": {"enabled": false}, "developerConfiguration": {"disabledFeatureGates": ["ImageVolume"]}}}}'
 
   echo "waiting for kubevirt to become ready, this can take a few minutes..."
   ${_kubectl} -n kubevirt wait kv kubevirt --for condition=Available --timeout=15m
