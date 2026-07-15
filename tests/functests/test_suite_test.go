@@ -21,7 +21,7 @@ import (
 )
 
 const (
-	testNamespace = "common-instancetype-functest"
+	defaultTestNamespace = "common-instancetype-functest"
 
 	defaultAlmaLinux9ContainerDisk         = "quay.io/containerdisks/almalinux:9"
 	defaultAlmaLinux10ContainerDisk        = "quay.io/containerdisks/almalinux:10"
@@ -118,8 +118,10 @@ var (
 	ol8ContainerDisk                string
 	ol9ContainerDisk                string
 
-	preferenceArch      string
-	windowsReadyTimeout time.Duration
+	preferenceArch           string
+	windowsReadyTimeout      time.Duration
+	testNamespace            string
+	testNamespacePreexisting bool
 )
 
 //nolint:gochecknoinits
@@ -215,6 +217,8 @@ func init() {
 	flag.StringVar(&preferenceArch, "preference-arch", "", "Architecture to test preferences for")
 	flag.DurationVar(&windowsReadyTimeout, "windows-ready-timeout",
 		defaultVMReadyTimeout, "Duration after Windows VM will timeout")
+	flag.StringVar(&testNamespace, "test-namespace", defaultTestNamespace,
+		"Namespace used for functional tests")
 }
 
 func getClusterArch(virtClient kubecli.KubevirtClient) string {
@@ -252,19 +256,29 @@ var _ = BeforeSuite(func() {
 		preferenceArch = getClusterArch(virtClient)
 	}
 
-	namespaceObj := &core.Namespace{
-		ObjectMeta: metav1.ObjectMeta{
-			Name: testNamespace,
-		},
+	_, err = virtClient.CoreV1().Namespaces().Get(context.TODO(), testNamespace, metav1.GetOptions{})
+	if errors.IsNotFound(err) {
+		testNamespacePreexisting = false
+		namespaceObj := &core.Namespace{
+			ObjectMeta: metav1.ObjectMeta{
+				Name: testNamespace,
+			},
+		}
+		_, err = virtClient.CoreV1().Namespaces().Create(context.TODO(), namespaceObj, metav1.CreateOptions{})
+		Expect(err).ToNot(HaveOccurred())
+	} else {
+		Expect(err).ToNot(HaveOccurred())
+		testNamespacePreexisting = true
 	}
-	_, err = virtClient.CoreV1().Namespaces().Create(context.TODO(), namespaceObj, metav1.CreateOptions{})
-	Expect(err).ToNot(And(HaveOccurred(), Not(MatchError(errors.IsAlreadyExists, "errors.IsAlreadyExists"))))
 
 	checkDeployedResources()
 })
 
 var _ = AfterSuite(func() {
-	// Clean up namespaced resources
+	if testNamespacePreexisting {
+		return
+	}
+	// Clean up namespaced resources created for this test run
 	err := virtClient.CoreV1().Namespaces().Delete(context.TODO(), testNamespace, metav1.DeleteOptions{})
 	if err != nil && !errors.IsNotFound(err) {
 		Expect(err).ToNot(HaveOccurred())
