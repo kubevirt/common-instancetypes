@@ -330,6 +330,7 @@ debian | Debian
 fedora | Fedora (amd64)
 fedora.arm64 | Fedora (arm64)
 fedora.s390x | Fedora (s390x)
+fedora.s390x.secex | Fedora (IBM Secure Execution)
 legacy | Legacy Guest
 linux | Linux Guest
 linux.efi | Linux EFI Guest
@@ -340,6 +341,7 @@ oraclelinux | Oracle Linux
 rhel.10 | Red Hat Enterprise Linux 10 (amd64)
 rhel.10.arm64 | Red Hat Enterprise Linux 10 (arm64)
 rhel.10.s390x | Red Hat Enterprise Linux 10 (s390x)
+rhel.10.s390x.secex | Red Hat Enterprise Linux 10 (IBM Secure Execution)
 rhel.7 | Red Hat Enterprise Linux 7
 rhel.7.desktop | Red Hat Enterprise Linux 7
 rhel.8 | Red Hat Enterprise Linux 8
@@ -351,6 +353,7 @@ rhel.9.desktop | Red Hat Enterprise Linux 9 Desktop (amd64)
 rhel.9.dpdk | Red Hat Enterprise Linux 9 DPDK (amd64)
 rhel.9.realtime | Red Hat Enterprise Linux 9 Realtime (amd64)
 rhel.9.s390x | Red Hat Enterprise Linux 9 (s390x)
+rhel.9.s390x.secex | Red Hat Enterprise Linux 9 (IBM Secure Execution)
 sles | SUSE Linux Enterprise Server
 ubuntu | Ubuntu
 windows.10 | Microsoft Windows 10
