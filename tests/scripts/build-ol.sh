@@ -7,12 +7,14 @@ curl -L "https://yum.oracle.com/templates/OracleLinux/OL8/u10/x86_64/OL8U10_x86_
 curl -L "https://yum.oracle.com/templates/OracleLinux/OL8/u10/aarch64/OL8U10_aarch64-kvm-cloud-b123.qcow2" -o "${context_dir}/OL8U10-arm64.qcow2"
 curl -L "https://yum.oracle.com/templates/OracleLinux/OL9/u5/x86_64/OL9U5_x86_64-kvm-b259.qcow2" -o "${context_dir}/OL9U5-amd64.qcow2"
 curl -L "https://yum.oracle.com/templates/OracleLinux/OL9/u5/aarch64/OL9U5_aarch64-kvm-cloud-b127.qcow2" -o "${context_dir}/OL9U5-arm64.qcow2"
+curl -L "https://yum.oracle.com/templates/OracleLinux/OL10/u1/x86_64/OL10U1_x86_64-kvm-b291.qcow2" -o "${context_dir}/OL10U1-amd64.qcow2"
+curl -L "https://yum.oracle.com/templates/OracleLinux/OL10/u1/aarch64/OL10U1_aarch64-kvm-cloud-b178.qcow2" -o "${context_dir}/OL10U1-arm64.qcow2"
 
 declare -A version_images=(
     ["8.10"]="OL8U10-amd64.qcow2 OL8U10-arm64.qcow2"
     ["9.5"]="OL9U5-amd64.qcow2 OL9U5-arm64.qcow2"
+    ["10.1"]="OL10U1-amd64.qcow2 OL10U1-arm64.qcow2"
   )
-
 
 for version in "${!version_images[@]}"; do
   IFS=' ' read -r -a arch_images <<< "${version_images[$version]}"
