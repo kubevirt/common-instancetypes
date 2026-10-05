@@ -81,6 +81,9 @@ var participleYqRules = []*participleYqRule{
 	{"TSVDecode", `from_?tsv|@tsvd`, decodeOp(TSVFormat), 0},
 	{"TSVEncode", `to_?tsv|@tsv`, encodeWithIndent(TSVFormat, 0), 0},
 
+	{"Base64Urld", `@base64urld`, decodeOp(Base64UrlFormat), 0},
+	{"Base64Url", `@base64url`, encodeWithIndent(Base64UrlFormat, 0), 0},
+
 	{"Base64d", `@base64d`, decodeOp(Base64Format), 0},
 	{"Base64", `@base64`, encodeWithIndent(Base64Format, 0), 0},
 
@@ -164,6 +167,12 @@ var participleYqRules = []*participleYqRule{
 
 	{"ALL_COMMENTS", `comments\s*=`, assignAllCommentsOp(false), 0},
 	{"ALL_COMMENTS_ASSIGN_RELATIVE", `comments\s*\|=`, assignAllCommentsOp(true), 0},
+
+	{"If", `if`, literalTokenWithCloser(openBracket, false, "end"), 0},
+	{"Then", `then`, opToken(ifThenOpType), 0},
+	{"Elif", `elif`, opToken(ifElseOpType), 0},
+	{"Else", `else`, opToken(ifElseOpType), 0},
+	{"End", `end`, literalToken(closeBracket, true), 0},
 
 	{"Block", `;`, opToken(blockOpType), 0},
 	{"Alternative", `\/\/`, opToken(alternativeOpType), 0},
@@ -568,6 +577,12 @@ func opToken(op *operationType) yqAction {
 func literalToken(tt tokenType, checkForPost bool) yqAction {
 	return func(rawToken lexer.Token) (*token, error) {
 		return &token{TokenType: tt, CheckForPostTraverse: checkForPost, Match: rawToken.Value}, nil
+	}
+}
+
+func literalTokenWithCloser(tt tokenType, checkForPost bool, expectedCloser string) yqAction {
+	return func(rawToken lexer.Token) (*token, error) {
+		return &token{TokenType: tt, CheckForPostTraverse: checkForPost, Match: rawToken.Value, ExpectedCloser: expectedCloser}, nil
 	}
 }
 
