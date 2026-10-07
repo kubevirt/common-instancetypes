@@ -1,7 +1,7 @@
 SHELL=/bin/bash
 
-export KUBEVIRT_VERSION = main
-export KUBEVIRT_TAG = main
+export KUBEVIRT_VERSION = v1.8.4
+export KUBEVIRT_TAG = release-1.8
 
 # Use the COMMON_INSTANCETYPES_CRI env variable to control if the following targets are executed within a container.
 # Supported runtimes are docker and podman. By default targets run directly on the host.

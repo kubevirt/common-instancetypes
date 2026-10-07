@@ -17,7 +17,7 @@
 set -ex
 
 export KUBEVIRT_MEMORY_SIZE="${KUBEVIRT_MEMORY_SIZE:-16G}"
-export KUBEVIRT_TAG="${KUBEVIRT_TAG:-main}"
+export KUBEVIRT_TAG="${KUBEVIRT_TAG:-release-1.8}"
 
 _base_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
 _kubectl="${_base_dir}/_kubevirt/kubevirtci/cluster-up/kubectl.sh"
