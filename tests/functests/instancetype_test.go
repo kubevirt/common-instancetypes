@@ -109,7 +109,8 @@ var _ = Describe("Common instance types func tests", func() {
 							"failure checking preference requirements: "+
 							"insufficient Memory resources of 64M provided by instance type, preference requires %s",
 						preference.Spec.Requirements.Memory.Guest.String(),
-					)))
+					),
+				))
 			}
 		})
 
