@@ -10,6 +10,7 @@ components:
   - ../components/diskbus-virtio-blk
   - ../components/interfacemodel-virtio-net
   - ../components/rng
+  - ../components/mergeable-memory
 
 patches:
   - target:
