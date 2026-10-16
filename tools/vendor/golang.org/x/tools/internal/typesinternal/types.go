@@ -9,7 +9,7 @@
 //   - functions for converting types to strings or syntax (e.g. [TypeExpr], FileQualifier]);
 //   - helpers for working with the [go/types] API (e.g. [NewTypesInfo]);
 //   - access to internal go/types APIs that are not yet
-//     exported (e.g. [SetUsesCgo], [ErrorCodeStartEnd]); and
+//     exported (e.g. [SetUsesCgo], [ErrorCodeStartEnd], [VarKind]); and
 //   - common algorithms related to types (e.g. [TooNewStdSymbols]).
 //
 // See also:
@@ -215,17 +215,17 @@ func ObjectKind(obj types.Object) string {
 		}
 	case *types.Var:
 		switch obj.Kind() {
-		case types.PackageVar:
+		case PackageVar:
 			return "package-level variable"
-		case types.LocalVar:
+		case LocalVar:
 			return "local variable"
-		case types.RecvVar:
+		case RecvVar:
 			return "receiver"
-		case types.ParamVar:
+		case ParamVar:
 			return "parameter"
-		case types.ResultVar:
+		case ResultVar:
 			return "result variable"
-		case types.FieldVar:
+		case FieldVar:
 			return "struct field"
 		}
 	case *types.Func:
