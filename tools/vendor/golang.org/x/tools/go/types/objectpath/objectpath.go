@@ -31,7 +31,8 @@ import (
 	"strconv"
 	"strings"
 	"sync"
-	// This package is dependency-restricted; see x/tools/go/gcexportdata.TestDeps.
+
+	"golang.org/x/tools/internal/typesinternal"
 )
 
 // TODO(adonovan): think about generic aliases.
@@ -691,13 +692,8 @@ func (enc *Encoder) concreteMethod(meth *types.Func) (Path, bool) {
 		return "", false
 	}
 
-	// Avoid dependency on typesinternal.RecvBase here.
-	t := meth.Signature().Recv().Type()
-	if ptr, ok := types.Unalias(t).(*types.Pointer); ok {
-		t = ptr.Elem()
-	}
-	named, ok := types.Unalias(t).(*types.Named)
-	if !ok {
+	_, named := typesinternal.ReceiverNamed(meth.Signature().Recv())
+	if named == nil {
 		return "", false
 	}
 

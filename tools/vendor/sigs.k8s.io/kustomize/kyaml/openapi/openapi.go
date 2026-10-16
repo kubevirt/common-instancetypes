@@ -5,6 +5,7 @@ package openapi
 
 import (
 	"bytes"
+	"compress/gzip"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -722,8 +723,8 @@ func parseBuiltinSchema(version string) {
 }
 
 // parseBuiltinBundle parses and indexes the compiled built-in schema bundle.
-func parseBuiltinBundle(data []byte) error {
-	bundle, err := decodeBuiltinBundle(data)
+func parseBuiltinBundle(compressed []byte) error {
+	bundle, err := decodeBuiltinBundle(compressed)
 	if err != nil {
 		return err
 	}
@@ -745,13 +746,30 @@ func parseBuiltinBundle(data []byte) error {
 	return nil
 }
 
-func decodeBuiltinBundle(data []byte) (*builtinopenapi.Bundle, error) {
-	decoder := json.NewDecoder(bytes.NewReader(data))
+func decodeBuiltinBundle(compressed []byte) (result *builtinopenapi.Bundle, retErr error) {
+	reader, err := gzip.NewReader(bytes.NewReader(compressed))
+	if err != nil {
+		return nil, errors.Wrap(err)
+	}
+	defer func() {
+		if closeErr := reader.Close(); closeErr != nil {
+			result = nil
+			closeErr = fmt.Errorf("close gzip reader: %w", closeErr)
+			if retErr != nil {
+				retErr = fmt.Errorf("%w; %w", retErr, closeErr)
+			} else {
+				retErr = closeErr
+			}
+		}
+	}()
+
+	decoder := json.NewDecoder(reader)
 	var bundle builtinopenapi.Bundle
 	if err := decoder.Decode(&bundle); err != nil {
 		return nil, errors.Wrap(err)
 	}
-	// Reject a second JSON value or invalid trailing data in the artifact.
+	// Force the gzip reader to EOF so its checksum is verified, and reject any
+	// second JSON value in the artifact.
 	var trailing interface{}
 	if err := decoder.Decode(&trailing); err == nil {
 		return nil, fmt.Errorf("built-in OpenAPI bundle contains multiple JSON values")

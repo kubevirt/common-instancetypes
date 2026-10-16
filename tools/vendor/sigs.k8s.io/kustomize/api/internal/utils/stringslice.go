@@ -3,24 +3,24 @@
 
 package utils
 
-import "slices"
-
 // StringSliceIndex returns the index of the str, else -1.
-//
-// Deprecated: use slices.Index instead.
-//
-//go:fix inline
 func StringSliceIndex(slice []string, str string) int {
-	return slices.Index(slice, str)
+	for i := range slice {
+		if slice[i] == str {
+			return i
+		}
+	}
+	return -1
 }
 
 // StringSliceContains returns true if the slice has the string.
-//
-// Deprecated: use slices.Contains instead.
-//
-//go:fix inline
 func StringSliceContains(slice []string, str string) bool {
-	return slices.Contains(slice, str)
+	for _, s := range slice {
+		if s == str {
+			return true
+		}
+	}
+	return false
 }
 
 // SameEndingSubSlice returns true if the slices end the same way, e.g.

@@ -5,7 +5,6 @@
 package schema
 
 import (
-	"slices"
 	"strings"
 
 	"sigs.k8s.io/kustomize/kyaml/openapi"
@@ -36,5 +35,10 @@ func IsAssociative(schema *openapi.ResourceSchema, nodes []*yaml.RNode, infer bo
 func schemaHasMergeStrategy(schema *openapi.ResourceSchema) bool {
 	tmp, _ := schema.PatchStrategyAndKey()
 	strategies := strings.Split(tmp, ",")
-	return slices.Contains(strategies, "merge")
+	for _, s := range strategies {
+		if s == "merge" {
+			return true
+		}
+	}
+	return false
 }
