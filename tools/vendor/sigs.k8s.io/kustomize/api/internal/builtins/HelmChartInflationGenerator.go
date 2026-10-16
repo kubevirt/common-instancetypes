@@ -148,8 +148,10 @@ func (p *HelmChartInflationGeneratorPlugin) errIfIllegalValuesMerge() error {
 		p.ValuesMerge = valuesMergeOptionOverride
 		return nil
 	}
-	if slices.Contains(legalMergeOptions, p.ValuesMerge) {
-		return nil
+	for _, opt := range legalMergeOptions {
+		if p.ValuesMerge == opt {
+			return nil
+		}
 	}
 	return fmt.Errorf("valuesMerge must be one of %v", legalMergeOptions)
 }

@@ -8,7 +8,6 @@ import (
 	"fmt"
 	"runtime"
 	"strings"
-	// This package is dependency-restricted; see x/tools/go/gcexportdata.TestDeps.
 )
 
 // fmtFrames formats a backtrace for reporting reader/writer desyncs.

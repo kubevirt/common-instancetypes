@@ -9,7 +9,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"slices"
 	"strings"
 
 	"github.com/sergi/go-diff/diffmatchpatch"
@@ -135,7 +134,12 @@ func Diff(sourceDir, destDir string) (sets.String, error) {
 // a file underneath the .git folder.
 func IsDotGitFolder(path string) bool {
 	cleanPath := filepath.ToSlash(filepath.Clean(path))
-	return slices.Contains(strings.Split(cleanPath, "/"), ".git")
+	for _, c := range strings.Split(cleanPath, "/") {
+		if c == ".git" {
+			return true
+		}
+	}
+	return false
 }
 
 // PrettyFileDiff takes the content of two files and returns the pretty diff

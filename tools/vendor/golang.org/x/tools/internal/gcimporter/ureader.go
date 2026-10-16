@@ -13,8 +13,9 @@ import (
 	"sort"
 	"strings"
 
+	"golang.org/x/tools/internal/aliases"
 	"golang.org/x/tools/internal/pkgbits"
-	// This package is dependency-restricted; see x/tools/go/gcexportdata.TestDeps.
+	"golang.org/x/tools/internal/typesinternal"
 )
 
 // A pkgReader holds the shared state for reading a unified IR package
@@ -550,9 +551,7 @@ func (pr *pkgReader) objIdx(idx pkgbits.Index) (*types.Package, string) {
 				tparams = r.typeParamNames(false)
 			}
 			typ := r.typ()
-			tname := types.NewTypeName(pos, objPkg, objName, nil)
-			types.NewAlias(tname, typ).SetTypeParams(tparams)
-			declare(tname)
+			declare(aliases.New(pos, objPkg, objName, typ, tparams))
 
 		case pkgbits.ObjConst:
 			pos := r.pos()
@@ -589,7 +588,7 @@ func (pr *pkgReader) objIdx(idx pkgbits.Index) (*types.Package, string) {
 						sig := fn.Type().(*types.Signature)
 
 						recv := types.NewVar(fn.Pos(), fn.Pkg(), "", named)
-						recv.SetKind(types.RecvVar)
+						typesinternal.SetVarKind(recv, typesinternal.RecvVar)
 						methods[i] = types.NewFunc(fn.Pos(), fn.Pkg(), fn.Name(), types.NewSignatureType(recv, nil, nil, sig.Params(), sig.Results(), sig.Variadic()))
 					}
 
@@ -696,7 +695,7 @@ func (pr *pkgReader) objIdx(idx pkgbits.Index) (*types.Package, string) {
 			pos := r.pos()
 			typ := r.typ()
 			v := types.NewVar(pos, objPkg, objName, typ)
-			v.SetKind(types.PackageVar)
+			typesinternal.SetVarKind(v, typesinternal.PackageVar)
 			declare(v)
 		}
 	}

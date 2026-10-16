@@ -242,7 +242,6 @@ import (
 	"strings"
 
 	"golang.org/x/tools/go/types/objectpath"
-	// This package is dependency-restricted; see x/tools/go/gcexportdata.TestDeps.
 )
 
 // IExportShallow encodes "shallow" export data for the specified package.

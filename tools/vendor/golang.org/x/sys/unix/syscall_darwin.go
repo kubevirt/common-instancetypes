@@ -369,7 +369,6 @@ func Flistxattr(fd int, dest []byte) (sz int, err error) {
  */
 
 //sys	fcntl(fd int, cmd int, arg int) (val int, err error)
-//sys	fcntlPtr(fd int, cmd int, arg unsafe.Pointer) (val int, err error) = SYS_FCNTL
 
 //sys	kill(pid int, signum int, posix int) (err error)
 

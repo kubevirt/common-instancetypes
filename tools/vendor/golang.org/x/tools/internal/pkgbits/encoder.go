@@ -13,7 +13,6 @@ import (
 	"math/big"
 	"runtime"
 	"strings"
-	// This package is dependency-restricted; see x/tools/go/gcexportdata.TestDeps.
 )
 
 // A PkgEncoder provides methods for encoding a package's Unified IR
