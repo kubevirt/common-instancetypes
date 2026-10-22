@@ -136,6 +136,10 @@ the IO threading from cores dedicated to the workload.
 In addition, in this series, the NUMA topology of the used
 cores is provided to the VM.
 
+CX sizes set `spec.cpu.maxSockets` to the guest CPU count, leaving no extra
+CPU sockets for hotplugging. This avoids excessive socket counts that can
+prevent the VM from starting.
+
 ### CX Series Characteristics
 
 Specific characteristics of this series are:
