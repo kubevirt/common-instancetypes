@@ -43,14 +43,19 @@ function kubevirtci::up() {
   echo "adding kubevirtci registry to cdi-insecure-registries"
   ${_kubectl} patch cdis/cdi --type merge -p '{"spec": {"config": {"insecureRegistries": ["registry:5000"]}}}'
 
-  # Treat main as stable version
   if [ "$KUBEVIRT_VERSION" = "main" ]; then
-    KUBEVIRT_VERSION=$(curl -L https://storage.googleapis.com/kubevirt-prow/devel/release/kubevirt/kubevirt/stable.txt)
+    KUBEVIRT_NIGHTLY=$(curl -L https://storage.googleapis.com/kubevirt-prow/devel/nightly/release/kubevirt/kubevirt/latest)
+    KUBEVIRT_NIGHTLY_BASE_URL="https://storage.googleapis.com/kubevirt-prow/devel/nightly/release/kubevirt/kubevirt/${KUBEVIRT_NIGHTLY}"
   fi
 
   echo "installing kubevirt..."
-  ${_kubectl} apply -f "https://github.com/kubevirt/kubevirt/releases/download/${KUBEVIRT_VERSION}/kubevirt-operator.yaml"
-  ${_kubectl} apply -f "https://github.com/kubevirt/kubevirt/releases/download/${KUBEVIRT_VERSION}/kubevirt-cr.yaml"
+  if [ -n "${KUBEVIRT_NIGHTLY_BASE_URL:-}" ]; then
+    ${_kubectl} apply --server-side -f "${KUBEVIRT_NIGHTLY_BASE_URL}/kubevirt-operator.yaml"
+    ${_kubectl} apply -f "${KUBEVIRT_NIGHTLY_BASE_URL}/kubevirt-cr.yaml"
+  else
+    ${_kubectl} apply -f "https://github.com/kubevirt/kubevirt/releases/download/${KUBEVIRT_VERSION}/kubevirt-operator.yaml"
+    ${_kubectl} apply -f "https://github.com/kubevirt/kubevirt/releases/download/${KUBEVIRT_VERSION}/kubevirt-cr.yaml"
+  fi
 
   echo "waiting for kubevirt to become ready, this can take a few minutes..."
   ${_kubectl} -n kubevirt wait kv kubevirt --for condition=Available --timeout=15m
