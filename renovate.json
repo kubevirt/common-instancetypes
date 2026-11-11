@@ -1,0 +1,55 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "baseBranchPatterns": ["main", "/^release-(?!1\\.[0-4]$)\\d+\\.\\d+$/"],
+  "enabledManagers": ["gomod", "github-actions"],
+  "prConcurrentLimit": 3,
+  "lockFileMaintenance": {
+    "enabled": false
+  },
+  "postUpdateOptions": ["gomodTidy"],
+  "labels": ["release-note-none"],
+  "extends": [":gitSignOff", ":dependencyDashboard"],
+  "packageRules": [
+    {
+      "description": "Enable indirect Go dependency updates",
+      "matchManagers": ["gomod"],
+      "matchDepTypes": ["indirect"],
+      "enabled": true
+    },
+    {
+      "description": "Group Go digest, patch, and minor updates",
+      "matchManagers": ["gomod"],
+      "groupName": "all dependencies",
+      "matchUpdateTypes": ["digest", "patch", "minor"],
+      "enabled": true
+    },
+    {
+      "description": "Group direct major Go updates and rewrite import paths",
+      "matchManagers": ["gomod"],
+      "groupName": "major dependencies",
+      "matchUpdateTypes": ["major"],
+      "matchDepTypes": ["require"],
+      "enabled": true,
+      "postUpdateOptions": ["gomodUpdateImportPaths"]
+    },
+    {
+      "description": "Disable routine updates on release branches; vulnerability alerts override this",
+      "matchBaseBranches": ["/^release-(?!1\\.[0-4]$)\\d+\\.\\d+$/"],
+      "matchPackageNames": ["*"],
+      "enabled": false
+    }
+  ],
+  "postUpgradeTasks": {
+    "commands": ["make generate", "make readme"],
+    "executionMode": "branch",
+    "installTools": {
+      "golang": {}
+    }
+  },
+  "vulnerabilityAlerts": {
+    "enabled": true
+  },
+  "osvVulnerabilityAlerts": true,
+  "separateMajorMinor": true,
+  "ignorePaths": ["**/vendor/**"]
+}
