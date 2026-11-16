@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	yaml "go.yaml.in/yaml/v4"
+	"go.yaml.in/yaml/v4/plugin/aliasdata"
 )
 
 var (
@@ -19,12 +20,13 @@ var (
 )
 
 type yamlDecoder struct {
-	decoder yaml.Decoder
+	decoder *yaml.Loader
 
 	prefs YamlPreferences
 
 	// work around of various parsing issues by yaml.v3 with document headers
 	leadingContent string
+	leadingLines   int
 	bufferRead     bytes.Buffer
 
 	// anchor map persists over multiple documents for convenience.
@@ -66,6 +68,7 @@ func (dec *yamlDecoder) processReadStream(reader *bufio.Reader) (io.Reader, stri
 
 		// Document separator: exact line '---' or a '--- ' prefix followed by content
 		if separatorLineRe.MatchString(trimmed) {
+			dec.leadingLines++
 			sb.WriteString("$yqDocSeparator$")
 			sb.WriteString(newline)
 			if errors.Is(err, io.EOF) {
@@ -86,7 +89,7 @@ func (dec *yamlDecoder) processReadStream(reader *bufio.Reader) (io.Reader, stri
 			sb.WriteString("$yqDocSeparator$")
 			sb.WriteString(sepNewline)
 			// push the remainder back onto the reader and continue processing
-			reader = bufio.NewReader(io.MultiReader(strings.NewReader(remainder), reader))
+			reader = bufio.NewReader(io.MultiReader(strings.NewReader(remainder+newline), reader))
 			if errors.Is(err, io.EOF) && remainder == "" {
 				return reader, sb.String(), nil
 			}
@@ -95,6 +98,7 @@ func (dec *yamlDecoder) processReadStream(reader *bufio.Reader) (io.Reader, stri
 
 		// Comments, YAML directives, and blank lines are leading content
 		if commentLineRe.MatchString(line) || yamlDirectiveLineRe.MatchString(line) || trimmed == "" {
+			dec.leadingLines++
 			sb.WriteString(line)
 			sb.WriteString(newline)
 			if errors.Is(err, io.EOF) {
@@ -112,6 +116,7 @@ func (dec *yamlDecoder) processReadStream(reader *bufio.Reader) (io.Reader, stri
 func (dec *yamlDecoder) Init(reader io.Reader) error {
 	readerToUse := reader
 	leadingContent := ""
+	dec.leadingLines = 0
 	dec.bufferRead = bytes.Buffer{}
 	var err error
 	// if we 'evaluating together' - we only process the leading content
@@ -122,6 +127,8 @@ func (dec *yamlDecoder) Init(reader io.Reader) error {
 		if err != nil {
 			return err
 		}
+		// Keep the parser's source positions while retaining the original header separately.
+		readerToUse = io.MultiReader(strings.NewReader(strings.Repeat("\n", dec.leadingLines)), readerToUse)
 	} else if !dec.prefs.LeadingContentPreProcessing {
 		// if we're not process the leading content
 		// keep a copy of what we've read. This is incase its a
@@ -131,7 +138,14 @@ func (dec *yamlDecoder) Init(reader io.Reader) error {
 	}
 	dec.leadingContent = leadingContent
 	dec.readAnything = false
-	dec.decoder = *yaml.NewDecoder(readerToUse)
+	aliasData, err := aliasdata.New(aliasdata.WithStream(true))
+	if err != nil {
+		return err
+	}
+	dec.decoder, err = yaml.NewLoader(readerToUse, yaml.WithPlugin(aliasData))
+	if err != nil {
+		return err
+	}
 	dec.firstFile = false
 	dec.documentIndex = 0
 	dec.anchorMap = make(map[string]*CandidateNode)
@@ -140,7 +154,7 @@ func (dec *yamlDecoder) Init(reader io.Reader) error {
 
 func (dec *yamlDecoder) Decode() (*CandidateNode, error) {
 	var yamlNode yaml.Node
-	err := dec.decoder.Decode(&yamlNode)
+	err := dec.decoder.Load(&yamlNode)
 
 	if errors.Is(err, io.EOF) && dec.leadingContent != "" && !dec.readAnything {
 		// force returning an empty node with a comment.
