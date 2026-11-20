@@ -13,8 +13,8 @@ function latest_version() {
 KUBEVIRT_VERSION=$(curl -L https://storage.googleapis.com/kubevirt-prow/devel/release/kubevirt/kubevirt/stable.txt)
 KUBEVIRT_NAMESPACE=${1:-kubevirt}
 
-kubectl apply -n "${KUBEVIRT_NAMESPACE}" -f "https://github.com/kubevirt/kubevirt/releases/download/${KUBEVIRT_VERSION}/kubevirt-operator.yaml"
-kubectl apply -n "${KUBEVIRT_NAMESPACE}" -f "https://github.com/kubevirt/kubevirt/releases/download/${KUBEVIRT_VERSION}/kubevirt-cr.yaml"
+kubectl create -n "${KUBEVIRT_NAMESPACE}" -f "https://github.com/kubevirt/kubevirt/releases/download/${KUBEVIRT_VERSION}/kubevirt-operator.yaml"
+kubectl create -n "${KUBEVIRT_NAMESPACE}" -f "https://github.com/kubevirt/kubevirt/releases/download/${KUBEVIRT_VERSION}/kubevirt-cr.yaml"
 
 echo "Waiting for Kubevirt to be ready..."
 kubectl wait --for=condition=Available --timeout=600s -n "${KUBEVIRT_NAMESPACE}" kv/kubevirt
