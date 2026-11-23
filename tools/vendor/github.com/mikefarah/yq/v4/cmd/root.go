@@ -157,6 +157,7 @@ yq -P -oy sample.json
 	rootCmd.PersistentFlags().BoolVar(&yqlib.ConfiguredLuaPreferences.Globals, "lua-globals", yqlib.ConfiguredLuaPreferences.Globals, "output keys as top-level global variables")
 
 	rootCmd.PersistentFlags().BoolVar(&yqlib.ConfiguredINIPreferences.PreserveSurroundedQuote, "ini-preserve-quotes", yqlib.ConfiguredINIPreferences.PreserveSurroundedQuote, "preserve surrounding quotes on INI values during round-trip")
+	rootCmd.PersistentFlags().StringVar(&yqlib.ConfiguredINIPreferences.KeyValueDelimiters, "ini-key-value-delimiters", yqlib.ConfiguredINIPreferences.KeyValueDelimiters, "sequence of delimiters used to separate keys and values when parsing INI")
 
 	rootCmd.PersistentFlags().StringVar(&yqlib.ConfiguredPropertiesPreferences.KeyValueSeparator, "properties-separator", yqlib.ConfiguredPropertiesPreferences.KeyValueSeparator, "separator to use between keys and values")
 	rootCmd.PersistentFlags().BoolVar(&yqlib.ConfiguredPropertiesPreferences.UseArrayBrackets, "properties-array-brackets", yqlib.ConfiguredPropertiesPreferences.UseArrayBrackets, "use [x] in array paths (e.g. for SpringBoot)")
@@ -165,6 +166,8 @@ yq -P -oy sample.json
 	if err = rootCmd.RegisterFlagCompletionFunc("shell-key-separator", cobra.NoFileCompletions); err != nil {
 		panic(err)
 	}
+
+	rootCmd.PersistentFlags().BoolVar(&yqlib.ConfiguredShellVariablesPreferences.SecurityForceNeverEscape, "security-force-never-escape-shell-output", yqlib.ConfiguredShellVariablesPreferences.SecurityForceNeverEscape, "UNSAFE: with -o=shell -r, never quote or escape values (may allow command injection when eval'd)")
 
 	rootCmd.PersistentFlags().BoolVar(&yqlib.StringInterpolationEnabled, "string-interpolation", yqlib.StringInterpolationEnabled, "Toggles strings interpolation of \\(exp)")
 
@@ -198,7 +201,7 @@ yq -P -oy sample.json
 	rootCmd.PersistentFlags().BoolVarP(&yqlib.ConfiguredYamlPreferences.FixMergeAnchorToSpec, "yaml-fix-merge-anchor-to-spec", "", false, "Fix merge anchor to match YAML spec. Will default to true in late 2025")
 	rootCmd.PersistentFlags().BoolVarP(&yqlib.ConfiguredYamlPreferences.CompactSequenceIndent, "yaml-compact-seq-indent", "c", false, "Use compact sequence indentation where '- ' is considered part of the indentation.")
 
-	rootCmd.PersistentFlags().StringVarP(&splitFileExp, "split-exp", "s", "", "print each result (or doc) into a file named (exp). [exp] argument must return a string. You can use $index in the expression as the result counter. The necessary directories will be created.")
+	rootCmd.PersistentFlags().StringVarP(&splitFileExp, "split-exp", "s", "", "print each result (or doc) into a file named (exp). [exp] argument must return a string. You can use $index in the expression as the result counter. The necessary directories will be created. Paths must stay within the current directory unless --security-allow-write-any-path is set.")
 	if err = rootCmd.RegisterFlagCompletionFunc("split-exp", cobra.NoFileCompletions); err != nil {
 		panic(err)
 	}
@@ -215,6 +218,7 @@ yq -P -oy sample.json
 	rootCmd.PersistentFlags().BoolVarP(&yqlib.ConfiguredSecurityPreferences.DisableEnvOps, "security-disable-env-ops", "", false, "Disable env related operations.")
 	rootCmd.PersistentFlags().BoolVarP(&yqlib.ConfiguredSecurityPreferences.DisableFileOps, "security-disable-file-ops", "", false, "Disable file related operations (e.g. load)")
 	rootCmd.PersistentFlags().BoolVarP(&yqlib.ConfiguredSecurityPreferences.EnableSystemOps, "security-enable-system-operator", "", false, "Enable system operator to allow execution of external commands.")
+	rootCmd.PersistentFlags().BoolVarP(&yqlib.ConfiguredSecurityPreferences.AllowWriteAnyPath, "security-allow-write-any-path", "", false, "Allow split-exp to write to paths outside the current directory.")
 
 	rootCmd.AddCommand(
 		createEvaluateSequenceCommand(),

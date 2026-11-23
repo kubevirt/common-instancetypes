@@ -1,3 +1,30 @@
+4.54.3:
+  - Fixed preservation of YAML aliases across documents within the same input stream, without leaking anchors between files (#2956) Thanks @ingydotnet
+  - Restricted `--split-exp` output paths to the current directory by default. Use `--security-allow-write-any-path` with trusted input to restore the previous behaviour (#2965)
+  - Fixed `--inplace` to reject direct updates to read-only files and replace symbolic links instead of modifying their targets. A link to a read-only target can still be replaced, preserving the target's permissions (#2973)
+
+4.54.2:
+  - Fixed command injection risk in shell output with `-o=shell -r`: unsafe values are now quoted and a warning is logged. Use `--security-force-never-escape-shell-output` to restore the previous unsafe behaviour (GHSA-h2cv-65fq-jgrp)
+  - Fixed YAML structure being changed when assigning head comments (#2847) Thanks @rootsec1
+  - Fixed `ireduce` to run per pipeline input, matching jq's `reduce` behaviour (#2869) Thanks @00200200
+  - Fixed `map_values` to remove entries when the expression returns nothing (#2862) Thanks @yuefdev
+  - Fixed preservation of comments on TOML inline table values (#2879) Thanks @iamhuman-cheolheelee
+  - Fixed INI keys containing colons (#2886)
+  - Fixed YAML line numbers after header preprocessing (#2939) Thanks @imharjot
+  - Fixed an extra leading comment blank line with CRLF input (#2856) Thanks @cestercian
+  - Cleaned up failed in-place edits (#2920) Thanks @Boulea7
+  - Bumped dependencies
+
+4.54.1:
+  - Added jq style `if-then-elif-else-end` conditional operator (#2871) Thanks @anandghegde
+  - Added `@base64url`/`@base64urld` operators (RFC 4648 §5) (#2827) Thanks @MsfPablo
+  - Fixed: preserve explicit assignments in read-only expressions (#2850) Thanks @RRXXZZYY
+  - Fixed: error on int64 overflow in +, -, * instead of silently wrapping (#2826) Thanks @MsfPablo
+  - Fixed(toml): quote empty keys (#2870) Thanks @jakezwang
+  - Fixed: /dev/null was triggering colour output (#2852) Thanks @laraibg786
+  - Fixed dead snapcraft confinement link in README (#2840) Thanks @ShurongCAO
+  - Bumped dependencies
+
 4.53.6:
   - Fixing release build issue
   
