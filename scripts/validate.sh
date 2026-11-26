@@ -12,14 +12,14 @@ fi
 
 # Validate the output of the various kustomization builds available in the repo
 for f in ./ VirtualMachineClusterInstancetypes VirtualMachineClusterPreferences VirtualMachineInstancetypes VirtualMachinePreferences; do
-    if ! kustomize build ${f} | kubeconform -exit-on-error -strict -schema-location "schemas/${KUBEVIRT_VERSION}/{{ .ResourceKind }}.json" ; then
+    if ! kustomize build ${f} | kubeconform -exit-on-error -strict -schema-location "_schemas/${KUBEVIRT_VERSION}/{{ .ResourceKind }}.json" ; then
         exit 1
     fi
 done
 
 # Validate the generated bundles
 for f in common*.yaml; do
-    if ! kubeconform -exit-on-error -strict -schema-location "schemas/${KUBEVIRT_VERSION}/{{ .ResourceKind }}.json"  "${f}" ; then
+    if ! kubeconform -exit-on-error -strict -schema-location "_schemas/${KUBEVIRT_VERSION}/{{ .ResourceKind }}.json"  "${f}" ; then
         exit 1
     fi
 done
