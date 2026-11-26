@@ -1,6 +1,6 @@
 SHELL=/bin/bash
 
-export KUBEVIRT_VERSION = v1.3.0
+export KUBEVIRT_VERSION = v1.3.1
 export KUBEVIRT_TAG = release-1.3
 
 # Use the COMMON_INSTANCETYPES_CRI env variable to control if the following targets are executed within a container.
