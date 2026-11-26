@@ -16,7 +16,8 @@
 
 set -ex
 
-export KUBEVIRTCI_TAG=${KUBEVIRTCI_TAG:-$(curl -sfL https://storage.googleapis.com/kubevirt-prow/release/kubevirt/kubevirtci/latest)}
+export KUBEVIRT_VERSION=${KUBEVIRT_VERSION:-v1.0.1}
+export KUBEVIRTCI_TAG=${KUBEVIRTCI_TAG:-$(curl -sfL https://raw.githubusercontent.com/kubevirt/kubevirt/"${KUBEVIRT_VERSION}"/cluster-up/version.txt || curl -sfL https://raw.githubusercontent.com/kubevirt/kubevirt/"${KUBEVIRT_VERSION}"/kubevirtci/cluster-up/version.txt)}
 export KUBEVIRT_DEPLOY_CDI="true"
 
 _base_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
@@ -42,9 +43,12 @@ function kubevirtci::up() {
   ${_kubectl} patch configmap cdi-insecure-registries -n cdi --type merge -p '{"data":{"kubevirtci": "registry:5000"}}'
 
   echo "installing kubevirt..."
-  LATEST=$(curl -L https://storage.googleapis.com/kubevirt-prow/devel/release/kubevirt/kubevirt/stable.txt)
-  ${_kubectl} apply -f "https://github.com/kubevirt/kubevirt/releases/download/${LATEST}/kubevirt-operator.yaml"
-  ${_kubectl} apply -f "https://github.com/kubevirt/kubevirt/releases/download/${LATEST}/kubevirt-cr.yaml"
+  # Treat main as stable version
+  if [ "$KUBEVIRT_VERSION" = "main" ]; then
+    KUBEVIRT_VERSION=$(curl -L https://storage.googleapis.com/kubevirt-prow/devel/release/kubevirt/kubevirt/stable.txt)
+  fi
+  ${_kubectl} apply -f "https://github.com/kubevirt/kubevirt/releases/download/${KUBEVIRT_VERSION}/kubevirt-operator.yaml"
+  ${_kubectl} apply -f "https://github.com/kubevirt/kubevirt/releases/download/${KUBEVIRT_VERSION}/kubevirt-cr.yaml"
 
   echo "waiting for kubevirt to become ready, this can take a few minutes..."
   ${_kubectl} -n kubevirt wait kv kubevirt --for condition=Available --timeout=15m
