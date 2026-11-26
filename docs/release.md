@@ -17,6 +17,24 @@ Before starting the release, verify:
 ## Checklist
 
 * [ ] Cut `release-1.${Y}` branch from `main`
+* [ ] Record the corresponding KubeVirt minor release and verify the latest
+published stable patch for that minor in the [KubeVirt
+releases](https://github.com/kubevirt/kubevirt/releases). On the new branch,
+set `KUBEVIRT_VERSION` to that fixed `vX.Y.Z` tag and `KUBEVIRT_TAG` to the
+matching `release-X.Y` branch in both the `Makefile` and the direct defaults in
+`scripts/kubevirtci.sh` and `scripts/kubevirt.sh`, respectively. Resolve the
+default `KUBEVIRTCI_TAG` from that fixed KubeVirt tag's
+`kubevirtci/cluster-up/version.txt` and verify the kubevirtci tag exists.
+If the target KubeVirt release branch or stable tag is not yet available,
+record an explicit follow-up in the release milestone to set and verify these
+pins as soon as they are published.
+* [ ] Verify release defaults and explicit overrides through both `make` and
+direct script calls for `KUBEVIRT_VERSION`, `KUBEVIRT_TAG`, and `KUBEVIRTCI_TAG`.
+Use fresh checkouts or inspect the selected refs: existing `_kubevirt` and
+`_cluster-up` directories are reused by the helpers. Run
+`make generate lint validate test test-lint` with the release defaults and run
+cluster functional tests in CI. Track any checks awaiting the target KubeVirt
+release alongside the pinning follow-up.
 * [ ] Tag `v1.${Y}.0` release on `release-1.${Y}` branch and generate release
 * [ ] Ensure the [release
 workflow](https://github.com/kubevirt/common-instancetypes/blob/67e413352b081deaec3ec504912947836532a731/.github/workflows/release.yaml)
