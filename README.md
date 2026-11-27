@@ -245,6 +245,23 @@ Specific characteristics of this series are:
 To get started with customizing or creating your own instancetypes and preferences
 see [DEVELOPMENT.md](./DEVELOPMENT.md).
 
+### Dependency updates
+
+Renovate runs daily at 06:00 UTC and can also be started from the Actions tab. It targets `main`
+and `release-1.5` and newer branches. On `main`, it proposes routine and security dependency
+updates; on release branches, it proposes security updates only. It replaces the previous
+Dependabot update configuration and updates the Go modules in `tests/` and `tools/`, including
+indirect dependencies, and the GitHub Actions workflows.
+
+Each Renovate branch runs `make generate` and `make readme` before creating its PR. `make generate`
+rebuilds the bundles under `_build/`, and `make readme` refreshes the README resource tables.
+
+To enable the workflow, install the Renovate GitHub App with `contents:write`, `pull-requests:write`,
+`issues:write`, `workflows:write`, and `dependabot-alerts:read` permissions. Configure its ID and
+private key as the `RENOVATE_APP_ID` and `RENOVATE_APP_PRIVATE_KEY` Actions secrets. Set the
+`RENOVATE_BOT_LOGIN` repository variable to the installed App's bot login so the Go version report
+runs only for its PRs.
+
 ## Resources
 
 The following instancetype resources (cluster-wide and namespaced) are
