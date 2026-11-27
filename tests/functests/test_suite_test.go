@@ -39,6 +39,7 @@ const (
 	defaultUbuntu2004ContainerDisk         = "quay.io/containerdisks/ubuntu:20.04"
 	defaultUbuntu2204ContainerDisk         = "quay.io/containerdisks/ubuntu:22.04"
 	defaultUbuntu2404ContainerDisk         = "quay.io/containerdisks/ubuntu:24.04"
+	defaultUbuntu2604ContainerDisk         = "quay.io/containerdisks/ubuntu:26.04"
 	defaultOpenSUSETumbleweedContainerDisk = "quay.io/containerdisks/opensuse-tumbleweed:1.0.0"
 	defaultOpenSUSELeap15ContainerDisk     = "quay.io/containerdisks/opensuse-leap:15.6"
 	defaultOpenSUSELeap16ContainerDisk     = "quay.io/containerdisks/opensuse-leap:16.0"
@@ -91,6 +92,7 @@ var (
 	ubuntu2004ContainerDisk         string
 	ubuntu2204ContainerDisk         string
 	ubuntu2404ContainerDisk         string
+	ubuntu2604ContainerDisk         string
 	validationOsContainerDisk       string
 	windows7ContainerDisk           string
 	windows10ContainerDisk          string
@@ -162,6 +164,8 @@ func init() {
 		defaultUbuntu2204ContainerDisk, "Ubuntu 22.04 container disk used by functional tests")
 	flag.StringVar(&ubuntu2404ContainerDisk, "ubuntu-2404-container-disk",
 		defaultUbuntu2404ContainerDisk, "Ubuntu 24.04 container disk used by functional tests")
+	flag.StringVar(&ubuntu2604ContainerDisk, "ubuntu-2604-container-disk",
+		defaultUbuntu2604ContainerDisk, "Ubuntu 26.04 container disk used by functional tests")
 	flag.StringVar(&openSUSETumbleweedContainerDisk, "opensuse-tumbleweed-container-disk",
 		defaultOpenSUSETumbleweedContainerDisk, "OpenSUSE Tumbleweed container disk used by functional tests")
 	flag.StringVar(&openSUSELeap15ContainerDisk, "opensuse-leap-container-disk",
