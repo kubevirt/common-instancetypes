@@ -25,6 +25,7 @@ yq '.a.b[0].c' < file.yaml
 ```bash
 yq -i '.a.b[0].c = "cool"' file.yaml
 ```
+If the input is a symbolic link, yq _replaces_ the link and leaves its target unchanged.
 
 **Update using environment variables:**
 ```bash
@@ -248,6 +249,12 @@ See https://mikefarah.gitbook.io/yq/usage/github-action for more.
 go install github.com/mikefarah/yq/v4@latest
 ```
 
+### Use yq as a Go library
+
+The command above installs the `yq` CLI. To use yq in a Go program instead, add it to your Go module with `go get github.com/mikefarah/yq/v4` and import `github.com/mikefarah/yq/v4/pkg/yqlib`.
+
+See [examples/library/main.go](examples/library/main.go) for a simple, runnable example (`go run ./examples/library`).
+
 ## Community Supported Installation methods
 As these are supported by the community :heart: - however, they may be out of date with the officially supported releases.
 
@@ -428,10 +435,11 @@ Flags:
   -P, --prettyPrint                     pretty print, shorthand for '... style = ""'
       --properties-array-brackets       use [x] in array paths (e.g. for SpringBoot)
       --properties-separator string     separator to use between keys and values (default " = ")
+      --security-allow-write-any-path   Allow split-exp to write to paths outside the current directory.
       --security-disable-env-ops        Disable env related operations.
       --security-disable-file-ops       Disable file related operations (e.g. load)
       --shell-key-separator string      separator for shell variable key paths (default "_")
-  -s, --split-exp string                print each result (or doc) into a file named (exp). [exp] argument must return a string. You can use $index in the expression as the result counter. The necessary directories will be created.
+  -s, --split-exp string                print each result (or doc) into a file named (exp). [exp] argument must return a string. You can use $index in the expression as the result counter. The necessary directories will be created. Paths must stay within the current directory unless --security-allow-write-any-path is set.
       --split-exp-file string           Use a file to specify the split-exp expression.
       --string-interpolation            Toggles strings interpolation of \(exp) (default true)
       --tsv-auto-parse                  parse TSV YAML/JSON values (default true)
@@ -451,6 +459,8 @@ Flags:
 
 Use "yq [command] --help" for more information about a command.
 ```
+
+By default, `--split-exp` rejects existing special-file destinations, including FIFOs and sockets, rather than replacing them. To retain legacy behaviour, including writing to a FIFO, use `--security-allow-write-any-path` only with trusted input.
 
 ## Troubleshooting
 
